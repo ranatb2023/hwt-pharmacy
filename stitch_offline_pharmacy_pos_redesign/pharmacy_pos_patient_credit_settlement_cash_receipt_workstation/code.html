@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-slate-100" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy POS - Patient Credit Settlement &amp; Cash Receipt Workstation</title>
+<!-- Tailwind CSS v3 CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5fa',
+              100: '#e1ecf5',
+              700: '#1a4373',
+              800: '#14365d',
+              900: '#0f2d59', /* Navy Primary */
+              950: '#0a1d3a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    
+    /* Subtle dot grid for clean clinical enterprise look */
+    .clinical-bg {
+      background-color: #f1f5f9;
+      background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
+      background-size: 16px 16px;
+    }
+    
+    /* Thermal Slip realistic styles */
+    .thermal-receipt {
+      background-color: #fdfdf9;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    .cut-line {
+      border-top: 2px dashed #94a3b8;
+      position: relative;
+    }
+    .cut-line::after {
+      content: '✂ CUT HERE';
+      position: absolute;
+      top: -9px;
+      right: 12px;
+      background: #fdfdf9;
+      padding: 0 6px;
+      font-size: 9px;
+      color: #64748b;
+      font-family: monospace;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 clinical-bg antialiased select-none">
+<!-- BEGIN: TopHeader -->
+<header class="w-full bg-white border-b border-slate-200 z-30 flex-shrink-0" data-purpose="system-header">
+<!-- Tier 1: System Status & Brand Bar -->
+<div class="px-6 py-2.5 flex items-center justify-between border-b border-slate-100 bg-white">
+<!-- Left: Logo & Clinical Unit -->
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-2">
+<!-- Hospital Emblem SVG -->
+<div class="w-8 h-8 rounded bg-brand-900 flex items-center justify-center text-white font-black text-lg tracking-tight">
+<svg class="w-5 h-5 fill-current text-sky-400" viewbox="0 0 24 24">
+<path d="M19 10.5h-4.5V6a1.5 1.5 0 0 0-3 0v4.5H7a1.5 1.5 0 0 0 0 3h4.5V18a1.5 1.5 0 0 0 3 0v-4.5H19a1.5 1.5 0 0 0 0-3z"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-baseline space-x-2">
+<span class="font-extrabold text-brand-900 tracking-tight text-lg leading-none">HOPE</span>
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Welfare Trust</span>
+</div>
+<p class="text-[11px] font-medium text-slate-500 tracking-tight">Hospital Management &amp; Pharmacy System</p>
+</div>
+</div>
+<div class="h-6 w-px bg-slate-200"></div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+          Counter 01 Connected
+        </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Citizen POS-80 USB: Ready
+        </span>
+</div>
+<!-- Right: Shift Sales, Station ID & Cashier Profile -->
+<div class="flex items-center space-x-5 text-xs">
+<div class="hidden lg:flex items-center space-x-4 border-r border-slate-200 pr-5">
+<div class="text-right">
+<div class="text-[10px] uppercase font-semibold text-slate-600">Shift Total (Cash)</div>
+<div class="font-bold text-slate-800 text-sm font-mono">PKR 187,100.00</div>
+</div>
+<div class="h-6 w-px bg-slate-200"></div>
+<div>
+<span class="text-slate-600">Station:</span>
+<span class="font-mono font-semibold text-slate-800">POS-WS-01</span>
+</div>
+<div>
+<span class="text-slate-600">LAN:</span>
+<span class="font-mono text-emerald-700 font-medium">192.168.10.45 [Master Online]</span>
+</div>
+</div>
+<!-- Pharmacist Badge -->
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded bg-brand-900 text-white font-bold flex items-center justify-center text-sm shadow-sm">
+            P
+          </div>
+<div class="text-left">
+<div class="font-bold text-slate-900 text-xs">Tariq Mahmood, R.Ph</div>
+<div class="text-[11px] text-slate-600">Duty Pharmacist · ID #8492</div>
+</div>
+<button class="ml-2 inline-flex items-center px-2.5 py-1 text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded border border-red-200 transition-colors" title="Sign Out">
+<svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+            Sign out
+          </button>
+</div>
+</div>
+</div>
+<!-- Tier 2: Keyboard Shortcut & Navigation Bar (No Sidebar Constraint) -->
+<nav class="px-6 bg-slate-50 flex items-center justify-between border-b border-slate-200 overflow-x-auto text-xs" data-purpose="workstation-nav">
+<div class="flex items-center space-x-1 py-1">
+<button class="px-3 py-1.5 font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded transition-colors flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-slate-200 text-slate-700 px-1 py-0.5 rounded border border-slate-300">F2</span>
+<span>Main POS</span>
+</button>
+<button class="px-3 py-1.5 font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded transition-colors flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-slate-200 text-slate-700 px-1 py-0.5 rounded border border-slate-300">F7</span>
+<span>Requisitions</span>
+</button>
+<button class="px-3 py-1.5 font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded transition-colors flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-slate-200 text-slate-700 px-1 py-0.5 rounded border border-slate-300">F3</span>
+<span>Inventory &amp; DRAP</span>
+</button>
+<button class="px-3 py-1.5 font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded transition-colors flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-slate-200 text-slate-700 px-1 py-0.5 rounded border border-slate-300">F8</span>
+<span>Vendors &amp; Orders</span>
+</button>
+<!-- Active Tab -->
+<button class="px-3 py-1.5 font-bold text-white bg-brand-900 rounded shadow-sm flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-sky-500 text-white px-1 py-0.5 rounded">F5</span>
+<span>Customers &amp; Welfare (Credit)</span>
+</button>
+<button class="px-3 py-1.5 font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded transition-colors flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-slate-200 text-slate-700 px-1 py-0.5 rounded border border-slate-300">F6</span>
+<span>Returns &amp; Refunds</span>
+</button>
+<button class="px-3 py-1.5 font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded transition-colors flex items-center space-x-1.5">
+<span class="font-mono font-bold text-[10px] bg-slate-200 text-slate-700 px-1 py-0.5 rounded border border-slate-300">F10</span>
+<span>Day Close / Till</span>
+</button>
+</div>
+<!-- Quick Station Badges -->
+<div class="hidden sm:flex items-center space-x-3 text-[11px] text-slate-500 font-medium">
+<span class="flex items-center">
+<span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span>
+          Cash Drawer #1: Armed
+        </span>
+<span class="text-slate-300">|</span>
+<span>Local SQLite DB Synced (12ms)</span>
+</div>
+</nav>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: SubheaderActionBar -->
+<section class="w-full bg-white border-b border-slate-200 px-6 py-3 shadow-sm flex-shrink-0" data-purpose="workstation-action-bar">
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+<!-- Left: Context Breadcrumb & Live Search -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-3">
+<div>
+<div class="flex items-center space-x-1.5 text-[11px] font-bold tracking-wider uppercase text-slate-600">
+<span>Patients &amp; Accounts</span>
+<svg class="w-3 h-3 text-slate-400" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" fill-rule="evenodd"></path></svg>
+<span>Customer Directory</span>
+<svg class="w-3 h-3 text-slate-400" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" fill-rule="evenodd"></path></svg>
+<span class="text-brand-900 font-extrabold">Settle Account &amp; Cash Receipt</span>
+</div>
+<h1 class="text-base font-bold text-slate-900 leading-tight">Patient Credit Settlement Workstation</h1>
+</div>
+<!-- Quick Switch Account Search -->
+<div class="relative sm:ml-4 min-w-[320px]">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="block w-full pl-9 pr-20 py-1.5 border border-slate-300 rounded-md text-xs font-medium placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-brand-900 focus:border-brand-900 bg-slate-50 focus:bg-white" placeholder="Search by Mobile, CNIC, or HWC ID..." type="text" value="0300-4567890 (Abdul Hameed)"/>
+<span class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+<kbd class="px-1.5 py-0.5 text-[10px] font-mono text-slate-500 bg-slate-200 border border-slate-300 rounded">Ctrl+K</kbd>
+</span>
+</div>
+</div>
+<!-- Right: Action Buttons with Shortcuts -->
+<div class="flex items-center space-x-2 self-end md:self-center">
+<button class="inline-flex items-center px-3 py-1.5 border border-slate-300 text-xs font-semibold rounded text-slate-700 bg-white hover:bg-slate-50 shadow-sm focus:outline-none" type="button">
+<kbd class="font-mono text-[10px] mr-1.5 bg-slate-100 text-slate-600 px-1 py-0.5 rounded border border-slate-200">Esc</kbd>
+          Back to Directory
+        </button>
+<button class="inline-flex items-center px-3 py-1.5 border border-slate-300 text-xs font-semibold rounded text-slate-700 bg-white hover:bg-slate-50 shadow-sm focus:outline-none" type="button">
+<kbd class="font-mono text-[10px] mr-1.5 bg-slate-100 text-slate-600 px-1 py-0.5 rounded border border-slate-200">F4</kbd>
+          Print Statement Slip
+        </button>
+<button class="inline-flex items-center px-4 py-1.5 border border-transparent text-xs font-bold rounded shadow-sm text-white bg-brand-900 hover:bg-brand-800 focus:outline-none ring-2 ring-offset-1 ring-brand-900" type="button">
+<kbd class="font-mono text-[10px] mr-2 bg-sky-500 text-white px-1.5 py-0.5 rounded">Alt+S / F9</kbd>
+          Save &amp; Print Cash Receipt
+        </button>
+</div>
+</div>
+</section>
+<!-- END: SubheaderActionBar -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 w-full px-6 py-4 overflow-y-auto" data-purpose="workstation-grid">
+<!-- Symmetric 60/40 Layout Container (Edge to Edge full-width) -->
+<div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
+<!-- ======================= LEFT COLUMN (60% ~ cols 7) ======================= -->
+<div class="lg:col-span-7 flex flex-col space-y-4">
+<!-- Card 1: Selected Customer Summary Banner -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden" data-purpose="customer-summary-card">
+<div class="p-4 bg-gradient-to-r from-slate-50 to-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center space-x-3.5">
+<div class="w-12 h-12 rounded-lg bg-sky-100 text-brand-900 flex items-center justify-center font-black text-xl border border-sky-200">
+                AH
+              </div>
+<div>
+<div class="flex items-center space-x-2">
+<h2 class="text-lg font-bold text-slate-900">Abdul Hameed</h2>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-sky-100 text-sky-800 border border-sky-200">
+                    75% Trust Subsidized
+                  </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    Active Beneficiary
+                  </span>
+</div>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
+<span>Welfare ID: <strong class="font-mono text-slate-800">HWC-00042</strong></span>
+<span>CNIC: <strong class="font-mono text-slate-800">35201-9876543-1</strong></span>
+<span>Phone: <strong class="font-mono text-slate-800">0300-4567890</strong></span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="px-2.5 py-1 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50">
+                View Ledger
+              </button>
+</div>
+</div>
+<!-- Financial Limits Metric Row -->
+<div class="grid grid-cols-3 divide-x divide-slate-200 bg-white text-center py-3">
+<div class="px-4">
+<div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Approved Credit Limit</div>
+<div class="text-base font-bold font-mono text-slate-800 mt-0.5">PKR 10,000.00</div>
+<div class="text-[10px] text-slate-600">Re-verified by Welfare Board</div>
+</div>
+<div class="px-4 bg-red-50/50">
+<div class="text-[11px] font-bold text-red-700 uppercase tracking-wide flex items-center justify-center space-x-1">
+<span>Total Dues Outstanding</span>
+<span class="bg-red-200 text-red-800 text-[9px] px-1.5 py-0.2 rounded font-mono font-bold">14d OVERDUE</span>
+</div>
+<div class="text-base font-extrabold font-mono text-red-600 mt-0.5">PKR 2,850.00</div>
+<div class="text-[10px] text-red-600 font-medium">3 Unpaid Dispensing Invoices</div>
+</div>
+<div class="px-4">
+<div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Available Credit Remaining</div>
+<div class="text-base font-bold font-mono text-emerald-700 mt-0.5">PKR 7,150.00</div>
+<div class="text-[10px] text-emerald-700 font-medium">71.5% Capacity Healthy</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Outstanding Invoices & Dispensing Indents Table -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm flex-1 flex flex-col" data-purpose="invoices-selection-table">
+<div class="px-4 py-3 border-b border-slate-200 flex items-center justify-between bg-slate-50/70">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-900" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Unsettled Credit Invoices (Select to allocate payment)</h3>
+</div>
+<div class="flex items-center space-x-3 text-xs">
+<label class="inline-flex items-center text-slate-600 font-medium cursor-pointer">
+<input checked="" class="rounded border-slate-300 text-brand-900 focus:ring-brand-900 h-3.5 w-3.5 mr-1.5" type="checkbox"/>
+                Select All Pending (3)
+              </label>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left text-xs border-collapse">
+<thead>
+<tr class="bg-slate-100/80 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200 tracking-wider">
+<th class="py-2.5 px-3 w-10 text-center">
+<input checked="" class="rounded border-slate-300 text-brand-900 focus:ring-brand-900 h-3.5 w-3.5" type="checkbox"/>
+</th>
+<th class="py-2.5 px-3">Date</th>
+<th class="py-2.5 px-3">Dispense Ref #</th>
+<th class="py-2.5 px-3">Prescribed Items / Department</th>
+<th class="py-2.5 px-3 text-right">Original Total</th>
+<th class="py-2.5 px-3 text-right">Welfare Paid</th>
+<th class="py-2.5 px-3 text-right">Patient Due</th>
+<th class="py-2.5 px-3 text-right w-28">Amount to Settle</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-medium">
+<!-- Item 1 -->
+<tr class="hover:bg-sky-50/50 bg-sky-50/20 transition-colors">
+<td class="py-3 px-3 text-center">
+<input checked="" class="rounded border-slate-300 text-brand-900 focus:ring-brand-900 h-4 w-4" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-mono text-slate-600 whitespace-nowrap">04-Sep-2026</td>
+<td class="py-3 px-3 font-mono font-bold text-brand-900 whitespace-nowrap">INV-202609-00014</td>
+<td class="py-3 px-3">
+<div class="font-semibold text-slate-800">Insulin Cartridges &amp; Syringes</div>
+<div class="text-[10px] text-slate-600">Prescription: OPD Diabetic Clinic · Dr. Salman</div>
+</td>
+<td class="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">PKR 1,200.00</td>
+<td class="py-3 px-3 text-right font-mono text-sky-700 whitespace-nowrap">PKR 900.00 <span class="text-[10px] text-slate-600">(75%)</span></td>
+<td class="py-3 px-3 text-right font-mono font-bold text-red-600 whitespace-nowrap">PKR 300.00</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<input class="w-24 px-2 py-1 text-right font-mono font-bold text-xs border border-slate-300 rounded focus:ring-1 focus:ring-brand-900 bg-white" type="text" value="300.00"/>
+</td>
+</tr>
+<!-- Item 2 -->
+<tr class="hover:bg-sky-50/50 bg-sky-50/20 transition-colors">
+<td class="py-3 px-3 text-center">
+<input checked="" class="rounded border-slate-300 text-brand-900 focus:ring-brand-900 h-4 w-4" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-mono text-slate-600 whitespace-nowrap">28-Aug-2026</td>
+<td class="py-3 px-3 font-mono font-bold text-brand-900 whitespace-nowrap">INV-202608-00019</td>
+<td class="py-3 px-3">
+<div class="font-semibold text-slate-800">Amoxicillin 500mg, Paracetamol Tab</div>
+<div class="text-[10px] text-slate-600">General OPD Pharmacy Counter #02</div>
+</td>
+<td class="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">PKR 1,600.00</td>
+<td class="py-3 px-3 text-right font-mono text-sky-700 whitespace-nowrap">PKR 1,200.00 <span class="text-[10px] text-slate-600">(75%)</span></td>
+<td class="py-3 px-3 text-right font-mono font-bold text-red-600 whitespace-nowrap">PKR 400.00</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<input class="w-24 px-2 py-1 text-right font-mono font-bold text-xs border border-slate-300 rounded focus:ring-1 focus:ring-brand-900 bg-white" type="text" value="400.00"/>
+</td>
+</tr>
+<!-- Item 3 -->
+<tr class="hover:bg-sky-50/50 bg-sky-50/20 transition-colors">
+<td class="py-3 px-3 text-center">
+<input checked="" class="rounded border-slate-300 text-brand-900 focus:ring-brand-900 h-4 w-4" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-mono text-slate-600 whitespace-nowrap">15-Aug-2026</td>
+<td class="py-3 px-3 font-mono font-bold text-brand-900 whitespace-nowrap">INV-202608-00008</td>
+<td class="py-3 px-3">
+<div class="font-semibold text-slate-800">Dialyzer Kit &amp; Heparin Consumables</div>
+<div class="text-[10px] text-slate-600">Dialysis Ward Emergency Indent #104</div>
+</td>
+<td class="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">PKR 8,600.00</td>
+<td class="py-3 px-3 text-right font-mono text-sky-700 whitespace-nowrap">PKR 6,450.00 <span class="text-[10px] text-slate-600">(75%)</span></td>
+<td class="py-3 px-3 text-right font-mono font-bold text-red-600 whitespace-nowrap">PKR 2,150.00</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<input class="w-24 px-2 py-1 text-right font-mono font-bold text-xs border border-slate-300 rounded focus:ring-1 focus:ring-brand-900 bg-white" type="text" value="2150.00"/>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Summary Bar -->
+<div class="p-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+<div class="flex items-center space-x-4">
+<span class="text-slate-600">Selected Invoices: <strong class="text-slate-900">3 of 3</strong></span>
+<span class="text-slate-300">|</span>
+<label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 font-medium">
+<input checked="" class="text-brand-900 focus:ring-brand-900 h-3.5 w-3.5" name="settlement_mode" type="radio"/>
+<span>Full Settlement (PKR 2,850.00)</span>
+</label>
+<label class="flex items-center space-x-1.5 cursor-pointer text-slate-700 font-medium">
+<input class="text-brand-900 focus:ring-brand-900 h-3.5 w-3.5" name="settlement_mode" type="radio"/>
+<span>Partial Custom Payment</span>
+</label>
+</div>
+<div class="flex items-center space-x-2">
+<span class="font-bold text-slate-700 uppercase tracking-wider text-[11px]">Selected Total to Settle:</span>
+<span class="font-mono font-extrabold text-base text-brand-900 bg-white px-2.5 py-0.5 rounded border border-slate-300">PKR 2,850.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ======================= RIGHT COLUMN (40% ~ cols 5) ======================= -->
+<div class="lg:col-span-5 flex flex-col space-y-4">
+<!-- Card 3: Payment Collection & Till Entry -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm p-4" data-purpose="payment-collection-panel">
+<div class="flex items-center justify-between pb-3 border-b border-slate-200">
+<div class="flex items-center space-x-2">
+<div class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                Rs
+              </div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-900">Cash Counter Till Entry</h3>
+</div>
+<span class="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              Drawer Kick on Print: ACTIVE
+            </span>
+</div>
+<!-- Payment Method Selector Tabs -->
+<div class="mt-3">
+<label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Payment Method</label>
+<div class="grid grid-cols-4 gap-1.5">
+<button class="py-2 px-1 text-center font-bold text-xs rounded bg-brand-900 text-white shadow-sm ring-1 ring-brand-900">
+                Cash
+              </button>
+<button class="py-2 px-1 text-center font-medium text-xs rounded bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">
+                Bank / Cheque
+              </button>
+<button class="py-2 px-1 text-center font-medium text-xs rounded bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">
+                Donor Grant
+              </button>
+<button class="py-2 px-1 text-center font-medium text-xs rounded bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200">
+                Payroll Ded.
+              </button>
+</div>
+</div>
+<!-- Cash Calculation Fields -->
+<div class="mt-4 space-y-3">
+<!-- Amount Tendered (Huge typography) -->
+<div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+<div class="flex justify-between items-baseline mb-1">
+<label class="text-xs font-bold uppercase text-slate-700 tracking-wide" for="tendered-input">Cash Tendered by Patient / Attendant</label>
+<span class="text-[11px] text-slate-600 font-mono">Currency: PKR</span>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center font-bold font-mono text-slate-400 text-lg">PKR</span>
+<input class="block w-full pl-14 pr-4 py-2 font-mono font-extrabold text-2xl text-right text-slate-900 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-brand-900 focus:border-brand-900 tracking-tight" id="tendered-input" type="text" value="3,000.00"/>
+</div>
+<div class="flex justify-end gap-1 mt-1.5">
+<button class="px-2 py-0.5 text-[11px] font-mono font-medium bg-white border border-slate-200 rounded text-slate-600 hover:bg-slate-100">+100</button>
+<button class="px-2 py-0.5 text-[11px] font-mono font-medium bg-white border border-slate-200 rounded text-slate-600 hover:bg-slate-100">+500</button>
+<button class="px-2 py-0.5 text-[11px] font-mono font-medium bg-white border border-slate-200 rounded text-slate-600 hover:bg-slate-100">+1,000</button>
+<button class="px-2 py-0.5 text-[11px] font-mono font-bold bg-sky-50 border border-sky-200 rounded text-sky-700 hover:bg-sky-100">Exact</button>
+</div>
+</div>
+<!-- Settlement breakdown cards -->
+<div class="grid grid-cols-2 gap-3">
+<div class="p-2.5 rounded border border-slate-200 bg-white">
+<span class="text-[10px] uppercase font-bold text-slate-600 block">Total Due to Settle</span>
+<span class="text-lg font-extrabold font-mono text-brand-900">PKR 2,850.00</span>
+</div>
+<div class="p-2.5 rounded border border-emerald-300 bg-emerald-50">
+<span class="text-[10px] uppercase font-extrabold text-emerald-800 block">Change to Return</span>
+<span class="text-xl font-black font-mono text-emerald-700 leading-tight">PKR 150.00</span>
+</div>
+</div>
+<!-- Note / Collector Remarks -->
+<div>
+<label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Receipt Remarks / Payer Details</label>
+<input class="w-full text-xs py-1.5 px-2.5 border border-slate-300 rounded focus:ring-1 focus:ring-brand-900 text-slate-700" type="text" value="Settled at counter by son Muhammad Tariq, cash drawer drawer #1."/>
+</div>
+<!-- Big Action Button -->
+<button class="w-full py-3 px-4 bg-brand-900 hover:bg-brand-800 text-white font-bold rounded-lg shadow flex items-center justify-center space-x-2 transition-transform active:scale-[0.99]" type="button">
+<svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-sm uppercase tracking-wide">Post Payment &amp; Print Thermal Receipt</span>
+<kbd class="font-mono text-xs bg-sky-500 text-white px-2 py-0.5 rounded">F9 / Alt+S</kbd>
+</button>
+</div>
+</div>
+<!-- Card 4: Live 80mm Citizen POS-80 Thermal Receipt Preview -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm p-4 flex-1 flex flex-col" data-purpose="thermal-receipt-preview">
+<div class="flex items-center justify-between pb-2 border-b border-slate-200 mb-3">
+<div class="flex items-center space-x-1.5">
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-700">Citizen POS-80 (80mm Live Preview)</span>
+</div>
+<span class="text-[10px] font-mono text-slate-500">ESC/POS Raw Stream · 203 DPI</span>
+</div>
+<!-- Realistic Thermal Receipt Body -->
+<div class="thermal-receipt border border-slate-300 rounded p-4 font-mono text-[11px] leading-tight text-slate-800 flex-1 flex flex-col justify-between">
+<div>
+<!-- Receipt Header -->
+<div class="text-center pb-2 border-b border-dashed border-slate-300">
+<div class="font-extrabold text-sm uppercase tracking-tight text-slate-900">HOPE WELFARE TRUST HOSPITAL</div>
+<div class="text-[10px] text-slate-600">Main Pharmacy &amp; Dispensary Division</div>
+<div class="text-[10px] text-slate-600">Tax Exemption NTN #901248-1</div>
+<div class="font-bold mt-1 text-slate-900">OFFICIAL CASH RECEIPT VOUCHER</div>
+</div>
+<!-- Slip Meta -->
+<div class="py-2 border-b border-dashed border-slate-300 text-[10px] space-y-0.5">
+<div class="flex justify-between">
+<span>Slip #: <strong>CR-202609-0084</strong></span>
+<span>Date: <strong>09-Sep-2026 11:15</strong></span>
+</div>
+<div class="flex justify-between">
+<span>Patient: <strong>Abdul Hameed</strong></span>
+<span>Card: <strong>HWC-00042 (75%)</strong></span>
+</div>
+<div class="flex justify-between">
+<span>Cashier: <strong>Tariq Mahmood (POS-01)</strong></span>
+<span>Type: <strong>Counter Settlement</strong></span>
+</div>
+</div>
+<!-- Line Items Settled -->
+<div class="py-2 border-b border-dashed border-slate-300">
+<div class="flex justify-between font-bold text-[10px] border-b border-slate-200 pb-1 mb-1">
+<span>DISPENSE REF / PARTICULARS</span>
+<span class="text-right">AMOUNT</span>
+</div>
+<div class="space-y-1 text-[10px]">
+<div class="flex justify-between">
+<div>
+<div>INV-202609-00014 (Insulin Cart.)</div>
+<div class="text-[9px] text-slate-600">Subsidized 75% | Net Dues</div>
+</div>
+<span class="font-bold">PKR 300.00</span>
+</div>
+<div class="flex justify-between">
+<div>
+<div>INV-202608-00019 (Antibiotics/Para)</div>
+<div class="text-[9px] text-slate-600">Subsidized 75% | Net Dues</div>
+</div>
+<span class="font-bold">PKR 400.00</span>
+</div>
+<div class="flex justify-between">
+<div>
+<div>INV-202608-00008 (Dialyzer Pack)</div>
+<div class="text-[9px] text-slate-600">Subsidized 75% | Net Dues</div>
+</div>
+<span class="font-bold">PKR 2,150.00</span>
+</div>
+</div>
+</div>
+<!-- Receipt Financial Totals -->
+<div class="py-2 text-[11px] space-y-1">
+<div class="flex justify-between">
+<span>Gross Settled Total:</span>
+<span class="font-bold">PKR 2,850.00</span>
+</div>
+<div class="flex justify-between text-slate-600">
+<span>Payment Mode:</span>
+<span>CASH (Drawer #1)</span>
+</div>
+<div class="flex justify-between text-slate-600">
+<span>Amount Tendered:</span>
+<span class="font-bold">PKR 3,000.00</span>
+</div>
+<div class="flex justify-between font-bold text-slate-900 border-t border-slate-200 pt-1">
+<span>Change Paid Back:</span>
+<span class="text-emerald-700">PKR 150.00</span>
+</div>
+<div class="flex justify-between text-slate-700 pt-0.5">
+<span>Patient Ledger Remaining:</span>
+<span class="font-extrabold text-emerald-800">PKR 0.00 (CLEARED)</span>
+</div>
+</div>
+</div>
+<!-- Receipt Barcode & Footer -->
+<div class="pt-3">
+<!-- Stylized Barcode -->
+<div class="flex flex-col items-center justify-center">
+<div class="h-8 w-48 bg-slate-800 flex items-center justify-between px-1.5 py-0.5 space-x-0.5">
+<div class="h-full w-1 bg-white"></div>
+<div class="h-full w-0.5 bg-white"></div>
+<div class="h-full w-2 bg-white"></div>
+<div class="h-full w-1 bg-white"></div>
+<div class="h-full w-0.5 bg-white"></div>
+<div class="h-full w-1.5 bg-white"></div>
+<div class="h-full w-0.5 bg-white"></div>
+<div class="h-full w-2 bg-white"></div>
+<div class="h-full w-1 bg-white"></div>
+<div class="h-full w-0.5 bg-white"></div>
+<div class="h-full w-1.5 bg-white"></div>
+<div class="h-full w-1 bg-white"></div>
+<div class="h-full w-2 bg-white"></div>
+</div>
+<div class="text-[9px] text-slate-500 tracking-widest mt-0.5">*CR2026090084*</div>
+</div>
+<div class="text-center text-[9px] text-slate-500 mt-1">
+                Thank you for supporting Hope Welfare Trust.<br/>
+                Computer generated electronic voucher · No manual signature required.
+              </div>
+<div class="cut-line mt-3"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: BottomTelemetryDock -->
+<footer class="w-full bg-brand-950 text-slate-300 text-xs px-6 py-2 border-t border-slate-800 flex-shrink-0 z-20" data-purpose="offline-telemetry-footer">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<!-- Left Telemetry & Node Status -->
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="font-mono text-[11px] font-semibold text-white">SQLite Local DB: Synced (12ms)</span>
+</div>
+<span class="text-slate-600">|</span>
+<div class="hidden md:flex items-center space-x-1 text-[11px]">
+<span class="text-slate-400">LAN Host:</span>
+<span class="font-mono text-sky-400">192.168.10.45 [Master Online]</span>
+</div>
+<span class="text-slate-600 hidden md:inline">|</span>
+<div class="hidden lg:flex items-center space-x-1 text-[11px]">
+<span class="text-slate-400">Shift Cash Sales:</span>
+<span class="font-mono font-bold text-white">Rs. 187,100.00</span>
+</div>
+<span class="text-slate-600 hidden lg:inline">|</span>
+<div class="hidden xl:flex items-center space-x-1 text-[11px]">
+<span class="text-slate-400">Drawer Float:</span>
+<span class="font-mono text-emerald-400">Rs. 5,000.00</span>
+</div>
+<span class="text-slate-600 hidden xl:inline">|</span>
+<div class="text-[11px] text-slate-400">
+          Citizen POS-80: <span class="text-emerald-400 font-semibold">Ready</span>
+</div>
+</div>
+<!-- Right Shortcuts Reminder -->
+<div class="flex items-center space-x-3 text-[11px] text-slate-400">
+<div class="flex items-center space-x-2">
+<span><kbd class="px-1 py-0.5 bg-slate-800 border border-slate-700 rounded font-mono text-[10px] text-slate-200">F2</kbd> POS</span>
+<span><kbd class="px-1 py-0.5 bg-slate-800 border border-slate-700 rounded font-mono text-[10px] text-slate-200">F4</kbd> Slip</span>
+<span><kbd class="px-1 py-0.5 bg-sky-600 border border-sky-500 rounded font-mono text-[10px] text-white font-bold">Alt+S</kbd> Settle &amp; Issue</span>
+<span><kbd class="px-1 py-0.5 bg-slate-800 border border-slate-700 rounded font-mono text-[10px] text-slate-200">Esc</kbd> Cancel</span>
+</div>
+<span class="text-slate-600">|</span>
+<span class="font-mono text-[10px] text-slate-400">v4.3-clinical</span>
+</div>
+</div>
+</footer>
+<!-- END: BottomTelemetryDock -->
+</body></html>

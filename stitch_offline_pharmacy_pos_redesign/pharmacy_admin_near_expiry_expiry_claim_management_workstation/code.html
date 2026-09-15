@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#001e12", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-primary-fixed": "#001b3f", "secondary-fixed-dim": "#aac7ff", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-fixed": "#d7e2ff", "tertiary-container": "#003523", "on-tertiary-fixed-variant": "#005137", "on-error": "#ffffff", "outline": "#747780", "on-primary": "#ffffff", "on-surface-variant": "#44474f", "inverse-surface": "#213145", "surface": "#f8f9ff", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#00458e", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "error-container": "#ffdad6", "primary-container": "#0f2d59", "on-secondary": "#ffffff", "secondary-container": "#5095fe", "secondary-fixed": "#d7e3ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#68dba9", "on-secondary-fixed": "#001b3e", "surface-container": "#e5eeff", "tertiary-fixed": "#85f8c4", "on-primary-fixed-variant": "#2c4674", "on-background": "#0b1c30", "secondary": "#005cba", "on-tertiary-fixed": "#002114", "on-secondary-container": "#002d61", "surface-container-high": "#dce9ff", "on-primary-container": "#7c95c8", "on-tertiary-container": "#2ca879", "outline-variant": "#c4c6d0", "surface-container-highest": "#d3e4fe", "primary": "#00183b", "surface-tint": "#455e8d", "surface-container-lowest": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#adc7fc", "primary-fixed-dim": "#adc7fc" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-2xs": "0.125rem", "space-3xl": "2rem", "space-md": "0.75rem", "space-2xl": "1.5rem", "container-pad": "1.5rem", "pos-sidebar-w": "340px", "table-row-h": "2.25rem", "space-lg": "1rem" }, "fontFamily": { "data-table": [ "JetBrains Mono" ], "headline-lg": [ "Manrope" ], "data-display-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "body-md": [ "Inter" ], "body-sm": [ "Inter" ], "label-shortcut": [ "JetBrains Mono" ], "label-caps": [ "Inter" ], "headline-xl": [ "Manrope" ], "data-display-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "data-table": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "fontWeight": "700" } ], "data-display-md": [ "16px", { "lineHeight": "22px", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "label-shortcut": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "data-display-lg": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col"><div class="px-space-xl py-space-lg bg-primary-container/60 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div><div class="font-headline-md text-headline-md text-on-primary leading-tight">Hope Welfare</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">Trust Hospital &amp; Pharmacy</div></div></div></div><div class="px-space-xl py-space-sm bg-tertiary-container flex items-center justify-between text-on-tertiary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-data-table text-data-table text-tertiary-fixed font-bold">LAN CORE</span><span class="font-data-table text-data-table text-on-tertiary-container">192.168.1.10</span></div><span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary text-tertiary-fixed rounded">NODE 01 OK</span></div><nav class="flex flex-col px-space-md py-space-md gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-bold"><div class="px-space-sm pt-space-sm pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Pakistani Formulary Master</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-formulary-master" href="#"><span class="material-symbols-outlined text-[18px]">medication</span><span class="font-body-md text-body-md">DRAP Formulary Master</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-audit-trail" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">DRAP Audit Trail</span></a><div class="px-space-sm pt-space-md pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Administration &amp; Governance</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold" data-path="users-and-prescribers" href="#"><span class="material-symbols-outlined text-[18px]">clinical_notes</span><span class="font-body-md text-body-md">Users &amp; Prescribers</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span class="font-body-md text-body-md">Roles &amp; Permissions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="employees-and-quotas" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Employees &amp; Quotas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="zakat-and-subsidy-accounts" href="#"><span class="material-symbols-outlined text-[18px]">volunteer_activism</span><span class="font-body-md text-body-md">Zakat &amp; Subsidy Accounts</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="offline-sync-and-cluster" href="#"><span class="material-symbols-outlined text-[18px]">sync</span><span class="font-body-md text-body-md">Offline Sync &amp; Cluster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="system-and-drap-rules" href="#"><span class="material-symbols-outlined text-[18px]">gavel</span><span class="font-body-md text-body-md">System &amp; DRAP Rules</span></a></nav></div><div class="p-space-md bg-primary-container/80"><div class="flex items-center gap-space-md px-space-sm py-space-xs"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 overflow-hidden"><div class="font-body-md text-body-md text-on-primary font-bold truncate">System Administrator</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase truncate">Governance Clearance Level 4</div></div><span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">shield</span></div></div></aside><div class="pl-pos-sidebar-w"><header class="fixed top-0 left-pos-sidebar-w right-0 z-40 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-container-pad flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-lg"><span class="font-label-shortcut text-label-shortcut text-secondary">DRAP REG:</span><span class="font-data-table text-data-table text-on-surface">002914-HWT/P</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Counter Subnet:</span><span class="font-data-table text-data-table text-on-surface">LAN-ZONE-A</span></div></div><nav class="hidden md:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-bold"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="drap-formulary-master" href="#">Formulary Catalog</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Registers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="offline-sync-and-cluster" href="#">Cluster Health</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-and-drap-rules" href="#">Policy Engine</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-tertiary-container rounded-lg text-on-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-label-shortcut text-label-shortcut text-tertiary-fixed">SYNC ACTIVE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 pb-12 bg-surface min-h-screen px-container-pad"><div class="flex flex-col w-full">
+<!-- Operational Breadcrumbs & Workflow Header -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-xl">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">
+<span class="hover:text-primary cursor-pointer">Procurement &amp; Supply Chain</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-secondary font-bold">Expiry &amp; Claims Management</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-on-surface">Distributor Recovery Console</span>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Near-Expiry Batches &amp; Distributor Claim Workstation</h1>
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs bg-tertiary-container text-tertiary-fixed rounded font-label-shortcut text-label-shortcut tracking-wider">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+          DRAP SRO 2024 VENDOR RECOVERY PROTOCOL
+        </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Statutory 180-Day / 90-Day Vendor Claim Window, Physical Batch Quarantine, and Debit Note Issuance Engine.
+      </p>
+</div>
+<!-- Quick Action Hotkeys -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="px-space-md py-space-sm bg-surface-container-low text-primary hover:bg-surface-container transition-colors rounded font-body-md text-body-md flex items-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+<span>Auto-Flag &lt;180d</span>
+<span class="px-space-2xs py-[1px] bg-surface-container-high rounded font-label-shortcut text-label-shortcut text-on-surface-variant">F4</span>
+</button>
+<button class="px-space-md py-space-sm bg-surface-container-low text-primary hover:bg-surface-container transition-colors rounded font-body-md text-body-md flex items-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-[18px]">print</span>
+<span>Expiry Schedule</span>
+<span class="px-space-2xs py-[1px] bg-surface-container-high rounded font-label-shortcut text-label-shortcut text-on-surface-variant">Ctrl+P</span>
+</button>
+<button class="px-space-md py-space-sm bg-secondary text-on-secondary hover:bg-secondary-container transition-colors rounded font-body-md text-body-md font-bold flex items-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>Generate Debit Note</span>
+<span class="px-space-2xs py-[1px] bg-on-secondary-container/20 text-on-secondary rounded font-label-shortcut text-label-shortcut">Ctrl+N</span>
+</button>
+</div>
+</section>
+<!-- Executive Statutory KPI Metric Strip -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-xl">
+<!-- Card 1: Total Expiring Batches -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider block mb-space-2xs">Near-Expiry Flagged</span>
+<span class="font-headline-xl text-headline-xl text-primary leading-none">28</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">timer</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between bg-surface-container-low px-space-sm py-space-2xs rounded">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Inventory Exposure:</span>
+<span class="font-data-table text-data-table font-bold text-on-surface">PKR 342,800</span>
+</div>
+</div>
+<!-- Card 2: Eligible for Full Vendor Credit -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-wider block mb-space-2xs">Eligible for Full Credit</span>
+<span class="font-headline-xl text-headline-xl text-secondary leading-none">21</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">assignment_return</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between bg-surface-container-low px-space-sm py-space-2xs rounded">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Statutory Returnable:</span>
+<span class="font-data-table text-data-table font-bold text-secondary">PKR 284,000</span>
+</div>
+</div>
+<!-- Card 3: Critical Lockout Window -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-error tracking-wider block mb-space-2xs">Critical Cutoff (&lt;30d)</span>
+<span class="font-headline-xl text-headline-xl text-error leading-none">04</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-[22px]">warning</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between bg-error-container/40 px-space-sm py-space-2xs rounded">
+<span class="font-body-sm text-body-sm text-on-error-container font-medium">Immediate Dispatch Required</span>
+<span class="font-label-shortcut text-label-shortcut text-error font-bold">4 BATCHES</span>
+</div>
+</div>
+<!-- Card 4: Settled Claims This Fiscal -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-tertiary-container tracking-wider block mb-space-2xs">Settled Debit Notes</span>
+<span class="font-data-display-md text-data-display-md text-on-tertiary-container leading-none">PKR 1,420,500</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary-container flex items-center justify-center text-tertiary-fixed">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between bg-tertiary-container/30 px-space-sm py-space-2xs rounded">
+<span class="font-body-sm text-body-sm text-tertiary-container font-medium">38 Claims Settled</span>
+<span class="font-label-shortcut text-label-shortcut text-on-tertiary-container font-bold">100% RECOVERED</span>
+</div>
+</div>
+</section>
+<!-- Main Dual-Panel Operational Area -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left Panel: Master Batch Registry & Filter Engine (7 Cols) -->
+<div class="xl:col-span-7 bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-md">
+<!-- Search & Command Input -->
+<div class="flex flex-col sm:flex-row gap-space-sm items-center justify-between">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full pl-10 pr-16 py-space-sm bg-surface-container-low text-on-surface rounded font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none shadow-sm" placeholder="Search medicine name, batch lot, DRAP #, or distributor..." type="text"/>
+<span class="absolute right-space-sm top-1/2 -translate-y-1/2 font-label-shortcut text-label-shortcut text-on-surface-variant bg-surface-container px-space-xs py-space-2xs rounded">
+            Ctrl+F
+          </span>
+</div>
+<div class="flex items-center gap-space-xs shrink-0 self-stretch sm:self-auto">
+<button class="px-space-sm py-space-sm bg-surface-container-low text-on-surface hover:bg-surface-container rounded font-body-md text-body-md flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+<span>Distributors</span>
+</button>
+<button class="px-space-sm py-space-sm bg-surface-container-low text-on-surface hover:bg-surface-container rounded font-body-md text-body-md flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">swap_vert</span>
+<span>Expiry</span>
+</button>
+</div>
+</div>
+<!-- Quick Filter Chips -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-2xs">
+<button class="px-space-sm py-space-2xs rounded bg-primary text-on-primary font-label-shortcut text-label-shortcut whitespace-nowrap">
+          ALL NEAR-EXPIRY (28)
+        </button>
+<button class="px-space-sm py-space-2xs rounded bg-surface-container text-on-surface font-label-shortcut text-label-shortcut hover:bg-surface-variant transition-colors whitespace-nowrap">
+          RETURN ELIGIBLE (21)
+        </button>
+<button class="px-space-sm py-space-2xs rounded bg-error-container text-on-error-container font-label-shortcut text-label-shortcut hover:opacity-90 transition-opacity whitespace-nowrap">
+          URGENT CUTOFF &lt;30D (4)
+        </button>
+<button class="px-space-sm py-space-2xs rounded bg-surface-container text-on-surface font-label-shortcut text-label-shortcut hover:bg-surface-variant transition-colors whitespace-nowrap">
+          DISPATCHED CLAIM (5)
+        </button>
+<button class="px-space-sm py-space-2xs rounded bg-tertiary-container text-tertiary-fixed font-label-shortcut text-label-shortcut hover:opacity-90 transition-opacity whitespace-nowrap">
+          SETTLED / REPLACED (38)
+        </button>
+</div>
+<!-- Master Batch Registry Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md">
+<thead>
+<tr class="bg-surface-container-low font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider h-7">
+<th class="px-space-sm">Medicine &amp; Strength</th>
+<th class="px-space-sm">Batch &amp; Stock</th>
+<th class="px-space-sm">Statutory Expiry</th>
+<th class="px-space-sm">Distributor</th>
+<th class="px-space-sm">Claim Status</th>
+<th class="px-space-sm text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1: Selected Item -->
+<tr class="bg-surface-container-high/60 cursor-pointer hover:bg-surface-container-high transition-colors">
+<td class="px-space-sm py-space-sm">
+<div class="font-body-md text-body-md font-bold text-primary">Augmentin 625mg Tabs</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Amoxicillin + Clavulanate (GSK)</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-bold">#VT-4410</div>
+<div class="font-data-table text-data-table text-on-surface-variant">120 Packs (Strip)</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-semibold">15-Oct-2026</div>
+<span class="inline-block px-space-xs py-[1px] bg-surface-variant text-secondary rounded font-label-shortcut text-label-shortcut">
+                  42d to Cutoff
+                </span>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-body-sm text-body-sm font-medium text-on-surface">Muller &amp; Phipps Pak</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">ACC #MP-9882</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<span class="px-space-xs py-space-2xs bg-surface-variant text-secondary rounded font-label-shortcut text-label-shortcut font-bold whitespace-nowrap">
+                  RETURN ELIGIBLE
+                </span>
+</td>
+<td class="px-space-sm py-space-sm text-right">
+<button class="px-space-sm py-space-2xs bg-primary text-on-primary rounded font-label-shortcut text-label-shortcut font-bold">
+                  ACTIVE
+                </button>
+</td>
+</tr>
+<!-- Row 2: Critical Item -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest">
+<td class="px-space-sm py-space-sm">
+<div class="font-body-md text-body-md font-bold text-primary">Ceftriaxone 1g IV Vial</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Rocephin (Searle Pharma Pak)</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-bold">#SF-9011</div>
+<div class="font-data-table text-data-table text-on-surface-variant">45 Vials (Box)</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-semibold">28-Aug-2026</div>
+<span class="inline-block px-space-xs py-[1px] bg-error-container text-on-error-container rounded font-label-shortcut text-label-shortcut font-bold">
+                  12d Urgent
+                </span>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-body-sm text-body-sm font-medium text-on-surface">Universal Distributors</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">ACC #UD-1044</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<span class="px-space-xs py-space-2xs bg-error-container text-on-error-container rounded font-label-shortcut text-label-shortcut font-bold whitespace-nowrap">
+                  URGENT CUTOFF
+                </span>
+</td>
+<td class="px-space-sm py-space-sm text-right">
+<button class="px-space-sm py-space-2xs bg-surface-container text-primary hover:bg-surface-variant rounded font-label-shortcut text-label-shortcut font-medium">
+                  SELECT
+                </button>
+</td>
+</tr>
+<!-- Row 3: Pending Debit Note Dispatch -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-low/40">
+<td class="px-space-sm py-space-sm">
+<div class="font-body-md text-body-md font-bold text-primary">Metformin 500mg (Glucophage)</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Martin Dow Healthcare</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-bold">#MD-1182</div>
+<div class="font-data-table text-data-table text-on-surface-variant">300 Tabs (5 Packs)</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-semibold">10-Nov-2026</div>
+<span class="inline-block px-space-xs py-[1px] bg-surface-container-high text-on-surface rounded font-label-shortcut text-label-shortcut">
+                  68d to Cutoff
+                </span>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-body-sm text-body-sm font-medium text-on-surface">Premier Agency Pak</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">ACC #PA-0092</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<span class="px-space-xs py-space-2xs bg-surface-container-high text-on-surface-variant rounded font-label-shortcut text-label-shortcut font-bold whitespace-nowrap">
+                  DN ISSUED #084
+                </span>
+</td>
+<td class="px-space-sm py-space-sm text-right">
+<button class="px-space-sm py-space-2xs bg-surface-container text-primary hover:bg-surface-variant rounded font-label-shortcut text-label-shortcut font-medium">
+                  SELECT
+                </button>
+</td>
+</tr>
+<!-- Row 4: Omeprazole Capsules -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest">
+<td class="px-space-sm py-space-sm">
+<div class="font-body-md text-body-md font-bold text-primary">Omeprazole 20mg (Risek)</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Getz Pharma Pakistan</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-bold">#GZ-7703</div>
+<div class="font-data-table text-data-table text-on-surface-variant">80 Packs (14s)</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-semibold">05-Dec-2026</div>
+<span class="inline-block px-space-xs py-[1px] bg-surface-variant text-secondary rounded font-label-shortcut text-label-shortcut">
+                  94d to Cutoff
+                </span>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-body-sm text-body-sm font-medium text-on-surface">Muller &amp; Phipps Pak</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">ACC #MP-9882</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<span class="px-space-xs py-space-2xs bg-surface-variant text-secondary rounded font-label-shortcut text-label-shortcut font-bold whitespace-nowrap">
+                  RETURN ELIGIBLE
+                </span>
+</td>
+<td class="px-space-sm py-space-sm text-right">
+<button class="px-space-sm py-space-2xs bg-surface-container text-primary hover:bg-surface-variant rounded font-label-shortcut text-label-shortcut font-medium">
+                  SELECT
+                </button>
+</td>
+</tr>
+<!-- Row 5: Infusion Solution -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest">
+<td class="px-space-sm py-space-sm">
+<div class="font-body-md text-body-md font-bold text-primary">Paracetamol 100ml Infusion</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Otsuka Pakistan Ltd</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-bold">#OT-5201</div>
+<div class="font-data-table text-data-table text-on-surface-variant">60 Infusion Bottles</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-data-table text-data-table text-on-surface font-semibold">18-Jan-2027</div>
+<span class="inline-block px-space-xs py-[1px] bg-surface-container text-on-surface-variant rounded font-label-shortcut text-label-shortcut">
+                  138d Remaining
+                </span>
+</td>
+<td class="px-space-sm py-space-sm">
+<div class="font-body-sm text-body-sm font-medium text-on-surface">Hakimsons Pvt Ltd</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">ACC #HK-3310</div>
+</td>
+<td class="px-space-sm py-space-sm">
+<span class="px-space-xs py-space-2xs bg-surface-container text-on-surface-variant rounded font-label-shortcut text-label-shortcut font-bold whitespace-nowrap">
+                  MONITORING
+                </span>
+</td>
+<td class="px-space-sm py-space-sm text-right">
+<button class="px-space-sm py-space-2xs bg-surface-container text-primary hover:bg-surface-variant rounded font-label-shortcut text-label-shortcut font-medium">
+                  SELECT
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Aggregate Footer -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low px-space-md py-space-sm rounded">
+<div class="font-data-table text-data-table text-on-surface-variant">
+          Showing <span class="font-bold text-on-surface">1 - 5</span> of 28 Expiring Drug Batches
+        </div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-space-2xs bg-surface-container-lowest text-on-surface rounded font-label-shortcut text-label-shortcut hover:bg-surface-container">PREV</button>
+<span class="px-space-sm py-space-2xs bg-primary text-on-primary rounded font-label-shortcut text-label-shortcut font-bold">1</span>
+<button class="px-space-sm py-space-2xs bg-surface-container-lowest text-on-surface rounded font-label-shortcut text-label-shortcut hover:bg-surface-container">2</button>
+<button class="px-space-sm py-space-2xs bg-surface-container-lowest text-on-surface rounded font-label-shortcut text-label-shortcut hover:bg-surface-container">3</button>
+<button class="px-space-sm py-space-2xs bg-surface-container-lowest text-on-surface rounded font-label-shortcut text-label-shortcut hover:bg-surface-container">NEXT</button>
+</div>
+</div>
+</div>
+<!-- Right Panel: Selected Batch Dossier & Statutory Recovery Engine (5 Cols) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Target Batch Dossier Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold tracking-wider">Active Recovery Dossier</span>
+<h2 class="font-headline-md text-headline-md text-primary mt-space-2xs">Augmentin 625mg Tablets</h2>
+<span class="font-data-table text-data-table text-on-surface-variant">DRAP Reg #000492 • GlaxoSmithKline Pakistan</span>
+</div>
+<span class="px-space-sm py-space-2xs bg-secondary-fixed text-on-secondary-fixed font-label-shortcut text-label-shortcut rounded font-bold">
+            BATCH #VT-4410
+          </span>
+</div>
+<!-- Metric Snapshot Grid -->
+<div class="grid grid-cols-2 gap-space-sm bg-surface-container-low p-space-md rounded-lg">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Recoverable Value</span>
+<div class="font-data-display-md text-data-display-md text-secondary font-bold">PKR 45,600</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">120 Packs @ Rs. 380 TP</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Window Runway</span>
+<div class="font-data-display-md text-data-display-md text-primary font-bold">42 Days Left</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Statutory 180d Cutoff</span>
+</div>
+</div>
+<!-- Vendor Return Contract Policy -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-bold">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-body-md text-body-md">Muller &amp; Phipps Distributor Policy</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Standard 180-Day DRAP Schedule: Full 100% credit adjustment or replacement against original invoice. Physical hand-over deadline: 30 days prior to 15-Oct-2026.
+          </p>
+<div class="flex items-center justify-between text-on-surface pt-space-xs font-data-table text-data-table">
+<span>Physical Location:</span>
+<span class="font-bold text-primary">Shelf G-04 (QUARANTINE BIN 02)</span>
+</div>
+</div>
+<!-- Mandatory Verification Checklist -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider font-bold">
+            Statutory Physical Audit Checklist
+          </span>
+<label class="flex items-center gap-space-sm p-space-xs bg-surface-container-low rounded cursor-pointer">
+<input checked="" class="w-4 h-4 rounded text-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Physical count verified against local inventory (120 Packs confirmed)</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-xs bg-surface-container-low rounded cursor-pointer">
+<input checked="" class="w-4 h-4 rounded text-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Counter POS lock engaged (Barcode barcode #8964000109 disabled)</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-xs bg-surface-container-low rounded cursor-pointer">
+<input class="w-4 h-4 rounded text-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Debit Note DN-2026-088 countersigned by Lead Pharmacist</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-xs bg-surface-container-low rounded cursor-pointer">
+<input class="w-4 h-4 rounded text-secondary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Vendor Order-Taker signature slip collected &amp; scanned</span>
+</label>
+</div>
+<!-- Claim Action Form Parameters -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div>
+<label class="block font-label-caps text-label-caps uppercase text-on-surface-variant mb-space-2xs">
+              Resolution Mechanism
+            </label>
+<select class="w-full px-space-sm py-space-sm bg-surface-container-low text-on-surface rounded font-body-md text-body-md focus:outline-none">
+<option>Full Credit Note (Offset against payable balance)</option>
+<option>Batch Replacement (Fresh expiry &gt; 18 months)</option>
+<option>Distributor Destruction &amp; Waste Certificate</option>
+</select>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps uppercase text-on-surface-variant mb-space-2xs">
+              Attending Governance Officer
+            </label>
+<div class="px-space-sm py-space-sm bg-surface-container-low text-on-surface rounded font-body-md text-body-md flex items-center justify-between">
+<span>Dr. Ayesha Tariq, RPh</span>
+<span class="font-data-table text-data-table text-on-surface-variant">PMDC #PH-48921</span>
+</div>
+</div>
+</div>
+<!-- Execution Action Buttons -->
+<div class="flex flex-col gap-space-xs pt-space-sm">
+<button class="w-full py-space-md bg-secondary hover:bg-secondary-container transition-colors text-on-secondary font-headline-md text-headline-md rounded font-bold flex items-center justify-center gap-space-sm shadow-md">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+<span>Issue Debit Note &amp; Return Voucher</span>
+<span class="px-space-xs py-space-2xs bg-on-secondary-container/20 text-on-secondary rounded font-label-shortcut text-label-shortcut">
+              F9
+            </span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="py-space-sm bg-surface-container-low hover:bg-surface-container transition-colors text-primary rounded font-body-md text-body-md font-semibold flex items-center justify-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">price_change</span>
+<span>Fast Depletion (20%)</span>
+</button>
+<button class="py-space-sm bg-surface-container-low hover:bg-surface-container transition-colors text-primary rounded font-body-md text-body-md font-semibold flex items-center justify-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Form 8 Certificate</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Local Node Offline Telemetry Banner -->
+<section class="mt-space-xl p-space-sm bg-surface-container-lowest rounded-lg shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-sm font-data-table text-data-table">
+<div class="flex items-center gap-space-md flex-wrap text-on-surface-variant">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+<span class="font-bold text-on-surface">SQLite Local:</span>
+<span class="text-tertiary-container font-semibold">WAL Mode (0.21ms latency)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-bold text-on-surface">Core Daemon:</span>
+<span>Expiry Sweep (Daily 00:00 PKT)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-bold text-on-surface">Node ID:</span>
+<span>PHARM-ADM-01 / Counter-Zone-A</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">verified_user</span>
+<span>DRAP Schedule D / SRO 2024 Audit Trace Verified</span>
+</div>
+</section>
+</div></main><footer class="fixed bottom-0 left-pos-sidebar-w right-0 h-10 bg-inverse-surface text-inverse-on-surface z-40 shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-between px-container-pad"><div class="flex items-center gap-space-xl font-data-table text-data-table"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">dns</span><span class="text-surface-variant">Master Node:</span><span class="text-tertiary-fixed font-bold">SRV-HWT-01 (192.168.1.10)</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary-fixed">speed</span><span class="text-surface-variant">Replication Latency:</span><span class="text-secondary-fixed font-bold">0.42 ms</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed">point_of_sale</span><span class="text-surface-variant">Active Workstations:</span><span class="text-primary-fixed font-bold">14 Online</span></div></div><div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed">verified_user</span><span>DRAP SRO 2024 / Form 9 Certified Hospital Governance</span></div></footer></div></body></html>

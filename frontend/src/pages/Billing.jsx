@@ -42,7 +42,7 @@ export default function Billing() {
 
       <div className="card mb">
         <h3>Generate Clinical Bill</h3>
-        <form className="flex" onSubmit={(e) => { e.preventDefault(); setParams({ visit: visitId }); loadPreview(visitId); }}>
+        <form className="fx" onSubmit={(e) => { e.preventDefault(); setParams({ visit: visitId }); loadPreview(visitId); }}>
           <input placeholder="Enter Visit ID" value={visitId} onChange={(e) => setVisitId(e.target.value)} style={{ maxWidth: 200 }} />
           <button className="btn">Load</button>
         </form>
@@ -51,7 +51,7 @@ export default function Billing() {
 
       {preview && (
         <div className="card receipt" style={{ maxWidth: 560 }}>
-          <div className="flex between mb">
+          <div className="fx between mb">
             <h3 style={{ margin: 0 }}>Bill Preview</h3>
             <span><CategoryBadge category={preview.category} /></span>
           </div>
@@ -123,7 +123,7 @@ function FinalBill({ bill, onPay, onUpdated }) {
         <div className="mt"><StatusBadge status={bill.status} /></div>
       </div>
       {onPay && due > 0 && (
-        <div className="flex mt no-print">
+        <div className="fx mt no-print">
           <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
           <button className="btn primary" onClick={pay}>Record Payment</button>
         </div>
@@ -133,5 +133,5 @@ function FinalBill({ bill, onPay, onUpdated }) {
 }
 
 function Row({ label, value, bold }) {
-  return <div className="flex between" style={{ padding: '4px 0', fontWeight: bold ? 700 : 400, fontSize: bold ? 16 : 14 }}><span>{label}</span><span>{value}</span></div>;
+  return <div className="fx between" style={{ padding: '4px 0', fontWeight: bold ? 700 : 400, fontSize: bold ? 16 : 14 }}><span>{label}</span><span>{value}</span></div>;
 }

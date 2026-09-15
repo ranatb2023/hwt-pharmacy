@@ -27,8 +27,8 @@ export default function Queue() {
   return (
     <div className="card">
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
-      <div className="flex between mb">
-        <div className="flex">
+      <div className="fx between mb">
+        <div className="fx">
           <label style={{ margin: 0 }}>Department</label>
           <Select value={dept} onChange={(e) => setDept(e.target.value)} style={{ width: 200 }}>
             {DEPTS.map((d) => <option key={d}>{d}</option>)}
@@ -48,7 +48,7 @@ export default function Queue() {
                 <td><CategoryBadge category={t.category} /></td>
                 <td><StatusBadge status={t.status} /></td>
                 <td className="right">
-                  <div className="flex" style={{ justifyContent: 'flex-end' }}>
+                  <div className="fx" style={{ justifyContent: 'flex-end' }}>
                     {can('consult.manage') && <button className="btn accent sm" onClick={() => nav(`/consultation/${t.visit_id}`)}>Consult</button>}
                     {t.status === 'waiting' && <button className="btn sm" onClick={() => setStatus(t.id, 'serving')}>Serve</button>}
                     {t.status !== 'done' && <button className="btn sm" onClick={() => setStatus(t.id, 'done')}>Done</button>}

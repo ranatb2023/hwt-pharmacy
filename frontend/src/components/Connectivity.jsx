@@ -1,33 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useConnection, setOnline, retryNow } from '../connection.js';
 
-// Shows whether the local hospital server is reachable. The system is
-// offline-first: even when this reads "Offline", staff keep working and data
-// is saved locally — the badge simply reassures them of that.
+// Shows whether this browser can reach the pharmacy server on the LAN.
+//
+// This site has no internet by design, so the badge must never say "offline" — a
+// pharmacist reading that reasonably assumes an internet problem and waits for it to
+// come back. There is nothing to come back.
+//
+// It must also not claim work is being saved locally. The browser is a thin client:
+// when the server is unreachable, nothing can be recorded at all. Telling staff their
+// sale is safe when it is not is worse than telling them nothing. So the message names
+// the real fault and the real fix.
+//
+// The state itself is app-wide (connection.js): a failed API call on any screen
+// turns this red at once, and the probe every 20 s keeps it honest in between.
 export default function Connectivity() {
-  const [online, setOnline] = useState(true);
+  const { online, since } = useConnection();
 
   useEffect(() => {
     let alive = true;
     async function ping() {
-      try {
-        const res = await fetch('/api/health', { cache: 'no-store' });
-        if (alive) setOnline(res.ok);
-      } catch {
-        if (alive) setOnline(false);
-      }
+      let ok = false;
+      try { ok = (await fetch('/api/health', { cache: 'no-store' })).ok; } catch { ok = false; }
+      if (alive) setOnline(ok);
     }
     ping();
     const id = setInterval(ping, 20000);
-    const on = () => ping();
-    window.addEventListener('online', on);
-    window.addEventListener('offline', () => setOnline(false));
-    return () => { alive = false; clearInterval(id); window.removeEventListener('online', on); };
+    return () => { alive = false; clearInterval(id); };
   }, []);
 
+  const downFor = since ? Math.round((Date.now() - since.getTime()) / 60000) : 0;
+
   return (
-    <span className={`conn ${online ? 'online' : 'offline'}`} title={online ? 'Connected to the hospital server' : 'Server unreachable — you can keep working, data is saved locally'}>
+    <button type="button" onClick={() => !online && retryNow()}
+      className={`conn ${online ? 'online' : 'offline'}`}
+      title={
+        online
+          ? 'Connected to the pharmacy server'
+          : 'This computer cannot reach the pharmacy server. Nothing can be saved until it '
+            + 'is back. Check that the server machine is switched on and the network cable '
+            + 'is connected, then tell the administrator. Click to retry.'
+      }
+    >
       <span className="dot" />
-      {online ? 'Server connected' : 'Working locally'}
-    </span>
+      {online
+        ? 'Counter connected'
+        : `Cannot reach server${downFor >= 1 ? ` — ${downFor} min` : ''}`}
+    </button>
   );
 }

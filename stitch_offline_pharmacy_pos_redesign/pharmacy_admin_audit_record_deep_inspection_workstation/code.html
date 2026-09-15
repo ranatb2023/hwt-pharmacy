@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#001e12", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-primary-fixed": "#001b3f", "secondary-fixed-dim": "#aac7ff", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-fixed": "#d7e2ff", "tertiary-container": "#003523", "on-tertiary-fixed-variant": "#005137", "on-error": "#ffffff", "outline": "#747780", "on-primary": "#ffffff", "on-surface-variant": "#44474f", "inverse-surface": "#213145", "surface": "#f8f9ff", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#00458e", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "error-container": "#ffdad6", "primary-container": "#0f2d59", "on-secondary": "#ffffff", "secondary-container": "#5095fe", "secondary-fixed": "#d7e3ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#68dba9", "on-secondary-fixed": "#001b3e", "surface-container": "#e5eeff", "tertiary-fixed": "#85f8c4", "on-primary-fixed-variant": "#2c4674", "on-background": "#0b1c30", "secondary": "#005cba", "on-tertiary-fixed": "#002114", "on-secondary-container": "#002d61", "surface-container-high": "#dce9ff", "on-primary-container": "#7c95c8", "on-tertiary-container": "#2ca879", "outline-variant": "#c4c6d0", "surface-container-highest": "#d3e4fe", "primary": "#00183b", "surface-tint": "#455e8d", "surface-container-lowest": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#adc7fc", "primary-fixed-dim": "#adc7fc" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-2xs": "0.125rem", "space-3xl": "2rem", "space-md": "0.75rem", "space-2xl": "1.5rem", "container-pad": "1.5rem", "pos-sidebar-w": "340px", "table-row-h": "2.25rem", "space-lg": "1rem" }, "fontFamily": { "data-table": [ "JetBrains Mono" ], "headline-lg": [ "Manrope" ], "data-display-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "body-md": [ "Inter" ], "body-sm": [ "Inter" ], "label-shortcut": [ "JetBrains Mono" ], "label-caps": [ "Inter" ], "headline-xl": [ "Manrope" ], "data-display-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "data-table": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "fontWeight": "700" } ], "data-display-md": [ "16px", { "lineHeight": "22px", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "label-shortcut": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "data-display-lg": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col"><div class="px-space-xl py-space-lg bg-primary-container/60 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div><div class="font-headline-md text-headline-md text-on-primary leading-tight">Hope Welfare</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">Trust Hospital &amp; Pharmacy</div></div></div></div><div class="px-space-xl py-space-sm bg-tertiary-container flex items-center justify-between text-on-tertiary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-data-table text-data-table text-tertiary-fixed font-bold">LAN CORE</span><span class="font-data-table text-data-table text-on-tertiary-container">192.168.1.10</span></div><span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary text-tertiary-fixed rounded">NODE 01 OK</span></div><nav class="flex flex-col px-space-md py-space-md gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-bold"><div class="px-space-sm pt-space-sm pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Pakistani Formulary Master</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-formulary-master" href="#"><span class="material-symbols-outlined text-[18px]">medication</span><span class="font-body-md text-body-md">DRAP Formulary Master</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-audit-trail" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">DRAP Audit Trail</span></a><div class="px-space-sm pt-space-md pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Administration &amp; Governance</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold" data-path="users-and-prescribers" href="#"><span class="material-symbols-outlined text-[18px]">clinical_notes</span><span class="font-body-md text-body-md">Users &amp; Prescribers</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span class="font-body-md text-body-md">Roles &amp; Permissions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="employees-and-quotas" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Employees &amp; Quotas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="zakat-and-subsidy-accounts" href="#"><span class="material-symbols-outlined text-[18px]">volunteer_activism</span><span class="font-body-md text-body-md">Zakat &amp; Subsidy Accounts</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="offline-sync-and-cluster" href="#"><span class="material-symbols-outlined text-[18px]">sync</span><span class="font-body-md text-body-md">Offline Sync &amp; Cluster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="system-and-drap-rules" href="#"><span class="material-symbols-outlined text-[18px]">gavel</span><span class="font-body-md text-body-md">System &amp; DRAP Rules</span></a></nav></div><div class="p-space-md bg-primary-container/80"><div class="flex items-center gap-space-md px-space-sm py-space-xs"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 overflow-hidden"><div class="font-body-md text-body-md text-on-primary font-bold truncate">System Administrator</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase truncate">Governance Clearance Level 4</div></div><span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">shield</span></div></div></aside><div class="pl-pos-sidebar-w"><header class="fixed top-0 left-pos-sidebar-w right-0 z-40 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-container-pad flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-lg"><span class="font-label-shortcut text-label-shortcut text-secondary">DRAP REG:</span><span class="font-data-table text-data-table text-on-surface">002914-HWT/P</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Counter Subnet:</span><span class="font-data-table text-data-table text-on-surface">LAN-ZONE-A</span></div></div><nav class="hidden md:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-bold"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="drap-formulary-master" href="#">Formulary Catalog</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Registers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="offline-sync-and-cluster" href="#">Cluster Health</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-and-drap-rules" href="#">Policy Engine</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-tertiary-container rounded-lg text-on-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-label-shortcut text-label-shortcut text-tertiary-fixed">SYNC ACTIVE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 pb-12 bg-surface min-h-screen px-container-pad"><div class="flex flex-col w-full space-y-space-lg">
+<!-- Top Command & Breadcrumb Strip -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex items-center gap-space-md">
+<button class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="font-body-md text-body-md font-semibold">Back to Audit Ledger</span>
+<span class="ml-space-2xs font-label-shortcut text-label-shortcut px-space-xs py-space-2xs bg-surface-container-highest text-on-surface-variant rounded">ESC</span>
+</button>
+<div class="h-5 w-px bg-surface-variant"></div>
+<nav aria-label="Breadcrumbs" class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span>Administration</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Audit History</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-data-table text-data-table font-semibold text-secondary">AUD-2026-0909-09281</span>
+</nav>
+</div>
+<!-- Status Chips & Quick Actions -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-tertiary-container text-on-tertiary rounded-lg">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+<span class="font-label-shortcut text-label-shortcut text-tertiary-fixed font-bold tracking-wider uppercase">SHA-256 Verified</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container text-on-surface rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">DRAP SRO Form 9 Valid</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span class="font-body-sm text-body-sm font-medium">Print Slip</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-space-2xs bg-surface-container text-on-surface-variant rounded">Ctrl+P</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs bg-primary hover:bg-primary-container text-on-primary rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span class="font-body-sm text-body-sm font-medium">Export Evidence</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-space-2xs bg-primary-container text-on-primary rounded">Alt+E</span>
+</button>
+</div>
+</div>
+<!-- Executive Record Banner -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm flex flex-col gap-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="space-y-space-2xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-data-display-md text-data-display-md text-primary font-bold">AUD-2026-0909-09281</span>
+<span class="px-space-sm py-space-2xs rounded-lg font-label-caps text-label-caps uppercase bg-error-container text-on-error-container font-bold">Dispense Override</span>
+<span class="px-space-sm py-space-2xs rounded-lg font-label-caps text-label-caps uppercase bg-surface-container-high text-secondary font-bold">Batch Expiry Claim</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Controlled drug lot threshold override, accelerated FEFO stock disposition, and 100% Trust Zakat subsidy claim.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="px-space-md py-space-sm bg-surface-container rounded-xl text-right">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Wallclock Timestamp</span>
+<span class="font-data-table text-data-table font-bold text-on-surface">09/09/2026 11:15:42 PKT</span>
+</div>
+<div class="px-space-md py-space-sm bg-surface-container rounded-xl text-right">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">UNIX Epoch</span>
+<span class="font-data-table text-data-table font-bold text-secondary">1788952542</span>
+</div>
+</div>
+</div>
+<!-- Metadata Attributes Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-xs">
+<!-- Actor -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-low">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]">badge</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Authorized Actor</span>
+<span class="font-body-md text-body-md font-bold text-on-surface truncate block">Bashir Ahmed, RPh</span>
+<span class="font-data-table text-data-table text-on-surface-variant block">Lic #PB-88219 • HWT-000017</span>
+</div>
+</div>
+<!-- Supervisor -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-low">
+<div class="w-9 h-9 rounded-lg bg-tertiary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary-fixed text-[20px]">verified</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Supervisor Sign-Off</span>
+<span class="font-body-md text-body-md font-bold text-on-surface truncate block">Dr. Ayesha Khan</span>
+<span class="font-data-table text-data-table text-on-surface-variant block">Level 4 Clearance • PIN Auth</span>
+</div>
+</div>
+<!-- Terminal / Network Origin -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-low">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]">computer</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Terminal Identity</span>
+<span class="font-body-md text-body-md font-bold text-on-surface block">Terminal #01 (Counter 1)</span>
+<span class="font-data-table text-data-table text-on-surface-variant block truncate">192.168.1.14 • 00:1A:2B:3C:4D:5E</span>
+</div>
+</div>
+<!-- Verification Seal -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-low">
+<div class="w-9 h-9 rounded-lg bg-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary-fixed text-[20px]">lock</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant block">Audit Trail Seal</span>
+<span class="font-body-md text-body-md font-bold text-tertiary-container block">Block #489,201 OK</span>
+<span class="font-data-table text-data-table text-on-surface-variant block">Replicated across 3 Nodes</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Cryptographic Integrity & Chain Evidence Strip -->
+<div class="bg-primary text-on-primary p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary-fixed text-[22px]">fingerprint</span>
+<h2 class="font-headline-md text-headline-md text-on-primary">Cryptographic Evidence &amp; Chain Hash Verification</h2>
+</div>
+<div class="flex items-center gap-space-xs font-data-table text-data-table bg-primary-container px-space-sm py-space-2xs rounded-lg">
+<span class="text-tertiary-fixed font-bold">HSM TOKEN:</span>
+<span class="text-on-primary">HW-SEC-892 (Local USB Keystore)</span>
+</div>
+</div>
+<!-- Hashes Comparison Pipeline -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-center">
+<!-- Preceding Hash -->
+<div class="lg:col-span-4 bg-primary-container/80 p-space-md rounded-lg space-y-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-primary-fixed-dim">Preceding Block Hash (SHA-256)</span>
+<span class="font-data-table text-data-table text-surface-variant">LSN #489,200</span>
+</div>
+<div class="font-data-table text-data-table text-primary-fixed select-all break-all">
+          9f8a42bc19e3557e0d68b201a4e512fd8a991472bfa03189e4c19873c31b99a1
+        </div>
+</div>
+<!-- Linkage Indicator -->
+<div class="lg:col-span-1 flex lg:flex-col items-center justify-center gap-space-2xs py-space-xs text-tertiary-fixed">
+<span class="material-symbols-outlined text-[20px] hidden lg:block">arrow_forward</span>
+<span class="material-symbols-outlined text-[20px] lg:hidden">arrow_downward</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-center text-tertiary-fixed">Chained</span>
+</div>
+<!-- Current Record Hash -->
+<div class="lg:col-span-4 bg-primary-container/80 p-space-md rounded-lg space-y-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-tertiary-fixed">Committed Record Hash (SHA-256)</span>
+<span class="font-data-table text-data-table text-tertiary-fixed font-bold">LSN #489,201</span>
+</div>
+<div class="font-data-table text-data-table text-tertiary-fixed font-bold select-all break-all">
+          4f8b9e8751aa046182c40ef90a12e87d00fca68341b1d2001c4e77298d02e3b6
+        </div>
+</div>
+<!-- Signature & Cluster Status -->
+<div class="lg:col-span-3 bg-primary-container/80 p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-primary-fixed-dim block">ECDSA Secp256k1 Signature</span>
+<div class="font-data-table text-data-table text-primary-fixed-dim truncate">
+          SIG: 3045022100e4ab78...c8192
+        </div>
+<div class="flex items-center justify-between pt-space-2xs">
+<span class="font-body-sm text-body-sm text-surface-variant">Cluster Sync:</span>
+<span class="font-data-table text-data-table text-tertiary-fixed font-bold">3/3 LAN Nodes Synced</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side-by-Side State Mutation (Diff Inspection Engine) -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">State Mutation Engine (Before vs. After Diff)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Deterministic side-by-side verification of local SQLite tables: <code class="font-data-table text-data-table text-secondary">inventory_batches</code>, <code class="font-data-table text-data-table text-secondary">dispensing_ledger</code>, &amp; <code class="font-data-table text-data-table text-secondary">zakat_subsidy_claims</code>.
+        </p>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded-lg">
+<span class="material-symbols-outlined text-secondary text-[16px]">difference</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface font-semibold">5 Fields Mutated</span>
+</div>
+</div>
+<!-- Comparative Diff Container -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+<!-- Previous Database State -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-lg space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">history</span>
+<span class="font-headline-md text-headline-md text-on-surface">Previous State (Pre-Commit)</span>
+</div>
+<span class="px-space-xs py-space-2xs bg-surface-container font-data-table text-data-table rounded text-on-surface-variant">Snapshot #489,200</span>
+</div>
+<div class="space-y-space-sm flex-1">
+<!-- Row: Item / Lot -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Drug Formulation &amp; Batch Master</span>
+<div class="font-body-md text-body-md font-bold text-on-surface">Rare Med 250mg Susp (Ceftriaxone 250mg)</div>
+<div class="flex items-center gap-space-sm font-data-table text-data-table text-on-surface-variant">
+<span>Lot: LOT-1449</span>
+<span>•</span>
+<span>Reg: 004812-DRAP</span>
+</div>
+</div>
+<!-- Row: Stock on Hand -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Stock On-Hand Balance</span>
+<div class="flex items-baseline justify-between">
+<span class="font-data-display-md text-data-display-md text-on-surface">12 Packs</span>
+<span class="font-data-table text-data-table text-on-surface-variant">Book Val: Rs 1,200.00</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Controlled Locker Shelf B-04</span>
+</div>
+<!-- Row: Expiry Flag -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">FEFO Lifecycle Status</span>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-surface-container-highest text-on-surface-variant font-label-shortcut text-label-shortcut rounded font-bold">WARNING: 10 DAYS TO EXPIRY</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface-variant block">Exp Date: 19/09/2026 (Restricted standard counter sale)</span>
+</div>
+<!-- Row: Supervisor Clearance -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Supervisor Override Flag</span>
+<div class="font-body-md text-body-md text-on-surface-variant italic">None (Standard Workflow Idle)</div>
+</div>
+<!-- Row: Subsidy Ledger -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Subsidy Allocation &amp; Payable</span>
+<div class="font-body-md text-body-md text-on-surface-variant">Unallocated Standard Retail Bill</div>
+</div>
+</div>
+</div>
+<!-- New Committed State -->
+<div class="flex flex-col bg-surface-container-high rounded-xl p-space-lg space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span class="font-headline-md text-headline-md text-on-surface">New Committed State</span>
+</div>
+<span class="px-space-xs py-space-2xs bg-surface-container-lowest font-data-table text-data-table rounded text-secondary font-bold">Snapshot #489,201</span>
+</div>
+<div class="space-y-space-sm flex-1">
+<!-- Row: Item / Lot -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">Drug Formulation &amp; Batch Master</span>
+<div class="font-body-md text-body-md font-bold text-on-surface">Rare Med 250mg Susp (Ceftriaxone 250mg)</div>
+<div class="flex items-center gap-space-sm font-data-table text-data-table text-secondary">
+<span>Lot: LOT-1449</span>
+<span>•</span>
+<span class="bg-surface-container-high px-space-xs py-space-2xs rounded">FEFO Override Applied</span>
+</div>
+</div>
+<!-- Row: Stock on Hand -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">Stock On-Hand Balance</span>
+<div class="flex items-baseline justify-between">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-data-display-md text-data-display-md text-on-surface">9 Packs</span>
+<span class="font-data-table text-data-table text-error font-bold">(-3 Packs Dispensed)</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface">Book Val: Rs 900.00</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Locker inventory updated in local WAL</span>
+</div>
+<!-- Row: Expiry Flag -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">FEFO Lifecycle Status</span>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-tertiary-container text-tertiary-fixed font-label-shortcut text-label-shortcut rounded font-bold">ACCELERATED FEFO CLAIM COMMITTED</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface block">Exemption Rule: DRAP SRO Sec 14(b) Emergency Hospital Waiver</span>
+</div>
+<!-- Row: Supervisor Clearance -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">Supervisor Override Flag</span>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md font-bold text-on-surface">Dr. Ayesha Khan (Medical Director)</span>
+<span class="px-space-xs py-space-2xs bg-surface-container font-label-shortcut text-label-shortcut text-secondary rounded">AUTH LEVEL 4</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface-variant block">Challenge Response Verified: Token HW-SEC-892</span>
+</div>
+<!-- Row: Subsidy Ledger -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-space-2xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">Subsidy Allocation &amp; Payable</span>
+<div class="flex items-baseline justify-between">
+<span class="font-data-display-md text-data-display-md text-secondary">Rs 0.00 Net Payable</span>
+<span class="font-label-caps text-label-caps uppercase bg-tertiary-container text-tertiary-fixed px-space-xs py-space-2xs rounded font-bold">100% Trust Zakat</span>
+</div>
+<div class="font-data-table text-data-table text-on-surface-variant">
+              Beneficiary: Rehana Kausar (Staff ID: HWT-000020) • Voucher #WLF-8849
+            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Environmental Telemetry & Contextual Metadata -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<!-- Storage & DB Engine Telemetry -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">database</span>
+<h4 class="font-headline-md text-headline-md text-on-surface">Database Engine Status</h4>
+</div>
+<div class="space-y-space-sm font-data-table text-data-table">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<span class="text-on-surface-variant">Storage Engine:</span>
+<span class="font-bold text-on-surface">SQLite 3.42.0 (Embedded)</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<span class="text-on-surface-variant">Journal Mode:</span>
+<span class="font-bold text-secondary">WAL (Write-Ahead Logging)</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<span class="text-on-surface-variant">Log Sequence Number (LSN):</span>
+<span class="font-bold text-on-surface">489,201</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<span class="text-on-surface-variant">Checkpoint Offset:</span>
+<span class="font-bold text-on-surface">0x00F83C1A</span>
+</div>
+</div>
+</div>
+<!-- Active Till Session & Prescriber Relation -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">point_of_sale</span>
+<h4 class="font-headline-md text-headline-md text-on-surface">Till &amp; Clinical Context</h4>
+</div>
+<div class="space-y-space-sm">
+<div class="p-space-sm bg-surface-container-low rounded-lg space-y-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Active Cash Till Session</span>
+<span class="font-data-table text-data-table text-secondary font-bold">TS-2026-0909-01</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Drawer solenoid bypassed: Non-cash welfare transaction verified.
+          </p>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg space-y-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Associated Prescription</span>
+<span class="font-data-table text-data-table text-secondary font-bold">Rx #RX-2026-9012</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+            Consultant: <strong>Dr. Tariq Mahmood</strong> (Internal Medicine • PMDC #33910-P)
+          </p>
+</div>
+</div>
+</div>
+<!-- Network & Isolated Sync Ring -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">hub</span>
+<h4 class="font-headline-md text-headline-md text-on-surface">LAN Cluster Heartbeat</h4>
+</div>
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-body-sm text-body-sm text-on-surface">Node 01 (Master Core)</span>
+</div>
+<span class="font-data-table text-data-table text-tertiary-container font-bold">0.12 ms • COMMIT</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-body-sm text-body-sm text-on-surface">Node 02 (Backup Replica)</span>
+</div>
+<span class="font-data-table text-data-table text-tertiary-container font-bold">0.38 ms • SYNCED</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-body-sm text-body-sm text-on-surface">Node 03 (OT Pharmacy)</span>
+</div>
+<span class="font-data-table text-data-table text-tertiary-container font-bold">0.45 ms • SYNCED</span>
+</div>
+<div class="p-space-xs bg-surface-container rounded font-data-table text-data-table text-on-surface-variant flex items-center justify-between">
+<span>WAN Uplink: ISOLATED (AIR-GAPPED)</span>
+<span class="text-secondary font-bold">Cloud Outbox: 15 Queued</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Forensic Action Toolbar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm w-full md:w-auto">
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">link</span>
+<span class="font-body-md text-body-md font-semibold">Verify Block Sequence</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-space-2xs bg-surface-container-highest text-on-surface-variant rounded">F1</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high rounded-lg text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+<span class="font-body-md text-body-md font-semibold">Flag for Internal Review</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">assignment</span>
+<span class="font-body-md text-body-md font-semibold">Generate DRAP Form 13 Annexure</span>
+</button>
+</div>
+<!-- Navigation Across Audit Records -->
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end">
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high rounded-lg text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="font-body-md text-body-md">Prev Record</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-space-2xs bg-surface-container-highest text-on-surface-variant rounded">[&lt;-]</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-secondary hover:bg-secondary/90 rounded-lg text-on-secondary transition-colors" type="button">
+<span class="font-body-md text-body-md font-semibold">Next Record</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-space-2xs bg-secondary-container text-on-secondary-container rounded font-bold">[-&gt;]</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<script>
+    document.addEventListener('keydown', function(event) {
+      // Shortcut Handlers
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        window.history.back();
+      }
+      if (event.ctrlKey && (event.key === 'p' || event.key === 'P')) {
+        event.preventDefault();
+        window.print();
+      }
+      if (event.altKey && (event.key === 'e' || event.key === 'E')) {
+        event.preventDefault();
+        alert('Exporting cryptographically sealed JSON evidence package for Record #AUD-2026-0909-09281...');
+      }
+      if (event.key === 'F1') {
+        event.preventDefault();
+        alert('Block Sequence Verification OK: Merkle root matches SQLite master database commit LSN #489,201.');
+      }
+    });
+  </script>
+</div></main><footer class="fixed bottom-0 left-pos-sidebar-w right-0 h-10 bg-inverse-surface text-inverse-on-surface z-40 shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-between px-container-pad"><div class="flex items-center gap-space-xl font-data-table text-data-table"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">dns</span><span class="text-surface-variant">Master Node:</span><span class="text-tertiary-fixed font-bold">SRV-HWT-01 (192.168.1.10)</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary-fixed">speed</span><span class="text-surface-variant">Replication Latency:</span><span class="text-secondary-fixed font-bold">0.42 ms</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed">point_of_sale</span><span class="text-surface-variant">Active Workstations:</span><span class="text-primary-fixed font-bold">14 Online</span></div></div><div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed">verified_user</span><span>DRAP SRO 2024 / Form 9 Certified Hospital Governance</span></div></footer></div></body></html>

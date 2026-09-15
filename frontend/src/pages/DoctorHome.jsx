@@ -61,7 +61,7 @@ export default function DoctorHome() {
         <div className="dh-head">
           <span className="dh-title"><Icon name="queue" size={18} /> Waiting Patients
             <span className="count">{waiting.length} waiting</span></span>
-          <div className="flex" style={{ gap: 8 }}>
+          <div className="fx" style={{ gap: 8 }}>
             <Select value={dept} onChange={(e) => setDept(e.target.value)} style={{ width: 170 }}>
               {DEPTS.map((d) => <option key={d}>{d}</option>)}
             </Select>

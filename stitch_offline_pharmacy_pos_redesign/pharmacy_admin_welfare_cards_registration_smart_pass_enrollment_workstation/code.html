@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy Admin - Welfare Cards Registration &amp; Smart Pass Enrollment</title>
+<!-- Tailwind CSS v3 with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for Hope Welfare Trust Brand Colors -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0f2d59',
+              dark: '#0a1e3b',
+              surface: '#0b2347',
+              accent: '#1e3a8a',
+              blue: '#2563eb',
+              lightBlue: '#e0f2fe',
+              emerald: '#059669',
+              amber: '#d97706',
+              border: '#1e3e6b'
+            },
+            clinical: {
+              bg: '#f4f6fa',
+              card: '#ffffff',
+              subtle: '#f8fafc',
+              border: '#e2e8f0',
+              textDark: '#0f172a',
+              textMuted: '#64748b'
+            }
+          },
+          fontFamily: {
+            sans: ['Manrope', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Font: Manrope & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-scrollbars">
+    /* Subtle sleek scrollbar for clinical workstations */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<style data-purpose="smart-card-graphics">
+    /* Photorealistic simulated microchip & card gloss */
+    .chip-graphic {
+      background: linear-gradient(135deg, #d4af37 0%, #f6e27a 40%, #e2b93b 70%, #9e7f1e 100%);
+      position: relative;
+    }
+    .chip-graphic::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-radius: 2px;
+    }
+    .card-security-pattern {
+      background-color: #0f2d59;
+      background-image: radial-gradient(circle at 100% 0%, rgba(30, 58, 138, 0.7) 0%, transparent 60%),
+                        radial-gradient(circle at 0% 100%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 0, transparent 14px);
+    }
+    .barcode-lines {
+      background: repeating-linear-gradient(
+        90deg,
+        #1e293b 0px,
+        #1e293b 2px,
+        transparent 2px,
+        transparent 4px,
+        #1e293b 4px,
+        #1e293b 7px,
+        transparent 7px,
+        transparent 9px,
+        #1e293b 9px,
+        #1e293b 10px,
+        transparent 10px,
+        transparent 13px,
+        #1e293b 13px,
+        #1e293b 16px,
+        transparent 16px,
+        transparent 18px
+      );
+    }
+  </style>
+</head>
+<body class="bg-clinical-bg text-clinical-textDark font-sans antialiased h-screen overflow-hidden flex flex-col">
+<!-- BEGIN: MasterApplicationContainer -->
+<div class="flex-1 flex overflow-hidden">
+<!-- BEGIN: AdminSidebar -->
+<aside class="w-64 bg-brand-navy flex-shrink-0 flex flex-col justify-between border-r border-brand-border select-none z-20">
+<!-- Top Brand Section & Navigation -->
+<div class="flex flex-col h-full overflow-y-auto">
+<!-- Organization Logo & Operational Status -->
+<div class="p-4 border-b border-brand-border bg-brand-dark/40">
+<div class="flex items-center space-x-3">
+<div class="bg-white p-1.5 rounded-lg shadow-sm flex items-center justify-center w-10 h-10 flex-shrink-0">
+<svg class="w-7 h-7 text-brand-blue" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+<path d="M12 7v6m-3-3h6" stroke="white" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h1 class="font-bold text-white text-sm tracking-wide leading-tight uppercase">HOPE WELFARE TRUST</h1>
+<p class="text-[11px] text-blue-200">Pharmacy Administration</p>
+</div>
+</div>
+<!-- Local Edge Node Status Indicator -->
+<div class="mt-3 flex items-center justify-between px-2 py-1 bg-brand-surface rounded border border-blue-900/40 text-[10px] text-blue-200">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-medium">Node 01 OK</span>
+</div>
+<span class="font-mono text-slate-300">192.168.1.10</span>
+</div>
+</div>
+<!-- Navigation Links Categorized -->
+<nav class="p-3 space-y-4 text-xs font-medium" data-purpose="main-navigation">
+<!-- Category 1: Executive -->
+<div>
+<span class="px-3 text-[10px] font-bold text-blue-300/60 uppercase tracking-wider">Executive</span>
+<ul class="mt-1 space-y-0.5">
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Executive Dashboard</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Category 2: Clinical Operations -->
+<div>
+<span class="px-3 text-[10px] font-bold text-blue-300/60 uppercase tracking-wider">Clinical Operations</span>
+<ul class="mt-1 space-y-0.5">
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Pharmacy Counter (POS)</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Day-End Close &amp; Z-Report</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Inventory &amp; Stock Control</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Department Indents</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Category 3: Patients & Welfare (Active Section) -->
+<div>
+<span class="px-3 text-[10px] font-bold text-amber-400 uppercase tracking-wider">Patients &amp; Welfare</span>
+<ul class="mt-1 space-y-0.5">
+<li>
+<!-- Expanded Submenu -->
+<div class="bg-brand-surface rounded-md p-1 border-l-2 border-brand-blue">
+<div class="flex items-center justify-between px-2 py-1.5 text-white font-semibold">
+<span class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-lightBlue" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Customers &amp; Cards</span>
+</span>
+<svg class="w-3.5 h-3.5 text-blue-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="mt-1 pl-4 space-y-1 text-[11px]">
+<a class="block px-2.5 py-1.5 text-slate-300 hover:text-white rounded hover:bg-brand-dark/50" href="#">
+                      Customers &amp; Patients
+                    </a>
+<a class="block px-2.5 py-1.5 bg-brand-blue text-white font-semibold rounded shadow-sm" href="#">
+                      Welfare Cards (Active)
+                    </a>
+<a class="block px-2.5 py-1.5 text-slate-300 hover:text-white rounded hover:bg-brand-dark/50" href="#">
+                      Tiers &amp; Subsidy Funds
+                    </a>
+</div>
+</div>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Credit Accounts &amp; Pledges</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Category 4: Finance & Billing -->
+<div>
+<span class="px-3 text-[10px] font-bold text-blue-300/60 uppercase tracking-wider">Finance &amp; Billing</span>
+<ul class="mt-1 space-y-0.5">
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Clinical Invoicing</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Returns &amp; Refunds</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Cash Flow Sessions</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Category 5: Administration -->
+<div>
+<span class="px-3 text-[10px] font-bold text-blue-300/60 uppercase tracking-wider">Administration</span>
+<ul class="mt-1 space-y-0.5">
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Subsidy Audit Reports</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-2.5 px-3 py-2 text-slate-300 hover:text-white hover:bg-brand-surface rounded-md transition-colors" href="#">
+<svg class="w-4 h-4 opacity-75" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>System Settings &amp; Sync</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</div>
+<!-- Bottom Profile / User Clearance Section -->
+<div class="p-3 border-t border-brand-border bg-brand-dark/80" data-purpose="user-profile-dock">
+<div class="flex items-center space-x-3">
+<div class="w-9 h-9 rounded bg-amber-500 flex items-center justify-center text-brand-dark font-extrabold text-sm flex-shrink-0 shadow-inner">
+            SA
+          </div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-white truncate">System Administrator</p>
+<p class="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Clearance Level 4
+            </p>
+</div>
+</div>
+<button class="mt-2.5 w-full flex items-center justify-center space-x-1.5 py-1.5 px-3 bg-brand-surface hover:bg-slate-800 text-slate-300 hover:text-white rounded text-xs transition-colors border border-brand-border" title="Terminate current administrative terminal session">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Sign out terminal</span>
+</button>
+</div>
+</aside>
+<!-- END: AdminSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col min-w-0 bg-clinical-bg overflow-hidden">
+<!-- Top Operational Workstation Header -->
+<header class="bg-white border-b border-clinical-border px-6 py-3.5 flex items-center justify-between shadow-xs z-10" data-purpose="workstation-header">
+<!-- Left: Hierarchical Breadcrumb & Title -->
+<div>
+<nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-[11px] text-clinical-textMuted font-medium">
+<span>Patients &amp; Welfare</span>
+<span>/</span>
+<span>Customers &amp; Cards</span>
+<span>/</span>
+<a class="hover:text-brand-navy" href="#">Welfare Cards Registry</a>
+<span>/</span>
+<span class="text-brand-blue font-semibold">Register New Cardholder Pass</span>
+</nav>
+<div class="flex items-center space-x-3 mt-1">
+<h1 class="text-xl font-extrabold text-clinical-textDark tracking-tight flex items-center gap-2">
+<span>Issue &amp; Enroll New Welfare Pass</span>
+<span class="text-xs font-mono font-medium px-2 py-0.5 bg-blue-50 text-brand-blue rounded border border-blue-200">FORM-WCF-26</span>
+</h1>
+</div>
+</div>
+<!-- Right: Hardware Status & Rapid Function Shortcuts -->
+<div class="flex items-center space-x-3">
+<!-- POS Peripheral Status Badges -->
+<div class="flex items-center space-x-2 text-xs">
+<div class="flex items-center space-x-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-md font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span>Counter 01 Connected</span>
+</div>
+<div class="flex items-center space-x-1.5 bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-md font-medium">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Citizen POS-80 USB Ready</span>
+</div>
+</div>
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- Rapid Hotkey Hints -->
+<div class="flex items-center space-x-1.5 text-xs text-slate-500 font-mono">
+<span class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-700 font-bold">[Esc] Return</span>
+<span class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-700 font-bold">[F2] Search</span>
+<span class="px-1.5 py-0.5 bg-blue-100 border border-blue-300 rounded text-brand-navy font-bold">[F9] Enroll</span>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Two-Column Workstation Canvas -->
+<main class="flex-1 overflow-y-auto p-6" data-purpose="enrollment-workspace">
+<div class="max-w-[1680px] mx-auto grid grid-cols-12 gap-6 items-start">
+<!-- BEGIN: LeftEnrollmentFormColumn -->
+<section aria-label="Welfare Pass Registration Form" class="col-span-12 xl:col-span-8 space-y-6">
+<!-- SECTION 1: Beneficiary Identification Card -->
+<div class="bg-white rounded-xl border border-clinical-border shadow-xs overflow-hidden">
+<div class="bg-slate-50/80 px-5 py-3 border-b border-clinical-border flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-6 h-6 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold">1</span>
+<h2 class="text-sm font-bold text-slate-800 tracking-wide uppercase">Patient / Beneficiary Identification</h2>
+</div>
+<span class="text-xs text-clinical-textMuted">MRN auto-indexes to provincial DRAP database</span>
+</div>
+<div class="p-5 space-y-4">
+<!-- Instant Search & Link Existing Record -->
+<div class="p-3 bg-blue-50/60 rounded-lg border border-blue-100 flex items-center gap-3">
+<div class="flex-1 relative">
+<label class="sr-only" for="existing_search">Search existing patient</label>
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<input class="block w-full pl-9 pr-24 py-2 border-slate-300 rounded-md text-xs focus:ring-brand-blue focus:border-brand-blue bg-white" id="existing_search" placeholder="Type Mobile Number, CNIC or MRN to link existing patient..." type="text"/>
+<span class="absolute right-2 top-2 text-[10px] bg-slate-100 border border-slate-300 text-slate-500 px-1.5 py-0.5 rounded font-mono">F2 Quickfind</span>
+</div>
+<button class="px-3.5 py-2 bg-brand-navy hover:bg-slate-800 text-white rounded-md text-xs font-semibold shadow-xs flex items-center gap-1.5" type="button">
+<span>Pull Patient Record</span>
+</button>
+</div>
+<!-- Personal Information Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Beneficiary Full Name *</label>
+<input class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue font-medium text-slate-800" type="text" value="Muhammad Rana"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">CNIC / B-Form Number *</label>
+<input class="w-full text-xs font-mono rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue font-medium text-slate-800" placeholder="XXXXX-XXXXXXX-X" type="text" value="35202-7841923-1"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Primary Mobile Contact *</label>
+<input class="w-full text-xs font-mono rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue font-medium text-slate-800" type="text" value="03004267657"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+<div class="grid grid-cols-2 gap-2">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Gender</label>
+<select class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue">
+<option selected="">Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Age (Yrs)</label>
+<input class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="number" value="48"/>
+</div>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Guardian / Next of Kin</label>
+<input class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue text-slate-800" type="text" value="Bashir Ahmed (Brother)"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Emergency Cell</label>
+<input class="w-full text-xs font-mono rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="text" value="03001112222"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+<div class="md:col-span-2">
+<label class="block font-semibold text-slate-700 mb-1">Residential Address / Mohallah / Area</label>
+<input class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="text" value="House 42, St 7, Basti Qadirabad, Near Railway Crossing, Lahore"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Zakat Eligibility (Mustahiq) Status</label>
+<select class="w-full text-xs rounded-md border-slate-300 font-semibold text-emerald-700 bg-emerald-50/50 border-emerald-300 focus:ring-brand-blue focus:border-brand-blue">
+<option selected="">Verified by Welfare Committee</option>
+<option>Pending Field Verification</option>
+<option>Urgent Discretionary (Trustee Approved)</option>
+<option>Non-Zakat (General Donor Funded)</option>
+</select>
+</div>
+</div>
+<!-- Diagnosis and Clinical Indication -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Primary Clinical Diagnosis / Disease Burden</label>
+<select class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue">
+<option selected="">Chronic Kidney Disease (Stage 4) + Secondary HTN</option>
+<option>Type-II Diabetes Mellitus (Insulin Dependent)</option>
+<option>Oncology Supportive &amp; Chemotherapy Adjuncts</option>
+<option>Cardiovascular / Post-CABG Maintenance</option>
+<option>Pediatric Thalassemia Major Support</option>
+<option>General Acute Medical Welfare</option>
+</select>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Hospital / Treating Consultant Reference</label>
+<input class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="text" value="Prof. Dr. Tariq Mahmood (Nephrology, Services Hospital)"/>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Subsidy Tier & Policy Allocation -->
+<div class="bg-white rounded-xl border border-clinical-border shadow-xs overflow-hidden">
+<div class="bg-slate-50/80 px-5 py-3 border-b border-clinical-border flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-6 h-6 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold">2</span>
+<h2 class="text-sm font-bold text-slate-800 tracking-wide uppercase">Subsidy Tier &amp; Financial Policy Allocation</h2>
+</div>
+<span class="text-xs text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded border border-amber-200 font-medium">Audited by Trust Trustees</span>
+</div>
+<div class="p-5 space-y-4">
+<!-- Tier Selection Cards -->
+<div>
+<label class="block font-bold text-slate-800 text-xs mb-2">Select Welfare Subsidy Tier *</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Tier Option 1 -->
+<label class="relative flex flex-col p-3.5 bg-white rounded-lg border-2 border-slate-200 hover:border-slate-300 cursor-pointer transition-all">
+<input class="sr-only peer" name="subsidy_tier" type="radio" value="100"/>
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-slate-900">100% Full Support</span>
+<span class="w-4 h-4 rounded-full border border-slate-300 peer-checked:border-brand-blue peer-checked:bg-brand-blue flex items-center justify-center"></span>
+</div>
+<p class="text-[11px] text-slate-500 mt-1">Zakat Needy Fund. 100% medication cost waived at dispensary counter.</p>
+<div class="mt-2 text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded w-fit">
+                        COPAY: Rs. 0
+                      </div>
+</label>
+<!-- Tier Option 2 (Selected) -->
+<label class="relative flex flex-col p-3.5 bg-blue-50/40 rounded-lg border-2 border-brand-blue shadow-xs cursor-pointer">
+<input checked="" class="sr-only peer" name="subsidy_tier" type="radio" value="50"/>
+<div class="flex items-center justify-between">
+<span class="text-xs font-extrabold text-brand-navy">50% Half Support</span>
+<span class="w-4 h-4 rounded-full border-2 border-brand-blue bg-brand-blue flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+</span>
+</div>
+<p class="text-[11px] text-slate-600 mt-1">General Welfare Donation. 50% trust grant with 50% patient copay.</p>
+<div class="mt-2 text-[10px] font-mono font-bold text-brand-blue bg-blue-100 px-1.5 py-0.5 rounded w-fit">
+                        COPAY: 50% AT POS
+                      </div>
+</label>
+<!-- Tier Option 3 -->
+<label class="relative flex flex-col p-3.5 bg-white rounded-lg border-2 border-slate-200 hover:border-slate-300 cursor-pointer transition-all">
+<input class="sr-only peer" name="subsidy_tier" type="radio" value="20"/>
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-slate-900">20% Partial Support</span>
+<span class="w-4 h-4 rounded-full border border-slate-300 peer-checked:border-brand-blue flex items-center justify-center"></span>
+</div>
+<p class="text-[11px] text-slate-500 mt-1">Community Concession. 20% discount sponsored by local pharmacy endowments.</p>
+<div class="mt-2 text-[10px] font-mono font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded w-fit">
+                        COPAY: 80% AT POS
+                      </div>
+</label>
+</div>
+</div>
+<!-- Ledger & Caps Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Debit Sponsoring Ledger / Trust Fund *</label>
+<select class="w-full text-xs rounded-md border-slate-300 font-semibold focus:ring-brand-blue focus:border-brand-blue">
+<option selected="">DONATION — General Welfare Fund (GEN-01)</option>
+<option>ZAKAT — Mustahiq Patient Relief Ledger (ZAK-2026)</option>
+<option>SPECIAL — Chronic Dialysis &amp; Renal Relief (DLY-04)</option>
+<option>ENDOWMENT — Al-Khidmat Oncology Sponsorship</option>
+</select>
+<p class="text-[10px] text-slate-500 mt-1">Every rupee waived is debited in real-time from this specific ledger.</p>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="font-semibold text-slate-700">Monthly Assistance Ceiling / Cap</label>
+<span class="text-[11px] text-brand-blue font-bold">Standard Cap</span>
+</div>
+<div class="relative rounded-md shadow-xs">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-slate-500 font-bold">PKR</span>
+</div>
+<input class="block w-full pl-12 pr-12 text-xs rounded-md border-slate-300 font-mono font-bold text-slate-800 focus:ring-brand-blue focus:border-brand-blue" type="text" value="15,000"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-slate-400 text-[10px]">/ Month</span>
+</div>
+</div>
+<p class="text-[10px] text-slate-500 mt-1">Dispensing auto-locks if monthly total exceeds this allocated ceiling.</p>
+</div>
+</div>
+<!-- Formulary Railguards -->
+<div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200">
+<span class="text-xs font-bold text-slate-800 block mb-1.5">DRAP &amp; Formulary Safety Railguards</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+<label class="flex items-center space-x-2">
+<input checked="" class="rounded border-slate-300 text-brand-blue focus:ring-brand-blue" type="checkbox"/>
+<span class="text-slate-700">Essential Formulary Only</span>
+</label>
+<label class="flex items-center space-x-2">
+<input checked="" class="rounded border-slate-300 text-brand-blue focus:ring-brand-blue" type="checkbox"/>
+<span class="text-slate-700">Exclude Cosmetics &amp; Nutraceuticals</span>
+</label>
+<label class="flex items-center space-x-2">
+<input class="rounded border-slate-300 text-brand-blue focus:ring-brand-blue" type="checkbox"/>
+<span class="text-slate-700">Allow Restricted Antibiotics</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Smart Card Metadata & Authorization -->
+<div class="bg-white rounded-xl border border-clinical-border shadow-xs overflow-hidden">
+<div class="bg-slate-50/80 px-5 py-3 border-b border-clinical-border flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-6 h-6 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold">3</span>
+<h2 class="text-sm font-bold text-slate-800 tracking-wide uppercase">Smart Card Metadata &amp; Authorization</h2>
+</div>
+<span class="font-mono text-xs font-bold text-slate-600">CHIP ID: SEC-88910-V2</span>
+</div>
+<div class="p-5 space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Generated Card Number</label>
+<input class="w-full text-xs font-mono font-bold bg-slate-100 text-brand-navy rounded-md border-slate-300" readonly="" type="text" value="HWC-00001"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Issue Date</label>
+<input class="w-full text-xs font-mono rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="date" value="2026-03-08"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Valid Until / Expiry *</label>
+<input class="w-full text-xs font-mono rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="date" value="2027-03-08"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Pass Status</label>
+<span class="inline-flex items-center justify-center w-full px-3 py-2 rounded-md font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      ACTIVE &amp; ISSUED
+                    </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Authorizing Welfare Officer / Pharmacist *</label>
+<input class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue font-medium" type="text" value="Dr. Tariq Mahmood (R.Ph - Reg # 4109)"/>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Welfare Committee Reference / Sanction Order</label>
+<input class="w-full text-xs font-mono rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" type="text" value="HWT-WC-2026-09-R41"/>
+</div>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Special Dispensing Notes (Shown on Counter POS upon card swipe)</label>
+<textarea class="w-full text-xs rounded-md border-slate-300 focus:ring-brand-blue focus:border-brand-blue" placeholder="e.g., Authorized only for monthly Erythropoietin and Iron sucrose infusions. Not valid for OTC supplements." rows="2">Patient undergoes dialysis twice weekly. Monthly erythropoietin injections pre-approved up to allocated ceiling.</textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- END: LeftEnrollmentFormColumn -->
+<!-- BEGIN: RightSmartCardPreviewColumn -->
+<section aria-label="Pass Simulation and Summary Actions" class="col-span-12 xl:col-span-4 space-y-6">
+<!-- Live Preview Badge Header -->
+<div class="flex items-center justify-between">
+<span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Live Smart Pass Preview</span>
+<span class="text-[11px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono font-medium">Thermal Print Ready</span>
+</div>
+<!-- SMART PASS PHYSICAL CARD REPLICA -->
+<div class="card-security-pattern text-white rounded-2xl p-5 shadow-xl border border-blue-400/30 relative overflow-hidden aspect-[1.58/1] flex flex-col justify-between select-none transform transition-transform hover:scale-[1.01]" data-purpose="card-canvas">
+<!-- Subtle Watermark Crest Motif -->
+<div class="absolute -right-8 -bottom-8 w-48 h-48 opacity-10 pointer-events-none">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+</div>
+<!-- Top Card Header -->
+<div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<div class="bg-white p-1 rounded">
+<svg class="w-5 h-5 text-brand-navy" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+</svg>
+</div>
+<div>
+<p class="font-extrabold text-[12px] tracking-wide uppercase leading-tight">HOPE WELFARE TRUST</p>
+<p class="text-[9px] text-blue-200 tracking-wider">CHARITABLE PHARMACY SERVICES</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-amber-400 text-brand-dark shadow-sm">
+                    50% SUBSIDY PASS
+                  </span>
+</div>
+<!-- Chip & Contactless Indicator -->
+<div class="mt-4 flex items-center space-x-3">
+<div class="w-10 h-7 rounded chip-graphic shadow-sm border border-yellow-700/40"></div>
+<svg class="w-5 h-5 text-blue-200/70" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.393 9.393c5.857-5.857 15.355-5.857 21.213 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Center: Holder Details -->
+<div class="my-auto pt-2">
+<p class="text-[10px] text-blue-200 uppercase font-mono tracking-widest">Cardholder Name</p>
+<p class="text-base font-black tracking-wide text-white uppercase drop-shadow-xs">Muhammad Rana</p>
+<div class="flex items-center space-x-4 mt-1 font-mono text-[11px] text-slate-200">
+<span>CNIC: 35202-7841923-1</span>
+<span>MOB: 03004267657</span>
+</div>
+</div>
+<!-- Bottom: Barcode & Serial Strip -->
+<div class="pt-2 border-t border-white/10 flex items-end justify-between">
+<div>
+<div class="w-36 h-6 barcode-lines bg-white p-0.5 rounded-sm"></div>
+<p class="text-[9px] font-mono mt-1 text-slate-300 tracking-wider">HWC-00001-HWT-2026</p>
+</div>
+<div class="text-right">
+<p class="text-[8px] uppercase tracking-wider text-blue-200">VALID THRU</p>
+<p class="font-mono text-xs font-bold text-amber-300">03/2027</p>
+</div>
+</div>
+</div>
+<!-- Entitlement Real-Time Calculation Simulation -->
+<div class="bg-white rounded-xl border border-clinical-border p-4 shadow-xs space-y-3" data-purpose="entitlement-calculator">
+<div class="flex items-center justify-between pb-2 border-b border-clinical-border">
+<span class="text-xs font-bold text-slate-800 uppercase tracking-wider">POS Copay Simulation</span>
+<span class="text-[10px] font-mono text-slate-500">Benchmark: Rs. 2,000 Rx</span>
+</div>
+<div class="space-y-2 text-xs">
+<div class="flex justify-between text-slate-600">
+<span>Sample Prescription Value:</span>
+<span class="font-mono font-semibold">PKR 2,000.00</span>
+</div>
+<div class="flex justify-between text-emerald-700 bg-emerald-50 px-2 py-1 rounded">
+<span class="font-semibold">Trust Subsidy (50% Waived):</span>
+<span class="font-mono font-bold">- PKR 1,000.00</span>
+</div>
+<div class="flex justify-between text-slate-900 font-bold border-t border-dashed border-slate-300 pt-1.5">
+<span>Patient Cash Due at POS:</span>
+<span class="font-mono text-brand-navy text-sm">PKR 1,000.00</span>
+</div>
+</div>
+<!-- Monthly Quota Remaining -->
+<div class="mt-3 pt-2 border-t border-clinical-border">
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-slate-600 font-medium">Monthly Quota Consumption:</span>
+<span class="font-mono font-bold text-slate-800">PKR 0 / 15,000 (100% Available)</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-emerald-500 h-2 rounded-full w-full"></div>
+</div>
+<p class="text-[10px] text-slate-500 mt-1">Allocation resets on 1st of every calendar month automatically.</p>
+</div>
+</div>
+<!-- Action Command Buttons -->
+<div class="space-y-2.5 pt-1" data-purpose="action-buttons">
+<button class="w-full py-3 px-4 bg-brand-navy hover:bg-slate-900 text-white rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2" type="button">
+<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Authorize &amp; Issue Welfare Pass (F9)</span>
+</button>
+<button class="w-full py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg font-semibold text-xs shadow-xs transition-colors flex items-center justify-center space-x-2" type="button">
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Print Temporary Paper Verification Slip</span>
+</button>
+<a class="block text-center py-2 text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors" href="#">
+                Cancel Registration &amp; Return to Cardholder Register
+              </a>
+</div>
+<!-- Compliance Checklist -->
+<div class="p-3 bg-slate-100/70 rounded-lg text-[11px] text-slate-600 space-y-1">
+<p class="font-bold text-slate-700">Enrollment Checklist:</p>
+<p class="flex items-center gap-1.5"><span class="text-emerald-600 font-bold">✓</span> CNIC biometric verified against Nadra database</p>
+<p class="flex items-center gap-1.5"><span class="text-emerald-600 font-bold">✓</span> Income affidavit below Rs. 35,000 / month on file</p>
+<p class="flex items-center gap-1.5"><span class="text-emerald-600 font-bold">✓</span> Consultant prescription stamped with PMDC #</p>
+</div>
+</section>
+<!-- END: RightSmartCardPreviewColumn -->
+</div>
+</main>
+<!-- BEGIN: OperationalFooterTelemetry -->
+<footer class="bg-white border-t border-clinical-border px-6 py-2 flex items-center justify-between text-[11px] text-slate-500 font-mono select-none" data-purpose="system-telemetry">
+<div class="flex items-center space-x-4">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>SQLite Local DB: Synced</span>
+</span>
+<span>•</span>
+<span>LAN: 192.168.10.45 [Master Server Online]</span>
+<span>•</span>
+<span class="text-slate-700 font-semibold">DRAP Formulary SRO 2024 Compliant</span>
+</div>
+<div class="flex items-center space-x-4">
+<span>Shift: Morning (A)</span>
+<span>•</span>
+<span>Terminal: #1</span>
+<span>•</span>
+<span class="font-sans font-medium text-slate-400">Build: v4.3-clinical</span>
+</div>
+</footer>
+<!-- END: OperationalFooterTelemetry -->
+</div>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: MasterApplicationContainer -->
+<!-- BEGIN: InteractiveKeyboardShortcuts -->
+<script data-purpose="keyboard-event-handlers">
+    document.addEventListener('keydown', function(event) {
+      // F9 Hotkey for Authorization
+      if (event.key === 'F9') {
+        event.preventDefault();
+        alert('Action: Authorizing and Printing Smart Welfare Pass HWC-00001 for Muhammad Rana...');
+      }
+      // F2 Hotkey for Search
+      if (event.key === 'F2') {
+        event.preventDefault();
+        const searchInput = document.getElementById('existing_search');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+      // Esc Key for Return
+      if (event.key === 'Escape') {
+        if (confirm('Return to Welfare Cards register? Any unsaved edits will be discarded.')) {
+          window.history.back();
+        }
+      }
+    });
+  </script>
+<!-- END: InteractiveKeyboardShortcuts -->
+</body></html>

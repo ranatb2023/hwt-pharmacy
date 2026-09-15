@@ -1,0 +1,702 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Hope Welfare Trust - Pharmacy POS Medicine Master &amp; Formulary Editor</title>
+<!-- Tailwind CSS v3 CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Config -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5fa',
+              100: '#e1ecf5',
+              200: '#c3d9ec',
+              500: '#1b5ca0',
+              600: '#14467d',
+              700: '#0f2d59',
+              800: '#0a1e3b',
+              900: '#061326',
+            },
+            clinical: {
+              teal: '#0d9488',
+              cold: '#0284c7',
+              warning: '#d97706',
+              success: '#059669',
+              danger: '#dc2626'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Manrope', 'Segoe UI', 'system-ui', 'sans-serif'],
+            mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Typography & Global Setup -->
+<style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .heading-font {
+      font-family: 'Manrope', sans-serif;
+    }
+  </style>
+<!-- Form Field Refinements & Accents -->
+<style data-purpose="form-styling">
+    input:focus, select:focus, textarea:focus {
+      outline: none !important;
+      border-color: #1b5ca0 !important;
+      box-shadow: 0 0 0 3px rgba(27, 92, 160, 0.15) !important;
+    }
+    /* Subtle custom scrollbar for clinical desktop */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between select-none">
+<!-- BEGIN: TopHospitalHeader -->
+<header class="bg-white text-slate-800 border-b border-slate-200 shadow-xs">
+<div class="px-4 py-2 flex flex-wrap items-center justify-between gap-3 text-xs border-b border-slate-100">
+<div class="flex items-center space-x-3">
+<div class="w-7 h-7 bg-brand-700 text-white rounded-md flex items-center justify-center font-bold text-base shadow-sm">
+          +
+        </div>
+<div>
+<span class="font-bold tracking-wide text-sm heading-font text-slate-900">HOPE WELFARE TRUST HOSPITAL</span>
+<span class="text-slate-500 ml-2 font-normal hidden sm:inline">| Hospital Information Management &amp; Pharmacy Operations</span>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-1.5 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-emerald-700 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="">Counter 01 Connected</span>
+</div>
+<div class="text-slate-500 hidden md:inline">
+          LAN IP: <span class="font-mono text-slate-800 font-semibold">192.168.10.45</span>
+</div>
+<div class="flex items-center space-x-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 hidden lg:flex font-medium">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Citizen POS-80: <strong>Ready</strong></span>
+</div>
+<div class="bg-slate-100 px-2.5 py-1 rounded text-slate-700 font-medium flex items-center gap-1.5 border border-slate-200">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span>
+<span class="">Pharm. Tariq Mahmood, R.Ph</span>
+</div>
+</div>
+</div>
+<div class="px-4 py-2 bg-slate-50 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200">
+<nav aria-label="System Quick Access" class="flex items-center space-x-1.5">
+<button class="px-3 py-1.5 rounded text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5 shadow-xs" type="button">
+<span class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded font-mono text-[10px] text-amber-600 font-bold">[F2]</span> Main POS
+        </button>
+<button class="px-3 py-1.5 rounded text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5 shadow-xs" type="button">
+<span class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded font-mono text-[10px] text-amber-600 font-bold">[F7]</span> Requisitions
+        </button>
+<button class="px-3 py-1.5 rounded text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200 shadow-xs flex items-center gap-1.5" type="button">
+<span class="px-1 py-0.5 bg-brand-600 text-white rounded font-mono text-[10px] font-bold">[F3]</span> Inventory (Active)
+        </button>
+<button class="px-3 py-1.5 rounded text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1.5 shadow-xs" type="button">
+<span class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded font-mono text-[10px] text-amber-600 font-bold">[F10]</span> Day Close
+        </button>
+</nav>
+<div class="flex items-center space-x-3 text-xs">
+<div class="bg-white px-2.5 py-1 rounded border border-slate-200 text-slate-600 font-mono shadow-xs">
+          Till Balance: <span class="text-emerald-600 font-bold ml-1">PKR 5,000.00</span>
+</div>
+<div class="bg-amber-50 text-amber-600 border border-amber-200/80 px-2.5 py-1 rounded font-medium">
+          Formulary Node: Verified DRAP List v2024.1
+        </div>
+</div>
+</div>
+</header>
+<!-- END: TopHospitalHeader -->
+<!-- BEGIN: SubheaderBreadcrumbAndActions -->
+<section class="bg-white border-b border-slate-200 px-6 py-3">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+<!-- Breadcrumb navigation -->
+<div>
+<nav class="flex items-center space-x-2 text-xs text-slate-500 mb-1">
+<span class="hover:text-brand-600 cursor-pointer">Pharmacy Inventory</span>
+<span class="">/</span>
+<span class="hover:text-brand-600 cursor-pointer">Medicine Master &amp; Formulary Catalog</span>
+<span class="">/</span>
+<span class="font-semibold text-brand-700">Formulary Editor</span>
+</nav>
+<div class="flex items-center gap-3">
+<h1 class="text-xl font-bold text-slate-900 heading-font tracking-tight">Medicine Master &amp; DRAP Formulary Specification</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+            DRAP Form-12 Compliance
+          </span>
+</div>
+</div>
+<!-- Header Action Controls & Mode Switcher -->
+<div class="flex items-center flex-wrap gap-2">
+<!-- Segmented Mode Control -->
+<div class="bg-slate-100 p-1 rounded-lg border border-slate-200 flex text-xs font-semibold mr-1">
+<button class="px-3 py-1 rounded bg-white text-brand-700 shadow-sm border border-slate-200/60" type="button">
+            + New Medicine Master
+          </button>
+<button class="px-3 py-1 rounded text-slate-600 hover:text-slate-900 transition" type="button">
+            Edit: Amoxicillin 500mg
+          </button>
+</div>
+<!-- Discard Action -->
+<button class="px-3.5 py-1.5 text-xs font-semibold text-slate-600 bg-white hover:bg-slate-100 border border-slate-300 rounded-md shadow-sm transition flex items-center gap-1.5" type="button">
+<span class="text-slate-400 font-mono text-[10px]">[Esc]</span> Discard
+        </button>
+<!-- Save and Add Batch Action -->
+<button class="px-3.5 py-1.5 text-xs font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 rounded-md shadow-sm transition flex items-center gap-1.5" type="button">
+<span class="text-brand-600 font-mono text-[10px]">[F9]</span> Save &amp; Add Batch
+        </button>
+<!-- Primary Commit Button -->
+<button class="px-4 py-1.5 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 border border-brand-700 rounded-md shadow transition flex items-center gap-1.5" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Save Medicine Master <span class="bg-brand-800/60 text-white/90 px-1 py-0.5 rounded font-mono text-[10px] ml-1">[Alt+S]</span>
+</button>
+</div>
+</div>
+</section>
+<!-- END: SubheaderBreadcrumbAndActions -->
+<!-- BEGIN: MainClinicalWorkspace -->
+<main class="flex-1 max-w-[1920px] w-full mx-auto p-4 md:p-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- LEFT COLUMN: Main Clinical & Regulatory Specification (~65% width / 8 cols) -->
+<section class="lg:col-span-8 space-y-5" data-purpose="clinical-specification-form">
+<!-- Card 1: Brand & Clinical Identification -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
+<h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider heading-font">1. Brand &amp; Clinical Identification</h2>
+</div>
+<span class="text-[11px] text-slate-400 font-medium">* Required DRAP identification parameters</span>
+</div>
+<div class="p-5 space-y-4">
+<!-- Full Width Brand Name Field -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="brand-name">
+                Brand Name <span class="text-red-500">*</span>
+</label>
+<input class="w-full text-sm font-semibold rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 placeholder-slate-400 px-3.5 py-2" id="brand-name" placeholder="e.g. Augmentin, Panadol, Amoxil" type="text" value="Amoxil">
+<p class="text-[11px] text-slate-500 mt-1">Official registered commercial brand name on packaging</p>
+</div>
+<!-- Generic Name & Strength Dual Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="generic-name">
+                  Generic Name (Active Pharmaceutical Ingredient)
+                </label>
+<input class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 placeholder-slate-400 px-3.5 py-2" id="generic-name" placeholder="e.g. Paracetamol, Amoxicillin Trihydrate" type="text" value="Amoxicillin Trihydrate">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="strength-value">
+                  Strength / Dosage Potency
+                </label>
+<input class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 placeholder-slate-400 px-3.5 py-2" id="strength-value" placeholder="e.g. 500mg, 125mg/5ml, 1g" type="text" value="500mg">
+</div>
+</div>
+<!-- Dosage Form & Base Dispense Unit Dropdowns -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="dosage-form">
+                  Dosage Form <span class="text-red-500">*</span>
+</label>
+<select class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="dosage-form">
+<option selected="" value="capsule">Capsule</option>
+<option value="tablet">Tablet</option>
+<option value="syrup">Syrup / Suspension</option>
+<option value="injection">Injection (Vial / Ampoule)</option>
+<option value="ointment">Ointment / Cream / Gel</option>
+<option value="drops">Eye / Ear / Oral Drops</option>
+<option value="inhaler">Inhaler / Respules</option>
+<option value="sachet">Sachet</option>
+<option value="infusion">IV Infusion (I.V Bottle)</option>
+</select>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="block text-xs font-semibold text-slate-700" for="base-unit">
+                    Base Unit <span class="text-red-500">*</span>
+</label>
+<span class="text-[11px] text-brand-600 font-medium">Smallest sellable item</span>
+</div>
+<select class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="base-unit">
+<option selected="" value="capsule">Capsule (cap)</option>
+<option value="tablet">Tablet (tab)</option>
+<option value="bottle">Bottle</option>
+<option value="ampoule">Ampoule</option>
+<option value="vial">Vial</option>
+<option value="sachet">Sachet</option>
+<option value="tube">Tube</option>
+<option value="custom">+ New Unit...</option>
+</select>
+</div>
+</div>
+<!-- SKU Code & Barcode Scanner Integration Field -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="sku-code">
+                  Internal Hospital SKU Code
+                </label>
+<input class="w-full text-sm font-mono rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2 uppercase" id="sku-code" placeholder="e.g. MED-AMOX-500" type="text" value="MED-AMOX-500">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="barcode-field">
+                  Barcode / GS1 / EAN-13
+                </label>
+<div class="relative rounded-lg shadow-sm">
+<input class="w-full text-sm font-mono rounded-lg border-slate-300 text-slate-800 pr-24 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="barcode-field" placeholder="Scan EAN-13 barcode" type="text" value="8964000182741">
+<button class="absolute inset-y-1 right-1 px-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded flex items-center gap-1 border border-slate-300" type="button">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                    Scan
+                  </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Packaging Hierarchy & Fractional Dispensing Math (From Reference Screenshots) -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" data-purpose="packaging-hierarchy-card">
+<div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+<h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider heading-font">
+                PACKAGING <span class="text-slate-400 font-normal">— HOW THE MEDICINE IS BOXED</span>
+</h2>
+</div>
+<span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Fractional Dispensing Active</span>
+</div>
+<div class="p-5 space-y-4">
+<!-- Packaging conversion inputs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="units-per-strip">
+                  Units per Strip
+                </label>
+<div class="relative">
+<input class="w-full text-base font-semibold rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="units-per-strip" min="1" type="number" value="10">
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-xs text-slate-400">
+                    capsules / strip
+                  </div>
+</div>
+<p class="text-[11px] text-slate-500 mt-1">Number of tablets/capsules sealed within a single blister strip</p>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="strips-per-box">
+                  Strips per Box
+                </label>
+<div class="relative">
+<input class="w-full text-base font-semibold rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="strips-per-box" min="1" type="number" value="10">
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-xs text-slate-400">
+                    strips / pack
+                  </div>
+</div>
+<p class="text-[11px] text-slate-500 mt-1">Number of strips packed in 1 commercial carton box</p>
+</div>
+</div>
+<!-- Verbatim Blue Soft Container from Reference Image -->
+<div class="bg-blue-50/80 border border-blue-200 rounded-lg p-4 text-blue-900 text-xs sm:text-sm leading-relaxed" data-purpose="conversion-rule-callout">
+<div class="flex items-start gap-2.5">
+<svg class="w-5 h-5 text-blue-600 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+<path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path>
+</svg>
+<div>
+<p class="font-normal text-slate-700">
+                    One box = <strong class="text-brand-700 font-bold">10 strips</strong> = <strong class="text-brand-700 font-bold">100 units</strong>. Stock is counted in units, so any of the three can be sold or dispensed from the same shelf.
+                  </p>
+<p class="text-xs text-blue-700/80 mt-1">
+                    System automatically calculates loose blister and fractional unit price upon billing counter barcode scanning.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Regulatory & Drug Administration (DRAP) Compliance -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" data-purpose="regulatory-card">
+<div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-clinical-teal"></span>
+<h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider heading-font">
+                REGULATORY &amp; PRICING <span class="text-slate-400 font-normal">— DRAP COMPLIANCE</span>
+</h2>
+</div>
+<span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Schedule Compliant</span>
+</div>
+<div class="p-5 space-y-4">
+<!-- Drug Schedule & DRAP Reg No -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="drug-schedule">
+                  Drug Schedule <span class="text-red-500">*</span>
+</label>
+<select class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2 font-medium" id="drug-schedule">
+<option selected="" value="rx">Rx — Prescription Only Medicine (Antibiotic)</option>
+<option value="otc">OTC — General Over-The-Counter Sale</option>
+<option value="schedule-g">Schedule G — Controlled Substance / Narcotic</option>
+<option value="high-alert">High Alert / Chemotherapy</option>
+</select>
+<p class="text-[11px] text-slate-500 mt-1">Requires prescribing physician PMDC/PMC number at checkout</p>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="drap-registration">
+                  DRAP Registration No
+                </label>
+<div class="relative">
+<input class="w-full text-sm font-mono rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="drap-registration" placeholder="e.g. 012345" type="text" value="004821">
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                      Form 12-A Valid
+                    </span>
+</div>
+</div>
+<p class="text-[11px] text-slate-500 mt-1">Registered with Drug Regulatory Authority of Pakistan</p>
+</div>
+</div>
+<!-- Therapeutic Class / ATC Code -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="therapeutic-class">
+                  Therapeutic Class
+                </label>
+<input class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="therapeutic-class" placeholder="e.g. Penicillin Antibacterials" type="text" value="Beta-lactam Antibacterials, Penicillins">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="atc-code">
+                  WHO ATC Code
+                </label>
+<input class="w-full text-sm font-mono uppercase rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="atc-code" placeholder="e.g. J01CA04" type="text" value="J01CA04">
+</div>
+</div>
+<!-- Cold Chain Checkbox (From Screenshot) -->
+<div class="border border-slate-200 rounded-lg p-3.5 bg-slate-50/70 hover:bg-slate-50 transition">
+<label class="flex items-start space-x-3 cursor-pointer">
+<input class="mt-1 h-4 w-4 rounded border-slate-300 text-clinical-cold focus:ring-clinical-cold" id="cold-chain-checkbox" type="checkbox">
+<div class="text-xs">
+<div class="flex items-center gap-2 font-medium text-slate-800">
+<span class="">Cold chain — must be stored at 2–8 °C</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">
+                      Refrigeration Alert
+                    </span>
+</div>
+<p class="text-slate-500 mt-0.5">Flags warnings during stock movement, receipt, and patient counsel alerts</p>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Card 4: Pricing, Tax & Inventory Reorder Parameters -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" data-purpose="pricing-inventory-card">
+<div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+<h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider heading-font">
+                4. Pricing, Reorder &amp; Supply Channel
+              </h2>
+</div>
+<span class="text-[11px] font-mono text-slate-500">PKR Standard Currency</span>
+</div>
+<div class="p-5 space-y-4">
+<!-- Pricing 3-Column Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="trade-price">
+                  Trade Price (TP) per unit
+                </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs text-slate-400 font-semibold">
+                    Rs
+                  </div>
+<input class="w-full text-sm font-mono pl-9 rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3 py-2" id="trade-price" placeholder="0.00" step="0.01" type="number" value="6.40">
+</div>
+<span class="text-[10px] text-slate-500">Wholesale cost per capsule</span>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="mrp-price">
+                  MRP per unit (Printed)
+                </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs text-slate-400 font-semibold">
+                    Rs
+                  </div>
+<input class="w-full text-sm font-mono pl-9 rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3 py-2" id="mrp-price" placeholder="0.00" step="0.01" type="number" value="8.00">
+</div>
+<span class="text-[10px] text-slate-500">Maximum Retail Price on pack</span>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="selling-price">
+                  Selling Price per unit
+                </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs text-slate-400 font-semibold">
+                    Rs
+                  </div>
+<input class="w-full text-sm font-mono pl-9 rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3 py-2 font-bold text-brand-700" id="selling-price" placeholder="0.00" step="0.01" type="number" value="8.00">
+</div>
+<span class="text-[10px] text-emerald-600 font-medium">Strip: Rs 80.00 | Box: Rs 800.00</span>
+</div>
+</div>
+<!-- Manufacturer & Reorder Thresholds (From Screenshot) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="manufacturer">
+                  Manufacturer / Distributor
+                </label>
+<select class="w-full text-sm rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="manufacturer">
+<option selected="" value="gsk">GSK Pakistan Ltd.</option>
+<option value="abbott">Abbott Laboratories Pakistan</option>
+<option value="sami">Sami Pharmaceuticals</option>
+<option value="hilton">Hilton Pharma</option>
+<option value="getz">Getz Pharma</option>
+<option value="none">— None / Third Party —</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" for="reorder-level">
+                  Reorder Level (Alert Threshold)
+                </label>
+<div class="relative">
+<input class="w-full text-sm font-semibold rounded-lg border-slate-300 text-slate-800 focus:border-brand-500 focus:ring-brand-500 px-3.5 py-2" id="reorder-level" min="1" type="number" value="40">
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-xs text-slate-400">
+                    units minimum
+                  </div>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">Automatic alert generated when counter stock falls below this</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Live Formulary Preview & Hospital Clinical Dossier (~35% width / 4 cols) -->
+<aside class="lg:col-span-4 space-y-5" data-purpose="clinical-preview-sidebar">
+<!-- Live Preview Dossier Card -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="px-4 py-3 bg-slate-50 text-slate-800 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<h3 class="text-xs font-bold uppercase tracking-wider heading-font text-slate-800">Live POS Item Presentation</h3>
+</div>
+<span class="text-[10px] bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded font-mono">Counter Preview</span>
+</div>
+<div class="p-4 space-y-3.5 bg-slate-50/50">
+<!-- POS Search Result Simulation Card -->
+<div class="bg-white rounded-lg border border-slate-200 p-3 shadow-xs">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">POS Billing Grid View:</span>
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-bold text-sm text-brand-800 leading-tight">Amoxil 500mg</h4>
+<p class="text-xs text-slate-600">Amoxicillin Trihydrate • Capsule</p>
+<span class="inline-block mt-1 text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                    SKU: MED-AMOX-500
+                  </span>
+</div>
+<div class="text-right">
+<div class="text-sm font-bold text-emerald-700">Rs 8.00 <span class="text-[10px] text-slate-500 font-normal">/cap</span></div>
+<div class="text-[11px] text-slate-500">Rs 80.00 /strip</div>
+<div class="text-[10px] text-blue-600 font-medium">Rs 800.00 /box</div>
+</div>
+</div>
+</div>
+<!-- Thermal Receipt Itemization Mockup -->
+<div class="bg-amber-50/40 border border-amber-200/80 rounded-lg p-3 font-mono text-xs text-slate-800">
+<div class="text-[10px] font-sans font-bold text-slate-500 uppercase mb-1">Citizen 80mm Receipt Print Line:</div>
+<div class="border-b border-dashed border-amber-300 pb-1 mb-1 text-[11px] flex justify-between">
+<span class="">AMOXIL 500MG CAP (10x10)</span>
+<span class="">PKR</span>
+</div>
+<div class="flex justify-between text-[11px] text-slate-700">
+<span class="">&nbsp;&nbsp;Qty: 1 Strip (10 Caps) @ 8.00</span>
+<span class="font-bold">80.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card: DRAP Form 12-A Compliance Checklist -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-3">
+<h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider heading-font flex items-center gap-1.5">
+<svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
+</svg>
+              DRAP Form 12-A Validation
+            </h3>
+<span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">4/4 Valid</span>
+</div>
+<ul class="space-y-2.5 text-xs">
+<li class="flex items-center text-slate-700">
+<span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mr-2 shrink-0">✓</span>
+<span class="">Active DRAP Reg #004821 entered</span>
+</li>
+<li class="flex items-center text-slate-700">
+<span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mr-2 shrink-0">✓</span>
+<span class="">Packaging Breakdown (1:10:100) balanced</span>
+</li>
+<li class="flex items-center text-slate-700">
+<span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mr-2 shrink-0">✓</span>
+<span class="">Schedule 'Rx Prescription Only' selected</span>
+</li>
+<li class="flex items-center text-slate-700">
+<span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mr-2 shrink-0">✓</span>
+<span class="">Reorder threshold configured (40 units)</span>
+</li>
+</ul>
+</div>
+<!-- Existing Batches & Stock Summary (When editing existing product) -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2.5">
+<div class="flex items-center gap-1.5">
+<h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider heading-font">Active Batches on Shelf</h3>
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+</div>
+<span class="text-xs font-bold text-brand-700 font-mono">199 Units on Hand</span>
+</div>
+<!-- Batches Mini Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-[10px] text-slate-400 border-b border-slate-100 font-semibold uppercase">
+<th class="py-1">Batch #</th>
+<th class="py-1">Expiry</th>
+<th class="py-1 text-right">Qty</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-mono">
+<tr>
+<td class="py-1.5 font-bold text-slate-800">#B4490</td>
+<td class="py-1.5 text-slate-600">11/2027</td>
+<td class="py-1.5 text-right font-bold text-slate-800">120 u</td>
+</tr>
+<tr>
+<td class="py-1.5 font-bold text-slate-800">#B3310</td>
+<td class="py-1.5 text-amber-600 font-semibold">05/2025</td>
+<td class="py-1.5 text-right font-bold text-slate-800">79 u</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+<span class="">Location: Rack B-04 (Antibiotics)</span>
+<button class="text-brand-600 hover:text-brand-800 font-semibold underline text-[11px]" type="button">
+              + New Batch Receipt
+            </button>
+</div>
+</div>
+<!-- Terminal Keyboard Shortcuts Guide -->
+<div class="bg-white border border-slate-200 text-slate-800 rounded-xl p-4 shadow-sm text-xs">
+<h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-2.5 flex items-center justify-between border-b border-slate-100 pb-2">
+<span class="">Clinical Workstation Keys</span>
+<span class="text-[9px] bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.5 rounded font-mono">Terminal v4.2</span>
+</h4>
+<div class="grid grid-cols-2 gap-2 text-[11px]">
+<div class="flex items-center justify-between bg-slate-50 border border-slate-200/60 p-1.5 rounded">
+<span class="text-slate-600 font-medium">Next Field</span>
+<kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-slate-700 font-mono text-[10px] font-semibold">[Tab]</kbd>
+</div>
+<div class="flex items-center justify-between bg-slate-50 border border-slate-200/60 p-1.5 rounded">
+<span class="text-slate-600 font-medium">Commit Form</span>
+<kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-slate-700 font-mono text-[10px] font-semibold">[Alt+S]</kbd>
+</div>
+<div class="flex items-center justify-between bg-slate-50 border border-slate-200/60 p-1.5 rounded">
+<span class="text-slate-600 font-medium">Add Stock</span>
+<kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-slate-700 font-mono text-[10px] font-semibold">[F9]</kbd>
+</div>
+<div class="flex items-center justify-between bg-slate-50 border border-slate-200/60 p-1.5 rounded">
+<span class="text-slate-600 font-medium">Exit / Cancel</span>
+<kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-slate-700 font-mono text-[10px] font-semibold">[Esc]</kbd>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- END: MainClinicalWorkspace -->
+<!-- BEGIN: OfflineFooterAndSystemStatus -->
+<footer class="bg-white text-slate-600 border-t border-slate-200 text-xs py-2 px-6 shadow-xs" data-purpose="system-offline-footer">
+<div class="flex flex-col md:flex-row items-center justify-between gap-2">
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-1.5 text-emerald-700 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="">SQLite Local DB: Synced (14ms)</span>
+</div>
+<div class="hidden sm:inline text-slate-300">|</div>
+<div class="text-slate-500">
+          LAN Station: <span class="text-slate-800 font-mono font-semibold">192.168.10.45</span> (Counter #1)
+        </div>
+<div class="hidden md:inline text-slate-300">|</div>
+<div class="text-slate-500 hidden md:inline">
+          Server Master Node: <span class="text-emerald-700 font-mono font-semibold">HOSP-SRV01 (Online)</span>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="text-slate-600">
+          Citizen Thermal: <span class="text-emerald-700 font-semibold">Online (80mm)</span>
+</div>
+<div class="text-slate-300 hidden sm:inline">|</div>
+<div class="text-slate-500">
+          Shift: <span class="text-slate-800 font-medium">Evening (14:00 – 22:00)</span>
+</div>
+<div class="text-slate-300 hidden sm:inline">|</div>
+<div class="font-mono text-slate-400 text-[11px]">
+          Build 2024.11.02-POS
+        </div>
+</div>
+</div>
+</footer>
+<!-- END: OfflineFooterAndSystemStatus -->
+<!-- Simple Client-Side Script to dynamically demonstrate Packaging math calculation -->
+<script data-purpose="packaging-calculator">
+    document.addEventListener('DOMContentLoaded', () => {
+      const unitsPerStripInput = document.getElementById('units-per-strip');
+      const stripsPerBoxInput = document.getElementById('strips-per-box');
+      const calloutElement = document.querySelector('[data-purpose="conversion-rule-callout"] p strong:last-of-type');
+      const stripsElement = document.querySelector('[data-purpose="conversion-rule-callout"] p strong:first-of-type');
+
+      function updatePackagingBreakdown() {
+        const unitsPerStrip = parseInt(unitsPerStripInput?.value || '10', 10);
+        const stripsPerBox = parseInt(stripsPerBoxInput?.value || '10', 10);
+        const totalUnits = unitsPerStrip * stripsPerBox;
+
+        if (stripsElement) {
+          stripsElement.textContent = `${stripsPerBox} strips`;
+        }
+        if (calloutElement) {
+          calloutElement.textContent = `${totalUnits} units`;
+        }
+      }
+
+      unitsPerStripInput?.addEventListener('input', updatePackagingBreakdown);
+      stripsPerBoxInput?.addEventListener('input', updatePackagingBreakdown);
+    });
+  </script>
+
+
+</body></html>

@@ -1,0 +1,32 @@
+# Render Blueprint for the Hope Welfare Trust pharmacy portal.
+#
+# One web service runs the Express API and serves the built React app from
+# the same origin. SQLite lives on a persistent disk mounted at /var/data —
+# without the disk every deploy would start with an empty database.
+#
+# Deploy: Render dashboard → New → Blueprint → pick this repository.
+# Full steps: DEPLOY-RENDER.md
+services:
+  - type: web
+    name: hwt-pharmacy
+    runtime: node
+    plan: starter            # a persistent disk needs a paid instance; free has no disk
+    region: singapore        # nearest Render region to Pakistan; change if you prefer
+    rootDir: backend
+    buildCommand: npm ci && npm --prefix ../frontend ci && npm --prefix ../frontend run build
+    startCommand: npm run start:render
+    healthCheckPath: /api/health
+    autoDeploy: true
+    disk:
+      name: hwt-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: HMS_DB_PATH
+        value: /var/data/hms.db
+      - key: JWT_SECRET
+        generateValue: true   # Render generates a long random secret
+      - key: SEED_DEMO
+        value: "0"            # set to 1 for the FIRST deploy only if you want the demo month

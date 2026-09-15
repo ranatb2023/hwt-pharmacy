@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#f8f9ff",
+            "surface-tint": "#455e8d",
+            "primary": "#00183b",
+            "surface-container": "#e5eeff",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed": "#d7e3ff",
+            "error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#2c4674",
+            "secondary-fixed-dim": "#aac7ff",
+            "inverse-primary": "#adc7fc",
+            "on-tertiary-fixed": "#002114",
+            "primary-fixed": "#d7e2ff",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#d3e4fe",
+            "on-tertiary-fixed-variant": "#005137",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#00458e",
+            "on-secondary-fixed": "#001b3e",
+            "inverse-surface": "#213145",
+            "surface-container-low": "#eff4ff",
+            "surface-dim": "#cbdbf5",
+            "secondary-container": "#5095fe",
+            "on-background": "#0b1c30",
+            "on-primary-container": "#7c95c8",
+            "surface": "#f8f9ff",
+            "tertiary": "#001e12",
+            "surface-variant": "#d3e4fe",
+            "primary-fixed-dim": "#adc7fc",
+            "tertiary-fixed": "#85f8c4",
+            "on-tertiary-container": "#2ca879",
+            "outline-variant": "#c4c6d0",
+            "secondary": "#005cba",
+            "surface-container-high": "#dce9ff",
+            "inverse-on-surface": "#eaf1ff",
+            "tertiary-container": "#003523",
+            "on-primary-fixed": "#001b3f",
+            "on-surface": "#0b1c30",
+            "on-primary": "#ffffff",
+            "on-surface-variant": "#44474f",
+            "outline": "#747780",
+            "on-tertiary": "#ffffff",
+            "background": "#f8f9ff",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-secondary-container": "#002d61",
+            "primary-container": "#0f2d59",
+            "on-error-container": "#93000a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-2xl": "1.5rem",
+            "space-3xl": "2rem",
+            "space-xl": "1.25rem",
+            "space-lg": "1rem",
+            "container-pad": "2rem",
+            "table-row-h": "2.25rem",
+            "space-xs": "0.25rem",
+            "space-2xs": "0.125rem",
+            "space-md": "0.75rem",
+            "pos-sidebar-w": "260px"
+          },
+          "fontFamily": {
+            "label-shortcut": ["JetBrains Mono"],
+            "headline-lg": ["Manrope"],
+            "body-sm": ["Inter"],
+            "data-table": ["JetBrains Mono"],
+            "data-display-md": ["JetBrains Mono"],
+            "headline-xl": ["Manrope"],
+            "label-caps": ["Inter"],
+            "headline-md": ["Manrope"],
+            "body-md": ["Inter"],
+            "data-display-lg": ["JetBrains Mono"],
+            "body-lg": ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f4f7fb] font-body-md text-on-surface min-h-screen flex">
+<!-- Generic Admin Sidebar (Clean & Intact) -->
+<aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-md">
+<div class="flex flex-col flex-1 overflow-hidden">
+<!-- Brand & Facility Header -->
+<div class="px-5 py-4 border-b border-primary-container/80 flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-on-primary text-[22px]">local_hospital</span>
+</div>
+<div>
+<div class="font-headline-md text-base text-on-primary font-bold leading-tight">Hope Welfare</div>
+<div class="text-[11px] text-primary-fixed-dim leading-none mt-1 font-medium">Trust Hospital &amp; Pharmacy</div>
+</div>
+</div>
+<!-- Main Navigation Items -->
+<nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+<div class="px-3 pt-2 pb-1 text-[11px] uppercase text-primary-fixed-dim/70 font-semibold tracking-wider">Clinical &amp; Operations</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[19px]">point_of_sale</span>
+<span>Pharmacy Counter</span>
+</div>
+<span class="text-[10px] bg-primary-container text-primary-fixed px-1.5 py-0.5 rounded font-mono">F2</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">receipt_long</span>
+<span>Billing &amp; Invoices</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">local_shipping</span>
+<span>Suppliers &amp; Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">assessment</span>
+<span>Reports</span>
+</a>
+<div class="px-3 pt-4 pb-1 text-[11px] uppercase text-primary-fixed-dim/70 font-semibold tracking-wider">Administration</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-secondary text-on-secondary font-semibold text-sm shadow-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">medication</span>
+<span>Drug Manufacturers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">domain</span>
+<span>Departments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">manage_accounts</span>
+<span>Users &amp; Roles</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[19px]">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Admin Profile Footer -->
+<div class="p-3 border-t border-primary-container bg-primary-container/40">
+<div class="flex items-center gap-3 px-2 py-1.5">
+<div class="w-8 h-8 rounded-full bg-secondary/80 flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="text-xs font-semibold text-on-primary truncate">Admin User</div>
+<div class="text-[11px] text-primary-fixed-dim truncate">Hope Welfare Trust</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="pl-pos-sidebar-w flex-1 flex flex-col min-h-screen">
+<!-- Top Header -->
+<header class="bg-surface-container-lowest border-b border-surface-container-high h-16 px-8 flex items-center justify-between sticky top-0 z-30">
+<div class="flex items-center gap-2 text-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Administration</a>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="font-semibold text-on-surface">Drug Manufacturers</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-9 px-3.5 bg-surface-container-low hover:bg-surface-container text-on-surface border border-surface-container-high rounded-lg font-medium text-sm flex items-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">merge_type</span>
+<span>Merge Duplicates</span>
+</button>
+<button class="h-9 px-4 bg-secondary hover:bg-blue-700 text-on-secondary rounded-lg font-semibold text-sm flex items-center gap-1.5 shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add Manufacturer</span>
+</button>
+</div>
+</header>
+<!-- Page Body -->
+<main class="flex-1 p-8 max-w-7xl w-full mx-auto flex flex-col gap-6">
+<!-- Page Title & Subtitle -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-on-surface">Drug Manufacturers Directory</h1>
+<p class="text-sm text-on-surface-variant mt-1">Manage approved pharmaceutical companies, registered licensing numbers, and active formulations.</p>
+</div>
+<!-- Clean Quiet Stat Chips -->
+<div class="flex items-center gap-2 self-start sm:self-auto bg-surface-container-lowest border border-surface-container p-1.5 rounded-xl shadow-sm text-xs">
+<div class="px-3 py-1.5 rounded-lg flex items-center gap-2 font-medium">
+<span class="text-on-surface-variant">Total:</span>
+<span class="font-bold text-on-surface text-sm">148</span>
+</div>
+<div class="h-4 w-px bg-surface-container-high"></div>
+<div class="px-3 py-1.5 rounded-lg flex items-center gap-2 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-on-surface-variant">Active:</span>
+<span class="font-bold text-emerald-700 text-sm">142</span>
+</div>
+<div class="h-4 w-px bg-surface-container-high"></div>
+<div class="px-3 py-1.5 rounded-lg flex items-center gap-2 font-medium">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="text-on-surface-variant">Inactive:</span>
+<span class="font-bold text-on-surface-variant text-sm">6</span>
+</div>
+</div>
+</div>
+<!-- Main Directory Card -->
+<div class="bg-surface-container-lowest border border-surface-container rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Search & Simple Filter Pills Bar -->
+<div class="p-4 border-b border-surface-container flex flex-col md:flex-row items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-low/50 border border-surface-container rounded-lg text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:bg-surface-container-lowest transition-colors" placeholder="Search manufacturer name, DML, or city..." type="text"/>
+</div>
+<!-- Filter Pills -->
+<div class="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-on-primary" type="button">
+              All (148)
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold text-on-surface-variant hover:bg-surface-container transition-colors" type="button">
+              Active (142)
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold text-on-surface-variant hover:bg-surface-container transition-colors" type="button">
+              Inactive (6)
+            </button>
+</div>
+</div>
+<!-- Clean Readable Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/60 text-on-surface-variant text-xs font-semibold uppercase tracking-wider border-b border-surface-container h-11">
+<th class="px-6 py-3">Manufacturer Name</th>
+<th class="px-6 py-3">DML License No</th>
+<th class="px-6 py-3">City / Location</th>
+<th class="px-6 py-3 text-center">Products Linked</th>
+<th class="px-6 py-3">Status</th>
+<th class="px-6 py-3 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-sm text-on-surface">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold text-xs flex items-center justify-center shrink-0">
+                      AB
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">Abbott Laboratories Pakistan Ltd</div>
+<div class="text-xs text-on-surface-variant">Multinational Partner</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs font-medium text-on-surface">
+<span class="bg-surface-container px-2 py-1 rounded">DML-000018</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  Landhi Industrial Area, Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  142 items
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Active
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold text-xs flex items-center justify-center shrink-0">
+                      GZ
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">Getz Pharma (Pvt) Ltd</div>
+<div class="text-xs text-on-surface-variant">National Manufacturer</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs font-medium text-on-surface">
+<span class="bg-surface-container px-2 py-1 rounded">DML-000045</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  Korangi Industrial Area, Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  218 items
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Active
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold text-xs flex items-center justify-center shrink-0">
+                      GS
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">GlaxoSmithKline (GSK) Pakistan</div>
+<div class="text-xs text-on-surface-variant">Multinational Partner</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs font-medium text-on-surface">
+<span class="bg-surface-container px-2 py-1 rounded">DML-000012</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  West Wharf, Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  165 items
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Active
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold text-xs flex items-center justify-center shrink-0">
+                      SM
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">Sami Pharmaceuticals (Pvt) Ltd</div>
+<div class="text-xs text-on-surface-variant">National Manufacturer</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs font-medium text-on-surface">
+<span class="bg-surface-container px-2 py-1 rounded">DML-000088</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  F.B. Area, Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  94 items
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Active
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold text-xs flex items-center justify-center shrink-0">
+                      HL
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">Hilton Pharma (Pvt) Ltd</div>
+<div class="text-xs text-on-surface-variant">National Manufacturer</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs font-medium text-on-surface">
+<span class="bg-surface-container px-2 py-1 rounded">DML-000034</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  Sector 15, Korangi, Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  89 items
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Active
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold text-xs flex items-center justify-center shrink-0">
+                      SC
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">The Searle Company Ltd</div>
+<div class="text-xs text-on-surface-variant">National Manufacturer</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs font-medium text-on-surface">
+<span class="bg-surface-container px-2 py-1 rounded">DML-000029</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  Port Qasim, Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  174 items
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Active
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">
+                      AB
+                    </div>
+<div>
+<div class="font-semibold text-on-surface">Aboot Pharma (Duplicate Flagged)</div>
+<div class="text-xs text-on-surface-variant">Pending Consolidation</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">
+<span class="text-outline italic">Not Specified</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+                  Karachi
+                </td>
+<td class="px-6 py-4 text-center font-medium">
+                  1 item
+                </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                    Inactive
+                  </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="text-secondary hover:text-blue-800 font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">Edit</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant hover:text-on-surface font-medium text-xs px-2 py-1 rounded hover:bg-surface-container transition-colors" type="button">View</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Clean Pagination Footer -->
+<div class="px-6 py-3.5 bg-surface-container-lowest border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-on-surface-variant">
+<div>
+            Showing <span class="font-semibold text-on-surface">1</span> to <span class="font-semibold text-on-surface">7</span> of <span class="font-semibold text-on-surface">148</span> entries
+          </div>
+<div class="flex items-center gap-1.5">
+<button class="h-8 px-2.5 border border-surface-container-high rounded-lg text-xs font-medium text-outline disabled:opacity-40 flex items-center justify-center" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="h-8 px-3 rounded-lg text-xs font-semibold bg-primary text-on-primary" type="button">
+              1
+            </button>
+<button class="h-8 px-3 rounded-lg text-xs font-medium hover:bg-surface-container transition-colors" type="button">
+              2
+            </button>
+<button class="h-8 px-3 rounded-lg text-xs font-medium hover:bg-surface-container transition-colors" type="button">
+              3
+            </button>
+<span class="px-1 text-outline">...</span>
+<button class="h-8 px-3 rounded-lg text-xs font-medium hover:bg-surface-container transition-colors" type="button">
+              22
+            </button>
+<button class="h-8 px-2.5 border border-surface-container-high rounded-lg text-xs font-medium text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Clean Minimal Footer -->
+<footer class="bg-surface-container-lowest border-t border-surface-container-high py-3 px-8 text-xs text-on-surface-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Hope Welfare Trust Pharmacy System · Online</span>
+</div>
+<div>
+<span>Version 2.4</span>
+</div>
+</footer>
+</div>
+</body></html>

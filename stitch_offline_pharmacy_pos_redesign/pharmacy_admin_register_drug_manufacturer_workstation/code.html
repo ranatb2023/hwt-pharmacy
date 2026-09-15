@@ -1,0 +1,516 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Register Drug Manufacturer Workstation - Hope Welfare Trust Pharmacy</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              600: '#0056b3',
+              700: '#004494',
+              800: '#0a2540',
+              900: '#0b1c30',
+              950: '#061120',
+            }
+          }
+        }
+      }
+    }
+</script>
+<style>
+  /* Custom scrollbar for authentic workstation dense feel */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>
+</head>
+<body class="bg-[#f1f5f9] font-sans text-slate-800 antialiased min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900">
+<div class="flex flex-1 min-h-screen overflow-hidden">
+<!-- Sidebar: Hospital Authentic Dark Navy Navigation Bar -->
+<aside class="w-64 bg-[#081528] text-slate-300 flex flex-col justify-between shrink-0 border-r border-[#152744] select-none text-xs">
+<div class="flex flex-col h-[calc(100vh-64px)] overflow-y-auto">
+<!-- Brand Header -->
+<div class="p-4 border-b border-[#172b4c] bg-[#050e1a]/70">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-900/40 ring-1 ring-white/20 shrink-0">
+<span class="material-symbols-outlined text-[24px]">local_hospital</span>
+</div>
+<div class="min-w-0">
+<h1 class="text-white font-display font-bold text-sm tracking-tight leading-tight">Hope Welfare Trust</h1>
+<p class="text-[10px] text-blue-300/80 font-semibold tracking-wider uppercase mt-0.5">Clinical Pharmacy ERP</p>
+</div>
+</div>
+<!-- Node status telemetry pill -->
+<div class="mt-3 px-2.5 py-1 rounded bg-[#0f2544] border border-[#1b3b6b] flex items-center justify-between text-[10px] text-blue-200">
+<div class="flex items-center gap-1.5 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="">LAN CORE: 192.168.1.10</span>
+</div>
+<span class="font-bold text-emerald-400 text-[9px] bg-emerald-950/60 px-1 rounded">NODE-01 OK</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="p-3 space-y-5">
+<!-- Section 1: Clinical & POS Operations -->
+<div>
+<div class="px-2 pb-1.5 text-[10px] font-bold text-slate-400/80 tracking-wider uppercase flex items-center justify-between">
+<span class="">Clinical &amp; POS Operations</span>
+</div>
+<div class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">space_dashboard</span>
+<span class="">Dashboard</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[17px] text-emerald-400">point_of_sale</span>
+<span class="">Pharmacy Counter</span>
+</div>
+<span class="text-[9px] font-mono font-bold bg-emerald-900/60 text-emerald-300 px-1 py-0.2 rounded border border-emerald-700/50">F2</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">calendar_today</span>
+<span class="">Day Close &amp; Shift Register</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">inventory_2</span>
+<span class="">Formulary &amp; Stock Ledger</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">account_balance_wallet</span>
+<span class="">Billing &amp; Hospital Invoices</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">receipt_long</span>
+<span class="">Returns &amp; Credit Slips</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">swap_horiz</span>
+<span class="">Hospital Transfer Orders</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">assessment</span>
+<span class="">Reports &amp; Analytics</span>
+</a>
+</div>
+</div>
+<!-- Section 2: Administration & Governance -->
+<div>
+<div class="px-2 pb-1.5 text-[10px] font-bold text-slate-400/80 tracking-wider uppercase">
+<span class="">Administration &amp; Governance</span>
+</div>
+<div class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">admin_panel_settings</span>
+<span class="">Users &amp; Roles [RBAC]</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded bg-blue-600 text-white font-medium shadow-sm ring-1 ring-blue-400/40" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[17px]">domain</span>
+<span class="">Catalogue &amp; Manufacturers</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">medical_information</span>
+<span class="">DRAP Audit Registry</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">volunteer_activism</span>
+<span class="">Zakat &amp; Subsidy Accounts</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">sync_alt</span>
+<span class="">Offline Cluster Sync</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:text-white hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px] text-slate-400">settings</span>
+<span class="">System Settings</span>
+</a>
+</div>
+</div>
+</nav>
+</div>
+<!-- Bottom Profile / Station Widget -->
+<div class="h-16 px-3.5 py-2.5 border-t border-[#172b4c] bg-[#050e1a] flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="relative">
+<div class="w-8 h-8 rounded bg-gradient-to-tr from-blue-700 to-indigo-600 text-white font-bold text-xs flex items-center justify-center border border-white/20">
+            SA
+          </div>
+<span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-[#050e1a]"></span>
+</div>
+<div class="min-w-0">
+<p class="text-[11px] font-semibold text-white truncate leading-tight">System Admin (Gov-4)</p>
+<p class="text-[9px] text-slate-400 font-mono truncate">ID: 8820-PHARM · DRAP AUTH</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-white p-1 rounded hover:bg-white/10 transition-colors" title="Lock Workstation" type="button">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Column -->
+<div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+<!-- Top Action Bar with Breadcrumb, LAN Telemetry and Quick Shortcut Buttons -->
+<header class="h-14 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 z-20"><div class="flex items-center gap-3"><nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-medium text-slate-500"><a class="hover:text-slate-900 transition-colors" href="#">Administration</a><span class="text-slate-300">/</span><a class="hover:text-slate-900 transition-colors" href="#">Drug Manufacturers</a><span class="text-slate-300">/</span><span class="text-slate-900 font-semibold">Register Manufacturer</span></nav></div><div class="flex items-center gap-3"><button class="px-3.5 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors" onclick="history.back()" type="button">Cancel</button><button class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded shadow-sm transition-colors" id="btn-save-mfr" type="button"><span class="material-symbols-outlined text-[16px]">save</span><span class="">Save Manufacturer</span></button></div></header>
+<!-- Main Body Canvas -->
+<main class="flex-1 px-6 py-5 overflow-y-auto bg-[#f8fafc]">
+<div class="max-w-7xl mx-auto space-y-4 pb-8">
+<!-- Workstation Context Header & Statutory Status Strip -->
+<div class="bg-white border border-slate-200/90 rounded-lg p-5 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div class="flex items-center gap-3.5"><div class="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[24px]">verified</span></div><div><div class="flex items-center gap-2"><h1 class="text-lg font-display font-bold text-slate-900 tracking-tight">Register Drug Manufacturer</h1><span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200">DRAP SRO-92</span></div><p class="text-xs text-slate-500 mt-0.5">Manage pharmaceutical manufacturer registration, licensing verification, and distribution channels.</p></div></div><div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="font-medium text-slate-700">CLB Verification Online</span></div></div>
+<!-- 2x2 Balanced Professional Form Grid -->
+<form class="grid grid-cols-1 lg:grid-cols-2 gap-4" id="mfr-form" onsubmit="event.preventDefault();">
+<!-- Card 1: Manufacturer & Corporate Profile -->
+<section class="bg-white border border-slate-200/90 rounded-lg shadow-xs overflow-hidden flex flex-col">
+<div class="bg-slate-50/80 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-blue-700">corporate_fare</span>
+<h2 class="font-display font-bold text-slate-900 text-xs tracking-tight uppercase">1. Manufacturer &amp; Corporate Profile</h2>
+</div>
+<span class="text-[10px] font-mono font-semibold text-slate-500 bg-slate-200/70 px-2 py-0.5 rounded">STEP 01</span>
+</div>
+<div class="p-4 space-y-3 text-xs flex-1">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="mfr-name">Manufacturer Full Legal Name <span class="text-rose-600 font-bold">*</span></label>
+<div class="relative">
+<input class="w-full h-8 px-3 rounded border border-slate-300 text-slate-900 text-xs font-medium placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="mfr-name" placeholder="e.g. Getz Pharma (Pvt) Ltd" type="text" value="Getz Pharma (Pvt) Ltd">
+<span class="absolute right-2.5 top-2 text-[10px] text-slate-400 font-mono">SECP REG</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="company-type">Company Classification <span class="text-rose-600 font-bold">*</span></label>
+<select class="w-full h-8 px-2.5 rounded border border-slate-300 text-slate-900 text-xs bg-white focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-medium" id="company-type">
+<option selected="">National / Local Manufacturer</option>
+<option>Multinational MNC Affiliate</option>
+<option>Biotech &amp; Biologics Producer</option>
+<option>Toll Manufacturer (Contractual)</option>
+<option>DRAP Authorized Importer</option>
+</select>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="ntn-number">Corporate NTN &amp; STRN <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="ntn-number" placeholder="0712345-6 / 12-00-9999" type="text" value="0712345-6 / 12-00-9999">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="head-office">Head Office City / Province</label>
+<select class="w-full h-8 px-2.5 rounded border border-slate-300 text-slate-900 text-xs bg-white focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-medium" id="head-office">
+<option selected="">Karachi, Sindh</option>
+<option>Lahore, Punjab</option>
+<option>Islamabad, ICT</option>
+<option>Peshawar, KPK</option>
+<option>Quetta, Balochistan</option>
+</select>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="sku-cap">DRAP Formulary SKU Quota Cap</label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="sku-cap" placeholder="e.g. 150 SKUs" type="text" value="120 Registered Formulations">
+</div>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="plant-address">Manufacturing Plant / Registered Physical Site <span class="text-rose-600 font-bold">*</span></label>
+<textarea class="w-full p-2.5 rounded border border-slate-300 text-slate-900 text-xs font-mono placeholder-slate-400 resize-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 leading-snug" id="plant-address" placeholder="Plot 29-30/27, Korangi Industrial Area, Sector 23, Karachi" rows="2">Plot 29-30/27, Korangi Industrial Area, Sector 23, Karachi, 74900, Pakistan</textarea>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="official-phone">Direct Corporate Phone <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="official-phone" placeholder="+92-21-35061234" type="text" value="+92-21-35061234">
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="regulatory-email">Regulatory Affairs Email <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="regulatory-email" placeholder="regulatory@getzpharma.com" type="email" value="regulatory@getzpharma.com">
+</div>
+</div>
+</div>
+<div class="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+<span class="">Verified Entity: FBR Active Taxpayer (ATL)</span>
+<span class="text-emerald-700 font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                FBR TAXPAYER ID VERIFIED
+              </span>
+</div>
+</section>
+<!-- Card 2: DRAP Statutory Licensing & Compliance -->
+<section class="bg-white border border-slate-200/90 rounded-lg shadow-xs overflow-hidden flex flex-col">
+<div class="bg-slate-50/80 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">verified_user</span>
+<h2 class="font-display font-bold text-slate-900 text-xs tracking-tight uppercase">2. DRAP Statutory Licensing &amp; Compliance</h2>
+</div>
+<span class="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded border border-emerald-300">
+                DRAP SRO FORM-2
+              </span>
+</div>
+<div class="p-4 space-y-3 text-xs flex-1">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="dml-number">Drug Manufacturing License (DML No.) <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 font-mono font-bold uppercase rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 tracking-wide bg-blue-50/30" id="dml-number" placeholder="DML-000045" type="text" value="DML-000045">
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="clb-ref-file">Central Licensing Board (CLB) File No. <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="clb-ref-file" placeholder="CLB/SRO-2024/481" type="text" value="CLB/SRO-2024/481">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="dml-issue-date">License Issue Date <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 rounded border border-slate-300 text-slate-900 font-mono text-xs focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="dml-issue-date" type="date" value="2021-04-12">
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="font-semibold text-slate-700" for="dml-expiry-date">Statutory Expiry / Renewal Date <span class="text-rose-600 font-bold">*</span></label>
+<span class="text-[10px] font-mono text-emerald-700 font-bold">Valid: Apr 2027</span>
+</div>
+<input class="w-full h-8 px-3 rounded border border-slate-300 text-slate-900 font-mono text-xs focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="dml-expiry-date" type="date" value="2027-04-11">
+</div>
+</div>
+<!-- GMP Status Pills -->
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Good Manufacturing Practice (GMP) Certification <span class="text-rose-600 font-bold">*</span></label>
+<div class="grid grid-cols-3 gap-2">
+<label class="flex items-center justify-center gap-1.5 p-2 rounded border border-emerald-400 bg-emerald-50 text-emerald-800 font-semibold cursor-pointer text-[11px] shadow-xs">
+<input checked="" class="accent-emerald-600 sr-only" name="gmp-status" type="radio">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span class="">Certified Compliant</span>
+</label>
+<label class="flex items-center justify-center gap-1.5 p-2 rounded border border-slate-200 bg-slate-50 text-slate-700 font-medium cursor-pointer text-[11px] hover:bg-slate-100">
+<input class="accent-amber-600 sr-only" name="gmp-status" type="radio">
+<span class="">Under Audit / Renewal</span>
+</label>
+<label class="flex items-center justify-center gap-1.5 p-2 rounded border border-slate-200 bg-slate-50 text-slate-700 font-medium cursor-pointer text-[11px] hover:bg-slate-100">
+<input class="accent-slate-600 sr-only" name="gmp-status" type="radio">
+<span class="">Inspection Pending</span>
+</label>
+</div>
+</div>
+<!-- SRO Form-2 Inspection Certificate & MRP Compliance -->
+<div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-blue-700">clinical_notes</span>
+<div>
+<p class="font-medium text-slate-800 text-[11px]">DRAP Form-2 Central Licensing Certificate</p>
+<p class="font-mono text-[10px] text-slate-400">Ref: CLB/2021-REG-0941 · Scanned on file</p>
+</div>
+</div>
+<span class="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
+                  ATTACHED &amp; VERIFIED
+                </span>
+</div>
+<!-- DRAP Pricing Compliance Confirmation Checkbox -->
+<div class="pt-1">
+<label class="flex items-start gap-2 cursor-pointer select-none">
+<input checked="" class="mt-0.5 rounded border-slate-300 text-blue-700 focus:ring-blue-600 w-4 h-4" type="checkbox">
+<span class="text-[11px] text-slate-600 leading-snug">
+<strong class="text-slate-800 font-semibold">Statutory MRP Gazette Enforcement:</strong> Enforce Maximum Retail Price (MRP) statutory ceiling gazette notices under Drug Pricing Policy 2018.
+                  </span>
+</label>
+</div>
+</div>
+<div class="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+<span class="">DRAP Verification Status: Active Formulary</span>
+<span class="text-blue-800 font-bold">DRAP INSPECTORATE OK</span>
+</div>
+</section>
+<!-- Card 3: Primary Distribution & Supply Channel -->
+<section class="bg-white border border-slate-200/90 rounded-lg shadow-xs overflow-hidden flex flex-col">
+<div class="bg-slate-50/80 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-blue-600">local_shipping</span>
+<h2 class="font-display font-bold text-slate-900 text-xs tracking-tight uppercase">3. Primary Distribution &amp; Supply Channel</h2>
+</div>
+<span class="text-[10px] font-mono font-semibold text-slate-500 bg-slate-200/70 px-2 py-0.5 rounded">STEP 02</span>
+</div>
+<div class="p-4 space-y-3 text-xs flex-1">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="primary-distributor">Primary Authorized Distributor / Regional Depot <span class="text-rose-600 font-bold">*</span></label>
+<select class="w-full h-8 px-2.5 rounded border border-slate-300 text-slate-900 text-xs bg-white focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-medium" id="primary-distributor">
+<option selected="">Premier Agencies Ltd / Muller &amp; Phipps Pakistan</option>
+<option>Ali Gohar &amp; Company (Pvt) Ltd</option>
+<option>IBL Operations (Pvt) Ltd</option>
+<option>Direct Factory Depot Supply (Autonomous Institutional)</option>
+<option>Horizon Healthcare Distribution Services</option>
+</select>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="booking-officer">Territory Supply Officer Name</label>
+<input class="w-full h-8 px-3 rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="booking-officer" placeholder="e.g. Tariq Mehmood Siddiqui" type="text" value="Tariq Mehmood Siddiqui">
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="officer-mobile">Direct Mobile Contact <span class="text-rose-600 font-bold">*</span></label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="officer-mobile" placeholder="0300-8451290" type="text" value="0300-8451290">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="credit-terms">Commercial &amp; Payment Terms <span class="text-rose-600 font-bold">*</span></label>
+<select class="w-full h-8 px-2.5 rounded border border-slate-300 text-slate-900 text-xs bg-white focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-medium" id="credit-terms">
+<option>Cash on Delivery (Immediate Cheque)</option>
+<option selected="">15 Days Credit Cycle</option>
+<option>30 Days Credit Cycle</option>
+<option>Consignment / Hospital Inventory Pool</option>
+</select>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="lead-time">Standard Delivery Lead Time</label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="lead-time" placeholder="24-48 Hours" type="text" value="24-48 Hours (Direct Delivery)">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="moq-amount">Minimum Order Value (PKR)</label>
+<input class="w-full h-8 px-3 font-mono rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600" id="moq-amount" placeholder="Rs. 15,000" type="text" value="Rs. 25,000">
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="expiry-policy">Return / Expiry Claim Policy</label>
+<input class="w-full h-8 px-3 rounded border border-slate-300 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-medium" id="expiry-policy" placeholder="180 Days Prior to Expiry" type="text" value="180 Days Prior Credit Note (100%)">
+</div>
+</div>
+</div>
+<div class="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+<span class="">Direct Vendor Ledger Linked</span>
+<span class="text-blue-700 font-semibold">AUTO GRN GENERATOR ENABLED</span>
+</div>
+</section>
+<!-- Card 4: Quality, Storage & Cold Chain Protocols -->
+<section class="bg-white border border-slate-200/90 rounded-lg shadow-xs overflow-hidden flex flex-col">
+<div class="bg-slate-50/80 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-indigo-600">ac_unit</span>
+<h2 class="font-display font-bold text-slate-900 text-xs tracking-tight uppercase">4. Quality, Storage &amp; Cold Chain Protocols</h2>
+</div>
+<span class="text-[10px] font-mono font-semibold text-slate-500 bg-slate-200/70 px-2 py-0.5 rounded">SETTINGS</span>
+</div>
+<div class="p-4 space-y-3 text-xs flex-1">
+<!-- Cold Chain Toggle -->
+<div class="flex items-center justify-between p-2.5 bg-blue-50/50 rounded border border-blue-200">
+<div class="pr-2">
+<div class="flex items-center gap-1.5 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-blue-600">ac_unit</span>
+<span class="">Cold Chain Capable (2°C - 8°C)</span>
+</div>
+<p class="text-[11px] text-slate-500 mt-0.5">Mandatory continuous data-logger verification for biologics, insulin, and vaccines at GRN dock.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Inward Stock Receipt Active -->
+<div class="flex items-center justify-between p-2.5 bg-slate-50 rounded border border-slate-200">
+<div class="pr-2">
+<p class="font-semibold text-slate-800">Active for Inward Stock GRN Receiving</p>
+<p class="text-[11px] text-slate-500 mt-0.5">Allow hospital purchasing orders, receiving electronic goods receipt notes, and formulary updates.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+</label>
+</div>
+<!-- Quarantine Protocol Requirement -->
+<div class="flex items-center justify-between p-2.5 bg-slate-50 rounded border border-slate-200">
+<div class="pr-2">
+<p class="font-semibold text-slate-800">Hospital Quarantine Batch Inspection</p>
+<p class="text-[11px] text-slate-500 mt-0.5">Auto-quarantine newly received batches until pharmacist physical seal &amp; batch assay validation.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input class="sr-only peer" type="checkbox">
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+</label>
+</div>
+<!-- Dispensary & QC Notes -->
+<div>
+<label class="block font-semibold text-slate-700 mb-1" for="dispensary-notes">Quality Control &amp; Dispensary Instructions</label>
+<textarea class="w-full p-2 rounded border border-slate-300 text-slate-900 font-mono text-xs placeholder-slate-400 resize-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 leading-snug" id="dispensary-notes" rows="2">Authorized tertiary hospital direct supply; inspect calibrated data-logger temperature on all cold chain receipts. Reject batches with remaining shelf-life &lt; 75%.</textarea>
+</div>
+</div>
+<div class="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+<span class="">Batch Release Policy: DRAP Form 9 Compliant</span>
+<span class="text-emerald-700 font-bold">REFRIGERATION LINK ACTIVE</span>
+</div>
+</section>
+</form>
+<!-- Bottom Action Bar / Hotkey Strip -->
+<div class="bg-white border border-slate-200/90 rounded-lg p-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-xs">
+<div class="flex items-center gap-2 text-slate-500 font-mono text-[11px]">
+<span class="material-symbols-outlined text-[16px] text-blue-600">info</span>
+<span class="">Fields marked with asterisk (<span class="text-rose-600 font-bold">*</span>) are mandatory DRAP statutory filing requirements.</span>
+</div>
+<div class="flex items-center gap-2.5">
+<button class="px-4 py-1.5 rounded border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium text-xs transition-colors" onclick="history.back()" type="button">
+              Discard Changes
+            </button>
+<button class="px-5 py-1.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs shadow-sm flex items-center gap-1.5 border border-blue-800 transition-colors" onclick="submitMfrForm()" type="button">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">Register Drug Manufacturer</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Standard Telemetry Clinical Footer -->
+<footer class="h-9 bg-white border-t border-slate-200 px-6 flex items-center justify-between text-[11px] text-slate-500 font-mono shrink-0 select-none">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-slate-700 font-semibold">Station ID: NODE-01</span>
+</div>
+<span class="text-slate-300">|</span>
+<span class="">Engine: SQLite 3.42 WAL Active</span>
+<span class="text-slate-300">|</span>
+<span class="text-emerald-700 font-semibold">DRAP Central Licensing Board Verified</span>
+</div>
+<div class="text-slate-400">
+        v2.4.9-pk · Hope Welfare Trust Pharmacy Counter Workstation
+      </div>
+</footer>
+</div>
+</div>
+<script>
+  function submitMfrForm() {
+    const btn = document.getElementById('btn-save-mfr');
+    if (btn) {
+      btn.classList.add('opacity-75');
+      setTimeout(() => {
+        btn.classList.remove('opacity-75');
+        alert('Drug Manufacturer record successfully registered and verified under DRAP Form-2.');
+      }, 150);
+    }
+  }
+
+  // Quick Hotkeys for Pharmacy Workstation
+  document.addEventListener('keydown', function(event) {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+      event.preventDefault();
+      submitMfrForm();
+    }
+    if (event.key === 'Escape') {
+      history.back();
+    }
+  });
+
+  document.getElementById('btn-save-mfr')?.addEventListener('click', submitMfrForm);
+</script>
+
+
+</body></html>

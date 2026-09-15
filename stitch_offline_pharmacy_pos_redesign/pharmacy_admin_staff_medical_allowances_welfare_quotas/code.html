@@ -1,0 +1,282 @@
+<!DOCTYPE html><html class="h-full bg-slate-100" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pharmacy Admin - Hospital Employees &amp; Welfare Subsidy Quotas</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            navy: {
+              850: '#0c1b30',
+              900: '#0b192c',
+              950: '#071120',
+            },
+            hwt: {
+              blue: '#1d4ed8',
+              accent: '#2563eb',
+              surface: '#f8fafc',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scroll-and-resets">
+    /* Subtle custom scrollbar for clinical workstation tables */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 bg-slate-100 antialiased overflow-hidden select-none">
+<!-- BEGIN: ApplicationLayout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-[260px] bg-navy-900 flex flex-col flex-shrink-0 text-slate-300 border-r border-slate-800 select-none"><!-- Brand Header -->
+<div class="p-4 border-b border-slate-800/80 bg-navy-950/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 flex-shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-extrabold tracking-tight text-white text-sm truncate">HOPE WELFARE TRUST</span>
+</div>
+<p class="text-[11px] text-slate-400 leading-tight truncate">Hope Welfare Trust Pharmacy</p>
+</div>
+</div>
+<!-- LAN status indicator pill -->
+<div class="mt-3 flex items-center justify-between px-2.5 py-1.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] font-mono">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-slate-300 text-[11px]">192.168.1.10</span>
+</div>
+<span class="text-[10px] text-emerald-400 font-medium">Node 01 OK</span>
+</div>
+</div>
+<!-- Navigation Menus -->
+<div class="flex-1 overflow-y-auto px-3 py-3 space-y-4 text-xs">
+<!-- MAIN MENU -->
+<div>
+<h4 class="px-2 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Main Menu</h4>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Dashboard</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<div class="flex items-center gap-2.5">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Pharmacy Counter</span>
+</div>
+<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">F2</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Day Close</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Inventory</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Departments</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Customers &amp; Cards</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Credit Accounts</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Billing</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Returns</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Cash Flow</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Vendors</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Reports</span>
+</a>
+</nav>
+</div>
+<!-- ADMINISTRATION (Collapsible) -->
+<div>
+<div class="flex items-center justify-between px-2 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+<span class="">Administration</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Users</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Roles &amp; Permissions</span>
+</a>
+<!-- Active Menu Item: Employees -->
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-sm transition" href="#"><div class="flex items-center gap-2.5"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Employees &amp; Quotas</span></div><span class="text-[9px] font-mono font-bold bg-blue-800 text-blue-200 px-1.5 py-0.5 rounded">ACTIVE</span></a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Catalogue</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Settings</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Audit Log</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Subsidy Report</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="">Sync</span>
+</a>
+</nav>
+</div>
+</div>
+<!-- Footer User Profile -->
+<div class="p-3 border-t border-slate-800 bg-navy-950/60">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2.5 overflow-hidden">
+<div class="w-8 h-8 rounded bg-amber-500 text-navy-950 font-bold flex items-center justify-center text-xs flex-shrink-0">
+        SA
+      </div>
+<div class="truncate">
+<div class="text-xs font-semibold text-white truncate">System Administrator</div>
+<div class="text-[10px] text-slate-400 truncate">Super Admin / IT &amp; Quality</div>
+</div>
+</div>
+<button class="text-slate-400 hover:text-rose-400 p-1 rounded transition" title="Sign out">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<div class="pt-1.5 border-t border-slate-800/60 flex items-center justify-between text-[10px] text-slate-500 font-mono">
+<span class="">v2.4.9-pk</span>
+<span class="text-emerald-400">SQLite + Sync</span>
+</div>
+</div></aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-hidden">
+<!-- BEGIN: TopBar -->
+<header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between flex-shrink-0"><div class="flex items-center gap-6"><div><nav class="flex items-center text-xs text-slate-400 space-x-1.5 mb-0.5"><span class="hover:text-slate-600 cursor-pointer">Administration</span><span class="text-slate-400">/</span><span class="text-slate-700 font-semibold">Employees &amp; Quotas</span></nav><h1 class="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">Hospital Staff Medical Allowances &amp; Quotas</h1></div></div><div class="flex items-center gap-3"><button class="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs shadow-sm transition"><svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Export List</span></button><button class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm transition"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg><span class="">+ Add Staff Allowance</span></button></div></header>
+<!-- END: TopBar -->
+<!-- BEGIN: AdminTabsRow -->
+
+<!-- END: AdminTabsRow -->
+<!-- BEGIN: ScrollableWorkspace -->
+<main class="flex-1 overflow-y-auto p-6 space-y-5">
+<!-- BEGIN: MetricsCardsRow -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4" data-purpose="metrics-row"><!-- Card 1: Registered Staff -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
+<div>
+<div class="text-[11px] uppercase tracking-wider font-bold text-slate-500">Registered Staff</div>
+<div class="mt-1 text-2xl font-extrabold text-slate-900">48 <span class="text-sm font-semibold text-slate-500">Staff</span></div>
+<div class="mt-1 text-[11px] text-emerald-600 font-medium flex items-center gap-1">
+<span class="">●</span> 100% active hospital workforce
+    </div>
+</div>
+<div class="p-2.5 rounded-lg bg-blue-50 text-blue-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Card 2: Total Yearly Budget -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
+<div>
+<div class="text-[11px] uppercase tracking-wider font-bold text-slate-500">Total Yearly Budget</div>
+<div class="mt-1 text-2xl font-extrabold text-slate-900 tabular-nums">PKR 1,250,000</div>
+<div class="mt-1 text-[11px] text-slate-500 font-medium">Trust Employee Medical Fund</div>
+</div>
+<div class="p-2.5 rounded-lg bg-blue-50 text-blue-700">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Card 3: Allowance Used -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
+<div>
+<div class="text-[11px] uppercase tracking-wider font-bold text-slate-500">Allowance Used</div>
+<div class="mt-1 text-2xl font-extrabold text-slate-900 tabular-nums">PKR 412,850</div>
+<div class="mt-1 text-[11px] text-blue-600 font-medium">
+      33% spent this fiscal year
+    </div>
+</div>
+<div class="p-2.5 rounded-lg bg-amber-50 text-amber-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Card 4: Remaining Balance -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
+<div>
+<div class="text-[11px] uppercase tracking-wider font-bold text-slate-500">Remaining Balance</div>
+<div class="mt-1 text-2xl font-extrabold text-emerald-700 tabular-nums">PKR 837,150</div>
+<div class="mt-1 text-[11px] text-emerald-600 font-medium">Healthy reserve available</div>
+</div>
+<div class="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div></div><div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3"><div class="flex-1 flex flex-wrap items-center gap-3"><div class="relative flex-1 min-w-[240px] max-w-md"><span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></span><input class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:ring-1 focus:ring-blue-600 focus:border-blue-600 transition placeholder:text-slate-400 font-sans" placeholder="Search staff name, CNIC, employee ID, role..." type="text"></div><div class="flex items-center gap-2"><select class="px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-700 font-medium focus:ring-1 focus:ring-blue-600 focus:border-blue-600 cursor-pointer"><option value="">All Departments</option><option value="dialysis">Dialysis Unit</option><option value="er">Emergency (ER)</option><option value="pathology">Pathology Lab</option><option value="inpatient">Inpatient (IPD)</option><option value="opd">General OPD</option><option value="sanitation">Sanitation</option></select><select class="px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-700 font-medium focus:ring-1 focus:ring-blue-600 focus:border-blue-600 cursor-pointer"><option value="">All Statuses</option><option value="active">Active</option><option value="near-limit">Near Limit / Alert</option><option value="exhausted">Exhausted</option></select><select class="px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-700 font-medium focus:ring-1 focus:ring-blue-600 focus:border-blue-600 cursor-pointer"><option value="">All Quota Tiers</option><option value="senior">Senior Medical (PKR 40k+)</option><option value="nursing">Nursing &amp; Tech (PKR 20k-35k)</option><option value="support">Trust Support (&lt; PKR 20k)</option></select></div></div><div class="flex items-center gap-2"><button class="px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium text-xs transition">Reset Filters</button><button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 font-medium text-xs transition"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="">Apply Filter</span></button></div></div>
+<!-- END: MetricsCardsRow -->
+<!-- BEGIN: TwoColumnWorkspace -->
+<div class="grid grid-cols-1 gap-6 items-start"><div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col w-full"><div class="p-4 border-b border-slate-200 space-y-3"><div class="space-y-3"><div><h2 class="text-sm font-bold text-slate-900 tracking-tight">Staff Medical Allowance Ledger &amp; Welfare Quotas</h2><p class="text-xs text-slate-500 mt-0.5">Employees and hospital clinical staff medical expense coverage under Hope Welfare Trust Subsidy Scheme FY 2024-25.</p></div><div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100"><button class="px-2.5 py-1 text-[11px] rounded-full bg-blue-600 text-white font-semibold transition">All Staff (48)</button><button class="px-2.5 py-1 text-[11px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium transition">Dialysis Unit</button><button class="px-2.5 py-1 text-[11px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium transition">Emergency (ER)</button><button class="px-2.5 py-1 text-[11px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium transition">Pathology</button><button class="px-2.5 py-1 text-[11px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium transition">Nursing</button><button class="px-2.5 py-1 text-[11px] rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium transition">Support Staff</button></div></div></div><div class="overflow-x-auto"><table class="w-full text-left text-xs border-collapse"><thead><tr class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider"><th class="py-3 px-4">Staff Member</th><th class="py-3 px-3">CNIC &amp; Mobile</th><th class="py-3 px-3">Department</th><th class="py-3 px-3 text-right">Annual Quota</th><th class="py-3 px-3 text-right">Utilized</th><th class="py-3 px-3 text-right">Remaining Balance</th><th class="py-3 px-3 text-center">Co-Pay Policy</th><th class="py-3 px-3 text-center">Status</th><th class="py-3 px-4 text-right">Actions</th></tr></thead><tbody class="divide-y divide-slate-200 font-medium"><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Rehana Kausar</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000020</span><span class="">•</span><span class="">Sanitary Worker</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-1112225-2</div><div class="text-[11px] text-slate-400 font-mono">0300-1112225</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-[10px] rounded font-semibold">Sanitation</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 15,000</div><div class="text-[10px] text-slate-400">Trust Support</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 1,250</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-emerald-600 text-xs">PKR 13,750</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 8.3%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">100% Subsidized</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Farzana Bibi</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000021</span><span class="">•</span><span class="">Aya / Ward Support</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-4455661-8</div><div class="text-[11px] text-slate-400 font-mono">0321-7788990</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-rose-100 text-rose-800 text-[10px] rounded font-semibold">General OPD</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 15,000</div><div class="text-[10px] text-slate-400">Trust Support</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 4,300</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-emerald-600 text-xs">PKR 10,700</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 28.6%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">100% Subsidized</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Dr. Salman Farooq</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000004</span><span class="">•</span><span class="">Consultant Nephrologist</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-1188301-9</div><div class="text-[11px] text-slate-400 font-mono">0300-4829100</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-cyan-100 text-cyan-800 text-[10px] rounded font-semibold">Dialysis Unit</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 40,000</div><div class="text-[10px] text-slate-400">Senior Medical</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 14,200</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-slate-900 text-xs">PKR 25,800</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-blue-600 h-1.5 rounded-full" style="width: 35.5%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/80">100% Free / Cap</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Nasreen Bibi</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000016</span><span class="">•</span><span class="">Charge Nurse</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-1112221-4</div><div class="text-[11px] text-slate-400 font-mono">0300-1112221</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-purple-100 text-purple-800 text-[10px] rounded font-semibold">Inpatient (IPD)</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 25,000</div><div class="text-[10px] text-slate-400">Nursing Scale</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 12,450</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-slate-900 text-xs">PKR 12,550</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-amber-500 h-1.5 rounded-full" style="width: 49.8%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/80">100% Free / Cap</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="bg-rose-50/40 hover:bg-rose-50/70 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs flex items-center gap-2"><span class="">Bashir Ahmed</span><span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-bold text-[9px] border border-rose-200 uppercase">99% Used</span></div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000017</span><span class="">•</span><span class="">Senior Lab Technician</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-1112222-6</div><div class="text-[11px] text-slate-400 font-mono">0300-1112222</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-amber-100 text-amber-800 text-[10px] rounded font-semibold">Pathology Lab</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 20,000</div><div class="text-[10px] text-slate-400">Trust Default</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-rose-600 font-bold">PKR 19,800</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-extrabold text-rose-600 text-xs">PKR 200</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-rose-500 h-1.5 rounded-full" style="width: 99%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Near Limit</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Alert</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-rose-300 bg-white hover:bg-rose-50 text-rose-700 font-bold rounded transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Saima Yousaf</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000018</span><span class="">•</span><span class="">Dialysis Technician</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-1112223-8</div><div class="text-[11px] text-slate-400 font-mono">0300-1112223</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-cyan-100 text-cyan-800 text-[10px] rounded font-semibold">Dialysis Center</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 35,000</div><div class="text-[10px] text-slate-400">Technical Staff</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 8,400</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-slate-900 text-xs">PKR 26,600</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-blue-600 h-1.5 rounded-full" style="width: 24%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">100% Free / Cap</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Muhammad Iqbal</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000019</span><span class="">•</span><span class="">Ward Attendant</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35201-1112224-0</div><div class="text-[11px] text-slate-400 font-mono">0300-1112224</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-rose-100 text-rose-800 text-[10px] rounded font-semibold">Emergency (ER)</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 12,000</div><div class="text-[10px] text-slate-400">Trust Support</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 1,200</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-emerald-600 text-xs">PKR 10,800</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 10%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">100% Free / Cap</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr><tr class="hover:bg-slate-50/80 transition"><td class="py-3.5 px-4"><div class="font-bold text-slate-900 text-xs">Dr. Tariq Mehmood</div><div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5"><span class="text-blue-600 font-medium">HWT-000008</span><span class="">•</span><span class="">Senior Medical Officer</span></div></td><td class="py-3.5 px-3"><div class="font-mono text-slate-700 text-xs font-semibold">35202-8823901-3</div><div class="text-[11px] text-slate-400 font-mono">0333-5566221</div></td><td class="py-3.5 px-3"><span class="inline-block px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200/80 text-[10px] rounded font-semibold">Emergency (ER)</span></td><td class="py-3.5 px-3 text-right tabular-nums"><div class="font-bold text-slate-900 text-xs">PKR 45,000</div><div class="text-[10px] text-slate-400">Senior Medical</div></td><td class="py-3.5 px-3 text-right font-mono tabular-nums text-slate-600">PKR 18,350</td><td class="py-3.5 px-3 text-right tabular-nums"><span class="font-bold text-slate-900 text-xs">PKR 26,650</span><div class="w-20 ml-auto bg-slate-100 rounded-full h-1.5 mt-1 overflow-hidden"><div class="bg-blue-600 h-1.5 rounded-full" style="width: 40.8%"></div></div></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200/80">100% Free / Cap</span></td><td class="py-3.5 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700">Active</span></td><td class="py-3.5 px-4 text-right whitespace-nowrap"><div class="flex items-center justify-end gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded hover:bg-slate-100 text-slate-700 font-semibold transition">Edit Quota</button><button class="px-2 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 text-blue-600 font-medium transition">Ledger</button></div></td></tr></tbody></table></div><div class="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium"><div class="">Showing <span class="font-semibold text-slate-800">1</span> to <span class="font-semibold text-slate-800">7</span> of <span class="font-semibold text-slate-800">48</span> staff allowances</div><div class="flex items-center gap-1.5"><button class="px-2.5 py-1 text-xs border border-slate-300 rounded bg-white hover:bg-slate-50 text-slate-600 disabled:opacity-50 transition">Previous</button><button class="px-2.5 py-1 text-xs rounded bg-blue-600 text-white font-semibold">1</button><button class="px-2.5 py-1 text-xs border border-slate-300 rounded bg-white hover:bg-slate-50 text-slate-600 transition">2</button><button class="px-2.5 py-1 text-xs border border-slate-300 rounded bg-white hover:bg-slate-50 text-slate-600 transition">3</button><button class="px-2.5 py-1 text-xs border border-slate-300 rounded bg-white hover:bg-slate-50 text-slate-600 transition">Next</button></div></div></div></div>
+<!-- END: TwoColumnWorkspace -->
+</main>
+<!-- END: ScrollableWorkspace -->
+<!-- BEGIN: TelemetryFooter -->
+<footer class="h-8 bg-white border-t border-slate-200 px-6 flex items-center justify-between text-[11px] text-slate-500 flex-shrink-0 select-none"><div class="flex items-center gap-4"><div class="flex items-center gap-1.5 font-mono"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-slate-700 font-semibold">Station ID: NODE-01</span></div><span class="">•</span><div class="font-mono">Engine: <strong class="text-slate-700 font-semibold">SQLite 3.42 WAL Active</strong></div><span class="">•</span><div class=""><strong class="text-slate-700 font-semibold">48 Records</strong> Synced Locally</div><span class="">•</span><div class="text-emerald-600 font-medium">Audit Trail DRAP-Compliant</div></div><div class="flex items-center gap-3"><span class="text-slate-500 font-mono text-[10px]">Hope Welfare Trust Pharmacy Counter Workstation • v2.4.9-pk</span></div></footer>
+<!-- END: TelemetryFooter -->
+</div>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: ApplicationLayout -->
+
+
+</body></html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy Admin - Customers &amp; Patients Directory Workstation | Hope Welfare Trust</title>
+<!-- Tailwind CSS v3 CDN with forms & container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              dark: '#0a1b33',
+              navy: '#0f2d59',
+              active: '#1b3a6b',
+              accent: '#2563eb',
+              light: '#f1f5f9'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom CSS for specific component polish -->
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col">
+<!-- BEGIN: ApplicationLayout -->
+<div class="flex-1 flex min-h-screen">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 fixed inset-y-0 left-0 bg-[#0a1b33] text-slate-300 z-30 flex flex-col border-r border-slate-800 shadow-xl select-none" data-purpose="primary-sidebar">
+<!-- Hospital & Pharmacy Header -->
+<div class="px-5 py-4 border-b border-slate-800/80 bg-[#081528]">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md ring-2 ring-blue-400/30">
+<!-- Medical Cross / Hope Emblem -->
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"></path>
+</svg>
+</div>
+<div>
+<h1 class="font-bold text-sm text-white tracking-wide leading-tight">HOPE WELFARE TRUST</h1>
+<p class="text-[11px] text-blue-300/80 font-medium">Hospital Pharmacy Portal</p>
+</div>
+</div>
+<!-- Local Network Node Badge -->
+<div class="mt-3.5 inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/70 text-emerald-400 border border-emerald-700/50 text-[10px] font-mono tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+<span>Node 01 OK • 192.168.1.10</span>
+</div>
+</div>
+<!-- Navigation Tree -->
+<nav class="flex-1 overflow-y-auto px-3 py-3 text-xs space-y-4 font-medium" data-purpose="nav-tree">
+<!-- Section: Executive -->
+<div>
+<span class="px-2 text-[10px] uppercase font-bold tracking-wider text-slate-500">Executive</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Executive Dashboard
+            </a>
+</div>
+</div>
+<!-- Section: Clinical Operations -->
+<div>
+<span class="px-2 text-[10px] uppercase font-bold tracking-wider text-slate-500">Clinical Operations</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Pharmacy Counter (POS)
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Day Close &amp; Z-Report
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Inventory &amp; Formulations
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Departments
+            </a>
+</div>
+</div>
+<!-- Section: Patients & Welfare (Expanded) -->
+<div>
+<span class="px-2 text-[10px] uppercase font-bold tracking-wider text-blue-400">Patients &amp; Welfare</span>
+<div class="mt-1 space-y-0.5">
+<!-- Parent Category Header -->
+<div class="flex items-center justify-between px-2.5 py-1.5 rounded-md text-white font-semibold cursor-pointer">
+<div class="flex items-center">
+<svg class="w-4 h-4 mr-2.5 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Customers &amp; Cards</span>
+</div>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<!-- Child Sub-links -->
+<div class="pl-6 space-y-1 mt-0.5">
+<!-- Active Item -->
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#1b3a6b] text-white font-semibold shadow-inner border-l-2 border-amber-400 transition-all" href="#">
+<span>Customers &amp; Patients</span>
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+</a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors" href="#">
+<span>Welfare Cards</span>
+</a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors" href="#">
+<span>Tiers &amp; Subsidy Funds</span>
+</a>
+</div>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Credit Accounts &amp; Pledges
+            </a>
+</div>
+</div>
+<!-- Section: Finance & Operations -->
+<div>
+<span class="px-2 text-[10px] uppercase font-bold tracking-wider text-slate-500">Finance &amp; Operations</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Billing &amp; Invoices
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Returns &amp; Claims
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Cash Flow
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Vendors
+            </a>
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Subsidy Reports
+            </a>
+</div>
+</div>
+<!-- Section: Governance -->
+<div>
+<span class="px-2 text-[10px] uppercase font-bold tracking-wider text-slate-500">Governance</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center px-2.5 py-1.5 rounded-md hover:bg-slate-800/60 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Administration
+            </a>
+</div>
+</div>
+</nav>
+<!-- Bottom Profile Card -->
+<div class="p-3 border-t border-slate-800 bg-[#071220]" data-purpose="user-profile-card">
+<div class="flex items-center space-x-3 mb-2.5">
+<div class="w-9 h-9 rounded-lg bg-amber-500 text-slate-900 font-extrabold flex items-center justify-center text-sm shadow">
+            SA
+          </div>
+<div class="flex-1 min-w-0">
+<h4 class="text-xs font-bold text-white truncate">System Administrator</h4>
+<span class="text-[10px] text-slate-400 font-mono block truncate">Clearance Level 4</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded bg-slate-800/80 hover:bg-red-950/40 hover:text-red-300 text-slate-300 border border-slate-700/60 text-xs transition-colors" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Sign out</span>
+</button>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: WorkspaceContainer -->
+<div class="pl-64 flex-1 flex flex-col min-w-0">
+<!-- Top Application Header Bar -->
+<header class="h-14 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20 shadow-sm" data-purpose="top-header">
+<!-- Breadcrumbs & Hospital Node -->
+<div class="flex items-center space-x-3">
+<span class="font-extrabold text-brand-navy tracking-tight text-sm">HWT HMS <span class="font-normal text-xs text-slate-500">v4.3</span></span>
+<span class="text-slate-300">/</span>
+<nav class="flex items-center space-x-1.5 text-xs text-slate-500 font-medium">
+<span>Patients &amp; Welfare</span>
+<span class="text-slate-300">/</span>
+<span>Customers &amp; Cards</span>
+<span class="text-slate-300">/</span>
+<span class="text-slate-900 font-semibold">Customers &amp; Patients Directory</span>
+</nav>
+</div>
+<!-- Right Side: Terminal Shortcuts & System Telemetry -->
+<div class="flex items-center space-x-4">
+<!-- Keyboard Shortcut Badges -->
+<div class="hidden xl:flex items-center space-x-2 text-[11px] text-slate-500">
+<span class="inline-flex items-center bg-slate-100 border border-slate-300 px-2 py-0.5 rounded font-mono text-slate-700">[Esc] Back</span>
+<span class="inline-flex items-center bg-slate-100 border border-slate-300 px-2 py-0.5 rounded font-mono text-slate-700">[F2] New Customer</span>
+<span class="inline-flex items-center bg-slate-100 border border-slate-300 px-2 py-0.5 rounded font-mono text-slate-700">[F9] Issue Card</span>
+</div>
+<div class="h-4 w-px bg-slate-200 hidden xl:block"></div>
+<!-- Counter Status & Date -->
+<div class="flex items-center space-x-3">
+<span class="inline-flex items-center space-x-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Counter connected</span>
+</span>
+<span class="text-xs font-medium text-slate-500">Wednesday, September 9, 2026</span>
+</div>
+</div>
+</header>
+<!-- Main Workstation Canvas -->
+<main class="flex-1 p-6 space-y-5" data-purpose="workstation-main">
+<!-- Page Title & Quick Navigation Tabs -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div>
+<h2 class="text-xl font-bold text-slate-900 tracking-tight">Customers &amp; Patients Directory</h2>
+<p class="text-xs text-slate-500 mt-0.5">Manage registered OPD patients, hospital staff, and welfare subsidy cardholders. Look up records by phone, name, or CNIC.</p>
+</div>
+<!-- Sub-module Pills (Synchronized with prototype tabs) -->
+<div class="inline-flex bg-slate-200/80 p-1 rounded-lg text-xs font-medium self-start md:self-auto">
+<button class="bg-blue-600 text-white shadow-sm px-3.5 py-1.5 rounded-md font-semibold transition-all" type="button">Customers</button>
+<button class="text-slate-600 hover:text-slate-900 px-3.5 py-1.5 rounded-md transition-all" type="button">Welfare Cards</button>
+<button class="text-slate-600 hover:text-slate-900 px-3.5 py-1.5 rounded-md transition-all" type="button">Tiers &amp; Funds</button>
+</div>
+</div>
+<!-- Search & Control Filter Bar -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3" data-purpose="filter-and-search-toolbar">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+<!-- Search Bar Field -->
+<div class="relative flex-1 max-w-2xl">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<input class="w-full pl-10 pr-24 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="Search by phone number, name, CNIC or customer ID (e.g. 0300... or HWT-000015)" type="text" value="03004267657"/>
+<div class="absolute inset-y-0 right-1.5 flex items-center">
+<span class="text-[11px] font-mono text-slate-400 bg-white border border-slate-200 px-1.5 py-0.5 rounded">Ctrl+F</span>
+</div>
+</div>
+<!-- Primary Action: Register New Patient -->
+<button class="inline-flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm shadow-blue-500/20 transition-all shrink-0" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>+ Register New Customer [F2]</span>
+</button>
+</div>
+<!-- Filter Pills & Helper Note -->
+<div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="text-slate-400 font-medium text-[11px] mr-1">Filter View:</span>
+<button class="px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 font-semibold border border-blue-200">All Customers (16)</button>
+<button class="px-2.5 py-1 rounded-md bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium border border-slate-200">Staff Members (5)</button>
+<button class="px-2.5 py-1 rounded-md bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium border border-slate-200">Welfare Cardholders (1)</button>
+<button class="px-2.5 py-1 rounded-md bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium border border-slate-200">General Walk-ins (10)</button>
+</div>
+<p class="text-[11px] text-slate-400 italic">
+              Mobile first — that is how an account is looked up at the dispensary desk.
+            </p>
+</div>
+</div>
+<!-- BEGIN: DataAndPreviewGrid (Two-Column Layout) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+<!-- LEFT / MAIN TABLE (8 Cols on XL) -->
+<section class="xl:col-span-8 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" data-purpose="customer-table-container">
+<div class="px-4 py-3 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="font-bold text-xs uppercase tracking-wider text-slate-600">Registered Accounts &amp; Subsidy Status</span>
+<span class="bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold">16 Records</span>
+</div>
+<span class="text-[11px] text-slate-500 font-medium">Showing 1-8 of 16</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="bg-slate-50/50 border-b border-slate-200 text-[11px] uppercase tracking-wider font-semibold text-slate-500">
+<th class="py-3 px-3.5">Customer &amp; ID</th>
+<th class="py-3 px-3">Mobile</th>
+<th class="py-3 px-3">Category</th>
+<th class="py-3 px-3">Welfare Card</th>
+<th class="py-3 px-3 text-center">Orders</th>
+<th class="py-3 px-3 text-right">Balance</th>
+<th class="py-3 px-3.5 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-normal text-slate-700">
+<!-- Row 1: Selected / Highlighted Customer (Muhammad Rana) -->
+<tr class="bg-blue-50/50 hover:bg-blue-50 transition-colors border-l-4 border-l-blue-600">
+<td class="py-3 px-3.5">
+<div class="font-bold text-blue-900 text-[13px] flex items-center space-x-1.5">
+<span>Muhammad Rana</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500" title="Active"></span>
+</div>
+<div class="text-[11px] text-slate-500 font-mono">HWT-000015 • Male, 46 Yrs</div>
+</td>
+<td class="py-3 px-3 font-mono font-medium text-slate-800">
+                      03004267657
+                    </td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                        registered
+                      </span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+                        50% • HWC-00001
+                      </span>
+</td>
+<td class="py-3 px-3 text-center font-mono font-semibold">3</td>
+<td class="py-3 px-3 text-right font-mono font-semibold text-slate-600">Rs 0</td>
+<td class="py-3 px-3.5 text-right whitespace-nowrap space-x-1">
+<button class="px-2.5 py-1 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 text-[11px] shadow-sm">View</button>
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Card</button>
+</td>
+</tr>
+<!-- Row 2: Nasreen Bibi (Staff) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Nasreen Bibi</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000016 • Female, 38 Yrs</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03001112221</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                        staff
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">1</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap space-x-1">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+<!-- Row 3: Bashir Ahmed (Staff) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Bashir Ahmed</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000017 • Male, 44 Yrs</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03001112222</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                        staff
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">0</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+<!-- Row 4: Saima Yousaf (Staff) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Saima Yousaf</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000018 • Female, 29 Yrs</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03001112223</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                        staff
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">0</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+<!-- Row 5: Muhammad Iqbal (Staff) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Muhammad Iqbal</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000019 • Male, 33 Yrs</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03001112224</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                        staff
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">0</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+<!-- Row 6: Rehana Kausar (Staff) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Rehana Kausar</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000020 • Female, 41 Yrs</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03001112225</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                        staff
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">2</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+<!-- Row 7: Test Trickle UP -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Test Trickle UP</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000014</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03005678765</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                        registered
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">0</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+<!-- Row 8: Consented Patient -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-3.5">
+<div class="font-semibold text-slate-900 text-xs">Consented Patient</div>
+<div class="text-[10px] text-slate-400 font-mono">HWT-000003</div>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">03119999999</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                        registered
+                      </span>
+</td>
+<td class="py-2.5 px-3 text-slate-400 font-mono">—</td>
+<td class="py-2.5 px-3 text-center font-mono">1</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-500">Rs 0</td>
+<td class="py-2.5 px-3.5 text-right whitespace-nowrap">
+<button class="px-2 py-1 rounded bg-slate-100 border border-slate-300 text-slate-700 font-medium hover:bg-slate-200 text-[11px]">Open</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Bar -->
+<div class="px-4 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+<span class="font-mono text-[11px]">Page 1 of 2 (16 Total)</span>
+<div class="inline-flex space-x-1">
+<button class="px-2.5 py-1 rounded border border-slate-300 bg-white text-slate-400 cursor-not-allowed">Previous</button>
+<button class="px-2.5 py-1 rounded border border-blue-600 bg-blue-600 text-white font-medium">1</button>
+<button class="px-2.5 py-1 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-100">2</button>
+<button class="px-2.5 py-1 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-100">Next</button>
+</div>
+</div>
+</section>
+<!-- RIGHT / DETAIL PANEL: Selected Customer Preview (4 Cols on XL) -->
+<aside class="xl:col-span-4 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col" data-purpose="active-profile-drawer">
+<!-- Profile Header -->
+<div class="p-4 bg-gradient-to-r from-blue-900 to-slate-900 text-white">
+<div class="flex items-start justify-between">
+<div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-200 border border-blue-400/30">HWT-000015</span>
+<h3 class="text-base font-bold tracking-tight text-white mt-1">Muhammad Rana</h3>
+<p class="text-xs text-blue-200 font-medium">Verified Mustahiq (Zakat Eligible)</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-blue-600/50 border border-blue-300/40 flex items-center justify-center font-bold text-white text-sm">
+                  MR
+                </div>
+</div>
+<!-- Key Demographic Metadata Grid -->
+<div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-blue-800/60 text-[11px]">
+<div>
+<span class="text-blue-300/80 block text-[10px]">CNIC:</span>
+<span class="font-mono font-medium">35202-7841923-1</span>
+</div>
+<div>
+<span class="text-blue-300/80 block text-[10px]">Mobile:</span>
+<span class="font-mono font-medium">03004267657</span>
+</div>
+<div class="col-span-2">
+<span class="text-blue-300/80 block text-[10px]">Permanent Address:</span>
+<span class="truncate block">House 14, St 3, Township, Lahore, Punjab</span>
+</div>
+</div>
+</div>
+<div class="p-4 space-y-4 flex-1">
+<!-- Welfare Card Status Container -->
+<div class="border border-blue-200 bg-blue-50/60 rounded-lg p-3 relative" data-purpose="welfare-card-badge">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[10px] uppercase font-bold tracking-wider text-blue-800">Active Welfare Pass</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Active</span>
+</div>
+<div class="flex items-baseline space-x-2">
+<span class="text-lg font-extrabold text-blue-900">50% Half Support</span>
+<span class="text-xs font-mono font-semibold text-blue-700">HWC-00001</span>
+</div>
+<div class="mt-2 space-y-1 text-xs text-slate-600">
+<div class="flex justify-between">
+<span class="text-slate-500">Expiry Date:</span>
+<span class="font-medium text-slate-800">2027-03-08</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Monthly Ceiling:</span>
+<span class="font-mono font-medium text-slate-800">Rs. 15,000 / mo</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Assigned Sponsor:</span>
+<span class="font-medium text-slate-800">General Donation Fund</span>
+</div>
+</div>
+</div>
+<!-- Mini Purchase History Log -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Recent Purchases</h4>
+<a class="text-[11px] text-blue-600 hover:underline font-medium" href="#">All orders (3)</a>
+</div>
+<div class="space-y-2 text-xs">
+<!-- Purchase Item 1 -->
+<div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-bold text-slate-800">Metformin 500mg, Panadol 1g</span>
+<span class="font-mono font-bold text-emerald-700">Rs 50</span>
+</div>
+<div class="flex items-center justify-between text-[11px] text-slate-500">
+<span>09-08-2026 • POS Cash</span>
+<span class="text-blue-600 font-medium">Subsidy: Rs 50 (50%)</span>
+</div>
+</div>
+<!-- Purchase Item 2 -->
+<div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-bold text-slate-800">Amoxicillin 500mg (Cap)</span>
+<span class="font-mono font-bold text-emerald-700">Rs 25</span>
+</div>
+<div class="flex items-center justify-between text-[11px] text-slate-500">
+<span>09-08-2026 • POS Cash</span>
+<span class="text-blue-600 font-medium">Subsidy: Rs 25 (50%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Profile Action Footer -->
+<div class="p-3 bg-slate-50 border-t border-slate-200 grid grid-cols-2 gap-2">
+<button class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1 shadow-sm" type="button">
+<span>[F9] Edit Welfare Card</span>
+</button>
+<button class="px-3 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium text-xs transition-colors flex items-center justify-center space-x-1" type="button">
+<span>Print Statement</span>
+</button>
+</div>
+</aside>
+</div>
+<!-- END: DataAndPreviewGrid -->
+</main>
+<!-- BEGIN: TelemetryFooter -->
+<footer class="bg-white border-t border-slate-200 px-6 py-2.5 text-[11px] font-mono text-slate-500 flex flex-wrap items-center justify-between gap-2" data-purpose="bottom-system-telemetry">
+<div class="flex items-center space-x-2">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-semibold text-slate-700">SQLite Local DB: Synced</span>
+<span class="text-slate-300">|</span>
+<span>LAN: 192.168.10.45 [Master Server Online]</span>
+<span class="text-slate-300">|</span>
+<span class="text-blue-700 font-medium">Welfare SRO 2024 Compliant</span>
+</div>
+<div class="flex items-center space-x-3 text-slate-400">
+<span>Shift: Morning (A)</span>
+<span>•</span>
+<span>POS Terminal #1</span>
+<span>•</span>
+<span class="text-slate-600 font-semibold">Build: v4.3-clinical</span>
+</div>
+</footer>
+<!-- END: TelemetryFooter -->
+</div>
+<!-- END: WorkspaceContainer -->
+</div>
+<!-- END: ApplicationLayout -->
+</body></html>

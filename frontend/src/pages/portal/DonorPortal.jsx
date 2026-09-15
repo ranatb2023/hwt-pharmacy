@@ -41,7 +41,7 @@ export default function DonorPortal() {
         {err && <div className="alert err">{err}</div>}
         {dash && (
           <>
-            <div className="grid cols-4 mb">
+            <div className="gx cols-4 mb">
               <Stat label="Patients Served" value={dash.patients_served} />
               <Stat label="Complete-Free Patients" value={dash.free_patients} />
               <Stat label="Total Subsidy Given" value={money(dash.total_subsidy)} accent />
@@ -49,7 +49,7 @@ export default function DonorPortal() {
               <Stat label="Lab Tests Done" value={dash.lab_tests_done} />
               <Stat label="Total Donations" value={money(dash.total_donations)} accent />
             </div>
-            <div className="grid cols-2" style={{ gridTemplateColumns: '1fr 1.3fr' }}>
+            <div className="gx cols-2" style={{ gridTemplateColumns: '1fr 1.3fr' }}>
               <Donate token={token} onDone={() => loadDash()} />
               <div className="card">
                 <h3>Your Donations</h3>
@@ -80,7 +80,7 @@ function Donate({ token, onDone }) {
       {receipt && <div className="alert ok">Thank you! Receipt {receipt.receipt_no} for {money(receipt.amount)}.</div>}
       <div className="field"><label>Amount</label><input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} /></div>
       <div className="field"><label>Purpose</label><Select value={purpose} onChange={(e) => setPurpose(e.target.value)}><option>General fund</option><option>Dialysis fund</option><option>Free medicine fund</option><option>Lab & diagnostics</option></Select></div>
-      <label className="flex" style={{ gap: 8 }}><input type="checkbox" style={{ width: 'auto' }} checked={isPledge} onChange={(e) => setIsPledge(e.target.checked)} /> This is a pledge (not yet paid)</label>
+      <label className="fx" style={{ gap: 8 }}><input type="checkbox" checked={isPledge} onChange={(e) => setIsPledge(e.target.checked)} /> This is a pledge (not yet paid)</label>
       <button className="btn primary mt" onClick={submit} disabled={!amount}>Donate</button>
     </div>
   );
@@ -139,7 +139,7 @@ export function PortalHeader({ title, name, onLogout, sync, patientCode }) {
   return (
     <header className="portal-head">
       <div><b>{title}</b>{patientCode && <span className="mono" style={{ marginLeft: 8 }}>{patientCode}</span>}</div>
-      <div className="flex">
+      <div className="fx">
         <span className="muted" style={{ fontSize: 12 }}>Last sync: {sync ? sync.slice(0, 19).replace('T', ' ') : 'pending'}</span>
         <span>{name}</span>
         <button className="btn ghost sm" onClick={onLogout}>Sign out</button>

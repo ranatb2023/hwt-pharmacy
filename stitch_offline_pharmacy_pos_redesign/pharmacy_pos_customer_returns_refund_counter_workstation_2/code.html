@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface":"#f8f9ff","on-tertiary":"#ffffff","secondary-fixed":"#d7e3ff","on-tertiary-fixed-variant":"#005137","inverse-surface":"#213145","on-secondary":"#ffffff","tertiary-container":"#003523","on-primary-fixed-variant":"#2c4674","surface-container-highest":"#d3e4fe","inverse-primary":"#adc7fc","on-primary-container":"#7c95c8","secondary":"#005cba","secondary-fixed-dim":"#aac7ff","secondary-container":"#5095fe","error-container":"#ffdad6","on-background":"#0b1c30","inverse-on-surface":"#eaf1ff","surface-container-low":"#eff4ff","tertiary":"#001e12","surface-bright":"#f8f9ff","on-tertiary-fixed":"#002114","on-tertiary-container":"#2ca879","on-secondary-fixed":"#001b3e","on-secondary-container":"#002d61","on-error-container":"#93000a","outline":"#747780","primary-fixed":"#d7e2ff","error":"#ba1a1a","on-primary-fixed":"#001b3f","primary":"#00183b","on-error":"#ffffff","tertiary-fixed":"#85f8c4","on-surface-variant":"#44474f","outline-variant":"#c4c6d0","surface-dim":"#cbdbf5","tertiary-fixed-dim":"#68dba9","on-primary":"#ffffff","surface-tint":"#455e8d","background":"#f8f9ff","surface-container-high":"#dce9ff","primary-fixed-dim":"#adc7fc","on-secondary-fixed-variant":"#00458e","surface-variant":"#d3e4fe","primary-container":"#0f2d59","surface-container":"#e5eeff","surface-container-lowest":"#ffffff","on-surface":"#0b1c30"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xs":"0.125rem","container-pad":"1.5rem","table-row-h":"2.25rem","space-xs":"0.25rem","space-sm":"0.5rem","pos-sidebar-w":"340px","space-md":"0.75rem","space-2xl":"1.5rem","space-lg":"1rem","space-xl":"1.25rem","space-3xl":"2rem"},"fontFamily":{"label-caps":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"data-display-lg":["JetBrains Mono"],"label-shortcut":["JetBrains Mono"],"data-display-md":["JetBrains Mono"],"headline-lg":["Manrope"],"headline-md":["Manrope"],"body-sm":["Inter"],"data-table":["JetBrains Mono"],"headline-xl":["Manrope"]},"fontSize":{"label-caps":["10px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"700"}],"body-lg":["15px",{"lineHeight":"22px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"data-display-lg":["28px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-shortcut":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"700"}],"data-display-md":["16px",{"lineHeight":"22px","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","fontWeight":"700"}],"headline-md":["18px",{"lineHeight":"24px","fontWeight":"600"}],"body-sm":["11px",{"lineHeight":"16px","fontWeight":"400"}],"data-table":["12px",{"lineHeight":"16px","fontWeight":"500"}],"headline-xl":["32px",{"lineHeight":"40px","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface select-none antialiased">
+<!-- 2-Tier Master Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant shadow-[0_1px_4px_rgba(15,45,89,0.05)]">
+<!-- Header Tier 1: Identity & Telemetry Status Pills -->
+<div class="h-12 w-full px-space-lg flex items-center justify-between border-b border-outline-variant/60 gap-space-md">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 bg-primary-container rounded flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-on-primary text-[18px]">local_pharmacy</span>
+</div>
+<div>
+<div class="font-headline-md text-body-md uppercase tracking-wider text-primary font-bold leading-tight">Hope Welfare Trust</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant leading-none">Hospital Management &amp; Pharmacy System</div>
+</div>
+</div>
+<div class="h-5 w-px bg-outline-variant"></div>
+<!-- Hardware Telemetry Status Pills -->
+<div class="flex items-center gap-space-xs">
+<div class="flex items-center gap-space-xs px-space-sm py-0.5 rounded bg-surface-container border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span class="font-label-shortcut text-label-shortcut text-primary-container font-semibold">Counter 01 Connected</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-0.5 rounded bg-surface-container border border-outline-variant font-data-table text-data-table text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-secondary">print</span>
+<span class="font-medium text-primary">Citizen POS-80 USB: Ready</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-0.5 rounded bg-surface-container-low border border-outline-variant font-data-table text-data-table text-on-surface-variant">
+<span class="text-on-surface-variant font-medium">Station:</span>
+<span class="text-primary font-bold">POS-WS-01</span>
+</div>
+<div class="hidden xl:flex items-center gap-space-xs px-space-sm py-0.5 rounded bg-surface-container-low border border-outline-variant font-data-table text-data-table text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary">lan</span>
+<span>LAN: 192.168.10.45 [Master Online]</span>
+</div>
+</div>
+</div>
+<!-- Right Side: Real-time Clock & Duty Pharmacist Profile -->
+<div class="flex items-center gap-space-md">
+<div class="text-right hidden sm:block">
+<div class="font-data-table text-data-table text-primary font-bold leading-tight">14:28:42 PST</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant leading-none">08-Sep-2026 • Shift A</div>
+</div>
+<div class="h-6 w-px bg-outline-variant hidden sm:block"></div>
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-body-sm">
+          TM
+        </div>
+<div class="text-left leading-tight hidden md:block">
+<div class="font-headline-md text-body-sm text-primary font-bold">Tariq Mahmood, R.Ph</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Duty Pharmacist</div>
+</div>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container hover:text-error transition-colors ml-1" title="Sign out">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Header Tier 2: Navigation Hotkey Dock -->
+<div class="h-10 w-full px-space-lg bg-surface-container-low flex items-center justify-between gap-space-md overflow-x-auto">
+<nav class="flex items-center gap-space-xs font-label-shortcut text-label-shortcut">
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors border border-outline-variant/60 shadow-2xs">
+<span class="bg-surface-container-high text-primary px-1 rounded font-bold">F2</span>
+<span>Main POS</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors border border-outline-variant/60 shadow-2xs">
+<span class="bg-surface-container-high text-primary px-1 rounded font-bold">F7</span>
+<span>Requisitions</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors border border-outline-variant/60 shadow-2xs">
+<span class="bg-surface-container-high text-primary px-1 rounded font-bold">F3</span>
+<span>Inventory &amp; DRAP</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors border border-outline-variant/60 shadow-2xs">
+<span class="bg-surface-container-high text-primary px-1 rounded font-bold">F8</span>
+<span>Vendors &amp; Orders</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors border border-outline-variant/60 shadow-2xs">
+<span class="bg-surface-container-high text-primary px-1 rounded font-bold">F5</span>
+<span>Customers &amp; Welfare</span>
+</button>
+<!-- Active Tab: F6 Returns & Refunds -->
+<button class="flex items-center gap-space-xs px-space-md py-1 rounded bg-primary-container text-on-primary shadow-sm border border-primary font-bold">
+<span class="bg-secondary-container text-on-secondary px-1.5 rounded font-bold">F6</span>
+<span>Returns &amp; Refunds</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors border border-outline-variant/60 shadow-2xs">
+<span class="bg-surface-container-high text-primary px-1 rounded font-bold">F10</span>
+<span>Day Close / Till</span>
+</button>
+</nav>
+<!-- Sub-status badge -->
+<div class="hidden lg:flex items-center gap-space-xs font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-on-tertiary-container">verified_user</span>
+<span class="font-bold text-primary">DRAP Return Protocol Sec 14-B Enforcement Active</span>
+</div>
+</div>
+</header>
+<!-- Main App Workspace (Full Width, Zero Sidebar) -->
+<main class="w-full pt-[88px] pb-10 bg-surface min-h-screen">
+<!-- Subheader Breadcrumbs & Omnibar Strip -->
+<div class="w-full bg-surface-container-lowest border-b border-outline-variant px-space-lg py-space-sm shadow-xs">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div>
+<div class="font-label-caps text-label-caps text-secondary font-bold uppercase tracking-wider">
+          PHARMACY DISPENSING / CUSTOMER RETURNS &amp; REFUNDS
+        </div>
+<h1 class="font-headline-lg text-headline-md text-primary font-bold tracking-tight">
+          Customer Returns &amp; Medicine Refund Workstation
+        </h1>
+</div>
+<!-- Omnibar Bill Lookup Input & Action Buttons -->
+<div class="flex items-center gap-space-xs flex-wrap">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">receipt_long</span>
+<input class="pl-8 pr-12 py-1.5 bg-surface-container-low border border-outline-variant font-data-table text-data-table text-primary rounded outline-none focus:border-secondary focus:bg-surface-container-lowest transition-colors w-64 md:w-80" placeholder="Bill # or Scan Barcode [Ctrl+K]..." type="text" value="INV-202609-00019"/>
+<span class="absolute right-2 font-label-caps text-[9px] bg-surface-container-high text-on-surface-variant px-1 rounded font-bold uppercase">Ctrl+K</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-secondary hover:bg-on-secondary-fixed-variant text-on-secondary font-label-shortcut text-label-shortcut shadow-xs transition-colors">
+<span class="material-symbols-outlined text-[15px]">sync_alt</span>
+<span>Load Bill</span>
+<span class="bg-primary text-on-primary text-[9px] px-1 rounded font-data-table">Enter</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container text-primary hover:bg-surface-container-high font-label-shortcut text-label-shortcut border border-outline-variant transition-colors">
+<span class="bg-surface-container-highest px-1 rounded text-primary text-[10px]">Esc</span>
+<span>Back to POS</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Workspace Container: Full Width with Padding -->
+<div class="w-full px-space-lg py-space-md flex flex-col gap-space-md">
+<!-- Top Quick Metrics Strip: 4 Balanced Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant/80 shadow-xs flex items-center justify-between">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold">Today's Returns</div>
+<div class="font-data-display-lg text-headline-lg text-primary font-bold tracking-tight mt-0.5">03 Slips</div>
+<div class="font-body-sm text-body-sm text-secondary font-semibold mt-0.5">PKR 420.00 Refunded</div>
+</div>
+<div class="w-10 h-10 rounded bg-surface-container-low border border-outline-variant/60 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">assignment_return</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant/80 shadow-xs flex items-center justify-between">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold">Restocked to Inventory</div>
+<div class="font-data-display-lg text-headline-lg text-primary font-bold tracking-tight mt-0.5">14 Units</div>
+<div class="font-body-sm text-body-sm text-on-tertiary-container font-semibold mt-0.5">100% Batch Inspected</div>
+</div>
+<div class="w-10 h-10 rounded bg-surface-container border border-outline-variant/60 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-[22px]">inventory_2</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant/80 shadow-xs flex items-center justify-between">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold">Discarded / Damaged</div>
+<div class="font-data-display-lg text-headline-lg text-error font-bold tracking-tight mt-0.5">0 Units</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant font-medium mt-0.5">Nil Quarantine • Clean Run</div>
+</div>
+<div class="w-10 h-10 rounded bg-error-container/40 border border-outline-variant/60 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]">delete_sweep</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant/80 shadow-xs flex items-center justify-between">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold">Refund Method Split</div>
+<div class="font-data-display-md text-data-display-md text-primary font-bold mt-1">Cash Till PKR 420.00</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Credit Ledger PKR 0.00</div>
+</div>
+<div class="w-10 h-10 rounded bg-surface-container-low border border-outline-variant/60 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid (60% Left / 40% Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<!-- LEFT COLUMN (60% ~ 7 Cols in 12-grid) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Original Bill Info Banner -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant shadow-xs">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/60 mb-space-xs">
+<div class="flex items-center gap-space-xs font-headline-md text-body-md text-primary font-bold">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<span>Original Dispensed Invoice Verification</span>
+</div>
+<span class="font-label-caps text-label-caps bg-surface-container text-secondary px-space-xs py-0.5 rounded font-bold uppercase border border-outline-variant/50">
+              Verified DRAP Dispensation
+            </span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm font-body-sm pt-1">
+<div class="bg-surface-container-low p-space-xs rounded border border-outline-variant/40">
+<div class="font-label-caps text-[10px] text-on-surface-variant uppercase font-semibold">Bill Number</div>
+<div class="font-data-table text-data-table text-primary font-bold mt-0.5">INV-202609-00019</div>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded border border-outline-variant/40">
+<div class="font-label-caps text-[10px] text-on-surface-variant uppercase font-semibold">Dispensed Date / Time</div>
+<div class="font-data-table text-data-table text-primary font-semibold mt-0.5">08-Sep-2026 12:09 PM</div>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded border border-outline-variant/40">
+<div class="font-label-caps text-[10px] text-on-surface-variant uppercase font-semibold">Dispensing Cashier</div>
+<div class="text-primary font-medium mt-0.5 truncate">Tariq Mahmood (C-01)</div>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded border border-outline-variant/40">
+<div class="font-label-caps text-[10px] text-on-surface-variant uppercase font-semibold">Patient / Beneficiary</div>
+<div class="text-secondary font-bold mt-0.5 truncate">Rehana Kausar</div>
+<div class="text-[10px] font-label-caps text-on-tertiary-container font-semibold">Staff Dependent - 50% Subsidy</div>
+</div>
+</div>
+</div>
+<!-- Dispensed Items Return Selection Table -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant shadow-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-headline-md text-body-md text-primary font-bold">
+<span class="material-symbols-outlined text-secondary text-[18px]">rule</span>
+<span>Dispensed Line Items Inspection &amp; Return Select</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">
+              Select items to return &amp; inspect blister seal integrity
+            </span>
+</div>
+<div class="w-full overflow-x-auto">
+<div class="min-w-[620px]">
+<!-- Table Headers -->
+<div class="bg-surface-container-low px-space-sm py-space-xs rounded flex items-center font-label-caps text-label-caps text-on-surface-variant uppercase font-bold border border-outline-variant/40">
+<div class="w-8 text-center">Ret</div>
+<div class="w-48">Medicine &amp; Batch</div>
+<div class="w-24 text-center">Dispensed</div>
+<div class="w-28 text-center">Return Qty</div>
+<div class="w-36 text-center">Condition / Action</div>
+<div class="flex-1 text-right">Refund Payable</div>
+</div>
+<!-- Row 1: Amoxicillin (Selected for Return, Restockable) -->
+<div class="p-space-sm rounded my-space-xs border border-secondary/30 bg-secondary/5 flex flex-col gap-space-xs shadow-2xs">
+<div class="flex items-center">
+<div class="w-8 text-center">
+<input checked="" class="w-4 h-4 accent-secondary rounded cursor-pointer" type="checkbox"/>
+</div>
+<div class="w-48">
+<div class="font-headline-md text-body-md text-primary font-bold">Amoxicillin 500mg Caps</div>
+<div class="font-data-table text-[11px] text-on-surface-variant">Batch: <span class="font-bold text-primary">#B4490</span> • Exp: 11/2027</div>
+<div class="font-data-table text-[10px] text-outline">DRAP Reg #001294</div>
+</div>
+<div class="w-24 text-center font-data-table text-data-table text-primary font-semibold">
+                    2 Strips <span class="block text-[11px] text-on-surface-variant font-normal">@ Rs. 80.00</span>
+</div>
+<div class="w-28 flex items-center justify-center">
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded font-data-table text-data-table">
+<button class="w-6 h-6 flex items-center justify-center bg-surface-container text-primary font-bold hover:bg-surface-container-high transition-colors">-</button>
+<input class="w-9 text-center bg-transparent font-bold text-primary outline-none" type="text" value="1 Strip"/>
+<button class="w-6 h-6 flex items-center justify-center bg-surface-container text-primary font-bold hover:bg-surface-container-high transition-colors">+</button>
+</div>
+</div>
+<div class="w-36 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded font-label-caps text-label-caps bg-surface-container text-on-tertiary-container font-bold border border-outline-variant/40">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>
+                      Intact Blister (Restockable)
+                    </span>
+</div>
+<div class="flex-1 text-right">
+<div class="font-data-display-md text-data-display-md text-primary font-bold">Rs. 40.00</div>
+<div class="font-label-caps text-[10px] text-secondary font-semibold leading-none">Net of 50% subsidy</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Flygel 2000 (Selected for Return, Damaged/Destroy) -->
+<div class="p-space-sm rounded my-space-xs border border-secondary/30 bg-secondary/5 flex flex-col gap-space-xs shadow-2xs">
+<div class="flex items-center">
+<div class="w-8 text-center">
+<input checked="" class="w-4 h-4 accent-secondary rounded cursor-pointer" type="checkbox"/>
+</div>
+<div class="w-48">
+<div class="font-headline-md text-body-md text-primary font-bold">Flygel 2000</div>
+<div class="font-data-table text-[11px] text-on-surface-variant">Batch: <span class="font-bold text-primary">#1226</span> • Exp: 09/2026</div>
+<div class="font-data-table text-[10px] text-outline">Sanofi • Liquid Suspension</div>
+</div>
+<div class="w-24 text-center font-data-table text-data-table text-primary font-semibold">
+                    1 Strip <span class="block text-[11px] text-on-surface-variant font-normal">@ Rs. 50.00</span>
+</div>
+<div class="w-28 flex items-center justify-center">
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded font-data-table text-data-table">
+<button class="w-6 h-6 flex items-center justify-center bg-surface-container text-primary font-bold hover:bg-surface-container-high transition-colors">-</button>
+<input class="w-9 text-center bg-transparent font-bold text-primary outline-none" type="text" value="1 Strip"/>
+<button class="w-6 h-6 flex items-center justify-center bg-surface-container text-primary font-bold hover:bg-surface-container-high transition-colors">+</button>
+</div>
+</div>
+<div class="w-36 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded font-label-caps text-label-caps bg-error-container text-error font-bold border border-error/20">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                      Seal Broken / Destroy
+                    </span>
+</div>
+<div class="flex-1 text-right">
+<div class="font-data-display-md text-data-display-md text-primary font-bold">Rs. 25.00</div>
+<div class="font-label-caps text-[10px] text-secondary font-semibold leading-none">Net of 50% subsidy</div>
+</div>
+</div>
+</div>
+<!-- Row 3: Panadol 500mg (Unselected, Qty 0) -->
+<div class="p-space-sm rounded my-space-xs border border-outline-variant/60 bg-surface-container-lowest opacity-65 flex flex-col gap-space-xs">
+<div class="flex items-center">
+<div class="w-8 text-center">
+<input class="w-4 h-4 accent-secondary rounded cursor-pointer" type="checkbox"/>
+</div>
+<div class="w-48">
+<div class="font-headline-md text-body-md text-primary font-bold">Panadol 500mg</div>
+<div class="font-data-table text-[11px] text-on-surface-variant">Batch: <span class="font-bold text-primary">#8812</span> • Exp: 05/2028</div>
+<div class="font-data-table text-[10px] text-outline">GSK • Paracetamol</div>
+</div>
+<div class="w-24 text-center font-data-table text-data-table text-primary font-semibold">
+                    2 Strips <span class="block text-[11px] text-on-surface-variant font-normal">@ Rs. 30.00</span>
+</div>
+<div class="w-28 text-center font-data-table text-data-table text-outline font-semibold">
+                    0 Strips
+                  </div>
+<div class="w-36 text-center font-body-sm text-body-sm text-outline">
+                    Retained by Patient
+                  </div>
+<div class="flex-1 text-right">
+<div class="font-data-display-md text-data-display-md text-outline font-bold">Rs. 0.00</div>
+<div class="font-label-caps text-[10px] text-outline leading-none">No Return Claimed</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Return Reason & Pharmacist Clinical Sign-off note -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant shadow-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-body-md text-primary font-bold flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">clinical_notes</span>
+<span>Clinical Justification &amp; Pharmacist Sign-Off</span>
+</span>
+<span class="font-label-caps text-label-caps text-secondary uppercase font-bold bg-surface-container px-space-xs py-0.5 rounded">
+              DRAP Form 14 Clinical Protocol
+            </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase font-bold mb-1">Return Reason Category:</label>
+<select class="w-full bg-surface-container-low border border-outline-variant font-body-sm text-primary p-2 rounded outline-none focus:bg-surface-container-lowest focus:border-secondary">
+<option selected="">Prescription changed by physician</option>
+<option>Adverse reaction / intolerance</option>
+<option>Excess quantity purchased</option>
+<option>Damaged foil packaging</option>
+</select>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase font-bold mb-1">Supervisor Clinical Review:</label>
+<div class="bg-surface-container-low border border-outline-variant font-body-sm text-primary px-2 py-1.5 rounded flex items-center justify-between">
+<span class="font-medium text-primary">Tariq Mahmood, R.Ph (#PB-74291)</span>
+<span class="font-label-caps text-label-caps text-on-tertiary-container font-bold">Authorized</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase font-bold mb-1">Clinical Assessment Notes:</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant p-2 rounded text-body-sm font-body-md text-primary focus:bg-surface-container-lowest focus:border-secondary outline-none transition-colors" placeholder="Enter clinical assessment notes..." rows="2">Physician Dr. Farooq Ahmad adjusted antibiotic regimen following culture test. Amoxicillin strip intact, seal inspected and cleared for restock to Batch #B4490. Flygel 2000 seal cut by patient, marked for disposal/destruction as per DRAP protocols.</textarea>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded border border-outline-variant/60 flex items-center gap-space-xs">
+<input checked="" class="w-4 h-4 accent-secondary rounded cursor-pointer" id="clinical_confirm" type="checkbox"/>
+<label class="text-body-sm text-primary font-medium cursor-pointer" for="clinical_confirm">
+              I verify as Duty Pharmacist that the returned items have been physically examined and segregated in compliance with DRAP Sec 14-B.
+            </label>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN (40% ~ 5 Cols in 12-grid) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Refund Settlement & Cash Drawer Adjustment Card -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant shadow-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-space-xs">
+<div class="flex items-center gap-space-xs font-headline-md text-body-md text-primary font-bold">
+<span class="material-symbols-outlined text-secondary text-[18px]">price_change</span>
+<span>Refund Settlement &amp; Cash Drawer Adjustment</span>
+</div>
+<span class="font-label-caps text-label-caps bg-surface-container text-primary font-bold px-1.5 py-0.5 rounded">
+              Counter 01
+            </span>
+</div>
+<!-- Prominent Clinical Refund Display -->
+<div class="bg-surface-container-low p-space-md rounded border border-outline-variant/60 flex flex-col items-center justify-center text-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold tracking-wider">Total Net Cash Refund Payable</span>
+<div class="font-data-display-lg text-headline-xl text-secondary font-extrabold tracking-tight mt-1">
+              PKR 65.00
+            </div>
+<span class="font-body-sm text-body-sm text-on-tertiary-container font-semibold mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+              Refund Approved • Disburse from Till Float
+            </span>
+</div>
+<!-- Calculation Breakdown -->
+<div class="bg-surface-container-low p-space-sm rounded border border-outline-variant/60 flex flex-col gap-1.5 font-body-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Gross Medicine Value (Returned Units):</span>
+<span class="font-data-table text-primary font-bold">PKR 130.00</span>
+</div>
+<div class="flex items-center justify-between text-secondary">
+<span class="flex items-center gap-1">
+<span>Less: Trust Subsidy Clawback (50%):</span>
+<span class="material-symbols-outlined text-[13px]">undo</span>
+</span>
+<span class="font-data-table font-bold">- PKR 65.00</span>
+</div>
+<div class="h-px bg-outline-variant my-1"></div>
+<div class="flex items-center justify-between font-bold">
+<span class="text-primary">Net Cash Refund to Patient:</span>
+<span class="font-data-table text-secondary text-headline-md font-bold">PKR 65.00</span>
+</div>
+</div>
+<!-- Refund Disbursement Method Selector -->
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold">Refund Disbursement Method:</span>
+<div class="grid grid-cols-3 gap-space-2xs text-center font-label-shortcut text-label-shortcut">
+<button class="py-2 px-1 rounded bg-primary-container text-on-primary font-bold flex flex-col items-center gap-1 shadow-xs border border-primary">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+<span>Cash Counter Till</span>
+</button>
+<button class="py-2 px-1 rounded bg-surface-container text-primary hover:bg-surface-container-high border border-outline-variant/60 flex flex-col items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">account_balance_wallet</span>
+<span>Credit Ledger</span>
+</button>
+<button class="py-2 px-1 rounded bg-surface-container text-primary hover:bg-surface-container-high border border-outline-variant/60 flex flex-col items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">person_outline</span>
+<span>Patient Float</span>
+</button>
+</div>
+</div>
+<!-- Drawer Action & Auth PIN -->
+<div class="flex flex-col gap-space-xs pt-1">
+<div class="bg-surface-container p-space-xs rounded flex items-center justify-between">
+<label class="flex items-center gap-space-xs text-body-sm text-primary font-medium cursor-pointer" for="drawer_kick">
+<input checked="" class="w-4 h-4 accent-secondary rounded cursor-pointer" id="drawer_kick" type="checkbox"/>
+<span>Auto Cash Drawer Kick on Refund <kbd class="font-data-table text-[10px] bg-surface-container-highest px-1 py-0.5 rounded font-bold">[Alt+A]</kbd></span>
+</label>
+<span class="font-label-caps text-[10px] text-on-tertiary-container font-bold">Port COM1 Ready</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">lock</span>
+<input class="w-full pl-8 pr-2 py-1.5 bg-surface-container-low border border-outline-variant rounded font-data-table text-data-table text-primary outline-none focus:border-secondary" placeholder="Supervisor Auth PIN (e.g. 7429)" type="password" value="••••"/>
+</div>
+<span class="font-label-caps text-label-caps text-on-tertiary-container font-bold px-2 py-1 bg-surface-container rounded border border-outline-variant/60">
+                PIN Verified
+              </span>
+</div>
+<!-- Big Action Button -->
+<button class="w-full py-2.5 px-space-md rounded bg-primary-container hover:bg-primary text-on-primary font-headline-md text-body-md font-bold shadow transition-all flex items-center justify-center gap-space-xs border border-primary/40">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+<span>[F9 / Alt+R] Process Refund &amp; Print Thermal Return Note</span>
+</button>
+</div>
+</div>
+<!-- Live 80mm Citizen POS-80 Thermal Return Receipt Preview -->
+<div class="bg-surface-container-lowest p-space-md rounded border border-outline-variant shadow-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-space-xs">
+<span class="font-headline-md text-body-md text-primary font-bold flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">receipt</span>
+<span>Live 80mm Thermal Receipt Preview</span>
+</span>
+<span class="font-label-caps text-label-caps bg-surface-container px-space-xs py-0.5 rounded text-on-tertiary-container font-bold border border-outline-variant/50">
+              Citizen POS-80 • 80mm Roll
+            </span>
+</div>
+<!-- Physical 80mm Slip Simulation Card -->
+<div class="bg-surface-container-low p-space-md rounded border border-outline-variant shadow-inner flex flex-col gap-space-xs font-data-table text-data-table text-primary">
+<!-- Header -->
+<div class="text-center pb-space-xs border-b border-dashed border-outline">
+<div class="font-headline-md text-body-sm font-extrabold uppercase tracking-wider text-primary">Hope Welfare Trust Pharmacy</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">G.T. Road, Gujranwala • Tel: 055-3891000</div>
+<div class="font-label-caps text-label-caps uppercase mt-1 text-secondary font-bold">CREDIT NOTE / RETURN VOUCHER</div>
+<div class="text-[10px] text-on-surface-variant">DRAP Dispensing Reg: PK-HWT-0041</div>
+</div>
+<!-- Receipt Metadata -->
+<div class="flex flex-col gap-0.5 py-1 text-body-sm border-b border-dashed border-outline">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Slip #:</span>
+<span class="font-bold text-primary">RET-202609-0004</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Ref Bill:</span>
+<span class="font-bold text-primary">INV-202609-00019</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Date / Time:</span>
+<span>08-Sep-2026 12:18 PM</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Patient:</span>
+<span class="font-bold">Rehana Kausar (Staff Dep 50%)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Cashier:</span>
+<span>Tariq Mahmood, R.Ph</span>
+</div>
+</div>
+<!-- Returned Item Details -->
+<div class="flex flex-col gap-1 py-1 text-body-sm border-b border-dashed border-outline">
+<div>
+<div class="flex justify-between font-bold">
+<span>1. Amoxicillin 500mg Caps</span>
+<span>Rs. 40.00</span>
+</div>
+<div class="flex justify-between text-[11px] text-on-surface-variant">
+<span>Batch #B4490 (Exp 11/2027) • Qty: 1</span>
+<span>[RESTOCKED]</span>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-bold">
+<span>2. Flygel 2000 Susp</span>
+<span>Rs. 25.00</span>
+</div>
+<div class="flex justify-between text-[11px] text-error font-medium">
+<span>Batch #1226 (Exp 09/2026) • Qty: 1</span>
+<span>[DESTROY LOG]</span>
+</div>
+</div>
+</div>
+<!-- Totals & Reversal -->
+<div class="flex flex-col gap-0.5 py-1 text-body-sm border-b border-dashed border-outline">
+<div class="flex justify-between text-on-surface-variant">
+<span>Gross Return Value:</span>
+<span>Rs. 130.00</span>
+</div>
+<div class="flex justify-between text-secondary font-medium">
+<span>Less 50% Welfare Subsidy:</span>
+<span>-Rs. 65.00</span>
+</div>
+<div class="flex justify-between items-center pt-1 font-bold text-headline-md text-primary">
+<span>NET CASH REFUND:</span>
+<span class="text-secondary font-extrabold text-data-display-md">PKR 65.00</span>
+</div>
+</div>
+<!-- Restock Verification Stamp & Signatures -->
+<div class="py-1 flex flex-col gap-2">
+<div class="border border-outline-variant bg-surface-container p-1 rounded text-center text-[10px] font-bold text-on-tertiary-container uppercase tracking-wider">
+                ✓ RESTOCK VERIFICATION STAMP: BATCH B4490 (+1) APPROVED
+              </div>
+<div class="pt-2 flex justify-between text-[11px] text-on-surface-variant">
+<div>
+<div>Pharmacist Auth:</div>
+<div class="font-bold text-primary mt-3">_________________</div>
+<div class="text-[9px]">Tariq Mahmood, R.Ph</div>
+</div>
+<div class="text-right">
+<div>Customer Signature:</div>
+<div class="font-bold text-primary mt-3">_________________</div>
+<div class="text-[9px]">Rehana Kausar</div>
+</div>
+</div>
+</div>
+<!-- Barcode Glyph -->
+<div class="flex flex-col items-center justify-center pt-1">
+<div class="font-data-display-lg tracking-widest text-primary text-body-lg select-none">
+                ||||| | |||| || |||||| | ||||| ||
+              </div>
+<div class="font-label-caps text-[9px] text-on-surface-variant">RET2026090004-HWT-01</div>
+</div>
+</div>
+<!-- Thermal Receipt Quick Print Buttons -->
+<div class="flex items-center gap-space-xs">
+<button class="flex-1 py-1.5 bg-secondary hover:bg-on-secondary-fixed-variant text-on-secondary rounded font-label-shortcut text-label-shortcut flex items-center justify-center gap-space-xs shadow-xs transition-colors">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>[F4] Print Slip Directly to Citizen POS-80</span>
+</button>
+<button class="px-space-md py-1.5 bg-surface-container text-primary hover:bg-surface-container-high rounded font-label-shortcut text-label-shortcut border border-outline-variant transition-colors">
+              PDF
+            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Telemetry Footer (Matching SCREEN_3, SCREEN_4, SCREEN_8, SCREEN_2) -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 h-8 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between px-space-lg text-on-surface-variant font-data-table text-data-table shadow-[0_-1px_3px_rgba(15,45,89,0.04)]">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+<span class="text-primary font-semibold">SQLite Local DB: Synced (12ms)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary">lan</span>
+<span>LAN Host: 192.168.10.45 [Master Online]</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs">
+<span>Shift Cash Sales:</span>
+<span class="font-bold text-secondary">Rs. 187,100.00</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs">
+<span>Drawer Float:</span>
+<span class="font-bold text-primary">Rs. 5,000.00</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[15px] text-on-tertiary-container">check_circle</span>
+<span class="text-primary font-medium">Citizen POS-80: Ready</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="font-label-caps text-label-caps bg-surface-container px-space-xs py-0.5 rounded text-primary-container font-bold">
+      Build v4.3-clinical
+    </div>
+</div>
+</footer>
+</body></html>

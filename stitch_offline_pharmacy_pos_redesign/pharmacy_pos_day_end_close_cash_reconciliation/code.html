@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hope Welfare Trust Pharmacy - Day-End Close &amp; Shift Cash Reconciliation</title>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            clinical: {
+              navy: '#0f2d59',
+              dark: '#0f172a',
+              accent: '#1e40af',
+              surface: '#f8fafc',
+              border: '#e2e8f0',
+              success: '#059669',
+              danger: '#dc2626',
+              warning: '#d97706',
+              badge: '#eff6ff',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-sheet {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    }
+    /* Clinical thin scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
+<!-- BEGIN: TopWorkstationHeader -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)]" data-purpose="pos-header">
+<div class="px-4 py-2 flex items-center justify-between">
+<!-- Logo & Branding -->
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-2">
+<!-- Hope SVG Cross / Emblem -->
+<div class="h-9 w-9 bg-clinical-navy text-white flex items-center justify-center rounded font-bold text-lg tracking-wider shadow-sm">
+<span>H</span>
+</div>
+<div class="leading-tight">
+<div class="font-extrabold text-clinical-navy tracking-tight text-base uppercase">HOPE WELFARE TRUST</div>
+<div class="text-[11px] font-medium text-slate-500 tracking-wide">Hospital Management &amp; Pharmacy System</div>
+</div>
+</div>
+<div class="h-6 w-px bg-slate-200 mx-2"></div>
+<!-- Counter Badge & Mode -->
+<div class="flex items-center space-x-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+            Counter 01 Connected
+          </span>
+<span class="text-xs text-slate-500 font-mono">Citizen POS-80 (USB Ready)</span>
+</div>
+</div>
+<!-- Center Status: Navigation shortcut -->
+<div class="flex items-center space-x-3">
+<a class="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded border border-slate-200 flex items-center space-x-1.5 transition" href="#dashboard">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Main POS (F2)</span>
+</a>
+<div class="text-xs font-medium text-slate-500 bg-slate-50 px-2.5 py-1 rounded border border-slate-200">
+<span>Till Current Cash:</span>
+<span class="font-mono font-bold text-slate-800 ml-1">PKR 17,480.00</span>
+</div>
+</div>
+<!-- Right Profile & Shift Context -->
+<div class="flex items-center space-x-4">
+<div class="text-right leading-tight">
+<div class="text-xs font-bold text-slate-800">Tariq Mahmood, R.Ph</div>
+<div class="text-[11px] text-slate-500">License # 044192 • Shift A (Morning)</div>
+</div>
+<div class="h-8 w-8 rounded-full bg-clinical-navy text-white flex items-center justify-center font-bold text-xs shadow-sm">
+          TM
+        </div>
+<button class="text-xs font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded border border-red-200 transition flex items-center space-x-1" title="End Session &amp; Lock Terminal" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Lock</span>
+</button>
+</div>
+</div>
+</header>
+<!-- END: TopWorkstationHeader -->
+<!-- BEGIN: ActionToolbar -->
+<section class="bg-slate-50 border-b border-slate-200 px-5 py-2.5 flex items-center justify-between no-print" data-purpose="sub-header-controls">
+<div class="flex items-center space-x-3">
+<div>
+<h1 class="text-base font-bold text-slate-800 tracking-tight flex items-center space-x-2">
+<span>Day-End Close &amp; Shift Cash Reconciliation</span>
+<span class="text-[11px] font-mono px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold uppercase">Register Formal Audit</span>
+</h1>
+<p class="text-[11px] text-slate-500">Reconcile physical cash drawer with dispensary ledger before closing shift session.</p>
+</div>
+</div>
+<!-- Date selector and action triggers -->
+<div class="flex items-center space-x-2">
+<!-- Date input matching screenshot style -->
+<div class="relative flex items-center">
+<input class="text-xs font-mono py-1.5 px-3 border border-slate-300 rounded shadow-sm focus:border-clinical-navy focus:ring-1 focus:ring-clinical-navy bg-white text-slate-700" type="date" value="2026-09-09"/>
+</div>
+<!-- Refresh button -->
+<button class="px-3 py-1.5 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded shadow-sm hover:bg-slate-50 flex items-center space-x-1 transition" type="button">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Refresh</span>
+</button>
+<!-- Print Audit Sheet button -->
+<button class="px-3.5 py-1.5 text-xs font-semibold bg-clinical-navy hover:bg-blue-900 text-white rounded shadow-sm flex items-center space-x-1.5 transition" onclick="window.print()" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Print Audit Sheet (F10)</span>
+</button>
+</div>
+</section>
+<!-- END: ActionToolbar -->
+<!-- BEGIN: MainContentGrid -->
+<main class="flex-1 p-3.5 max-w-[1680px] w-full mx-auto" data-purpose="reconciliation-dashboard">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+<!-- LEFT COLUMN: Shift Cash Reconcile, Denominations & Handover (5 cols) -->
+<div class="lg:col-span-5 space-y-3">
+<!-- Shift Identification Card -->
+<div class="bg-white border border-slate-200 rounded p-3 shadow-sm">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-2.5">
+<h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center">
+<span class="w-2 h-2 bg-clinical-navy rounded-sm mr-2"></span>
+              Shift Terminal &amp; Session State
+            </h2>
+<span class="text-[11px] font-mono font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded">SES-20260909-01</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="bg-slate-50 p-2 rounded border border-slate-100">
+<span class="text-[11px] text-slate-500 block">Assigned Counter</span>
+<span class="font-bold text-slate-800">Counter 01 (Outpatient Central)</span>
+</div>
+<div class="bg-slate-50 p-2 rounded border border-slate-100">
+<span class="text-[11px] text-slate-500 block">Duty Pharmacist</span>
+<span class="font-bold text-slate-800">Tariq Mahmood (R.Ph)</span>
+</div>
+<div class="bg-slate-50 p-2 rounded border border-slate-100">
+<span class="text-[11px] text-slate-500 block">Session Opened</span>
+<span class="font-mono text-slate-700">09-Sep-2026 08:00 AM</span>
+</div>
+<div class="bg-slate-50 p-2 rounded border border-slate-100">
+<span class="text-[11px] text-slate-500 block">Reconciliation Time</span>
+<span class="font-mono text-slate-700">09-Sep-2026 04:00 PM</span>
+</div>
+</div>
+</div>
+<!-- Cash Count & Denomination Breakup Card -->
+<div class="bg-white border border-slate-200 rounded shadow-sm p-3.5" data-purpose="cash-drawer-calculator">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-3">
+<div>
+<h2 class="text-xs font-bold uppercase tracking-wider text-slate-800">Physical Cash Drawer Audit</h2>
+<span class="text-[11px] text-slate-500">Tally physical notes in counter drawer</span>
+</div>
+<span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              Auto-Calculated
+            </span>
+</div>
+<!-- Denomination Breakdown Form Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-xs" data-purpose="denominations-table">
+<thead>
+<tr class="bg-slate-50 text-slate-500 uppercase text-[10px] tracking-wider border-y border-slate-200">
+<th class="py-1.5 px-2 text-left font-semibold">Note / Coin</th>
+<th class="py-1.5 px-2 text-center font-semibold w-24">Count</th>
+<th class="py-1.5 px-2 text-right font-semibold">Total Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-mono">
+<tr>
+<td class="py-1.5 px-2 font-medium text-slate-700">PKR 5,000</td>
+<td class="py-1.5 px-2 text-center">
+<input class="w-16 h-7 text-center text-xs font-mono p-1 border border-slate-300 rounded focus:ring-1 focus:ring-clinical-navy" min="0" type="number" value="1"/>
+</td>
+<td class="py-1.5 px-2 text-right font-semibold text-slate-800">5,000.00</td>
+</tr>
+<tr>
+<td class="py-1.5 px-2 font-medium text-slate-700">PKR 1,000</td>
+<td class="py-1.5 px-2 text-center">
+<input class="w-16 h-7 text-center text-xs font-mono p-1 border border-slate-300 rounded focus:ring-1 focus:ring-clinical-navy" min="0" type="number" value="9"/>
+</td>
+<td class="py-1.5 px-2 text-right font-semibold text-slate-800">9,000.00</td>
+</tr>
+<tr>
+<td class="py-1.5 px-2 font-medium text-slate-700">PKR 500</td>
+<td class="py-1.5 px-2 text-center">
+<input class="w-16 h-7 text-center text-xs font-mono p-1 border border-slate-300 rounded focus:ring-1 focus:ring-clinical-navy" min="0" type="number" value="4"/>
+</td>
+<td class="py-1.5 px-2 text-right font-semibold text-slate-800">2,000.00</td>
+</tr>
+<tr>
+<td class="py-1.5 px-2 font-medium text-slate-700">PKR 100</td>
+<td class="py-1.5 px-2 text-center">
+<input class="w-16 h-7 text-center text-xs font-mono p-1 border border-slate-300 rounded focus:ring-1 focus:ring-clinical-navy" min="0" type="number" value="11"/>
+</td>
+<td class="py-1.5 px-2 text-right font-semibold text-slate-800">1,100.00</td>
+</tr>
+<tr>
+<td class="py-1.5 px-2 font-medium text-slate-700">PKR 50 / 20 / 10 &amp; Coins</td>
+<td class="py-1.5 px-2 text-center">
+<input class="w-16 h-7 text-center text-xs font-mono p-1 border border-slate-300 rounded focus:ring-1 focus:ring-clinical-navy" min="0" type="number" value="38"/>
+</td>
+<td class="py-1.5 px-2 text-right font-semibold text-slate-800">380.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Drawer Calculation Summary -->
+<div class="mt-3.5 bg-slate-50 border border-slate-200 rounded p-3 space-y-2">
+<div class="flex justify-between items-center text-xs text-slate-600">
+<span>Opening Petty Float:</span>
+<span class="font-mono font-medium text-slate-800">PKR 5,000.00</span>
+</div>
+<div class="flex justify-between items-center text-xs text-slate-600">
+<span>(+) Cash Collected from Sales:</span>
+<span class="font-mono font-medium text-slate-800">PKR 12,480.00</span>
+</div>
+<div class="h-px bg-slate-200"></div>
+<div class="flex justify-between items-center text-xs font-bold text-slate-800">
+<span>System Expected Drawer Cash:</span>
+<span class="font-mono text-clinical-navy font-extrabold text-sm">PKR 17,480.00</span>
+</div>
+<div class="flex justify-between items-center text-xs font-bold text-slate-800">
+<span>Actual Counted Physical Cash:</span>
+<span class="font-mono text-emerald-700 font-extrabold text-sm">PKR 17,480.00</span>
+</div>
+<!-- Variance Pill: Perfect Zero Discrepancy -->
+<div class="pt-1.5 border-t border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<span class="text-xs font-semibold text-emerald-800">Cash Variance:</span>
+</div>
+<span class="font-mono font-bold text-xs bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-300">
+                Balanced (Rs 0.00 Discrepancy)
+              </span>
+</div>
+</div>
+<!-- Safe Handover Allocation -->
+<div class="mt-3 pt-3 border-t border-slate-100">
+<h3 class="text-xs font-bold uppercase text-slate-700 mb-2">Shift Handover &amp; Safe Drop Allocation</h3>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="p-2 border border-slate-200 rounded bg-white">
+<label class="block text-[11px] text-slate-500 font-medium mb-1">Float Retained for Shift B</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-2 flex items-center font-mono text-[11px] text-slate-400">PKR</span>
+<input class="pl-9 w-full h-8 text-xs font-mono font-bold bg-slate-50 border-slate-200 rounded text-slate-700" readonly="" type="text" value="5,000.00"/>
+</div>
+</div>
+<div class="p-2 border border-blue-200 rounded bg-blue-50/50">
+<label class="block text-[11px] text-blue-900 font-bold mb-1">Dropped into Hospital Safe</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-2 flex items-center font-mono text-[11px] text-blue-500">PKR</span>
+<input class="pl-9 w-full h-8 text-xs font-mono font-bold bg-white border-blue-300 rounded text-blue-900" readonly="" type="text" value="12,480.00"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Controlled Drugs Schedule G Register Status Card -->
+<div class="bg-white border border-slate-200 rounded p-3 shadow-sm" data-purpose="narcotics-compliance">
+<div class="flex items-center justify-between mb-2">
+<h2 class="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center">
+<svg class="w-4 h-4 text-amber-600 mr-1.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Controlled Drug Register (Schedule G / DRAP)
+            </h2>
+<span class="text-[10px] font-semibold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Compliance Check</span>
+</div>
+<div class="bg-amber-50/50 border border-amber-200/80 rounded p-2.5 text-xs">
+<div class="flex items-start justify-between">
+<div>
+<p class="text-amber-900 font-medium">Narcotics / Benzodiazepines Dispensed Today: <strong class="font-bold">2 Rx Slips</strong></p>
+<p class="text-[11px] text-amber-800 mt-0.5">Inj. Tramadol 100mg (Qty: 2) • Tab. Clonazepam 0.5mg (Qty: 20)</p>
+</div>
+<span class="text-[10px] font-bold uppercase bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-mono">Logged</span>
+</div>
+<div class="mt-2 pt-2 border-t border-amber-200/60 flex items-center justify-between text-[11px] text-slate-600">
+<span>Prescriptions Verified by Registered Pharmacist: Tariq Mahmood</span>
+<span class="text-emerald-700 font-semibold flex items-center">
+<svg class="w-3.5 h-3.5 mr-0.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path></svg>
+                All 2 Rx Archived
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Printable Sales Audit Sheet & Breakdown (7 cols) -->
+<div class="lg:col-span-7 space-y-3">
+<!-- Hospital Official Printable Sheet Container -->
+<div class="bg-white border border-slate-200 rounded shadow-sm p-5 print-sheet" data-purpose="printable-day-end-sheet">
+<!-- Sheet Header (Formatted like the Hope Welfare Trust Pharmacy screenshot) -->
+<div class="text-center border-b border-slate-200 pb-3 mb-4">
+<h2 class="text-lg font-bold text-clinical-navy tracking-tight">Hope Welfare Trust Pharmacy</h2>
+<div class="text-xs font-semibold text-slate-700 mt-0.5">
+              Day-End Close Audit Sheet — 2026-09-09
+            </div>
+<div class="text-[11px] text-slate-400 font-mono mt-0.5">
+              Generated: 9/9/2026, 04:00:18 PM • Workstation #01
+            </div>
+</div>
+<!-- Section: Sales KPI 8-Card Grid (Matching screencapture-localhost-4000-pharmacy-close layout) -->
+<div class="mb-4">
+<div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">SALES SUMMARY</div>
+<div class="grid grid-cols-4 gap-2">
+<!-- Total Bills -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">BILLS</div>
+<div class="text-lg font-bold text-slate-800 font-mono mt-0.5">41</div>
+<div class="text-[10px] text-slate-400">Prescriptions</div>
+</div>
+<!-- Units Sold -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">UNITS SOLD</div>
+<div class="text-lg font-bold text-slate-800 font-mono mt-0.5">184</div>
+<div class="text-[10px] text-slate-400">Packs / Ampoules</div>
+</div>
+<!-- Gross Retail Turnover -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">GROSS RETAIL</div>
+<div class="text-lg font-bold text-slate-800 font-mono mt-0.5">Rs 48,250</div>
+<div class="text-[10px] text-slate-400">Total Value</div>
+</div>
+<!-- Net Taken / Total Recovered -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">NET CASH TAKEN</div>
+<div class="text-lg font-bold text-clinical-navy font-mono mt-0.5">Rs 12,480</div>
+<div class="text-[10px] text-slate-400">Direct Cash</div>
+</div>
+<!-- Discount Given -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">DISCOUNT GIVEN</div>
+<div class="text-base font-bold text-slate-700 font-mono mt-0.5">Rs 0</div>
+<div class="text-[10px] text-slate-400">Zero Commercial Off</div>
+</div>
+<!-- Subsidy Absorbed -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">SUBSIDY ABSORBED</div>
+<div class="text-base font-bold text-blue-700 font-mono mt-0.5">Rs 21,450</div>
+<div class="text-[10px] text-blue-600/80">Zakat &amp; Welfare</div>
+</div>
+<!-- Cost of Goods -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">COST OF GOODS (COGS)</div>
+<div class="text-base font-bold text-slate-700 font-mono mt-0.5">Rs 36,180</div>
+<div class="text-[10px] text-slate-400">Distributor Cost</div>
+</div>
+<!-- Gross Margin -->
+<div class="border border-slate-200 rounded p-2 bg-white">
+<div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">GROSS MARGIN</div>
+<div class="text-base font-bold text-emerald-700 font-mono mt-0.5">Rs 12,070 <span class="text-xs font-medium text-slate-500">25%</span></div>
+<div class="text-[10px] text-slate-400">Mark-up Return</div>
+</div>
+</div>
+</div>
+<!-- Section: Payments Received By Channel (Screenshot alignment) -->
+<div class="mb-4">
+<div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">PAYMENTS RECEIVED BREAKDOWN</div>
+<div class="grid grid-cols-4 gap-2">
+<div class="border border-slate-200 rounded p-2 bg-slate-50">
+<div class="text-[10px] uppercase font-bold text-slate-500">CASH (DRAWER)</div>
+<div class="text-base font-bold text-slate-800 font-mono mt-0.5">Rs 12,480</div>
+</div>
+<div class="border border-slate-200 rounded p-2 bg-slate-50">
+<div class="text-[10px] uppercase font-bold text-slate-500">CARD / POS TERMINAL</div>
+<div class="text-base font-bold text-slate-800 font-mono mt-0.5">Rs 0</div>
+</div>
+<div class="border border-slate-200 rounded p-2 bg-slate-50">
+<div class="text-[10px] uppercase font-bold text-slate-500">ONLINE / BANK TRANSFER</div>
+<div class="text-base font-bold text-slate-800 font-mono mt-0.5">Rs 0</div>
+</div>
+<div class="border border-slate-200 rounded p-2 bg-slate-50">
+<div class="text-[10px] uppercase font-bold text-slate-500">HOSPITAL DEPT TRANSFERS</div>
+<div class="text-base font-bold text-slate-800 font-mono mt-0.5">Rs 14,320</div>
+</div>
+</div>
+</div>
+<!-- Section: Detailed Financial Audit Ledger Table -->
+<div class="mb-4">
+<div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5 flex justify-between">
+<span>DISPENSING ALLOCATION &amp; REVENUE LEDGER</span>
+<span class="text-[10px] font-normal text-slate-400">Total Shift Turnover: Rs 48,250.00</span>
+</div>
+<div class="border border-slate-200 rounded overflow-hidden">
+<table class="w-full text-xs text-left" data-purpose="sales-ledger">
+<thead class="bg-slate-50 text-[10px] uppercase text-slate-500 border-b border-slate-200 font-semibold">
+<tr>
+<th class="py-1.5 px-3">Revenue Category</th>
+<th class="py-1.5 px-2 text-center">Invoices</th>
+<th class="py-1.5 px-3 text-right">Gross Retail</th>
+<th class="py-1.5 px-3 text-right">Subsidy / Trust Paid</th>
+<th class="py-1.5 px-3 text-right">Net Drawer Cash</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-mono">
+<tr>
+<td class="py-2 px-3 font-sans font-medium text-slate-800">
+                      Private OPD Walk-In Patients
+                      <span class="block text-[10px] font-normal text-slate-400 font-sans">Direct retail sale to visiting outpatients</span>
+</td>
+<td class="py-2 px-2 text-center text-slate-600">14</td>
+<td class="py-2 px-3 text-right font-medium text-slate-700">12,480.00</td>
+<td class="py-2 px-3 text-right text-slate-400">0.00</td>
+<td class="py-2 px-3 text-right font-bold text-slate-900">12,480.00</td>
+</tr>
+<tr>
+<td class="py-2 px-3 font-sans font-medium text-slate-800">
+                      Mustahiq Zakat / 100% Free Welfare Patients
+                      <span class="block text-[10px] font-normal text-slate-400 font-sans">Full medicine coverage funded by Hope Welfare Trust Fund</span>
+</td>
+<td class="py-2 px-2 text-center text-slate-600">18</td>
+<td class="py-2 px-3 text-right font-medium text-slate-700">21,450.00</td>
+<td class="py-2 px-3 text-right font-bold text-blue-700">21,450.00</td>
+<td class="py-2 px-3 text-right text-slate-400 font-medium">0.00</td>
+</tr>
+<tr>
+<td class="py-2 px-3 font-sans font-medium text-slate-800">
+                      Emergency Room (ER) &amp; OT Indents
+                      <span class="block text-[10px] font-normal text-slate-400 font-sans">Billed to Inpatient Department / Operation Theatre Ledger</span>
+</td>
+<td class="py-2 px-2 text-center text-slate-600">7</td>
+<td class="py-2 px-3 text-right font-medium text-slate-700">11,200.00</td>
+<td class="py-2 px-3 text-right text-slate-400">0.00</td>
+<td class="py-2 px-3 text-right text-slate-400 font-medium">0.00</td>
+</tr>
+<tr>
+<td class="py-2 px-3 font-sans font-medium text-slate-800">
+                      Hemodialysis Center Consumables
+                      <span class="block text-[10px] font-normal text-slate-400 font-sans">Dialyzer, Heparin &amp; Saline indents transfer</span>
+</td>
+<td class="py-2 px-2 text-center text-slate-600">2</td>
+<td class="py-2 px-3 text-right font-medium text-slate-700">3,120.00</td>
+<td class="py-2 px-3 text-right text-slate-400">0.00</td>
+<td class="py-2 px-3 text-right text-slate-400 font-medium">0.00</td>
+</tr>
+</tbody>
+<tfoot class="bg-slate-50 font-bold border-t border-slate-200 text-xs">
+<tr>
+<td class="py-2 px-3 text-slate-800 font-sans">Totals Summary</td>
+<td class="py-2 px-2 text-center font-mono">41</td>
+<td class="py-2 px-3 text-right font-mono text-slate-800">Rs 48,250.00</td>
+<td class="py-2 px-3 text-right font-mono text-blue-700">Rs 21,450.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-700">Rs 12,480.00</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Section: Audit Notes Statement -->
+<div class="mb-5 bg-slate-50 border border-slate-200 rounded p-2.5 text-xs text-slate-600">
+<span class="font-bold text-slate-700 block mb-0.5">Cash Reconciliation Audit Note:</span>
+            Shift session opened on 2026-09-09 at 08:00 AM with an initial float of PKR 5,000.00. Cash sales collected totaled PKR 12,480.00 across 14 commercial receipts. Total cash counted in register is PKR 17,480.00. Variance is strictly PKR 0.00.
+          </div>
+<!-- Section: Formal Dual Sign-Off Block (Identical to Hospital Sheet requirement) -->
+<div class="pt-4 border-t border-slate-200 grid grid-cols-2 gap-8 text-xs">
+<div>
+<div class="border-b border-slate-400 h-10 flex items-end pb-1 font-mono text-[11px] text-slate-800">
+                Tariq Mahmood (R.Ph - #044192)
+              </div>
+<div class="flex justify-between items-center text-[10px] text-slate-500 mt-1">
+<span>Pharmacist on Duty — Name &amp; Signature</span>
+<span class="font-mono">Time: 16:00:20</span>
+</div>
+</div>
+<div>
+<div class="border-b border-slate-400 h-10 flex items-end pb-1 font-mono text-[11px] text-slate-400 italic">
+                [ Pending Audit Verification Signature ]
+              </div>
+<div class="flex justify-between items-center text-[10px] text-slate-500 mt-1">
+<span>Cash Verified by — Internal Auditor / Accountant</span>
+<span class="font-mono">Date: ____/____/2026</span>
+</div>
+</div>
+</div>
+<!-- Final Action Buttons (Hidden on Print) -->
+<div class="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between no-print">
+<div class="text-[11px] text-slate-500">
+              Shortcut: <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-mono text-[10px]">Esc</kbd> Cancel &amp; Return
+            </div>
+<div class="flex items-center space-x-2">
+<button class="px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 transition" type="button">
+                Return to POS
+              </button>
+<button class="px-3.5 py-1.5 text-xs font-semibold text-clinical-navy bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition flex items-center space-x-1" onclick="window.print()" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Print 2-Copy Day-End Sheet</span>
+</button>
+<button class="px-4 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded shadow transition flex items-center space-x-1.5" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Save &amp; Close Shift (F10)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- END: MainContentGrid -->
+<!-- BEGIN: WorkstationBottomBar -->
+<footer class="bg-white border-t border-slate-200 py-1.5 px-4 text-xs text-slate-500 no-print flex items-center justify-between shadow-inner" data-purpose="workstation-status-footer">
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-medium text-slate-700">LAN Host Active:</span>
+<span class="font-mono text-slate-500">192.168.1.104</span>
+</div>
+<div class="h-3 w-px bg-slate-300"></div>
+<div>Database: <span class="font-mono text-slate-700 font-semibold">SQLite Embedded</span></div>
+<div class="h-3 w-px bg-slate-300"></div>
+<div class="flex items-center space-x-1">
+<span>Sync Buffer:</span>
+<span class="font-mono font-bold text-emerald-700">0 pending transactions</span>
+</div>
+</div>
+<div class="flex items-center space-x-4 font-mono text-[11px]">
+<span>Thermal Printer: Citizen CT-S310II</span>
+<span class="text-slate-300">•</span>
+<span>Build: v4.2.1-prod</span>
+<span class="text-slate-300">•</span>
+<span class="text-slate-600 font-sans">Wednesday, Sep 09, 2026</span>
+</div>
+</footer>
+<!-- END: WorkstationBottomBar -->
+<!-- Simple Keyboard Handling script for hospital POS standard keys -->
+<script data-purpose="pos-keyboard-shortcuts">
+    document.addEventListener('keydown', function(e) {
+      // F10 to print or close
+      if (e.key === 'F10') {
+        e.preventDefault();
+        window.print();
+      }
+      // Esc to prompt return
+      if (e.key === 'Escape') {
+        if (confirm('Return to main POS counter window?')) {
+          console.log('Navigating back to main dispensary view');
+        }
+      }
+    });
+  </script>
+</body></html>

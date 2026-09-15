@@ -4,6 +4,7 @@ const { authenticate, requirePermission } = require('../middleware/auth');
 const { PERMISSIONS } = require('../permissions');
 const { audit } = require('../audit');
 const { wrap } = require('../utils');
+const { businessDate } = require('../businessDay');
 
 const router = express.Router();
 router.use(authenticate);
@@ -18,22 +19,31 @@ router.post(
     const visit = db.prepare('SELECT * FROM visits WHERE id = ?').get(visit_id);
     if (!visit) return res.status(404).json({ error: 'Visit not found' });
 
-    const today = new Date().toISOString().slice(0, 10);
+    // Dated by the hospital's local day, not UTC — otherwise tokens issued
+    // after midnight local time are stamped with the previous date and never
+    // show up in that shift's queue.
+    const today = businessDate();
     // Daily per-department running number.
     const seqName = `token:${department}:${today}`;
     const number = nextSeq(seqName);
 
-    const info = db
-      .prepare(
-        `INSERT INTO tokens (visit_id, patient_id, department, token_number, token_date)
-         VALUES (?, ?, ?, ?, ?)`
-      )
-      .run(visit_id, visit.patient_id, department, number, today);
+    // The token row and the visit's department are one fact recorded in two places.
+    // A cut between them leaves a token issued for a department the visit does not
+    // claim, and the queue reads the visit.
+    const info = db.transaction(() => {
+      const ins = db
+        .prepare(
+          `INSERT INTO tokens (visit_id, patient_id, department, token_number, token_date)
+           VALUES (?, ?, ?, ?, ?)`
+        )
+        .run(visit_id, visit.patient_id, department, number, today);
 
-    db.prepare("UPDATE visits SET department = ?, updated_at = datetime('now') WHERE id = ?").run(
-      department,
-      visit_id
-    );
+      db.prepare("UPDATE visits SET department = ?, updated_at = datetime('now') WHERE id = ?").run(
+        department,
+        visit_id
+      );
+      return ins;
+    })();
 
     const token = db.prepare('SELECT * FROM tokens WHERE id = ?').get(info.lastInsertRowid);
     audit(req, 'token.create', 'token', token.id, { department, number });
@@ -46,7 +56,7 @@ router.get(
   '/queue/:department',
   requirePermission(PERMISSIONS.TOKEN_MANAGE, PERMISSIONS.CONSULT_MANAGE, PERMISSIONS.LAB_VIEW),
   wrap((req, res) => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = businessDate();
     const rows = db
       .prepare(
         `SELECT t.*, p.patient_code, p.full_name, p.category

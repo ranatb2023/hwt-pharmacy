@@ -1,0 +1,563 @@
+<!DOCTYPE html><html class="h-full bg-slate-100" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pharmacy Admin - Roles &amp; Permissions</title>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              dark: '#0b192c',
+              sidebar: '#0d2038',
+              activeNav: '#1d4ed8',
+              accent: '#2563eb',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars">
+    /* Subtle custom scrollbars for clinical admin workstations */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="h-screen flex overflow-hidden bg-slate-50 font-sans text-slate-800 antialiased select-none">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-[260px] h-screen bg-[#0b192c] flex-shrink-0 flex flex-col justify-between overflow-hidden border-r border-slate-800 text-slate-300">
+  <div class="flex flex-col flex-1 min-h-0">
+    <!-- Clinic Brand Header -->
+    <div class="px-4 py-3.5 border-b border-slate-800 flex items-center justify-between shrink-0">
+      <div class="flex items-center space-x-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-inner shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+          </svg>
+        </div>
+        <div class="truncate leading-tight">
+          <div class="flex items-center space-x-1.5">
+            <span class="text-xs font-extrabold tracking-wide text-white uppercase truncate">HOPE WELFARE TRUST</span>
+          </div>
+          <p class="text-[10px] text-slate-400 font-medium tracking-tight truncate">Hope Welfare Trust Pharmacy</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network LAN Telemetry Indicator -->
+    <div class="px-4 py-1.5 bg-[#081322] border-b border-slate-800/80 flex items-center justify-between text-[11px] font-mono shrink-0">
+      <div class="flex items-center space-x-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-slate-400">LAN Core:</span>
+        <span class="text-emerald-400 font-semibold">192.168.1.10</span>
+      </div>
+      <span class="text-[10px] bg-emerald-950 text-emerald-400 px-1.5 py-0.2 rounded border border-emerald-800">Node 01 OK</span>
+    </div>
+
+    <!-- Scrollable Navigation Items -->
+    <nav class="flex-1 overflow-y-auto px-3 py-2 space-y-0.5 text-xs">
+      <!-- Dashboard -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Dashboard</span>
+      </a>
+
+      <!-- Pharmacy Dashboard -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Pharmacy Dashboard</span>
+      </a>
+
+      <!-- Pharmacy Counter -->
+      <a class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <div class="flex items-center">
+          <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+          <span class="">Pharmacy Counter</span>
+        </div>
+        <span class="text-[9px] bg-slate-800 text-slate-400 px-1 py-0.5 rounded font-mono">F2</span>
+      </a>
+
+      <!-- Day Close -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Day Close</span>
+      </a>
+
+      <!-- Inventory -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Inventory</span>
+      </a>
+
+      <!-- Departments -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Departments</span>
+      </a>
+
+      <!-- Customers & Cards -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Customers &amp; Cards</span>
+      </a>
+
+      <!-- Credit Accounts -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Credit Accounts</span>
+      </a>
+
+      <!-- Billing -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Billing</span>
+      </a>
+
+      <!-- Returns -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M16 15v-1a4 4 0 00-4-4H4m0 0l3-3m-3 3l3 3m5 6h5a2 2 0 002-2V7a2 2 0 00-2-2h-3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Returns</span>
+      </a>
+
+      <!-- Cash Flow -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Cash Flow</span>
+      </a>
+
+      <!-- Vendors -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Vendors</span>
+      </a>
+
+      <!-- Reports -->
+      <a class="flex items-center px-2.5 py-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition" href="#">
+        <svg class="w-4 h-4 mr-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="">Reports</span>
+      </a>
+
+      <!-- Administration (Active Collapsible / Group) -->
+      <div class="pt-1.5">
+        <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-blue-900/80 text-white font-semibold">
+          <div class="flex items-center space-x-2">
+            <svg class="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+            <span class="">Administration</span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </div>
+
+        <!-- Admin Submenu Options -->
+        <div class="mt-1 ml-3 pl-3 border-l border-slate-800 space-y-0.5">
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Users</span>
+          </a>
+          <a class="flex items-center justify-between px-2 py-1 rounded bg-blue-600 text-white font-medium transition text-[11px] shadow-sm" href="#">
+            <span class="">Roles &amp; Permissions</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-200"></span>
+          </a>
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Employees</span>
+          </a>
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Catalogue</span>
+          </a>
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Settings</span>
+          </a>
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Audit Log</span>
+          </a>
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Subsidy Report</span>
+          </a>
+          <a class="flex items-center px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition text-[11px]" href="#">
+            <span class="">Sync</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Sidebar User Profile Footer -->
+  <div class="p-3 bg-[#081322] border-t border-slate-800 shrink-0">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2.5 min-w-0">
+        <div class="w-7 h-7 rounded bg-amber-500 text-slate-900 font-extrabold flex items-center justify-center text-xs shrink-0">
+          SA
+        </div>
+        <div class="leading-tight truncate">
+          <div class="text-[11px] font-semibold text-white truncate">System Administrator</div>
+          <div class="text-[9px] text-slate-400 font-medium flex items-center space-x-1">
+            <span class="bg-slate-800 text-slate-300 px-1 py-0.2 rounded font-mono text-[8px]">Administrator</span>
+          </div>
+        </div>
+      </div>
+      <button class="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded transition shrink-0" title="Sign out">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="mt-2 pt-1.5 border-t border-slate-800/80 flex items-center justify-between text-[9px] font-mono text-slate-400">
+      <span class="">v2.4.9-pk</span>
+      <span class="">SQLite + Sync</span>
+    </div>
+  </div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- Top Workstation Header Bar (Fixed h-16) -->
+<header class="h-16 flex-shrink-0 bg-white border-b border-slate-200 px-6 flex items-center justify-between shadow-sm">
+<div>
+<div class="flex items-center space-x-1.5 text-xs text-slate-500 font-medium">
+<span class="">Administration</span>
+<span class="">/</span>
+<span class="text-blue-600 font-semibold">Roles &amp; Permissions</span>
+</div>
+<h1 class="text-lg font-bold text-slate-900 tracking-tight flex items-center space-x-2"><span class="">Staff Roles &amp; Permissions</span></h1>
+</div>
+<div class="flex items-center space-x-3">
+<div class="text-xs font-medium text-slate-500 hidden sm:block font-mono">
+        Sep 9, 2026
+      </div>
+<button class="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm transition">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span class="">+ New Role</span>
+</button>
+</div>
+</header>
+<!-- Main Body Container -->
+<main class="flex-1 overflow-hidden p-5 flex flex-col gap-3 min-h-0">
+<!-- BEGIN: Regulatory Notice Banner -->
+<div class="bg-blue-50 border border-blue-200 rounded-xl py-2 px-3 flex items-center justify-between text-xs shadow-xs shrink-0" data-purpose="statutory-notice">
+<div class="flex items-center space-x-2.5 min-w-0">
+<div class="p-1 bg-blue-600 text-white rounded shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-blue-900 text-xs truncate">Controlled medicines require doctor verification. A certified pharmacist must sign off before dispensing.</p>
+</div>
+<button class="text-[11px] font-mono text-blue-700 bg-white hover:bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200 whitespace-nowrap ml-3 shrink-0 font-medium">
+        Audit Roster
+      </button>
+</div>
+<!-- END: Regulatory Notice Banner -->
+<!-- BEGIN: Two-Column Workspace Grid -->
+<div class="flex-1 grid grid-cols-12 gap-4 min-h-0 overflow-hidden">
+<!-- LEFT COLUMN: Roles List (4 Cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col min-h-0 bg-white rounded-xl border border-slate-200 shadow-sm p-3.5">
+<div class="flex items-center justify-between mb-2.5 shrink-0">
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Roles</h3>
+<span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-semibold">6 Active</span>
+</div>
+<!-- Search bar inside role list -->
+<div class="relative mb-2.5 shrink-0">
+<input class="w-full text-xs rounded-lg border-slate-200 pl-7 pr-3 py-1.5 focus:border-blue-500 focus:ring-blue-500 bg-slate-50" placeholder="Filter roles..." type="text">
+<svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<!-- Scrollable Roles List -->
+<div class="flex-1 overflow-y-auto space-y-2 pr-1" data-purpose="role-selector-list">
+<!-- Role Item 1: Super Admin -->
+<div class="p-2.5 border border-slate-200 rounded-lg hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition">
+<div class="flex items-center justify-between">
+<div class="font-bold text-slate-900 text-xs">Super Administrator</div>
+<span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">2</span>
+</div>
+<p class="text-[11px] text-slate-500 mt-0.5 truncate">Can manage all settings, staff, and records.</p>
+<div class="flex items-center space-x-1.5 mt-1.5">
+<span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded border border-slate-200 font-mono">Root</span>
+</div>
+</div>
+<!-- Role Item 2: Category-A Pharmacist (ACTIVE/SELECTED) -->
+<div class="p-2.5 border-2 border-blue-600 bg-blue-50/60 rounded-lg cursor-pointer shadow-xs relative ring-1 ring-blue-500/20">
+<div class="flex items-center justify-between">
+<div class="font-extrabold text-blue-950 text-xs">Lead Pharmacist</div>
+<span class="text-[10px] font-mono bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded font-bold">1</span>
+</div>
+<p class="text-[11px] text-blue-900/80 mt-0.5 truncate">Approves controlled drugs, returns, and discounts.</p>
+<div class="flex items-center space-x-1.5 mt-1.5">
+<span class="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded border border-blue-200 font-mono font-semibold">Form 9</span>
+<span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded border border-amber-200 font-mono font-semibold">Sched-G</span>
+</div>
+</div>
+<!-- Role Item 3: Category-B Dispenser -->
+<div class="p-2.5 border border-slate-200 rounded-lg hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition">
+<div class="flex items-center justify-between">
+<div class="font-bold text-slate-900 text-xs">Counter Dispenser</div>
+<span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">3</span>
+</div>
+<p class="text-[11px] text-slate-500 mt-0.5 truncate">Dispenses medicine and handles billing.</p>
+<div class="flex items-center space-x-1.5 mt-1.5">
+<span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded border border-slate-200 font-mono">Counter</span>
+</div>
+</div>
+<!-- Role Item 4: Cashier & Billing Officer -->
+<div class="p-2.5 border border-slate-200 rounded-lg hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition">
+<div class="flex items-center justify-between">
+<div class="font-bold text-slate-900 text-xs">Cashier</div>
+<span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">2</span>
+</div>
+<p class="text-[11px] text-slate-500 mt-0.5 truncate">Collects cash, issues receipts, and applies counter discounts.</p>
+<div class="flex items-center space-x-1.5 mt-1.5">
+<span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded border border-slate-200 font-mono">Cap: 10%</span>
+</div>
+</div>
+<!-- Role Item 5: Medical Officer / Consultant -->
+<div class="p-3 border border-slate-200 rounded-lg hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition">
+<div class="flex items-center justify-between">
+<div class="font-bold text-slate-900 text-xs">Doctor</div>
+<span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">4</span>
+</div>
+<p class="text-[11px] text-slate-500 mt-0.5 truncate">Prescribes medicines and reviews patient records.</p>
+<div class="flex items-center space-x-1.5 mt-1.5">
+<span class="text-[9px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded border border-emerald-200 font-mono">PM&amp;DC</span>
+</div>
+</div>
+<!-- Role Item 6: Ward Nurse / Indent Runner -->
+<div class="p-2.5 border border-slate-200 rounded-lg hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition">
+<div class="flex items-center justify-between">
+<div class="font-bold text-slate-900 text-xs">Nurse</div>
+<span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium">6</span>
+</div>
+<p class="text-[11px] text-slate-500 mt-0.5 truncate">Requests medicine for hospital wards and rooms.</p>
+<div class="flex items-center space-x-1.5 mt-1.5">
+<span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded border border-slate-200 font-mono">Indents</span>
+</div>
+</div>
+</div>
+<!-- Button: Add Custom Role (Compact bottom) -->
+<button class="mt-2.5 w-full py-1.5 border border-dashed border-slate-300 hover:border-blue-500 hover:bg-blue-50/50 rounded-lg text-xs font-semibold text-slate-600 hover:text-blue-700 flex items-center justify-center space-x-1 transition shrink-0">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">+ New Role</span>
+</button>
+</div>
+<!-- END: Left Column -->
+<!-- RIGHT COLUMN: Role Inspector & Granular Permissions (8 Cols) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col min-h-0 bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+<!-- Inspector Header Row -->
+<div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200 shrink-0">
+<div class="min-w-0">
+<div class="flex items-center space-x-2">
+<h2 class="text-sm font-extrabold text-slate-900 tracking-tight truncate">Category-A Pharmacist (Superintendent)</h2>
+<span class="bg-blue-100 text-blue-800 text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border border-blue-200 shrink-0">DRAP</span>
+<span class="bg-emerald-100 text-emerald-800 text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border border-emerald-200 shrink-0">Form 9</span>
+</div>
+<p class="text-[11px] text-slate-500 truncate mt-0.5">
+              Accountable for pharmacy stock, controlled narcotics, and dispensing overrides.
+            </p>
+</div>
+<!-- Action Controls -->
+<div class="flex items-center space-x-2 shrink-0">
+<button class="px-2.5 py-1.5 border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold text-xs rounded-lg transition">
+              Reset
+            </button>
+<button class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-xs rounded-lg shadow-sm flex items-center space-x-1.5 transition">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span class="">Save [Ctrl+S]</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Permissions Container -->
+<div class="flex-1 overflow-y-auto space-y-3 pr-1 pt-3 min-h-0">
+<!-- PERMISSION GROUP 1: POS & Clinical Dispensing -->
+<div class="border border-slate-200 rounded-lg overflow-hidden" data-purpose="perm-group-pos">
+<div class="bg-slate-50/90 px-3 py-1.5 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-blue-600"></div>
+<h3 class="text-[11px] font-bold text-slate-900 uppercase tracking-wide">COUNTER &amp; BILLING PERMISSIONS</h3>
+</div>
+<span class="text-[10px] font-mono text-slate-500">4 Active</span>
+</div>
+<div class="p-2.5 space-y-2">
+<!-- Perm 1.1 -->
+<div class="flex items-center justify-between p-2 rounded-lg border border-slate-100 hover:bg-slate-50/60 transition">
+<div class="pr-3">
+<div class="text-xs font-bold text-slate-800 flex items-center space-x-2">
+<span class="">Dispense Medicine &amp; Print Bills</span>
+<span class="text-[9px] font-mono text-emerald-600 bg-emerald-50 px-1.5 rounded">DISP-01</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-normal">Fulfill tokens and print counter receipts.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Perm 1.2 -->
+<div class="flex items-center justify-between p-2 rounded-lg border border-amber-200 bg-amber-50/30 transition">
+<div class="pr-3">
+<div class="text-xs font-bold text-slate-800 flex items-center space-x-2">
+<span class="">Dispense Controlled Medicines</span>
+<span class="text-[9px] font-mono text-amber-700 bg-amber-100 px-1.5 rounded font-semibold">STATUTORY</span>
+</div>
+<p class="text-[11px] text-slate-600 leading-normal">Dispense narcotics with mandatory supervisor PIN.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Perm 1.3 -->
+<div class="flex items-center justify-between p-2 rounded-lg border border-slate-100 hover:bg-slate-50/60 transition">
+<div class="pr-3">
+<div class="text-xs font-bold text-slate-800 flex items-center space-x-2">
+<span class="">Emergency Dispensing (Skip Token)</span>
+<span class="text-[9px] font-mono text-slate-500 bg-slate-100 px-1.5 rounded">BYPASS</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-normal">Immediate fulfillment for ER and crash carts.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Perm 1.4 -->
+<div class="flex items-center justify-between p-2 rounded-lg border border-slate-100 hover:bg-slate-50/60 transition">
+<div class="pr-3">
+<div class="text-xs font-bold text-slate-800 flex items-center space-x-2">
+<span class="">Approve Extra Discounts</span>
+<span class="text-[9px] font-mono text-blue-600 bg-blue-50 px-1.5 rounded font-semibold">SUPERVISOR</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-normal">Approve welfare copay discounts up to 25%.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- PERMISSION GROUP 2: Inventory & SRO Pricing -->
+<div class="border border-slate-200 rounded-lg overflow-hidden" data-purpose="perm-group-inventory">
+<div class="bg-slate-50/90 px-3 py-1.5 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-blue-600"></div>
+<h3 class="text-[11px] font-bold text-slate-900 uppercase tracking-wide">STOCK &amp; PRICING PERMISSIONS</h3>
+</div>
+<span class="text-[10px] font-mono text-slate-500">2 Active</span>
+</div>
+<div class="p-2.5 space-y-2">
+<!-- Perm 2.1 -->
+<div class="flex items-center justify-between p-2 rounded-lg border border-slate-100 hover:bg-slate-50/60 transition">
+<div class="pr-3">
+<div class="text-xs font-bold text-slate-800 flex items-center space-x-2">
+<span class="">Remove Expired Medicines</span>
+<span class="text-[9px] font-mono text-red-600 bg-red-50 px-1.5 rounded font-semibold">FORM-11</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-normal">Authorize expired stock transfer and Form 11 certificate.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<!-- Perm 2.2 -->
+<div class="flex items-center justify-between p-2 rounded-lg border border-slate-100 hover:bg-slate-50/60 transition">
+<div class="pr-3">
+<div class="text-xs font-bold text-slate-800 flex items-center space-x-2">
+<span class="">Approve New Stock Arrivals</span>
+<span class="text-[9px] font-mono text-slate-500 bg-slate-100 px-1.5 rounded">GRN-VAL</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-normal">Verify inward distributor batches and trade costs.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: Right Column -->
+</div>
+<!-- END: Workspace Grid -->
+</main>
+<!-- BEGIN: TelemetryFooter (Fixed h-8 pinned cleanly at bottom) -->
+<footer class="h-8 shrink-0 bg-white border-t border-slate-200 px-6 flex items-center justify-between text-[10px] font-mono text-slate-500 select-none">
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span class="">IP: <span class="text-slate-700 font-semibold">192.168.1.10</span></span>
+</div>
+<span class="text-slate-300">•</span>
+<div class="">Latency: <span class="text-slate-700 font-semibold">1.2 ms</span></div>
+<span class="text-slate-300">•</span>
+<div class="">Terminals: <span class="text-slate-700 font-semibold">4 Active</span></div>
+</div>
+<div class="flex items-center space-x-2.5">
+<span class="px-1.5 py-0.2 bg-slate-100 text-slate-700 rounded border border-slate-200 font-semibold">DRAP SRO / Form 9</span>
+<span class="text-slate-400 hidden md:inline">Hope Welfare Trust Workstation</span>
+</div>
+</footer>
+<!-- END: TelemetryFooter -->
+</div>
+<!-- END: MainContentArea -->
+
+
+</body></html>

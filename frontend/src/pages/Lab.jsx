@@ -45,8 +45,8 @@ export default function Lab() {
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <Alert type="ok" onClose={() => setMsg('')}>{msg}</Alert>
       <div className="card">
-        <div className="flex between mb">
-          <div className="flex">
+        <div className="fx between mb">
+          <div className="fx">
             {['ordered', 'collected', 'completed', 'all'].map((s) => (
               <button key={s} className={`btn sm ${filter === s ? 'primary' : 'ghost'}`} onClick={() => setFilter(s)}>{s}</button>
             ))}
@@ -67,7 +67,7 @@ export default function Lab() {
                   <td><StatusBadge status={o.status} /></td>
                   <td className="right">
                     {can('lab.manage') && o.status !== 'completed' && (
-                      <div className="flex" style={{ justifyContent: 'flex-end' }}>
+                      <div className="fx" style={{ justifyContent: 'flex-end' }}>
                         {o.status === 'ordered' && <button className="btn sm" onClick={() => api.put(`/lab/orders/${o.id}/collect`).then(load).catch((e) => setErr(e.message))}>Collect</button>}
                         <button className="btn accent sm" onClick={() => { setActive(o); setResult({ result_value: '', result_notes: '' }); }}>Enter Result</button>
                       </div>
@@ -92,7 +92,7 @@ export default function Lab() {
               <input type="file" accept="application/pdf,image/*" onChange={onFile} />
               {file && <div className="muted mt">Attached: {file.name}</div>}
             </div>
-            <div className="flex">
+            <div className="fx">
               <button className="btn primary" onClick={saveResult}>Save & Mark Complete</button>
               <button className="btn ghost" onClick={() => { setActive(null); setFile(null); }}>Cancel</button>
             </div>

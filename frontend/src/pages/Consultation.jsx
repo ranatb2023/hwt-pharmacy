@@ -90,7 +90,7 @@ export default function Consultation() {
 
       {patient ? (
         <div className="card mb">
-          <div className="flex between">
+          <div className="fx between">
             <div><b style={{ fontSize: 16 }}>{patient.full_name}</b> <CategoryBadge category={patient.category} />
               <span className="muted mono"> · {patient.patient_code}</span></div>
             <div className="muted">{patient.gender} · {patient.age || '—'}y</div>
@@ -98,7 +98,7 @@ export default function Consultation() {
         </div>
       ) : <div className="card mb muted">Visit #{visitId}</div>}
 
-      <div className="grid cols-2">
+      <div className="gx cols-2">
         <div className="card">
           <h3>Clinical Notes</h3>
           <div className="field"><label>Presenting Complaint</label><input value={form.complaint} onChange={(e) => setForm({ ...form, complaint: e.target.value })} /></div>
@@ -139,10 +139,10 @@ export default function Consultation() {
 
           <div className="card">
             <h3>Order Lab Tests</h3>
-            <div className="flex wrap">
+            <div className="fx wrap">
               {tests.map((t) => (
-                <label key={t.id} className="flex" style={{ gap: 6, margin: 0, padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', background: labIds.includes(t.id) ? 'var(--primary-soft)' : '#fff' }}>
-                  <input type="checkbox" style={{ width: 'auto' }} checked={labIds.includes(t.id)} onChange={() => toggleLab(t.id)} />
+                <label key={t.id} className="fx" style={{ gap: 6, margin: 0, padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 8, cursor: 'pointer', background: labIds.includes(t.id) ? 'var(--primary-soft)' : '#fff' }}>
+                  <input type="checkbox" checked={labIds.includes(t.id)} onChange={() => toggleLab(t.id)} />
                   {t.name} <span className="muted">Rs{t.price}</span>
                 </label>
               ))}
@@ -151,7 +151,7 @@ export default function Consultation() {
         </div>
       </div>
 
-      <div className="flex mt">
+      <div className="fx mt">
         <button className="btn primary" onClick={() => save(false)} disabled={busy}>{busy ? 'Saving…' : 'Save Consultation'}</button>
         <button className="btn accent" onClick={() => save(true)} disabled={busy}>Save &amp; see next →</button>
         <button className="btn ghost" onClick={() => nav(-1)}>Cancel</button>

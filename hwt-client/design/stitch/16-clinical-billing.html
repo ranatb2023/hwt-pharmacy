@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-slate-100" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HOPE Welfare Trust - Central Clinical Billing &amp; Encounter Charges Workstation</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+            },
+            welfare: {
+              50: '#ecfdf5',
+              600: '#059669',
+              700: '#047857'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="custom-scrollbar">
+    /* High-density POS clean scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<style data-purpose="thermal-preview">
+    /* Simulated 80mm POS slip micro styling */
+    .receipt-font {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .dashed-line {
+      border-top: 1px dashed #94a3b8;
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased overflow-x-hidden">
+<!-- BEGIN: TopBar -->
+<header class="bg-white border-b border-slate-200 shrink-0 sticky top-0 z-50">
+<div class="w-full px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
+<!-- Brand & Hospital System Title -->
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-2">
+<!-- Hope Welfare Trust Bird/Wing Logo SVG Representation -->
+<svg class="h-8 w-auto text-sky-600" fill="currentColor" viewbox="0 0 100 60">
+<path d="M10,45 C25,48 40,40 52,25 C45,28 35,30 25,28 C15,26 8,18 2,10 C15,14 30,15 45,10 C60,5 75,0 95,2 C80,12 65,22 55,38 C70,32 85,34 98,40 C75,48 50,45 35,55 C25,60 15,55 10,45 Z"></path>
+</svg>
+<div class="flex flex-col">
+<div class="flex items-baseline space-x-1">
+<span class="font-black tracking-tight text-xl text-sky-700 leading-none">HOPE</span>
+<span class="text-[9px] font-bold text-slate-500 tracking-wider uppercase leading-none">WELFARE TRUST</span>
+</div>
+<span class="text-[11px] font-semibold text-slate-600 leading-tight">Hospital Management &amp; Pharmacy System</span>
+</div>
+</div>
+<div class="h-6 w-px bg-slate-300 mx-2 hidden md:block"></div>
+<!-- System Telemetry Status Badges -->
+<div class="hidden lg:flex items-center space-x-2 text-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Counter 01 Connected
+          </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+            Citizen POS-80 USB: Ready
+          </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono text-[11px] bg-slate-100 text-slate-500">
+            Station: POS-WS-01
+          </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono text-[11px] bg-sky-50 text-sky-700 border border-sky-200">
+            LAN: 192.168.10.45 [Master Online]
+          </span>
+</div>
+</div>
+<!-- Right Operator Info & Session Controls -->
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-3 text-right">
+<div class="hidden sm:block">
+<div class="text-xs font-semibold text-slate-900 leading-snug">Tariq Mahmood, R.Ph</div>
+<div class="text-[11px] text-slate-500 leading-none">Duty Pharmacist &amp; Billing Officer · ID #8492</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+            P
+          </div>
+</div>
+<div class="h-6 w-px bg-slate-200"></div>
+<button class="inline-flex items-center px-3 py-1.5 border border-slate-300 rounded-md text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-sky-500 shadow-sm transition" type="button">
+<svg class="w-3.5 h-3.5 mr-1.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Sign out
+        </button>
+</div>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- BEGIN: HotkeySubNavigation -->
+<nav aria-label="Clinical Hotkeys Navigation" class="bg-slate-800 text-white text-xs border-b border-slate-700 overflow-x-auto shadow-inner">
+<div class="w-full px-4 flex items-center justify-between whitespace-nowrap min-w-max">
+<!-- POS and Department Hotkeys -->
+<div class="flex items-center space-x-1 py-1">
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#pos">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-amber-300">F2</span> Main POS
+        </a>
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#requisitions">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-slate-400">F7</span> Requisitions
+        </a>
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#inventory">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-slate-400">F3</span> Inventory &amp; DRAP
+        </a>
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#vendors">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-slate-400">F8</span> Vendors &amp; Orders
+        </a>
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#customers">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-slate-400">F5</span> Customers &amp; Welfare
+        </a>
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#returns">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-slate-400">F6</span> Returns &amp; Refunds
+        </a>
+<a class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition flex items-center" href="#dayclose">
+<span class="bg-slate-700 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-slate-600 text-slate-400">F10</span> Day Close / Till
+        </a>
+<!-- ACTIVE ROUTE -->
+<a class="px-3 py-1 bg-sky-600 text-white font-semibold rounded shadow-sm flex items-center" href="#billing">
+<span class="bg-sky-800 px-1 py-0.2 rounded font-mono text-[10px] mr-1.5 border border-sky-400 text-sky-200">F11</span> Central Clinical Billing
+        </a>
+</div>
+<!-- Sync Telemetry Indicator -->
+<div class="flex items-center text-[11px] text-slate-400 space-x-2 pl-4">
+<span class="flex items-center text-emerald-400">
+<svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+          SQLite Local DB Synced (12ms)
+        </span>
+</div>
+</div>
+</nav>
+<!-- END: HotkeySubNavigation -->
+<!-- BEGIN: BreadcrumbAndSearchBar -->
+<section class="bg-white border-b border-slate-200 py-3 shadow-xs">
+<div class="w-full px-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<!-- Workstation Title & Breadcrumb -->
+<div>
+<div class="text-[10px] tracking-widest font-bold uppercase text-slate-400">
+          Hospital Financials <span class="mx-1 text-slate-300">/</span> Encounter Billing &amp; Charges Consolidation
+        </div>
+<h1 class="text-lg font-bold text-slate-800 flex items-center mt-0.5">
+<span>Central Clinical Billing &amp; Patient Encounter Workstation</span>
+<span class="ml-2 text-xs font-semibold px-2 py-0.5 bg-sky-100 text-sky-800 rounded">Active Session</span>
+</h1>
+</div>
+<!-- Encounter Search Form -->
+<div class="flex items-center space-x-2 w-full md:w-auto">
+<div class="relative flex-1 md:w-96">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<!-- Barcode Scan / Search Icon -->
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="block w-full pl-9 pr-8 py-1.5 bg-slate-50 border border-slate-300 rounded-md text-xs font-mono text-slate-900 focus:bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500" placeholder="Enter Patient MR Number / Visit ID (e.g. VIS-2026-09823 or CNIC)..." type="text" value="VIS-2026-09823"/>
+<span class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-[10px] text-slate-400 font-mono">
+            Ctrl+K
+          </span>
+</div>
+<button class="inline-flex items-center px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-md text-xs font-semibold shadow-sm transition" type="button">
+<span>Load Encounter</span>
+<kbd class="ml-1.5 text-[9px] bg-sky-800 px-1 rounded text-sky-200 font-mono">Enter</kbd>
+</button>
+<button class="p-1.5 border border-slate-300 bg-white hover:bg-slate-50 rounded-md text-slate-600" title="Scan MR Barcode via USB" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 10h18M3 14h18M3 6h18M3 18h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</section>
+<!-- END: BreadcrumbAndSearchBar -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 w-full px-4 sm:px-6 py-4 flex flex-col space-y-4">
+<!-- BEGIN: PatientEncounterBanner -->
+<section class="bg-white rounded-lg border border-slate-200 shadow-sm p-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
+<!-- Col 1: Patient Details -->
+<div class="border-b md:border-b-0 md:border-r border-slate-100 pb-3 md:pb-0 md:pr-4">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Patient Details</span>
+<div class="flex items-center space-x-2 mt-0.5">
+<span class="text-sm font-bold text-slate-900">Zubaida Begum</span>
+<span class="text-xs px-1.5 py-0.2 bg-slate-100 text-slate-600 rounded">54Y / Female</span>
+</div>
+<div class="text-xs text-slate-500 font-mono mt-0.5">CNIC: 35201-8931204-2</div>
+</div>
+<!-- Col 2: Encounter / Identifiers -->
+<div class="border-b md:border-b-0 md:border-r border-slate-100 pb-3 md:pb-0 md:pr-4">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Medical Identifiers</span>
+<div class="flex items-center space-x-2 mt-0.5">
+<span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-200">MR-40912</span>
+<span class="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">VIS-2026-09823</span>
+</div>
+<div class="text-xs text-slate-500 mt-0.5">Admitted: Today, 07:45 AM</div>
+</div>
+<!-- Col 3: Department & Consultant -->
+<div class="border-b md:border-b-0 md:border-r border-slate-100 pb-3 md:pb-0 md:pr-4">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Unit &amp; Consultant</span>
+<div class="text-xs font-bold text-slate-800 mt-0.5">Dialysis Unit &amp; General OPD</div>
+<div class="text-xs text-slate-600 flex items-center mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span> Dr. Salman Farooq (Nephrology)
+          </div>
+</div>
+<!-- Col 4: Welfare / Subsidy Tier -->
+<div class="border-b md:border-b-0 lg:border-r border-slate-100 pb-3 md:pb-0 md:pr-4">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Welfare / Subsidy Plan</span>
+<div class="mt-0.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+<svg class="w-3 h-3 mr-1 text-emerald-600" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
+</svg>
+              75% Trust Covered (Mustahiq Fund)
+            </span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Zakat Card # ZKT-2026-4410</div>
+</div>
+<!-- Col 5: Account Status & Fast Actions -->
+<div class="flex items-center justify-between lg:justify-end space-x-3">
+<div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Encounter Status</span>
+<span class="inline-flex items-center text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
+              ● Open Encounter
+            </span>
+</div>
+<button class="p-1.5 rounded-md border border-slate-300 hover:bg-slate-100 text-slate-600" title="Refresh Charges Buffer" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</section>
+<!-- END: PatientEncounterBanner -->
+<!-- BEGIN: MainBillingSplitView (65% Table / 35% Settlement) -->
+<div class="w-full flex-1 flex flex-col lg:flex-row gap-4 items-start">
+<!-- BEGIN: ConsolidatedChargesColumn (65%) -->
+<div class="w-full lg:w-[65%] flex flex-col space-y-4">
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+<!-- Section Card Header -->
+<div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center space-x-2">
+<h2 class="text-sm font-bold text-slate-800 uppercase tracking-wide">Aggregated Encounter Charge Sheet</h2>
+<span class="text-xs bg-slate-200 text-slate-700 font-semibold px-2 py-0.2 rounded-full">4 Service Units</span>
+</div>
+<div class="flex items-center space-x-2">
+<button class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 shadow-2xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                Add Clinical Charge
+              </button>
+<button class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 shadow-2xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                View Requisition Slips
+              </button>
+</div>
+</div>
+<!-- Comprehensive Charges Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="bg-slate-100 text-slate-600 uppercase text-[10px] font-bold tracking-wider border-b border-slate-200">
+<th class="py-2.5 px-3">Item / Service Details</th>
+<th class="py-2.5 px-2">Department</th>
+<th class="py-2.5 px-2 text-center">Qty</th>
+<th class="py-2.5 px-3 text-right">Gross Rate</th>
+<th class="py-2.5 px-3 text-right text-emerald-700">Welfare (75%)</th>
+<th class="py-2.5 px-3 text-right font-bold text-slate-800">Net Payable</th>
+<th class="py-2.5 px-3 text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200">
+<!-- Group 1: Pharmacy Dispenses -->
+<tr class="bg-sky-50/50 font-semibold text-slate-700 text-[11px]">
+<td class="py-1.5 px-3 flex items-center justify-between" colspan="7">
+<span class="flex items-center">
+<span class="w-2 h-2 rounded bg-sky-500 mr-2"></span> 1. Pharmacy Dispenses &amp; Dialysis Consumables (Dr. Salman Farooq)
+                    </span>
+<span class="text-xs font-bold text-sky-800">Subtotal: PKR 4,850.00</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Polysulfone Dialyzer Kit (High Flux)</div>
+<div class="text-[10px] text-slate-400 font-mono">CODE: PH-DIA-0091 · Batch: DL-889</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px]">Pharmacy</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">3,200.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-2,400.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">800.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[10px] font-medium">Dispensed</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Heparin Sodium 5000 IU/ml Injection</div>
+<div class="text-[10px] text-slate-400 font-mono">CODE: PH-INJ-0144 · Batch: HP-441</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px]">Pharmacy</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">2</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">650.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-487.50</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">162.50</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[10px] font-medium">Dispensed</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Normal Saline 0.9% 1000ml Infusion</div>
+<div class="text-[10px] text-slate-400 font-mono">CODE: PH-IV-0021 · Batch: NS-902</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px]">Pharmacy</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">2</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">400.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-300.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">100.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[10px] font-medium">Dispensed</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Humulin 70/30 Insulin Cartridge</div>
+<div class="text-[10px] text-slate-400 font-mono">CODE: PH-INS-004 · Batch: IN-220</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px]">Pharmacy</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">600.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-450.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">150.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[10px] font-medium">Dispensed</span></td>
+</tr>
+<!-- Group 2: Laboratory & Diagnostics -->
+<tr class="bg-indigo-50/50 font-semibold text-slate-700 text-[11px]">
+<td class="py-1.5 px-3 flex items-center justify-between" colspan="7">
+<span class="flex items-center">
+<span class="w-2 h-2 rounded bg-indigo-500 mr-2"></span> 2. Laboratory &amp; Diagnostic Investigations
+                    </span>
+<span class="text-xs font-bold text-indigo-800">Subtotal: PKR 2,400.00</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Complete Blood Count (CBC) with ESR</div>
+<div class="text-[10px] text-slate-400 font-mono">LAB-HAEM-01 · Verified by Pathologist</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px]">Laboratory</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">600.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-450.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">150.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-sky-100 text-sky-700 rounded text-[10px] font-medium">Reported</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Renal Function Profile (Serum Creatinine &amp; Urea)</div>
+<div class="text-[10px] text-slate-400 font-mono">LAB-CHEM-08 · Urgent Dialysis Panel</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px]">Laboratory</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">1,000.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-750.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">250.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-sky-100 text-sky-700 rounded text-[10px] font-medium">Reported</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Serum Electrolytes (Na+, K+, Cl-)</div>
+<div class="text-[10px] text-slate-400 font-mono">LAB-CHEM-12 · Stat order</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px]">Laboratory</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">800.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-600.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">200.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-sky-100 text-sky-700 rounded text-[10px] font-medium">Reported</span></td>
+</tr>
+<!-- Group 3: Clinical Consultation & Procedure Fees -->
+<tr class="bg-amber-50/50 font-semibold text-slate-700 text-[11px]">
+<td class="py-1.5 px-3 flex items-center justify-between" colspan="7">
+<span class="flex items-center">
+<span class="w-2 h-2 rounded bg-amber-500 mr-2"></span> 3. Clinical Consultation &amp; Procedure Fees
+                    </span>
+<span class="text-xs font-bold text-amber-800">Subtotal: PKR 1,500.00</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Consultant Nephrology Follow-up Fee</div>
+<div class="text-[10px] text-slate-400 font-mono">CLIN-SRV-02 · Dr. Salman Farooq</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]">Clinical OPD</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">1,000.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-750.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">250.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-[10px] font-medium">Completed</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Day Care Hemodialysis Bed &amp; Machine Charge</div>
+<div class="text-[10px] text-slate-400 font-mono">BED-DC-04 · 4 Hours Session</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]">Dialysis Bay</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">500.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-375.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">125.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-[10px] font-medium">Active</span></td>
+</tr>
+<!-- Group 4: Nursing & Consumables -->
+<tr class="bg-rose-50/50 font-semibold text-slate-700 text-[11px]">
+<td class="py-1.5 px-3 flex items-center justify-between" colspan="7">
+<span class="flex items-center">
+<span class="w-2 h-2 rounded bg-rose-500 mr-2"></span> 4. Nursing &amp; Medical Consumables
+                    </span>
+<span class="text-xs font-bold text-rose-800">Subtotal: PKR 650.00</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Fistula Cannula Needle Set (16G) + Syringes</div>
+<div class="text-[10px] text-slate-400 font-mono">NUR-CON-18 · Dialysis Prep</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px]">Nursing Bay</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">450.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-337.50</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">112.50</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded text-[10px] font-medium">Administered</span></td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-2 px-3">
+<div class="font-medium text-slate-900">Sterile Dressing Pack &amp; Micropore Tape</div>
+<div class="text-[10px] text-slate-400 font-mono">NUR-CON-03 · Post-dialysis Seal</div>
+</td>
+<td class="py-2 px-2 text-slate-600"><span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px]">Nursing Bay</span></td>
+<td class="py-2 px-2 text-center font-mono font-medium">1</td>
+<td class="py-2 px-3 text-right font-mono text-slate-600">200.00</td>
+<td class="py-2 px-3 text-right font-mono text-emerald-600">-150.00</td>
+<td class="py-2 px-3 text-right font-mono font-bold text-slate-900">50.00</td>
+<td class="py-2 px-3 text-center"><span class="px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded text-[10px] font-medium">Administered</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Charges Table Footer Notes -->
+<div class="px-4 py-2 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex items-center justify-between">
+<div>
+<span class="font-medium text-slate-700">Audit Protocol:</span> All charges consolidated real-time from Nursing Station, Pharmacy Terminal 02, and Central Diagnostics.
+            </div>
+<div class="text-right font-mono text-slate-600">
+              Total 10 Items Billed
+            </div>
+</div>
+</div>
+<!-- Live Consolidated Hospital Statement Slip Preview -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm p-4">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center">
+<svg class="w-4 h-4 mr-1.5 text-sky-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+              Standard 80mm Encounter Invoice Format (Live Preview)
+            </h3>
+<span class="text-[10px] text-slate-400 font-mono">Printer: Citizen POS-80 USB</span>
+</div>
+<div class="p-3 bg-slate-50 rounded border border-slate-200 receipt-font text-[11px] leading-relaxed text-slate-700 max-w-xl mx-auto">
+<div class="text-center font-bold">HOPE WELFARE TRUST HOSPITAL &amp; PHARMACY</div>
+<div class="text-center text-[10px]">Main GT Road, Lahore | UAN: +92 42 111-467-387</div>
+<div class="text-center text-[10px]">NTN / Welfare Reg # 092834-ZKT</div>
+<div class="dashed-line my-1.5"></div>
+<div class="flex justify-between">
+<span>VISIT: VIS-2026-09823</span>
+<span>MR: 40912</span>
+</div>
+<div class="flex justify-between">
+<span>PT: Zubaida Begum</span>
+<span>DATE: 09-Sep-2026</span>
+</div>
+<div class="dashed-line my-1.5"></div>
+<div class="flex justify-between font-bold">
+<span>ITEM DESC</span>
+<span>AMOUNT (PKR)</span>
+</div>
+<div class="flex justify-between"><span>Pharmacy Dispenses (4 Items)</span><span>4,850.00</span></div>
+<div class="flex justify-between"><span>Laboratory Services (3 Tests)</span><span>2,400.00</span></div>
+<div class="flex justify-between"><span>Clinical &amp; Bed Charges</span><span>1,500.00</span></div>
+<div class="flex justify-between"><span>Nursing Consumables</span><span>650.00</span></div>
+<div class="dashed-line my-1.5"></div>
+<div class="flex justify-between"><span>GROSS TOTAL:</span><span class="font-bold">PKR 9,400.00</span></div>
+<div class="flex justify-between text-emerald-700"><span>WELFARE TRUST SUBSIDY (75%):</span><span>-PKR 7,050.00</span></div>
+<div class="flex justify-between"><span>PRIOR ADVANCE PAID:</span><span>-PKR 1,000.00</span></div>
+<div class="dashed-line my-1.5"></div>
+<div class="flex justify-between text-xs font-bold text-slate-900">
+<span>PATIENT NET PAYABLE:</span>
+<span>PKR 1,350.00</span>
+</div>
+<div class="dashed-line my-1.5"></div>
+<div class="text-center text-[9px] mt-1 text-slate-500">Subsidized through General Zakat &amp; Welfare Fund. May Allah grant quick shifa.</div>
+</div>
+</div>
+</div>
+<!-- END: ConsolidatedChargesColumn -->
+<!-- BEGIN: SettlementPanelColumn (35%) -->
+<div class="w-full lg:w-[35%] flex flex-col space-y-4">
+<!-- Financial Summary Card -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm p-4">
+<div class="border-b border-slate-200 pb-3 mb-3">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Encounter Ledger Summary</span>
+<div class="text-xs text-slate-500">Accrued clinical services for encounter #VIS-2026-09823</div>
+</div>
+<div class="space-y-2.5 text-xs">
+<div class="flex justify-between items-center text-slate-600">
+<span>Total Gross Encounter Charges:</span>
+<span class="font-mono font-semibold text-slate-800">PKR 9,400.00</span>
+</div>
+<div class="flex justify-between items-center text-emerald-700 font-medium bg-emerald-50 px-2 py-1 rounded border border-emerald-200">
+<span class="flex items-center">
+<svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" fill-rule="evenodd"></path>
+</svg>
+                Trust Welfare Subsidy (75%):
+              </span>
+<span class="font-mono font-bold">-PKR 7,050.00</span>
+</div>
+<div class="flex justify-between items-center text-slate-600">
+<span>Prior Deposits / Advance Paid:</span>
+<span class="font-mono text-slate-700">-PKR 1,000.00</span>
+</div>
+<div class="h-px bg-slate-200 my-1"></div>
+<!-- NET OUTSTANDING PAYABLE (HIGH CONTRAST) -->
+<div class="bg-slate-900 text-white p-3.5 rounded-lg shadow-sm">
+<div class="flex justify-between items-baseline">
+<span class="text-xs font-medium text-slate-300 uppercase tracking-wide">Net Outstanding Payable</span>
+<span class="text-[10px] text-amber-400 font-bold bg-slate-800 px-2 py-0.5 rounded">Due Now</span>
+</div>
+<div class="text-3xl font-black font-mono tracking-tight text-white mt-1">
+                PKR 1,350.00
+              </div>
+<div class="text-[11px] text-slate-400 mt-0.5">
+                Calculated after automated Trust Welfare adjustment
+              </div>
+</div>
+</div>
+<!-- Payment Options Form -->
+<div class="mt-4 pt-3 border-t border-slate-200">
+<label class="block text-xs font-bold text-slate-700 uppercase mb-2">Select Payment Method</label>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<button class="py-2 px-2.5 rounded border border-sky-600 bg-sky-50 text-sky-800 font-bold flex items-center justify-center text-center shadow-2xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1 text-sky-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                Cash Counter
+              </button>
+<button class="py-2 px-2.5 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 font-medium flex items-center justify-center text-center shadow-2xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                Bank Transfer
+              </button>
+<button class="py-2 px-2.5 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 font-medium flex items-center justify-center text-center shadow-2xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                Zakat Clearance
+              </button>
+<button class="py-2 px-2.5 rounded border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 font-medium flex items-center justify-center text-center shadow-2xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                Payroll Deduction
+              </button>
+</div>
+<!-- Tendered and Change -->
+<div class="mt-3 space-y-2">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Amount Tendered (PKR)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 font-mono text-xs">Rs.</span>
+<input class="block w-full pl-9 pr-3 py-1.5 border border-slate-300 rounded text-sm font-mono font-bold text-slate-900 focus:ring-2 focus:ring-sky-500" id="amount-tendered" type="number" value="1500"/>
+</div>
+</div>
+<!-- Fast Cash Buttons -->
+<div class="flex items-center space-x-1.5">
+<button class="flex-1 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-mono font-semibold text-slate-700" type="button">Exact</button>
+<button class="flex-1 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-mono font-semibold text-slate-700" type="button">1,400</button>
+<button class="flex-1 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-mono font-semibold text-slate-700" type="button">1,500</button>
+<button class="flex-1 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-mono font-semibold text-slate-700" type="button">2,000</button>
+<button class="flex-1 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-mono font-semibold text-slate-700" type="button">5,000</button>
+</div>
+<!-- Change return badge -->
+<div class="p-2.5 bg-emerald-50 rounded border border-emerald-200 flex items-center justify-between mt-2">
+<span class="text-xs font-bold text-emerald-800 uppercase">Change to Return:</span>
+<span class="text-lg font-mono font-black text-emerald-700">PKR 150.00</span>
+</div>
+</div>
+<!-- Notes & Remarks -->
+<div class="mt-3">
+<label class="block text-xs font-semibold text-slate-700 mb-1">Receipt Remarks / Authorization</label>
+<input class="block w-full py-1 px-2.5 border border-slate-300 rounded text-xs text-slate-700" type="text" value="Dialysis session completed. Welfare verification signed by MS Office."/>
+</div>
+<!-- Supervisor Checkbox -->
+<div class="mt-2.5 flex items-center">
+<input checked="" class="h-3.5 w-3.5 text-sky-600 focus:ring-sky-500 border-slate-300 rounded" id="supervisor-stamp" type="checkbox"/>
+<label class="ml-2 block text-xs text-slate-600" for="supervisor-stamp">
+                Attach Medical Superintendent welfare stamp on printed invoice
+              </label>
+</div>
+</div>
+<!-- PRIMARY ACTION BUTTON -->
+<div class="mt-4 pt-3 border-t border-slate-200 space-y-2">
+<button class="w-full py-3 px-4 bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white rounded-md text-sm font-bold shadow-md flex items-center justify-center space-x-2 transition" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Generate Master Clinical Bill &amp; Print</span>
+<kbd class="bg-sky-800 px-1.5 py-0.5 rounded text-xs font-mono text-sky-100">F9 / Alt+S</kbd>
+</button>
+<div class="flex items-center space-x-2">
+<button class="flex-1 py-1.5 px-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded text-xs font-semibold shadow-2xs" type="button">
+                Hold Bill (F6)
+              </button>
+<button class="flex-1 py-1.5 px-3 bg-white border border-slate-300 hover:bg-slate-50 text-rose-700 rounded text-xs font-semibold shadow-2xs" type="button">
+                Void Encounter
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- END: SettlementPanelColumn -->
+</div>
+<!-- END: MainBillingSplitView -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: PersistentTelemetryFooter -->
+<footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-1.5 px-4 text-xs shrink-0 select-none">
+<div class="w-full flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+<!-- Left: Engine & LAN state -->
+<div class="flex items-center space-x-3">
+<span class="flex items-center text-emerald-400 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-ping"></span>
+          SQLite Local DB: Synced (12ms)
+        </span>
+<span class="text-slate-600">|</span>
+<span>LAN Host: 192.168.10.45 [Master Online]</span>
+<span class="text-slate-600">|</span>
+<span class="text-slate-300">Encounter Buffer: Ready</span>
+</div>
+<!-- Right: Hardware telemetry & Date -->
+<div class="flex items-center space-x-3 text-slate-400">
+<span class="flex items-center text-slate-300">
+<svg class="w-3.5 h-3.5 mr-1 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Thermal Printer: Ready
+        </span>
+<span class="text-slate-600">|</span>
+<span class="text-slate-200 font-sans font-medium">Wednesday, Sep 09, 2026 · 10:44:32</span>
+</div>
+</div>
+</footer>
+<!-- END: PersistentTelemetryFooter -->
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="hotkey-listener">
+    // Clinical Workstation Hotkey Interceptor
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F9' || (e.altKey && e.key.toLowerCase() === 's')) {
+        e.preventDefault();
+        alert('Action: Generating Consolidated Encounter Bill & Sending to Citizen POS-80 USB...');
+      }
+      if (e.key === 'F11') {
+        e.preventDefault();
+        console.log('Workstation F11: Central Billing is active.');
+      }
+    });
+  </script>
+<!-- END: InteractiveScripts -->
+</body></html>

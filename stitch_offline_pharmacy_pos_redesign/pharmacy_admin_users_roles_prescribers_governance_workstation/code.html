@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pharmacy Admin - Users, Roles &amp; Prescribers Governance Workstation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0b1e3b',
+              navyDeep: '#08172e',
+              navyHover: '#132e54',
+              blue: '#1d5bd8',
+              blueHover: '#1548af',
+              lightBg: '#f6f8fc',
+              borderLight: '#e2e8f0',
+              textDark: '#0f172a',
+              textMuted: '#64748b'
+            }
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-brand-lightBg font-sans text-brand-textDark antialiased h-screen flex overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-72 bg-brand-navy flex-shrink-0 flex flex-col justify-between text-slate-300 border-r border-slate-800 select-none z-20">
+<!-- Top Brand & Header -->
+<div class="flex flex-col">
+<!-- Organization Brand Header -->
+<div class="px-5 py-4 border-b border-slate-800/80 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-extrabold tracking-tight text-white text-sm uppercase">Hope Welfare Trust</span>
+<span class="text-[10px] bg-slate-800 text-blue-400 font-mono px-1.5 py-0.5 rounded border border-slate-700">HWT</span>
+</div>
+<span class="text-[11px] text-slate-400">Hospital &amp; Pharmacy Governance</span>
+</div>
+</div>
+<!-- Network Node Status Bar -->
+<div class="px-5 py-2.5 bg-brand-navyDeep border-b border-slate-800 flex items-center justify-between text-xs font-mono">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-slate-400">LAN Core:</span>
+<span class="text-emerald-400 font-medium">192.168.1.10</span>
+</div>
+<span class="text-[10px] bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 px-1.5 py-0.5 rounded">Node 01 OK</span>
+</div>
+<!-- Navigation Tree -->
+<div class="overflow-y-auto px-3 py-4 space-y-6 max-h-[calc(100vh-220px)]">
+<!-- Group 1: Clinical & Dispensary -->
+<div>
+<p class="px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-2">Clinical &amp; Dispensary</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dashboard Overview</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dispensing Counter (POS)</span>
+</div>
+<span class="text-[10px] font-mono bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">F2</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Inventory &amp; Stock Ledger</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Day-End &amp; Cash Closing</span>
+</a>
+</nav>
+</div>
+<!-- Group 2: Pakistani Formulary Master -->
+<div>
+<p class="px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-2">Pakistani Formulary Master</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">DRAP Drug Catalogue</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dosage Forms &amp; Base Units</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Manufacturers &amp; SRO Limits</span>
+</a>
+</nav>
+</div>
+<!-- Group 3: Administration & Governance -->
+<div class="">
+<p class="px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-2">Administration &amp; Governance</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-lg bg-brand-blue text-white shadow-sm transition" href="#">
+<div class="flex items-center gap-2 flex-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Users &amp; Prescribers</span>
+</div>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Roles &amp; Permissions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Employees &amp; Quotas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">DRAP Formulary Master</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">DRAP Audit Trail</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Zakat &amp; Subsidy Accounts</span>
+</div>
+<span class="text-[10px] font-mono bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800">HWT-Z</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Offline Sync &amp; Cluster</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-300 hover:bg-brand-navyHover hover:text-white transition" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">System &amp; DRAP Rules</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+<!-- Sidebar Bottom Card -->
+<div class="p-3 border-t border-slate-800 bg-brand-navyDeep">
+<div class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-bold text-xs">
+            SA
+          </div>
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-white">System Administrator</span>
+<span class="text-[10px] text-slate-400">Super Admin (IT &amp; Quality)</span>
+</div>
+</div>
+<button class="text-slate-400 hover:text-white p-1" title="Sign out session">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<div class="mt-2.5 px-1 flex items-center justify-between text-[10px] font-mono text-slate-400">
+<span class="">Build v2.4.9-pk</span>
+<span class="text-emerald-400">DB: Local SQLite + Sync</span>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentWrapper -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f4f7fb]">
+<!-- BEGIN: TopBar -->
+<header class="bg-white border-b border-slate-200 px-6 py-3.5 flex-shrink-0 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-4">
+<div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<nav class="flex items-center gap-1.5 text-xs text-slate-400 font-medium"><span class="">Administration</span><span class="">/</span><span class="text-slate-600 font-medium">Users &amp; Prescribers Governance</span></nav>
+<h1 class="text-lg font-extrabold text-slate-900 tracking-tight">Users, Roles &amp; Prescribers Governance Workstation</h1>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-xs text-slate-500 font-medium border-r border-slate-200 pr-4">Wednesday, 9 September 2026</div>
+<a href="#" class="inline-flex items-center gap-2.5 bg-brand-blue hover:bg-brand-blueHover text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm transition hover:shadow cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Add New Staff / Prescriber</span><kbd class="ml-1 px-1.5 py-0.5 text-[10px] font-mono bg-blue-800/60 rounded text-blue-100">Ctrl+N</kbd></a>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- BEGIN: SubNavTabs -->
+
+<!-- END: SubNavTabs -->
+<!-- BEGIN: WorkstationWorkspace -->
+<div class="flex-1 overflow-y-auto p-6">
+<!-- Regulatory Banner -->
+<div class="mb-5 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50/90 via-sky-50/50 to-white p-4 flex items-center justify-between">
+<div class="flex items-start gap-3.5">
+<div class="mt-0.5 p-1.5 bg-blue-600 text-white rounded-lg">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<h2 class="text-xs font-bold text-blue-950 uppercase tracking-wide">Enterprise User Roster &amp; Statutory Prescribing Mandate</h2>
+<p class="text-xs text-slate-600 mt-0.5">
+              Only qualified pharmacists licensed under <strong>Punjab Pharmacy Council (Cat-A / Cat-B)</strong> and registered medical officers with valid <strong>PMC/PMDC numbers</strong> are authorized to dispense and authorize Schedule G controlled formulary batches.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-mono uppercase bg-white border border-blue-200 text-blue-700 px-2.5 py-1 rounded font-bold tracking-wider shadow-xs">DRAP AUDITED ROSTER</span>
+</div>
+</div>
+<!-- Main 2-Column Grid -->
+<div class="grid-cols-12 gap-6">
+<!-- Column 1: Staff Directory & Table (65% width = 8 cols) -->
+<section class="col-span-12 space-y-4 w-full">
+<!-- Filters & Search Toolbar -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+<div class="flex items-center gap-3">
+<div class="relative flex-1">
+<svg class="w-4 h-4 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<input class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Search staff by Name, CNIC, License No, or Username..." type="text">
+</div>
+<select class="text-xs py-1.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:outline-none focus:border-brand-blue">
+<option>All Hospital Depts</option>
+<option>Central Pharmacy</option>
+<option>Billing &amp; Cash Desk</option>
+<option>Dialysis Unit</option>
+<option>OPD Dispensary</option>
+</select>
+</div>
+<!-- Role Chips -->
+<div class="flex items-center gap-1.5 flex-wrap pt-1 text-xs">
+<span class="text-[11px] font-bold text-slate-400 uppercase mr-1">Roster Filter:</span>
+<button class="px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-blue text-white">All Users (14)</button>
+<button class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Pharmacists (Cat A/B)</button>
+<button class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Cashiers &amp; Billing</button>
+<button class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Consultants &amp; Doctors</button>
+<button class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Dialysis &amp; Nursing</button>
+</div>
+</div>
+<!-- Staff Table Card -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs text-slate-600 border-collapse">
+<thead class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500"><tr><th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Staff Member &amp; Credentials</th><th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Username / Department</th><th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Assigned Role</th><th class="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500">Clinical Authority &amp; Scope</th><th class="px-6 py-3.5 text-center text-xs font-bold uppercase tracking-wider text-slate-500">Status</th><th class="px-6 py-3.5 text-right text-xs font-bold uppercase tracking-wider text-slate-500">Actions</th></tr></thead>
+<tbody class="divide-y divide-slate-100"><tr class="hover:bg-blue-50/30 transition"><td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs flex-shrink-0">MU</div><div><div class="font-bold text-slate-900 text-sm">Dr. Muhammad Usman (Pharm-D)</div><div class="text-xs font-mono text-slate-500 flex items-center gap-2 mt-0.5"><span class="text-blue-700 font-semibold">PCP: PCP-RPH-21049-A</span><span class="">•</span><span class="">CNIC: 35201-8931204-1</span></div></div></div></td><td class="px-6 py-4"><span class="font-mono text-slate-800 font-semibold bg-slate-100 px-2 py-0.5 rounded text-xs">usman.pharm</span><div class="text-xs text-slate-500 mt-1">Central Pharmacy</div></td><td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">Superintendent Pharmacist</span></td><td class="px-6 py-4"><div class="text-xs text-emerald-700 font-medium flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Full SRO / Narcotics Auth</span></div></td><td class="px-6 py-4 text-center"><span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800">ACTIVE</span></td><td class="px-6 py-4 text-right space-x-2 whitespace-nowrap"><button class="text-xs font-semibold text-brand-blue hover:underline px-2 py-1 rounded hover:bg-blue-50">Edit</button><button class="text-xs font-semibold text-red-600 hover:underline px-2 py-1 rounded hover:bg-red-50">Deactivate</button></td></tr><tr class="hover:bg-blue-50/30 transition"><td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-xs flex-shrink-0">TM</div><div><div class="font-bold text-slate-900 text-sm">Tariq Mahmood, R.Ph</div><div class="text-xs font-mono text-slate-500 flex items-center gap-2 mt-0.5"><span class="text-indigo-700 font-semibold">PCP: PCP-RPH-34102-B</span><span class="">•</span><span class="">CNIC: 35202-1849102-3</span></div></div></div></td><td class="px-6 py-4"><span class="font-mono text-slate-800 font-semibold bg-slate-100 px-2 py-0.5 rounded text-xs">tariq.dispenser</span><div class="text-xs text-slate-500 mt-1">OPD Dispensary</div></td><td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">Duty Pharmacist &amp; Cashier</span></td><td class="px-6 py-4"><div class="text-xs text-slate-600 font-medium">Standard POS Dispense &amp; Till</div></td><td class="px-6 py-4 text-center"><span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800">ACTIVE</span></td><td class="px-6 py-4 text-right space-x-2 whitespace-nowrap"><button class="text-xs font-semibold text-brand-blue hover:underline px-2 py-1 rounded hover:bg-blue-50">Edit</button><button class="text-xs font-semibold text-red-600 hover:underline px-2 py-1 rounded hover:bg-red-50">Deactivate</button></td></tr><tr class="hover:bg-blue-50/30 transition"><td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs flex-shrink-0">SF</div><div><div class="font-bold text-slate-900 text-sm">Dr. Salman Farooq</div><div class="text-xs font-mono text-slate-500 flex items-center gap-2 mt-0.5"><span class="text-emerald-700 font-semibold">PMC: 48291-P</span><span class="">•</span><span class="">CNIC: 35201-1188301-9</span></div></div></div></td><td class="px-6 py-4"><span class="font-mono text-slate-800 font-semibold bg-slate-100 px-2 py-0.5 rounded text-xs">dr.salman</span><div class="text-xs text-slate-500 mt-1">Dialysis &amp; Medicine</div></td><td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">Consultant Nephrologist</span></td><td class="px-6 py-4"><div class="text-xs text-emerald-700 font-medium flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Schedule G &amp; Antibiotics</span></div></td><td class="px-6 py-4 text-center"><span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800">ACTIVE</span></td><td class="px-6 py-4 text-right space-x-2 whitespace-nowrap"><button class="text-xs font-semibold text-brand-blue hover:underline px-2 py-1 rounded hover:bg-blue-50">Edit</button><button class="text-xs font-semibold text-red-600 hover:underline px-2 py-1 rounded hover:bg-red-50">Deactivate</button></td></tr><tr class="hover:bg-blue-50/30 transition"><td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-pink-100 text-pink-700 font-bold flex items-center justify-center text-xs flex-shrink-0">AK</div><div><div class="font-bold text-slate-900 text-sm">Dr. Ayesha Khan</div><div class="text-xs font-mono text-slate-500 flex items-center gap-2 mt-0.5"><span class="text-pink-700 font-semibold">PMC: 72910-S</span><span class="">•</span><span class="">CNIC: 35202-9912048-2</span></div></div></div></td><td class="px-6 py-4"><span class="font-mono text-slate-800 font-semibold bg-slate-100 px-2 py-0.5 rounded text-xs">dr.ayesha</span><div class="text-xs text-slate-500 mt-1">General OPD</div></td><td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-pink-50 text-pink-700 border border-pink-200">Medical Officer (OPD)</span></td><td class="px-6 py-4"><div class="text-xs text-slate-600 font-medium">Standard OPD Prescriber</div></td><td class="px-6 py-4 text-center"><span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800">ACTIVE</span></td><td class="px-6 py-4 text-right space-x-2 whitespace-nowrap"><button class="text-xs font-semibold text-brand-blue hover:underline px-2 py-1 rounded hover:bg-blue-50">Edit</button><button class="text-xs font-semibold text-red-600 hover:underline px-2 py-1 rounded hover:bg-red-50">Deactivate</button></td></tr><tr class="hover:bg-blue-50/30 transition"><td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-xs flex-shrink-0">KR</div><div><div class="font-bold text-slate-900 text-sm">Kashif Raza</div><div class="text-xs font-mono text-slate-500 flex items-center gap-2 mt-0.5"><span class="">CNIC: 35201-4458921-5</span></div></div></div></td><td class="px-6 py-4"><span class="font-mono text-slate-800 font-semibold bg-slate-100 px-2 py-0.5 rounded text-xs">kashif.cashier</span><div class="text-xs text-slate-500 mt-1">Billing Counter 01</div></td><td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200">Cashier / Billing Clerk</span></td><td class="px-6 py-4"><div class="text-xs text-slate-600 font-medium">Cap: <span class="font-semibold text-slate-900">10% Disc</span> • Till Drawer Armed</div></td><td class="px-6 py-4 text-center"><span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800">ACTIVE</span></td><td class="px-6 py-4 text-right space-x-2 whitespace-nowrap"><button class="text-xs font-semibold text-brand-blue hover:underline px-2 py-1 rounded hover:bg-blue-50">Edit</button><button class="text-xs font-semibold text-red-600 hover:underline px-2 py-1 rounded hover:bg-red-50">Deactivate</button></td></tr><tr class="hover:bg-blue-50/30 transition"><td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-teal-100 text-teal-800 font-bold flex items-center justify-center text-xs flex-shrink-0">RK</div><div><div class="font-bold text-slate-900 text-sm">Rehana Kausar</div><div class="text-xs font-mono text-slate-500 flex items-center gap-2 mt-0.5"><span class="">CNIC: 35202-6019482-6</span></div></div></div></td><td class="px-6 py-4"><span class="font-mono text-slate-800 font-semibold bg-slate-100 px-2 py-0.5 rounded text-xs">rehana.ward</span><div class="text-xs text-slate-500 mt-1">IPD Dialysis Bay</div></td><td class="px-6 py-4"><span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-teal-50 text-teal-800 border border-teal-200">Ward Runner / Attendant</span></td><td class="px-6 py-4"><div class="text-xs text-slate-600 font-medium">Requisition Indent: Authorized</div></td><td class="px-6 py-4 text-center"><span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800">ACTIVE</span></td><td class="px-6 py-4 text-right space-x-2 whitespace-nowrap"><button class="text-xs font-semibold text-brand-blue hover:underline px-2 py-1 rounded hover:bg-blue-50">Edit</button><button class="text-xs font-semibold text-red-600 hover:underline px-2 py-1 rounded hover:bg-red-50">Deactivate</button></td></tr></tbody>
+</table>
+</div>
+<!-- Table Footer Status -->
+<div class="px-4 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="">Showing <strong>6</strong> of <strong>14</strong> staff accounts</span>
+</div>
+<div class="font-mono text-[11px] text-slate-400">
+                Offline encrypted credential store (BCrypt hashed)
+              </div>
+</div>
+</div>
+</section>
+<!-- Column 2: Create / Edit User Card (35% width = 4 cols) -->
+
+</div>
+</div>
+<!-- END: WorkstationWorkspace -->
+<!-- BEGIN: SystemTelemetryFooter -->
+<footer class="bg-white border-t border-slate-200 px-6 py-2 flex items-center justify-between text-[11px] text-slate-500 flex-shrink-0">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-mono text-slate-700 font-semibold">Master Node: 192.168.1.10</span>
+</div>
+<span class="">•</span>
+<span class="">Replication Latency: <strong class="text-slate-700 font-mono">1.2 ms</strong></span>
+<span class="">•</span>
+<span class="">Active Workstations: <strong class="text-slate-700 font-mono">4 Terminals</strong></span>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-[10px] font-mono text-slate-600">DRAP SRO 2024 / Form 9 Certified</span>
+<span class="text-slate-400">Hope Welfare Trust Pharmacy Workstation</span>
+</div>
+</footer>
+<!-- END: SystemTelemetryFooter -->
+</main>
+<!-- END: MainContentWrapper -->
+
+
+
+
+
+
+</body></html>

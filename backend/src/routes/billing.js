@@ -4,7 +4,7 @@ const { authenticate, requirePermission } = require('../middleware/auth');
 const { PERMISSIONS } = require('../permissions');
 const { audit } = require('../audit');
 const { queueSync } = require('../sync');
-const { applyCategory } = require('../billingRules');
+const { applyCategory, resolveEntitlement } = require('../billingRules');
 const { staffAllowance, clampStaffDiscount } = require('../staffCap');
 const { newBillNo, wrap } = require('../utils');
 const { getSetting } = require('../settings');
@@ -145,6 +145,24 @@ router.post(
   })
 );
 
+// Find a bill by the number printed on it. That is all an admin has when
+// someone brings a receipt back: not an id, a piece of paper.
+router.get(
+  '/lookup',
+  requirePermission(PERMISSIONS.BILLING_VIEW),
+  wrap((req, res) => {
+    const no = (req.query.bill_no || '').trim();
+    if (!no) return res.status(400).json({ error: 'Enter a bill number' });
+    const bill = db
+      .prepare('SELECT * FROM bills WHERE bill_no = ? COLLATE NOCASE')
+      .get(no);
+    if (!bill) return res.status(404).json({ error: `No bill numbered ${no}` });
+    bill.items = db.prepare('SELECT * FROM bill_items WHERE bill_id = ?').all(bill.id);
+    res.json(bill);
+  })
+);
+
+// Declared BEFORE '/:id' so the static path is matched first.
 router.get(
   '/:id',
   requirePermission(PERMISSIONS.BILLING_VIEW),
@@ -152,6 +170,69 @@ router.get(
     const bill = db.prepare('SELECT * FROM bills WHERE id = ?').get(req.params.id);
     if (!bill) return res.status(404).json({ error: 'Bill not found' });
     res.json(fullBill(bill.id));
+  })
+);
+
+// ---------------------------------------------------------------------------
+// Corrections
+// ---------------------------------------------------------------------------
+
+
+// Amend a bill on a day whose till is already closed.
+//
+// Gated on `billing.amend`, NOT `billing.override`. Letting a senior pharmacist
+// discount at the counter and letting them rewrite last week's takings are two
+// different authorities, and an auditor will expect to see them held by
+// different people.
+router.post(
+  '/:id/amend',
+  requirePermission(PERMISSIONS.BILLING_AMEND),
+  wrap((req, res) => {
+    const original = db.prepare('SELECT * FROM bills WHERE id = ?').get(req.params.id);
+    if (!original) return res.status(404).json({ error: 'Bill not found' });
+    const b = req.body || {};
+
+    const { consumeFEFO } = require('./pharmacy');
+    const { openSessionFor } = require('./cashflow');
+    const A = require('../amend');
+
+    // The money lands on the till that is open NOW. Without one it has nowhere
+    // to go, and a correction that quietly moves no cash is how a drawer ends
+    // the day short with no explanation.
+    const till = openSessionFor(req.user.id);
+    if (!till && !b.accept_no_till) {
+      return res.status(409).json({
+        error: 'No till is open, so a refund or a collection has nowhere to land. '
+          + 'Open the till first, or amend without moving cash if nothing changes hands.',
+        code: 'TILL_NOT_OPEN',
+        retry_with: { accept_no_till: true },
+      });
+    }
+
+    let out;
+    try {
+      out = db.transaction(() => A.amend(original, {
+        lines: b.lines,
+        reason: b.reason,
+        userId: req.user.id,
+        consumeFEFO,
+        openSession: till,
+      }))();
+    } catch (e) {
+      return res.status(e.status || 400).json({ error: e.message });
+    }
+
+    audit(req, 'billing.amend', 'bill', original.id, out);
+    res.status(201).json(out);
+  })
+);
+
+router.get(
+  '/:id/amendments',
+  requirePermission(PERMISSIONS.BILLING_VIEW),
+  wrap((req, res) => {
+    const A = require('../amend');
+    res.json(A.chainFor(Number(req.params.id)));
   })
 );
 

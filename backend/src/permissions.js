@@ -13,6 +13,11 @@ const PERMISSIONS = {
   BILLING_VIEW: 'billing.view',
   BILLING_MANAGE: 'billing.manage',
   BILLING_OVERRIDE: 'billing.override',   // manual discounts / overrides
+  // Correcting a bill on a day whose till is already closed. Deliberately NOT
+  // the same key as billing.override: giving a senior pharmacist the authority
+  // to discount at the counter is a different decision from letting them rewrite
+  // last week's takings, and a trust auditor will expect to see them separated.
+  BILLING_AMEND: 'billing.amend',
   VENDOR_VIEW: 'vendor.view',
   VENDOR_MANAGE: 'vendor.manage',
   RETURN_MANAGE: 'return.manage',
@@ -21,6 +26,10 @@ const PERMISSIONS = {
   CASH_MANAGE: 'cash.manage',
   DONOR_MANAGE: 'donor.manage',
   SYNC_MANAGE: 'sync.manage',
+  // QA 2026-09-14
+  PHARMACY_OVERRIDE_PRICE: 'pharmacy.override_price', // charge other than the catalogue price (S1-02 / S3-22)
+  DIALYSIS_SEROLOGY: 'dialysis.serology',             // see a patient's serology results, not just the isolation flag (S2-11)
+  DAY_REOPEN: 'day.reopen',                           // reopen a closed business day (S1-04)
   REPORT_VIEW: 'report.view',
   USER_MANAGE: 'user.manage',
   AUDIT_VIEW: 'audit.view',
@@ -45,7 +54,7 @@ const DEFAULT_ROLES = [
     permissions: [
       PERMISSIONS.PATIENT_VIEW, PERMISSIONS.CONSULT_MANAGE,
       PERMISSIONS.LAB_VIEW, PERMISSIONS.INVENTORY_VIEW,
-      PERMISSIONS.DIALYSIS_VIEW, PERMISSIONS.DIALYSIS_MANAGE,
+      PERMISSIONS.DIALYSIS_VIEW, PERMISSIONS.DIALYSIS_MANAGE, PERMISSIONS.DIALYSIS_SEROLOGY,
     ],
   },
   {

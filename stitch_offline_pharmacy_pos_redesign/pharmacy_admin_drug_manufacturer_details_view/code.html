@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-slate-100" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy Admin - Drug Manufacturer Details View</title>
+<!-- Tailwind CSS v3 with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5fc',
+              100: '#e1ecf8',
+              500: '#1d5fa7',
+              600: '#154b87',
+              700: '#0f3866',
+              800: '#0b2a4d',
+              900: '#081e37',
+              navy: '#0f2d59',
+              dark: '#0a1d3a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Typography & Global Layout Styles -->
+<style data-purpose="layout-and-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Custom subtle scrollbar for tables and internal views */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="h-full text-slate-800 flex overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-[#0a1d3a] flex flex-col flex-shrink-0 text-slate-300 select-none border-r border-slate-800" data-purpose="main-sidebar">
+<!-- Brand Header -->
+<div class="px-5 py-4 border-b border-slate-800/80 flex items-center space-x-3">
+<div class="w-9 h-9 rounded-lg bg-[#0066cc] flex items-center justify-center text-white shadow-sm flex-shrink-0">
+<!-- Hospital Cross Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h1 class="text-sm font-semibold text-white tracking-tight leading-none">Hope Welfare Trust</h1>
+<p class="text-[10px] tracking-wider font-mono text-cyan-400 mt-1 uppercase font-medium">CLINICAL PHARMACY ERP</p>
+</div>
+</div>
+<!-- Cluster / Connection Badge -->
+<div class="px-5 py-2.5 bg-slate-900/60 border-b border-slate-800/60 flex items-center justify-between text-[11px] font-mono">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="text-slate-400">LAN: 192.168.1.10</span>
+</div>
+<span class="bg-emerald-950/80 text-emerald-400 px-1.5 py-0.5 rounded text-[10px] font-semibold border border-emerald-800/50">NODE-01 OK</span>
+</div>
+<!-- Navigation Menu Items -->
+<div class="flex-1 overflow-y-auto px-3 py-4 space-y-6 text-xs">
+<!-- Section 1: Clinical & POS Operations -->
+<div>
+<p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Clinical &amp; POS Operations</p>
+<nav class="space-y-0.5">
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Dashboard
+          </a>
+<a class="flex items-center justify-between px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<span class="flex items-center">
+<svg class="w-4 h-4 mr-2.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              Pharmacy Counter
+            </span>
+<span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded font-mono text-slate-400 border border-slate-700">F2</span>
+</a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Day Close &amp; Shift Register
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Formulary &amp; Stock Ledger
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Billing &amp; Hospital Invoices
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Returns &amp; Credit Slips
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Hospital Transfer Orders
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Reports &amp; Analytics
+          </a>
+</nav>
+</div>
+<!-- Section 2: Administration & Governance -->
+<div>
+<p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Administration &amp; Governance</p>
+<nav class="space-y-0.5">
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Users &amp; Roles [RBAC]
+          </a>
+<!-- Active Menu Item -->
+<a aria-current="page" class="flex items-center justify-between px-3 py-2 bg-[#0066cc] text-white rounded-md font-medium shadow-sm" href="#">
+<span class="flex items-center">
+<svg class="w-4 h-4 mr-2.5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              Catalogue &amp; Manufacturers
+            </span>
+<span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+</a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            DRAP Audit Registry
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Zakat &amp; Subsidy Accounts
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Offline Cluster Sync
+          </a>
+<a class="flex items-center px-3 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md transition-colors group" href="#">
+<svg class="w-4 h-4 mr-2.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            System Settings
+          </a>
+</nav>
+</div>
+</div>
+<!-- Admin User Pill at Bottom -->
+<div class="p-3 bg-slate-900 border-t border-slate-800">
+<div class="flex items-center justify-between p-2 rounded-lg bg-slate-800/80 border border-slate-700/60">
+<div class="flex items-center space-x-2.5 overflow-hidden">
+<div class="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center font-bold text-xs text-white uppercase tracking-wider">
+            SA
+          </div>
+<div class="truncate">
+<p class="text-xs font-semibold text-white leading-tight truncate">System Admin (Gov-4)</p>
+<p class="text-[10px] text-slate-400 font-mono mt-0.5">ID: 8820-PHARM · DRAP</p>
+</div>
+</div>
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50" data-purpose="content-area">
+<!-- Top Action & Navigation Header -->
+<header class="h-14 bg-white border-b border-slate-200 px-6 flex items-center justify-between flex-shrink-0 z-10" data-purpose="top-navigation">
+<!-- Breadcrumb Navigation -->
+<nav class="flex items-center space-x-2 text-xs text-slate-500 font-medium">
+<span>Administration</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<a class="text-slate-600 hover:text-brand-navy transition-colors" href="#">Drug Manufacturers</a>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-slate-900 font-semibold">Getz Pharma (Pvt) Ltd</span>
+</nav>
+<!-- Action Buttons Header -->
+<div class="flex items-center space-x-2.5">
+<!-- Back Button -->
+<a class="inline-flex items-center px-3 py-1.5 border border-slate-300 rounded-md text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-xs" href="#">
+<svg class="w-3.5 h-3.5 mr-1.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+          Back to Manufacturers
+        </a>
+<!-- Print Button -->
+<button class="inline-flex items-center px-3 py-1.5 border border-slate-300 rounded-md text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+          Print Profile &amp; Audit
+        </button>
+<!-- Edit Primary Button -->
+<button class="inline-flex items-center px-3.5 py-1.5 border border-transparent rounded-md text-xs font-semibold text-white bg-[#0066cc] hover:bg-[#0052a3] transition-colors shadow-xs" type="button">
+<svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+          Edit Manufacturer
+        </button>
+</div>
+</header>
+<!-- Scrollable Workspace Body -->
+<main class="flex-1 overflow-y-auto px-7 py-6 space-y-5" data-purpose="detail-workspace">
+<!-- Manufacturer Title Banner -->
+<section class="bg-white rounded-lg border border-slate-200/90 p-5 shadow-xs" data-purpose="manufacturer-summary-banner">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<!-- Main Entity Information -->
+<div class="flex items-start space-x-4">
+<!-- Organization Avatar / Initials Pill -->
+<div class="w-14 h-14 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-800 font-bold text-xl flex-shrink-0">
+              GZ
+            </div>
+<div>
+<div class="flex flex-wrap items-center gap-2">
+<h2 class="text-xl font-bold text-slate-900 tracking-tight">Getz Pharma (Pvt) Ltd</h2>
+<!-- Active Status Tag -->
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                  Active
+                </span>
+<!-- Formulation Partner Tag -->
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                  Active Formulation Partner
+                </span>
+<!-- DRAP Compliance Pill -->
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                  DRAP SRO Compliant
+                </span>
+</div>
+<p class="text-xs text-slate-500 mt-1.5 font-normal">
+                DML No: <span class="font-mono text-slate-700 font-medium">DML-000045</span> · 
+                SECP Reg: <span class="font-mono text-slate-700 font-medium">0712345-6</span> · 
+                CLB Reg No: <span class="font-mono text-slate-700">CLB/SRO-2024/481</span> · 
+                Registered Partner since <span class="text-slate-700 font-medium">2014</span>
+</p>
+</div>
+</div>
+<!-- Quick Regulatory CLB Status Indicator -->
+<div class="flex items-center space-x-4 border-t lg:border-t-0 pt-3 lg:pt-0 lg:border-l lg:pl-6 border-slate-100">
+<div class="text-right">
+<span class="inline-flex items-center text-xs font-semibold text-emerald-700">
+<span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span>
+                CLB Verification Online
+              </span>
+<p class="text-[11px] text-slate-400 font-mono mt-0.5">DRAP Form-2 Attached &amp; Verified</p>
+</div>
+</div>
+</div>
+</section>
+<!-- KPI Overview Cards (4 Grid Metrics) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-purpose="kpi-metrics-row">
+<!-- Metric 1 -->
+<div class="bg-white rounded-lg border border-slate-200/90 p-4 shadow-xs">
+<div class="flex items-center justify-between text-slate-500 text-xs font-medium">
+<span>Active Formulations / SKUs</span>
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div class="mt-2 flex items-baseline">
+<span class="text-2xl font-bold text-slate-900 tracking-tight">218</span>
+<span class="ml-2 text-xs text-slate-500">Formulated Medicines</span>
+</div>
+<p class="mt-1 text-[11px] text-slate-500">Tablets, Injections, Suspensions &amp; Syrups</p>
+</div>
+<!-- Metric 2 -->
+<div class="bg-white rounded-lg border border-slate-200/90 p-4 shadow-xs">
+<div class="flex items-center justify-between text-slate-500 text-xs font-medium">
+<span>Hospital Stock Value</span>
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div class="mt-2 flex items-baseline">
+<span class="text-2xl font-bold text-slate-900 tracking-tight">Rs. 1,420,500</span>
+</div>
+<p class="mt-1 text-[11px] text-slate-500">Dispensary, Emergency &amp; Central Store</p>
+</div>
+<!-- Metric 3 -->
+<div class="bg-white rounded-lg border border-slate-200/90 p-4 shadow-xs">
+<div class="flex items-center justify-between text-slate-500 text-xs font-medium">
+<span>DRAP License Status</span>
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+</div>
+<div class="mt-2 flex items-baseline">
+<span class="text-xl font-bold text-emerald-700 tracking-tight">Valid to Apr 2027</span>
+</div>
+<p class="mt-1 text-[11px] text-slate-500 font-mono">Form-2 / CLB SRO-92 Compliant</p>
+</div>
+<!-- Metric 4 -->
+<div class="bg-white rounded-lg border border-slate-200/90 p-4 shadow-xs">
+<div class="flex items-center justify-between text-slate-500 text-xs font-medium">
+<span>Primary Distributor</span>
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div class="mt-2 truncate">
+<span class="text-base font-bold text-slate-900 tracking-tight block truncate">Premier Agencies Ltd</span>
+</div>
+<p class="mt-1 text-[11px] text-slate-500">15 Days Credit · Muller &amp; Phipps Co-dist.</p>
+</div>
+</section>
+<!-- Two-Column Detailed Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5" data-purpose="details-two-column-grid">
+<!-- LEFT COLUMN: Company & Statutory Compliance (5 Columns) -->
+<div class="lg:col-span-5 space-y-5">
+<!-- Card 1: Corporate & Licensing Dossier -->
+<div class="bg-white rounded-lg border border-slate-200/90 shadow-xs overflow-hidden">
+<div class="px-4 py-3 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-navy" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Corporate &amp; Licensing Dossier</h3>
+</div>
+<span class="text-[10px] font-mono text-slate-400">SEC-01</span>
+</div>
+<div class="p-4 divide-y divide-slate-100 text-xs">
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3 first:pt-0">
+<span class="text-slate-500 font-medium">Manufacturer Legal Name</span>
+<span class="text-slate-900 font-semibold text-right">Getz Pharma (Pvt) Ltd</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">Company Classification</span>
+<span class="text-slate-800 text-right">National / Local Manufacturer</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">Corporate NTN &amp; STRN</span>
+<span class="font-mono text-slate-800 text-right">0712345-6 / 12-00-9999-001</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex flex-col gap-1">
+<span class="text-slate-500 font-medium">Manufacturing Plant &amp; Physical Site</span>
+<span class="text-slate-800 font-medium leading-relaxed">Plot 29-30/27, Korangi Industrial Area, Sector 23, Karachi, 74900, Pakistan</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">Direct Corporate Phone</span>
+<span class="font-mono text-slate-800 text-right">+92-21-35061234</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">Regulatory Affairs Email</span>
+<span class="font-mono text-brand-500 text-right">regulatory@getzpharma.com</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between items-center gap-3">
+<span class="text-slate-500 font-medium">Drug Mfg License (DML)</span>
+<span class="font-mono font-semibold bg-slate-100 px-2 py-0.5 rounded text-slate-800 border border-slate-200">DML-000045</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between items-center gap-3">
+<span class="text-slate-500 font-medium">GMP Certification</span>
+<span class="inline-flex items-center text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+<svg class="w-3 h-3 mr-1 text-emerald-600" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+                  Certified Compliant (WHO-GMP)
+                </span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between items-center gap-3 last:pb-0">
+<span class="text-slate-500 font-medium">Statutory MRP Gazette Enforcement</span>
+<span class="text-slate-800 font-medium text-right flex items-center text-xs">
+<span class="w-2 h-2 rounded-full bg-blue-600 mr-1.5"></span>
+                  Active (Policy 2018 Ceiling)
+                </span>
+</div>
+</div>
+</div>
+<!-- Card 2: Supply Channel & Commercial Terms -->
+<div class="bg-white rounded-lg border border-slate-200/90 shadow-xs overflow-hidden">
+<div class="px-4 py-3 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-navy" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Supply Channel &amp; Commercial Terms</h3>
+</div>
+<span class="text-[10px] font-mono text-slate-400">SEC-02</span>
+</div>
+<div class="p-4 divide-y divide-slate-100 text-xs">
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3 first:pt-0">
+<span class="text-slate-500 font-medium">Primary Authorized Distributor</span>
+<span class="text-slate-900 font-semibold text-right">Premier Agencies Ltd / M&amp;P</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">Territory Supply Officer</span>
+<span class="text-slate-800 text-right">Tariq Mehmood Siddiqui</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">TSO Direct Mobile</span>
+<span class="font-mono text-slate-800 text-right">0300-8451290</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between items-center gap-3">
+<span class="text-slate-500 font-medium">Commercial Payment Terms</span>
+<span class="font-medium text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">15 Days Credit Cycle</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between gap-3">
+<span class="text-slate-500 font-medium">Standard Delivery Lead Time</span>
+<span class="text-slate-800 font-medium text-right">24 - 48 Hours (Direct Delivery)</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex flex-col gap-1">
+<span class="text-slate-500 font-medium">Return / Expiry Claim Policy</span>
+<span class="text-slate-800 font-medium">180 Days Prior Credit Note (100% replacement guarantee)</span>
+</div>
+<!-- Item -->
+<div class="py-2.5 flex justify-between items-center gap-3 last:pb-0">
+<span class="text-slate-500 font-medium">Cold Chain Protocols</span>
+<span class="inline-flex items-center text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+<svg class="w-3 h-3 mr-1 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 3v18m9-9H3m15.364 6.364l-12.728-12.728m0 12.728l12.728-12.728" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+                  2°C - 8°C Data-Logger Required
+                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Linked Medicines & Recent GRN Batches (7 Columns) -->
+<div class="lg:col-span-7 space-y-5">
+<!-- Card 3: Active Formulations Table -->
+<div class="bg-white rounded-lg border border-slate-200/90 shadow-xs overflow-hidden">
+<div class="px-4 py-3 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-navy" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Active Formulations &amp; Linked Products (Top SKUs)</h3>
+</div>
+<span class="text-[11px] bg-slate-200/70 text-slate-700 font-semibold px-2 py-0.5 rounded">218 Registered</span>
+</div>
+<!-- Formulary Table -->
+<div class="overflow-x-auto">
+<table class="min-w-full text-left text-xs divide-y divide-slate-200">
+<thead class="bg-slate-50 text-[11px] font-semibold text-slate-600 uppercase tracking-wider">
+<tr>
+<th class="py-2.5 px-4" scope="col">Medicine &amp; Generic</th>
+<th class="py-2.5 px-3" scope="col">Dosage / Form</th>
+<th class="py-2.5 px-3" scope="col">DRAP Reg #</th>
+<th class="py-2.5 px-3 text-right" scope="col">Stock On Hand</th>
+<th class="py-2.5 px-4 text-center" scope="col">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 bg-white">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4">
+<div class="font-semibold text-slate-900">Getryl 2mg</div>
+<div class="text-[11px] text-slate-500">Glimepiride</div>
+</td>
+<td class="py-2.5 px-3 text-slate-600">Oral Solid (Tablet)</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">028451</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-800">14,200 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Normal</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4">
+<div class="font-semibold text-slate-900">Lipiget 20mg</div>
+<div class="text-[11px] text-slate-500">Atorvastatin Calcium</div>
+</td>
+<td class="py-2.5 px-3 text-slate-600">Oral Solid (Tablet)</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">031920</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-800">8,450 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Normal</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4">
+<div class="font-semibold text-slate-900">Montiget 10mg</div>
+<div class="text-[11px] text-slate-500">Montelukast Sodium</div>
+</td>
+<td class="py-2.5 px-3 text-slate-600">Oral Solid (Tablet)</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">041180</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-800">12,100 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Normal</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/80 transition-colors bg-amber-50/30">
+<td class="py-2.5 px-4">
+<div class="font-semibold text-slate-900">Risek 20mg</div>
+<div class="text-[11px] text-slate-500">Omeprazole Pellets</div>
+</td>
+<td class="py-2.5 px-3 text-slate-600">Oral Solid (Capsule)</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">022941</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-amber-700">18,900 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-300">Reorder Alert</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4">
+<div class="font-semibold text-slate-900">Clariget 250mg/5ml</div>
+<div class="text-[11px] text-slate-500">Clarithromycin</div>
+</td>
+<td class="py-2.5 px-3 text-slate-600">Suspension (60ml)</td>
+<td class="py-2.5 px-3 font-mono text-slate-700">039811</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-800">2,100 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Normal</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Formulary Footer Link -->
+<div class="p-3 bg-slate-50/90 border-t border-slate-200 text-center">
+<a class="inline-flex items-center text-xs font-semibold text-[#0066cc] hover:text-[#0052a3] transition-colors" href="#">
+                View all 218 formulations in Formulary Master
+                <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Card 4: Recent Goods Received Notes (GRN Batches) -->
+<div class="bg-white rounded-lg border border-slate-200/90 shadow-xs overflow-hidden">
+<div class="px-4 py-3 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-brand-navy" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Recent Goods Received Notes (GRN Batches)</h3>
+</div>
+<span class="text-[10px] font-mono text-slate-400">Audit Trail Active</span>
+</div>
+<!-- Mini GRN Table -->
+<div class="overflow-x-auto">
+<table class="min-w-full text-left text-xs divide-y divide-slate-200">
+<thead class="bg-slate-50 text-[11px] font-semibold text-slate-600 uppercase tracking-wider">
+<tr>
+<th class="py-2.5 px-4" scope="col">GRN Number</th>
+<th class="py-2.5 px-3" scope="col">Date</th>
+<th class="py-2.5 px-3" scope="col">Batch Number</th>
+<th class="py-2.5 px-3 text-right" scope="col">Inward Qty</th>
+<th class="py-2.5 px-4 text-center" scope="col">QC Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 bg-white">
+<!-- GRN 1 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4 font-mono font-semibold text-brand-600">GRN-2026-0892</td>
+<td class="py-2.5 px-3 text-slate-600 font-mono">02 Sep 2026</td>
+<td class="py-2.5 px-3 font-mono text-slate-800">#GZ-882</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-900">5,000 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Verified &amp; Shelved
+                      </span>
+</td>
+</tr>
+<!-- GRN 2 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4 font-mono font-semibold text-brand-600">GRN-2026-0741</td>
+<td class="py-2.5 px-3 text-slate-600 font-mono">18 Aug 2026</td>
+<td class="py-2.5 px-3 font-mono text-slate-800">#GZ-710</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-900">3,200 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Verified &amp; Shelved
+                      </span>
+</td>
+</tr>
+<!-- GRN 3 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2.5 px-4 font-mono font-semibold text-brand-600">GRN-2026-0610</td>
+<td class="py-2.5 px-3 text-slate-600 font-mono">29 Jul 2026</td>
+<td class="py-2.5 px-3 font-mono text-slate-800">#GZ-551</td>
+<td class="py-2.5 px-3 text-right font-mono font-medium text-slate-900">8,000 units</td>
+<td class="py-2.5 px-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Verified &amp; Shelved
+                      </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Inward GRN Footer -->
+<div class="px-4 py-2.5 bg-slate-50/80 border-t border-slate-200 flex justify-between items-center text-[11px] text-slate-500">
+<span>Showing last 3 received batches</span>
+<a class="font-medium text-[#0066cc] hover:underline" href="#">View Full Inward Ledger →</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BEGIN: WorkstationFooter -->
+<footer class="h-8 bg-white border-t border-slate-200 px-6 flex items-center justify-between text-[11px] text-slate-500 font-mono flex-shrink-0 select-none" data-purpose="status-footer">
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-medium text-slate-700">Station ID: NODE-01</span>
+</div>
+<span class="text-slate-300">|</span>
+<span>Engine: SQLite 3.42 WAL Active</span>
+<span class="text-slate-300">|</span>
+<span class="text-emerald-700 font-medium">DRAP Central Licensing Board Verified</span>
+</div>
+<div class="flex items-center space-x-3 text-slate-400">
+<span>Hope Welfare Trust Pharmacy Counter Workstation</span>
+<span class="text-slate-300">|</span>
+<span class="text-slate-600 font-semibold">v2.4.9-pk</span>
+</div>
+</footer>
+<!-- END: WorkstationFooter -->
+</div>
+<!-- END: MainContentArea -->
+</body></html>

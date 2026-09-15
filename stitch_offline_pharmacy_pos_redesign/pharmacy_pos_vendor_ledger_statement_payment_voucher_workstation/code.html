@@ -1,0 +1,672 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pharmacy POS - Vendor Ledger Statement &amp; Payment Voucher Workstation</title>
+<!-- Tailwind CSS v3 CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Font: Manrope for clinical and precise typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style data-purpose="custom-config">
+    body {
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f1f4f9;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Custom scrollbars for high-density tables */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs" data-purpose="workstation-top-header">
+<!-- Level 1: System Branding, Telemetry, Till and Pharmacist Profile -->
+<div class="px-5 py-2.5 flex items-center justify-between border-b border-slate-100 gap-4">
+<!-- Organization Logo & Title -->
+<div class="flex items-center space-x-3 shrink-0">
+<div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 to-indigo-900 flex items-center justify-center text-white font-black text-lg shadow-sm">
+<span class="">+</span>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-extrabold tracking-tight text-slate-900 text-base">HOPE</span>
+<span class="text-[10px] font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-200 uppercase tracking-wider">Welfare Trust</span>
+<span class="text-xs text-slate-400 font-mono">v4.2</span>
+</div>
+<p class="text-[11px] text-slate-500 font-medium leading-none mt-0.5">Hospital Management &amp; Pharmacy System</p>
+</div>
+</div>
+<!-- Station and Hardware Status Indicators -->
+<div class="hidden lg:flex items-center space-x-2.5">
+<!-- Counter Node Status -->
+<div class="flex items-center space-x-2 bg-emerald-50 text-emerald-800 px-3 py-1 rounded-md border border-emerald-200/80 text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="">Counter 01 Connected</span>
+</div>
+<!-- Local IP Badge -->
+<div class="flex items-center space-x-1.5 bg-slate-50 text-slate-600 px-2.5 py-1 rounded-md border border-slate-200 text-xs font-mono">
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">192.168.10.45</span>
+</div>
+<!-- Thermal Receipt Printer Status -->
+<div class="flex items-center space-x-1.5 bg-emerald-50/60 text-emerald-700 px-2.5 py-1 rounded-md border border-emerald-200 text-xs font-medium">
+<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Citizen POS-80 Ready</span>
+</div>
+</div>
+<!-- Till Float, Online Shift Info & Shift Operator -->
+<div class="flex items-center space-x-4">
+<!-- Live Shift Telemetry -->
+<div class="text-right hidden sm:block">
+<div class="text-[11px] text-slate-500">
+            Shift 02 • Wednesday, Sep 09, 2026 • <span class="text-emerald-600 font-semibold">DRAP Sync Online</span>
+</div>
+<div class="text-xs font-bold text-slate-800">
+            Till Float: <span class="text-blue-700 font-mono font-extrabold">PKR 5,000.00</span>
+</div>
+</div>
+<!-- Authenticated Pharmacist Profile -->
+<div class="flex items-center pl-3 border-l border-slate-200 space-x-2.5">
+<div class="w-8 h-8 rounded bg-blue-900 text-white font-bold flex items-center justify-center text-xs shadow-xs">
+            P
+          </div>
+<div class="text-left leading-tight">
+<div class="flex items-center space-x-1">
+<span class="text-xs font-bold text-slate-800">Pharm. Tariq Mahmood</span>
+<span class="text-[10px] bg-blue-100 text-blue-800 px-1 py-0.2 rounded font-semibold">R.Ph</span>
+</div>
+<p class="text-[10px] text-slate-500">Shift A • Reg #PB-74291-A</p>
+</div>
+<!-- Sign Out Button -->
+<button class="ml-1 p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Sign out workstation" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<!-- Level 2: Top Functional Navigation Dock & Shortcut Access -->
+<nav class="px-5 py-1.5 bg-slate-50/70 flex flex-wrap items-center justify-between text-xs gap-2" data-purpose="pos-navigation-dock">
+<div class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto">
+<!-- [F2] Main POS -->
+<button class="px-2.5 py-1 text-slate-600 hover:text-blue-900 font-semibold rounded flex items-center space-x-1.5 hover:bg-white transition-all" type="button">
+<span class="text-[10px] bg-slate-200 text-slate-700 px-1 rounded font-mono font-bold">F2</span>
+<span class="">Main POS</span>
+</button>
+<!-- [F7] Requisitions -->
+<button class="px-2.5 py-1 text-slate-600 hover:text-blue-900 font-semibold rounded flex items-center space-x-1.5 hover:bg-white transition-all" type="button">
+<span class="text-[10px] bg-slate-200 text-slate-700 px-1 rounded font-mono font-bold">F7</span>
+<span class="">Requisitions</span>
+</button>
+<!-- [F3] Inventory & DRAP -->
+<button class="px-2.5 py-1 text-slate-600 hover:text-blue-900 font-semibold rounded flex items-center space-x-1.5 hover:bg-white transition-all" type="button">
+<span class="text-[10px] bg-slate-200 text-slate-700 px-1 rounded font-mono font-bold">F3</span>
+<span class="">Inventory &amp; DRAP</span>
+</button>
+<!-- [F8] Vendors & Orders (Active State) -->
+<button class="px-3 py-1 bg-white text-blue-900 font-bold rounded shadow-xs border border-blue-200/80 flex items-center space-x-1.5" type="button">
+<span class="text-[10px] bg-blue-700 text-white px-1 rounded font-mono font-bold">F8</span>
+<span class="">Vendors &amp; Orders</span>
+</button>
+<!-- [F10] Day Close / Till -->
+<button class="px-2.5 py-1 text-slate-600 hover:text-blue-900 font-semibold rounded flex items-center space-x-1.5 hover:bg-white transition-all" type="button">
+<span class="text-[10px] bg-slate-200 text-slate-700 px-1 rounded font-mono font-bold">F10</span>
+<span class="">Day Close / Till</span>
+</button>
+</div>
+<!-- Quick Action Hints & Regulatory Badges -->
+<div class="hidden xl:flex items-center space-x-3 text-slate-500 font-medium">
+<span class="inline-flex items-center space-x-1">
+<kbd class="px-1 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded text-slate-700 font-semibold">Alt+P</kbd>
+<span class="text-[11px]">Post Payment</span>
+</span>
+<span class="inline-flex items-center space-x-1">
+<kbd class="px-1 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded text-slate-700 font-semibold">F6</kbd>
+<span class="text-[11px]">Print Ledger Statement</span>
+</span>
+<span class="h-3 w-px bg-slate-300"></span>
+<div class="flex items-center space-x-1 text-emerald-700 font-semibold text-[11px]">
+<svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<span class="">DRAP Form 12-A Validated</span>
+</div>
+</div>
+</nav>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="px-5 py-4 flex-1 space-y-4 max-w-[1920px] w-full mx-auto" data-purpose="vendor-statement-workspace">
+<!-- Section: Header Breadcrumb & Screen Actions -->
+<div class="bg-white px-4 py-3.5 rounded-xl border border-slate-200/90 shadow-2xs flex flex-col gap-3"><div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5"><div class="flex items-center space-x-1.5 text-[11px] font-bold text-slate-400 tracking-wider uppercase"><span class="hover:text-slate-600 transition-colors cursor-pointer">Purchase &amp; Supply</span><span class="text-slate-300">›</span><span class="hover:text-slate-600 transition-colors cursor-pointer">Vendors &amp; Distributors</span><span class="text-slate-300">›</span><span class="text-blue-700 font-extrabold">Vendor Statement &amp; Settlement</span></div><div class="flex items-center space-x-2"><button class="inline-flex items-center space-x-1.5 px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-semibold rounded text-xs transition-colors" type="button"><kbd class="px-1 text-[10px] bg-slate-100 text-slate-600 border border-slate-300 rounded font-mono font-bold">Esc</kbd><span class="">Back to Directory</span></button><span class="h-3 w-px bg-slate-200"></span><span class="text-[11px] text-slate-400 font-mono">ID: #VD-8891</span></div></div><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3"><div class="flex flex-wrap items-center gap-2.5"><h1 class="text-xl font-black tracking-tight text-slate-900">Vendor Statement &amp; Payment Settlement</h1><div class="inline-flex items-center rounded-lg border border-blue-200 bg-blue-50/60 pl-2 pr-1.5 py-0.5 space-x-2"><span class="text-xs font-bold text-blue-900">Generic Pharma Distributors</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-700 text-white font-mono font-extrabold tracking-wide">VEND-00109</span></div></div><div class="flex items-center space-x-2 shrink-0"><button class="h-9 inline-flex items-center space-x-1.5 px-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg text-xs font-bold shadow-2xs transition" type="button"><svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Export PDF / CSV</span><kbd class="px-1 text-[10px] bg-slate-100 text-slate-500 border border-slate-200 rounded font-mono font-bold">F6</kbd></button><button class="h-9 inline-flex items-center space-x-1.5 px-3.5 bg-blue-700 hover:bg-blue-800 text-white rounded-lg text-xs font-bold shadow-xs transition" type="button"><svg class="w-3.5 h-3.5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Record Payment Voucher</span><kbd class="px-1.5 py-0.5 text-[9px] bg-blue-900 border border-blue-600/60 rounded font-mono font-bold text-blue-200">Alt+P</kbd></button></div></div></div>
+<!-- Section: Top 4 Financial Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5" data-purpose="financial-summary-cards">
+<!-- Card 1: Current Ledger Balance -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-2xs">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold tracking-wider text-slate-500 uppercase">Current Ledger Balance</span>
+<span class="w-6 h-6 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-1.5 flex items-baseline space-x-1.5">
+<span class="text-xs font-semibold text-emerald-700">Rs</span>
+<span class="text-2xl font-black tracking-tight text-emerald-700 font-mono">-380.00</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[11px]">
+<span class="text-emerald-700 font-medium bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200/60">Advance / In Credit</span>
+<span class="text-slate-400">Zero Overdue</span>
+</div>
+</div>
+<!-- Card 2: Total Purchases YTD -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-2xs">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold tracking-wider text-slate-500 uppercase">Total Purchases (YTD)</span>
+<span class="w-6 h-6 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-1.5 flex items-baseline space-x-1.5">
+<span class="text-xs font-semibold text-slate-500">Rs</span>
+<span class="text-2xl font-black tracking-tight text-slate-900 font-mono">1,428,950.00</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[11px]">
+<span class="text-slate-600 font-medium">42 Invoices Cleared</span>
+<span class="text-emerald-600 font-semibold font-mono">100% Tax Compliant</span>
+</div>
+</div>
+<!-- Card 3: Pending Claims / Reclaims -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-2xs">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold tracking-wider text-slate-500 uppercase">Pending Claims / Expiry</span>
+<span class="w-6 h-6 rounded bg-amber-50 text-amber-600 flex items-center justify-center">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-1.5 flex items-baseline space-x-1.5">
+<span class="text-xs font-semibold text-amber-700">Rs</span>
+<span class="text-2xl font-black tracking-tight text-amber-700 font-mono">6,850.00</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[11px]">
+<span class="text-amber-800 font-medium">2 Credit Notes Awaiting Adj.</span>
+<span class="text-slate-400">Near-Expiry Log</span>
+</div>
+</div>
+<!-- Card 4: Terms & License -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-2xs">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold tracking-wider text-slate-500 uppercase">Terms &amp; Compliance</span>
+<span class="w-6 h-6 rounded bg-purple-50 text-purple-700 flex items-center justify-center">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-1.5 flex items-baseline justify-between">
+<span class="text-lg font-extrabold text-slate-800">15 Days Net</span>
+<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">DRAP OK</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[11px] text-slate-500">
+<span class="">Lic: <strong class="text-slate-700 font-mono">#DSL-LHR-9821</strong></span>
+<span class="text-slate-400">Rep: Tariq Aziz</span>
+</div>
+</div>
+</div>
+<!-- Section: Main Workspace 2-Column Split -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+<!-- BEGIN: LeftColumn (65% width equivalent: 8 cols out of 12) -->
+<section class="lg:col-span-8 space-y-3" data-purpose="ledger-statement-panel">
+<div class="bg-white rounded-xl border border-slate-200/90 shadow-2xs overflow-hidden">
+<!-- Card Header & Filter Control Strip -->
+<div class="p-3.5 border-b border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-white">
+<div>
+<h2 class="text-sm font-extrabold text-slate-900 tracking-tight flex items-center space-x-2">
+<span class="">Official Supplier Ledger &amp; Invoice History</span>
+<span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-medium">GRN vs Payment</span>
+</h2>
+<p class="text-[11px] text-slate-500 mt-0.5">Real-time ledger entries synchronized with DRAP Inward Challans and Banking Instruments.</p>
+</div>
+<!-- Date Range Selector -->
+<div class="flex items-center space-x-2 shrink-0">
+<div class="relative">
+<input class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-mono text-slate-700 font-semibold focus:ring-1 focus:ring-blue-500 cursor-pointer w-48" readonly="" type="text" value="01/08/2026 - 09/09/2026">
+</div>
+<button class="p-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600" title="Refresh Statement" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<!-- Transaction Type Category Tabs -->
+<div class="px-3.5 py-2 bg-slate-50/70 border-b border-slate-200/70 flex items-center justify-between flex-wrap gap-2 text-xs">
+<div class="flex items-center space-x-1.5">
+<button class="px-2.5 py-1 rounded bg-white text-blue-800 font-bold shadow-2xs border border-slate-200">
+                All Entries <span class="ml-1 text-[10px] font-mono px-1 py-0.2 bg-blue-50 text-blue-700 rounded-full">48</span>
+</button>
+<button class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-semibold hover:bg-white transition">
+                Invoices / GRNs <span class="ml-1 text-[10px] font-mono text-slate-500">42</span>
+</button>
+<button class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-semibold hover:bg-white transition">
+                Payments <span class="ml-1 text-[10px] font-mono text-slate-500">5</span>
+</button>
+<button class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-semibold hover:bg-white transition">
+                Returns &amp; Credit Notes <span class="ml-1 text-[10px] font-mono text-slate-500">1</span>
+</button>
+</div>
+<div class="text-[11px] text-slate-500">
+              Showing <strong class="text-slate-700">5</strong> latest transactions
+            </div>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="bg-slate-100/75 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+<th class="py-2.5 px-3">Date / Time</th>
+<th class="py-2.5 px-3">Ref ID</th>
+<th class="py-2.5 px-3">Challan / Doc #</th>
+<th class="py-2.5 px-3">Description / Particulars</th>
+<th class="py-2.5 px-3 text-right">Debit (Rs)</th>
+<th class="py-2.5 px-3 text-right">Credit (Rs)</th>
+<th class="py-2.5 px-3 text-right">Balance (Rs)</th>
+<th class="py-2.5 px-3 text-center">Status</th>
+<th class="py-2.5 px-3 text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+<!-- Row 1: Payment Voucher -->
+<tr class="hover:bg-blue-50/40 transition-colors">
+<td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">
+                    09/09/2026 <span class="text-[10px] text-slate-400 block">10:15 AM</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="font-mono font-bold text-blue-700">PV-2026-0842</span>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">
+                    Cheque #982103
+                  </td>
+<td class="py-2.5 px-3">
+<span class="font-semibold text-slate-800">Advance Payment for Weekly Demand</span>
+<span class="text-[10px] text-slate-500 block">HBL Account *4920 • Authorized by R.Ph</span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-400">-</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-700">50,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono font-extrabold text-emerald-700 whitespace-nowrap">
+                    -380.00 <span class="text-[10px] font-semibold">Cr</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                      Cleared
+                    </span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<button class="text-blue-700 hover:text-blue-900 font-bold hover:underline inline-flex items-center space-x-0.5" type="button">
+<span class="">Voucher</span>
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</td>
+</tr>
+<!-- Row 2: Inward GRN -->
+<tr class="hover:bg-blue-50/40 transition-colors">
+<td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">
+                    05/09/2026 <span class="text-[10px] text-slate-400 block">02:40 PM</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="font-mono font-bold text-slate-800">GRN-2026-04192</span>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">
+                    DC-2026-8819
+                  </td>
+<td class="py-2.5 px-3">
+<span class="font-semibold text-slate-800">Inward Supply (Amoxil, Flagyl 400mg)</span>
+<span class="text-[10px] text-slate-500 block">Batch: AMX-801, FLG-441 • 15 Days Net</span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-slate-800">28,400.00</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-400">-</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-slate-800 whitespace-nowrap">
+                    49,620.00 <span class="text-[10px] font-semibold text-slate-500">Dr</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      Inward Verified
+                    </span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<button class="text-slate-700 hover:text-blue-900 font-bold hover:underline" type="button">
+                      View GRN
+                    </button>
+</td>
+</tr>
+<!-- Row 3: Credit Note Expiry Reclaim -->
+<tr class="hover:bg-blue-50/40 transition-colors bg-amber-50/20">
+<td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">
+                    01/09/2026 <span class="text-[10px] text-slate-400 block">11:10 AM</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="font-mono font-bold text-amber-800">CN-2026-0019</span>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">
+                    CR-EXP-4402
+                  </td>
+<td class="py-2.5 px-3">
+<span class="font-semibold text-slate-800">Expiry Reclaim Credit</span>
+<span class="text-[10px] text-amber-700 block">Flygel Infusion 2000mg expired &amp; returned</span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-400">-</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-700">4,800.00</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-slate-800 whitespace-nowrap">
+                    21,220.00 <span class="text-[10px] font-semibold text-slate-500">Dr</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800">
+                      Approved
+                    </span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<button class="text-amber-800 hover:text-amber-900 font-bold hover:underline" type="button">
+                      Credit Slip
+                    </button>
+</td>
+</tr>
+<!-- Row 4: Settlement Payment Voucher -->
+<tr class="hover:bg-blue-50/40 transition-colors">
+<td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">
+                    28/08/2026 <span class="text-[10px] text-slate-400 block">04:15 PM</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="font-mono font-bold text-blue-700">PV-2026-0791</span>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">
+                    Cash Rect #401
+                  </td>
+<td class="py-2.5 px-3">
+<span class="font-semibold text-slate-800">Interim Settlement Payment</span>
+<span class="text-[10px] text-slate-500 block">Cash Float handover to Tariq Aziz</span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-400">-</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-700">40,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-slate-800 whitespace-nowrap">
+                    26,020.00 <span class="text-[10px] font-semibold text-slate-500">Dr</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                      Cleared
+                    </span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<button class="text-blue-700 hover:text-blue-900 font-bold hover:underline" type="button">
+                      Voucher
+                    </button>
+</td>
+</tr>
+<!-- Row 5: Inward GRN -->
+<tr class="hover:bg-blue-50/40 transition-colors">
+<td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">
+                    22/08/2026 <span class="text-[10px] text-slate-400 block">01:05 PM</span>
+</td>
+<td class="py-2.5 px-3">
+<span class="font-mono font-bold text-slate-800">GRN-2026-03991</span>
+</td>
+<td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">
+                    DC-2026-8104
+                  </td>
+<td class="py-2.5 px-3">
+<span class="font-semibold text-slate-800">Inward IV Infusions, Ringer Lactate, Saline</span>
+<span class="text-[10px] text-slate-500 block">Cold-chain compliant • Ferozsons Stock</span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-slate-800">35,600.00</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-400">-</td>
+<td class="py-2.5 px-3 text-right font-mono font-bold text-slate-800 whitespace-nowrap">
+                    66,020.00 <span class="text-[10px] font-semibold text-slate-500">Dr</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      Inward Verified
+                    </span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<button class="text-slate-700 hover:text-blue-900 font-bold hover:underline" type="button">
+                      View GRN
+                    </button>
+</td>
+</tr>
+</tbody>
+<!-- Summary Table Footer -->
+<tfoot class="bg-slate-50 font-bold border-t border-slate-200 text-slate-800">
+<tr>
+<td class="py-2.5 px-3 text-right text-xs uppercase tracking-wide" colspan="4">Period Aggregate:</td>
+<td class="py-2.5 px-3 text-right font-mono text-slate-900">Rs 64,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono text-emerald-700">Rs 94,800.00</td>
+<td class="py-2.5 px-3 text-right font-mono font-extrabold text-emerald-700">Rs -380.00 Cr</td>
+<td class="py-2.5 px-3 text-center text-[10px] text-slate-500" colspan="2">Reconciled</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<!-- Bottom Ledger Pagination & Audit Footer -->
+<div class="p-3 bg-white border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="">Ledger auto-validated with Hospital Financial ERP General Ledger</span>
+</div>
+<div class="flex items-center space-x-3"><span class="text-[11px] text-slate-500 font-medium hidden sm:inline">Showing <strong class="text-slate-700 font-mono">1-5</strong> of <strong class="text-slate-700 font-mono">48</strong> transactions (Page 1 of 10)</span><div class="flex items-center space-x-1"><button class="px-2 py-1 rounded border border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed">Previous</button><button class="px-2 py-1 rounded bg-blue-700 text-white font-bold">1</button><button class="px-2 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700">2</button><button class="px-2 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700">3</button><button class="px-2 py-1 rounded border border-slate-200 hover:bg-slate-50 text-slate-700">Next</button></div></div>
+</div>
+</div>
+</section>
+<!-- END: LeftColumn -->
+<!-- BEGIN: RightColumn (35% width equivalent: 4 cols out of 12) -->
+<section class="lg:col-span-4 space-y-3.5" data-purpose="payment-voucher-and-vendor-info">
+<!-- Card 1: Issue Payment Voucher Form -->
+<div class="bg-white rounded-xl border border-slate-200/90 shadow-2xs overflow-hidden">
+<div class="p-3.5 bg-gradient-to-r from-slate-900 to-blue-950 text-white flex items-center justify-between">
+<div>
+<h2 class="text-xs font-black uppercase tracking-wider text-blue-200">Payment Issuance</h2>
+<p class="text-sm font-bold text-white">Record Payment Voucher</p>
+</div>
+<span class="text-[10px] font-mono bg-blue-800/80 text-blue-200 px-2 py-0.5 rounded border border-blue-600/50">PV FORM</span>
+</div>
+<form class="p-4 space-y-3.5" data-purpose="voucher-entry-form">
+<!-- Payment Amount Input -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-1">
+                Payment Amount (PKR) <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 font-bold text-xs">Rs</span>
+<input class="w-full pl-9 pr-3 py-2 text-base font-mono font-extrabold text-slate-900 bg-blue-50/40 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600" type="text" value="25,000.00">
+</div>
+<p class="text-[10px] text-slate-500 mt-1">Current Balance is in Credit: <strong>Rs -380.00</strong></p>
+</div>
+<!-- Payment Mode -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-1">
+                Payment Mode <span class="text-red-500">*</span>
+</label>
+<div class="grid grid-cols-3 gap-1.5 text-xs font-semibold">
+<label class="border border-blue-600 bg-blue-50 text-blue-900 rounded-lg p-2 text-center cursor-pointer flex flex-col items-center">
+<input checked="" class="sr-only" name="payment_mode" type="radio" value="cheque">
+<span class="text-[11px] font-bold">Cheque</span>
+</label>
+<label class="border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg p-2 text-center cursor-pointer flex flex-col items-center">
+<input class="sr-only" name="payment_mode" type="radio" value="online">
+<span class="text-[11px] font-bold">Online Transfer</span>
+</label>
+<label class="border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg p-2 text-center cursor-pointer flex flex-col items-center">
+<input class="sr-only" name="payment_mode" type="radio" value="cash">
+<span class="text-[11px] font-bold">Cash Float</span>
+</label>
+</div>
+</div>
+<!-- Bank Instrument Details -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-1">
+                Hospital Bank Account &amp; Instrument #
+              </label>
+<input class="w-full px-3 py-1.5 text-xs font-mono font-medium text-slate-800 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600" type="text" value="HBL Trust Acc #***4920 - Cheque #982104">
+</div>
+<!-- Payment Date -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-1">
+                Voucher Date
+              </label>
+<input class="w-full px-3 py-1.5 text-xs font-mono text-slate-800 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600" type="date" value="2026-09-09">
+</div>
+<!-- Tax Deduction Checkbox (WHT Section 153) -->
+<div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200/80">
+<label class="flex items-start space-x-2 cursor-pointer">
+<input checked="" class="mt-0.5 rounded border-slate-300 text-blue-700 focus:ring-blue-500" type="checkbox">
+<div class="text-xs">
+<span class="font-bold text-slate-800">Deduct WHT 0.5% (Income Tax Sec 153)</span>
+<p class="text-[11px] text-slate-500 mt-0.5">Withholding Tax Calculated: <strong class="text-slate-800 font-mono">PKR 125.00</strong> (Net Paid: PKR 24,875.00)</p>
+</div>
+</label>
+</div>
+<!-- Remarks / Settlement Reference -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-1">
+                Payment Remarks / Memo
+              </label>
+<textarea class="w-full px-3 py-1.5 text-xs text-slate-800 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="e.g. Settlement against GRN-2026-04192 &amp; DC-8819" rows="2">Settlement against GRN-2026-04192 &amp; DC-8819</textarea>
+</div>
+<!-- Form Action Buttons -->
+<div class="pt-1 flex flex-col sm:flex-row items-center gap-2">
+<button class="w-full py-2 px-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-lg text-xs shadow-xs flex items-center justify-center space-x-1.5 transition" type="button">
+<svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Post &amp; Print Voucher</span>
+<kbd class="px-1 text-[9px] bg-blue-900 rounded font-mono text-blue-200">Alt+P</kbd>
+</button>
+<button class="w-full sm:w-auto py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-xs border border-slate-200 transition" type="button">
+                Save Draft
+              </button>
+</div>
+</form>
+</div>
+<!-- Card 2: Vendor Profile & Banking Details -->
+<div class="bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-2xs space-y-3" data-purpose="vendor-tax-banking-profile">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2">
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Vendor Banking &amp; Regulatory</h3>
+<span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">Active Supplier</span>
+</div>
+<div class="space-y-2 text-xs">
+<!-- NTN & STRN -->
+<div class="flex items-center justify-between">
+<span class="text-slate-500 font-medium">NTN:</span>
+<span class="font-mono font-bold text-slate-800">389210-4</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500 font-medium">STRN:</span>
+<span class="font-mono font-bold text-slate-800">32778761234</span>
+</div>
+<!-- Bank & IBAN -->
+<div class="pt-1.5 border-t border-slate-100">
+<div class="text-slate-500 font-medium text-[11px]">Bank Settlement Account:</div>
+<div class="font-bold text-slate-800 mt-0.5">Habib Bank Limited (HBL) - Commercial Br.</div>
+<div class="font-mono text-[11px] font-semibold text-blue-800 bg-slate-50 p-1.5 rounded border border-slate-200 mt-1 select-all">
+                PK36 HABB 0001 2345 6789 0102
+              </div>
+</div>
+<!-- Key Contacts -->
+<div class="pt-1.5 border-t border-slate-100 space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Sales Representative:</span>
+<span class="font-semibold text-slate-800">Tariq Aziz <span class="text-slate-400 font-mono">(0300-1234567)</span></span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Order Booker:</span>
+<span class="font-semibold text-slate-800">Muhammad Bilal <span class="text-slate-400 font-mono">(0302-8874621)</span></span>
+</div>
+</div>
+<!-- Authorized Principals -->
+<div class="pt-1.5 border-t border-slate-100">
+<span class="text-slate-500 font-medium text-[11px]">Authorized Distribution Principals:</span>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium border border-slate-200">Abbott</span>
+<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium border border-slate-200">Sanofi</span>
+<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium border border-slate-200">Ferozsons</span>
+<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium border border-slate-200">Searle</span>
+<span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium border border-slate-200">GSK</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: RightColumn -->
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="bg-white border-t border-slate-200 px-5 py-2 text-xs text-slate-600 select-none" data-purpose="pos-telemetry-bar">
+<div class="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
+<!-- System Telemetry & Heartbeat -->
+<div class="flex items-center flex-wrap gap-x-4 gap-y-1">
+<div class="flex items-center space-x-1.5">
+<span class="text-slate-400 font-mono font-medium">SQLite Local DB:</span>
+<span class="font-bold text-slate-800">Synced</span>
+<span class="text-[10px] text-emerald-600 font-mono font-bold">(14ms)</span>
+</div>
+<span class="text-slate-300 hidden sm:inline">•</span>
+<div class="flex items-center space-x-1.5">
+<span class="text-slate-400 font-medium">Station:</span>
+<span class="font-bold text-slate-800 font-mono">POS-WS-01 (192.168.10.45)</span>
+</div>
+<span class="text-slate-300 hidden sm:inline">•</span>
+<div class="flex items-center space-x-1.5">
+<span class="text-slate-400 font-medium">Drug DB Rev:</span>
+<span class="font-mono font-semibold text-slate-700">2026.04.18-PK</span>
+</div>
+</div>
+<!-- Hardware & Keybindings -->
+<div class="flex items-center flex-wrap gap-x-3 gap-y-1">
+<!-- Hardware Indicator -->
+<div class="flex items-center space-x-1.5 text-emerald-700 font-semibold text-[11px]">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="">Citizen POS-80 Thermal Printer Ready</span>
+</div>
+<span class="text-slate-300 hidden sm:inline">|</span>
+<!-- Keyboard Shortcuts Bar -->
+<div class="flex items-center space-x-2 text-[11px] text-slate-500">
+<span class="">Shortcuts:</span>
+<span class="inline-flex items-center"><kbd class="px-1 py-0.2 text-[9px] font-mono bg-slate-100 border border-slate-300 rounded text-slate-700 font-bold mr-0.5">[Alt+P]</kbd> New Payment</span>
+<span class="inline-flex items-center"><kbd class="px-1 py-0.2 text-[9px] font-mono bg-slate-100 border border-slate-300 rounded text-slate-700 font-bold mr-0.5">[F6]</kbd> Statement</span>
+<span class="inline-flex items-center"><kbd class="px-1 py-0.2 text-[9px] font-mono bg-slate-100 border border-slate-300 rounded text-slate-700 font-bold mr-0.5">[Esc]</kbd> Back</span>
+</div>
+<span class="text-slate-300 hidden sm:inline">|</span>
+<span class="font-mono text-[10px] text-slate-400 bg-slate-50 px-1 py-0.5 rounded border border-slate-200">v4.3-clinical</span>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- JavaScript for Shortcut Handling & Interactive Demo -->
+<script data-purpose="keyboard-shortcuts-listener">
+    document.addEventListener('keydown', function(event) {
+      // Catch Alt+P for Payment Voucher focus
+      if (event.altKey && (event.key === 'p' || event.key === 'P')) {
+        event.preventDefault();
+        const amountInput = document.querySelector('input[value="25,000.00"]');
+        if (amountInput) {
+          amountInput.focus();
+          amountInput.select();
+        }
+      }
+      // Catch Esc to simulate return
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        console.log('Esc pressed: Return to supplier directory');
+      }
+    });
+  </script>
+
+
+</body></html>

@@ -109,7 +109,7 @@ export default function RegisterPatient() {
               <tr><th>Date</th><td>{new Date().toLocaleString()}</td></tr>
             </tbody>
           </table>
-          <div className="flex mt no-print">
+          <div className="fx mt no-print">
             <button className="btn primary" onClick={() => nav(`/patients/${p.id}`)}>Open patient record</button>
             <button className="btn ghost" onClick={() => {
               setDone(null); setStep(1); setMatches([]);
@@ -213,7 +213,7 @@ export default function RegisterPatient() {
                 <li key={d.id}><a onClick={() => nav(`/patients/${d.id}`)}>{d.patient_code} — {d.full_name}{d.contact ? ` (${d.contact})` : ''}</a></li>
               ))}
             </ul>
-            <div className="flex mt">
+            <div className="fx mt">
               <button type="button" className="btn sm" onClick={() => submit(null, true)} disabled={busy}>Register anyway</button>
               <button type="button" className="btn ghost sm" onClick={() => setDupes(null)}>Cancel</button>
             </div>

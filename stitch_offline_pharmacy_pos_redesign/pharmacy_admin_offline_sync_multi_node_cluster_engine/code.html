@@ -1,0 +1,672 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pharmacy Admin - Offline Sync &amp; Multi-Node Cluster Engine</title>
+<!-- Tailwind CSS CDN with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Tailwind Config for precision colors matching DRAP & Hope Welfare Trust palette -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0b192c',
+              dark: '#0f172a',
+              sidebar: '#0c1b30',
+              sidebarHover: '#132847',
+              accent: '#2563eb',
+              accentHover: '#1d4ed8',
+              emerald: '#10b981',
+              warning: '#f59e0b',
+              danger: '#ef4444'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="scrollbar-and-micro-animations">
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Pulsing dot indicator for real-time LAN heartbeat */
+    .pulse-dot {
+      animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans flex h-screen overflow-hidden select-none">
+<!-- BEGIN: Left Navigation Sidebar -->
+<aside class="w-72 bg-brand-sidebar text-slate-300 flex flex-col flex-shrink-0 border-r border-slate-800 z-30 justify-between" data-purpose="admin-sidebar">
+<div class="flex flex-col h-full overflow-hidden">
+<!-- Organization Brand Header -->
+<div class="p-4 border-b border-slate-800/80 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
+<svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="flex flex-col leading-tight">
+<span class="text-xs font-bold tracking-wider text-white uppercase">Hope Welfare Trust</span>
+<span class="text-[11px] text-slate-400">Hospital &amp; Pharmacy Governance</span>
+</div>
+<span class="ml-auto text-[10px] font-mono bg-slate-800 text-slate-400 border border-slate-700 px-1.5 py-0.5 rounded">HWT</span>
+</div>
+<!-- LAN Core Node Status Pill -->
+<div class="px-4 py-3 border-b border-slate-800 bg-slate-900/50 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-mono tracking-wider text-slate-400">LAN Core</span>
+<span class="text-xs font-mono font-semibold text-emerald-400">192.168.1.10</span>
+</div>
+</div>
+<span class="text-[10px] font-mono bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 px-2 py-0.5 rounded">Node 01 OK</span>
+</div>
+<!-- Navigation Links Container -->
+<nav class="flex-1 overflow-y-auto px-3 py-4 space-y-6 text-xs" data-purpose="sidebar-nav">
+<!-- Group 1: Clinical & Dispensary -->
+<div>
+<div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Clinical &amp; Dispensary</div>
+<ul class="space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dashboard Overview</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center justify-between px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dispensing Counter (POS)</span>
+</div>
+<span class="text-[9px] font-mono bg-slate-800 text-slate-400 px-1 rounded border border-slate-700">F2</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Inventory &amp; Stock Ledger</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Day-End &amp; Cash Closing</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Group 2: Pakistani Formulary Master -->
+<div>
+<div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Pakistani Formulary Master</div>
+<ul class="space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">DRAP Drug Catalogue</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dosage Forms &amp; Base Units</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Manufacturers &amp; SRO Limits</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Group 3: Administration & Governance -->
+<div>
+<div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Administration &amp; Governance</div>
+<ul class="space-y-1">
+<li class="">
+<!-- Highlighted Navigation Item -->
+<a class="flex items-center justify-between px-3 py-2 rounded-md bg-blue-600 text-white font-medium shadow-sm transition-colors" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Offline Sync &amp; Cluster</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-emerald-300"></span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Users &amp; Access Control</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Roles &amp; Prescriber Rights</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center justify-between px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Zakat &amp; Subsidy Accounts</span>
+</div>
+<span class="text-[9px] font-mono bg-slate-800 text-slate-400 px-1 rounded border border-slate-700">HWT-Z</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-brand-sidebarHover hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">DRAP Compliance Audit Trail</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Super Admin Profile Footer -->
+<div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center justify-between" data-purpose="user-profile-badge">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-amber-500 text-slate-900 font-bold flex items-center justify-center text-xs shadow-inner">
+            SA
+          </div>
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-white leading-tight">System Administrator</span>
+<span class="text-[10px] text-slate-400">Super Admin (IT &amp; Quality)</span>
+</div>
+</div>
+<button class="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded transition-colors" title="Sign out" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</aside>
+<!-- END: Left Navigation Sidebar -->
+<!-- BEGIN: Main Workstation Body -->
+<main class="flex-1 flex flex-col min-w-0 bg-slate-100 overflow-hidden" data-purpose="workstation-canvas">
+<!-- Top Header Bar with Breadcrumb and Actions -->
+<header class="bg-white border-b border-slate-200 px-6 py-3.5 flex-shrink-0"><div class="flex flex-wrap items-center justify-between gap-4"><div class="flex flex-col min-w-0"><nav class="flex items-center text-xs text-slate-500 font-medium mb-1 gap-1.5"><span class="hover:text-slate-700 cursor-pointer transition-colors">Administration</span><svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="text-slate-800 font-semibold">Offline Sync &amp; Cluster Engine</span></nav><h1 class="text-xl font-bold text-slate-900 tracking-tight">Offline Sync &amp; Multi-Node Cluster Engine</h1></div><div class="flex items-center gap-3 flex-shrink-0"><div class="text-xs text-slate-500 font-medium hidden md:flex items-center gap-1.5 pr-2 border-r border-slate-200"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Wednesday, 9 September 2026</span></div><button class="px-3 py-1.5 text-xs border border-slate-300 rounded-md text-slate-700 bg-white hover:bg-slate-50 flex items-center gap-1.5 font-medium shadow-sm transition-colors" type="button"><svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Re-scan Subnet</span></button><button class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md shadow-sm transition-all" type="button"><svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span class="">Trigger Cluster Sync (Ctrl+S)</span></button></div></div></header>
+<!-- Scrollable Content Canvas -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6" data-purpose="dashboard-scroll-area">
+<!-- BEGIN: Health Metric Cards (4 Cards Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-purpose="sync-metrics-grid">
+<!-- Metric 1: Local Node Status -->
+<div class="bg-white p-4 rounded-lg border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Local Node Status</span>
+<span class="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="my-2">
+<div class="text-xl font-bold text-slate-900 font-mono flex items-baseline gap-2">
+              Node 01: MASTER
+            </div>
+<div class="text-xs text-slate-500 font-mono">192.168.1.10 • Port 8443</div>
+</div>
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+<span class="inline-flex items-center gap-1.5 text-emerald-700 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              SQLite WAL Mode
+            </span>
+<span class="font-mono text-slate-500">Latency: 0.8ms</span>
+</div>
+</div>
+<!-- Metric 2: Outbound Replication Queue -->
+<div class="bg-white p-4 rounded-lg border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Outbound Sync Queue</span>
+<span class="p-1.5 bg-emerald-50 text-emerald-600 rounded-md">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="my-2">
+<div class="text-xl font-bold text-slate-900 flex items-baseline gap-2">
+              0 <span class="text-xs font-normal text-slate-500">Pending Transactions</span>
+</div>
+<div class="text-xs text-emerald-600 font-medium flex items-center gap-1">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              100% Peer Synchronized
+            </div>
+</div>
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+<span class="text-slate-500">Cloud Drain Buffer:</span>
+<span class="font-mono font-medium text-slate-700">31 queued (opportunistic)</span>
+</div>
+</div>
+<!-- Metric 3: Connected LAN Terminals -->
+<div class="bg-white p-4 rounded-lg border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Active Workstations</span>
+<span class="p-1.5 bg-amber-50 text-amber-600 rounded-md">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="my-2">
+<div class="text-xl font-bold text-slate-900 flex items-baseline gap-2">
+              4 <span class="text-xs font-normal text-slate-500">Workstations Online</span>
+</div>
+<div class="text-xs text-slate-600">Counter 1, Counter 2, GRN, Indent</div>
+</div>
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+<span class="inline-flex items-center gap-1 text-emerald-700">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              All Heartbeats Valid
+            </span>
+<span class="font-mono text-slate-500">Cluster 100%</span>
+</div>
+</div>
+<!-- Metric 4: Database Integrity & Backup -->
+<div class="bg-white p-4 rounded-lg border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Database Integrity</span>
+<span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-md">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="my-2">
+<div class="text-xl font-bold text-emerald-600 flex items-baseline gap-1.5">
+              Healthy
+              <span class="text-xs font-normal text-slate-500 font-mono">SHA-256 OK</span>
+</div>
+<div class="text-xs text-slate-600">Last Snapshot: Today 10:45 AM</div>
+</div>
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+<span class="text-slate-500">Disaster Target:</span>
+<span class="font-mono text-slate-700 font-medium">/mnt/usb_backup/</span>
+</div>
+</div>
+</section>
+<!-- END: Health Metric Cards -->
+<!-- BEGIN: Main Multi-Column Operational Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6" data-purpose="core-sync-management">
+<!-- Left 2 Columns: Active Terminals and Buffered Drains -->
+<div class="xl:col-span-2 space-y-6">
+<!-- Table 1: Active LAN Workstations & Terminal Cluster -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden" data-purpose="lan-cluster-table-card">
+<div class="px-5 py-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-slate-50/70">
+<div>
+<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+<span class="">Active LAN Workstations &amp; Terminal Cluster</span>
+<span class="text-[11px] font-normal px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-mono">4 Connected Peers</span>
+</h3>
+<p class="text-xs text-slate-500">Direct peer-to-peer SQLite replication over offline subnet. Changes propagate in &lt;10ms.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-xs border border-slate-300 rounded text-slate-700 bg-white hover:bg-slate-50 flex items-center gap-1 font-medium" type="button">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                  Re-scan Subnet
+                </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs border-collapse" data-purpose="cluster-table">
+<thead>
+<tr class="border-b border-slate-200 bg-slate-50 font-semibold text-slate-600">
+<th class="py-2.5 px-4">Terminal &amp; Role</th>
+<th class="py-2.5 px-3">IP &amp; MAC Address</th>
+<th class="py-2.5 px-3">Cashier / Staff on Duty</th>
+<th class="py-2.5 px-3 font-mono">WAL Revision</th>
+<th class="py-2.5 px-3">Ping</th>
+<th class="py-2.5 px-3">Cluster Status</th>
+<th class="py-2.5 px-4 text-right">Diagnostic Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700">
+<!-- Row 1: POS-WS-01 -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3 px-4">
+<div class="font-bold text-slate-900 flex items-center gap-1.5 font-mono">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        POS-WS-01
+                      </div>
+<div class="text-[11px] text-slate-500">Main Dispensary Billing</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px]">
+<div class="">192.168.1.11</div>
+<div class="text-slate-400 text-[10px]">70:85:C2:A1:14:F8</div>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-slate-900">Tariq Mahmood</div>
+<div class="text-[10px] text-slate-500">Duty Pharmacist (Cat-A)</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px] text-slate-600">
+                      rev.84,921
+                    </td>
+<td class="py-3 px-3 font-mono text-emerald-600 font-medium">
+                      0.9 ms
+                    </td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                        Synchronized
+                      </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-blue-600 hover:text-blue-800 font-medium text-[11px] hover:underline" type="button">
+                        Diagnostics
+                      </button>
+</td>
+</tr>
+<!-- Row 2: POS-WS-02 -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3 px-4">
+<div class="font-bold text-slate-900 flex items-center gap-1.5 font-mono">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        POS-WS-02
+                      </div>
+<div class="text-[11px] text-slate-500">Walk-in Express Counter</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px]">
+<div class="">192.168.1.12</div>
+<div class="text-slate-400 text-[10px]">70:85:C2:B3:89:12</div>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-slate-900">Kashif Raza</div>
+<div class="text-[10px] text-slate-500">Cashier / Dispenser</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px] text-slate-600">
+                      rev.84,921
+                    </td>
+<td class="py-3 px-3 font-mono text-emerald-600 font-medium">
+                      1.1 ms
+                    </td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                        Synchronized
+                      </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-blue-600 hover:text-blue-800 font-medium text-[11px] hover:underline" type="button">
+                        Diagnostics
+                      </button>
+</td>
+</tr>
+<!-- Row 3: WH-GRN-01 -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3 px-4">
+<div class="font-bold text-slate-900 flex items-center gap-1.5 font-mono">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        WH-GRN-01
+                      </div>
+<div class="text-[11px] text-slate-500">Store Inward &amp; Quarantine</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px]">
+<div class="">192.168.1.15</div>
+<div class="text-slate-400 text-[10px]">A4:B2:39:DF:11:09</div>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-slate-900">Muhammad Hamza</div>
+<div class="text-[10px] text-slate-500">Store Officer &amp; QA</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px] text-slate-600">
+                      rev.84,920
+                    </td>
+<td class="py-3 px-3 font-mono text-emerald-600 font-medium">
+                      1.4 ms
+                    </td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-blue-800">
+                        Live Streaming
+                      </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-blue-600 hover:text-blue-800 font-medium text-[11px] hover:underline" type="button">
+                        Force Handshake
+                      </button>
+</td>
+</tr>
+<!-- Row 4: IND-01 -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-3 px-4">
+<div class="font-bold text-slate-900 flex items-center gap-1.5 font-mono">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        IND-01
+                      </div>
+<div class="text-[11px] text-slate-500">Ward Indent &amp; Emergency</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px]">
+<div class="">192.168.1.18</div>
+<div class="text-slate-400 text-[10px]">F8:1A:67:23:CC:41</div>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-slate-900">Sister Samina Akhtar</div>
+<div class="text-[10px] text-slate-500">Ward Charge Nurse</div>
+</td>
+<td class="py-3 px-3 font-mono text-[11px] text-slate-600">
+                      rev.84,921
+                    </td>
+<td class="py-3 px-3 font-mono text-emerald-600 font-medium">
+                      0.8 ms
+                    </td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                        Synchronized
+                      </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-blue-600 hover:text-blue-800 font-medium text-[11px] hover:underline" type="button">
+                        Diagnostics
+                      </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 2: Offline Transaction Drain & Cloud Buffer (from Snapshot Image 27) -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden" data-purpose="offline-drain-buffer">
+<div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/70">
+<div>
+<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+<span class="">Offline-First Cloud Drain Buffer (Outbound Upstream)</span>
+<span class="text-[11px] font-normal px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-mono">31 Total Records</span>
+</h3>
+<p class="text-xs text-slate-500">Operations are committed to local SQLite WAL instantly. The upstream engine opportunistically drains to donor and patient cloud portals whenever internet uplinks are online.</p>
+</div>
+<button class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold flex items-center gap-1.5 shadow-sm" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Sync Now to Cloud
+              </button>
+</div>
+<!-- Drain Queue Table -->
+<table class="w-full text-left text-xs border-collapse">
+<thead>
+<tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-semibold uppercase tracking-wider text-[10px]">
+<th class="py-2.5 px-5">Entity Type</th>
+<th class="py-2.5 px-3">Local Storage Engine</th>
+<th class="py-2.5 px-3">Replication Guarantee</th>
+<th class="py-2.5 px-3">Upstream Target</th>
+<th class="py-2.5 px-5 text-right">Pending Drain</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-mono text-slate-700">
+<tr class="hover:bg-slate-50">
+<td class="py-3 px-5 font-bold font-sans text-slate-900 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    bill (Dispensary Invoices)
+                  </td>
+<td class="py-3 px-3 text-[11px]">SQLite WAL + FBR Hash</td>
+<td class="py-3 px-3 text-[11px] text-emerald-600">Strict FIFO / Zero-loss</td>
+<td class="py-3 px-3 text-[11px] text-slate-500 font-sans">Donor Accounting &amp; FBR Gateway</td>
+<td class="py-3 px-5 text-right font-bold text-slate-900 text-sm">1</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-3 px-5 font-bold font-sans text-slate-900 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    donation (Zakat &amp; Welfare Allocation)
+                  </td>
+<td class="py-3 px-3 text-[11px]">SQLite WAL + Audit Log</td>
+<td class="py-3 px-3 text-[11px] text-emerald-600">Strict FIFO / Signed</td>
+<td class="py-3 px-3 text-[11px] text-slate-500 font-sans">Donor Transparency Portal</td>
+<td class="py-3 px-5 text-right font-bold text-slate-900 text-sm">1</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-3 px-5 font-bold font-sans text-slate-900 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    patient (EMR &amp; Destitute Profiles)
+                  </td>
+<td class="py-3 px-3 text-[11px]">SQLite WAL + CNIC Checksum</td>
+<td class="py-3 px-3 text-[11px] text-emerald-600">Idempotent Upsert</td>
+<td class="py-3 px-3 text-[11px] text-slate-500 font-sans">Central Hospital Registry</td>
+<td class="py-3 px-5 text-right font-bold text-slate-900 text-sm">13</td>
+</tr>
+<tr class="hover:bg-slate-50">
+<td class="py-3 px-5 font-bold font-sans text-slate-900 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                    grn_receipts (Form 14 DRAP Inward)
+                  </td>
+<td class="py-3 px-3 text-[11px]">SQLite WAL + SRO 2024</td>
+<td class="py-3 px-3 text-[11px] text-emerald-600">Batch-Locked Atomicity</td>
+<td class="py-3 px-3 text-[11px] text-slate-500 font-sans">Formulary Central Ledger</td>
+<td class="py-3 px-5 text-right font-bold text-slate-900 text-sm">16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right 1 Column: Disaster Recovery, WAL Snapshots & Strict Conflict Policy -->
+<div class="space-y-6">
+<!-- Card: Local Disaster Recovery & WAL Snapshots -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 space-y-4" data-purpose="disaster-recovery-card">
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+<svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Local Disaster Recovery &amp; Snapshots
+              </h3>
+<span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-semibold">ONLINE</span>
+</div>
+<!-- Automatic Hourly Schedule -->
+<div class="space-y-2 text-xs">
+<div class="flex justify-between items-center text-slate-600">
+<span class="">Automated WAL Snapshot:</span>
+<span class="font-semibold text-slate-800">Every 60 Minutes</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5">
+<div class="bg-blue-600 h-1.5 rounded-full" style="width: 78%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-600 font-mono">
+<span class="">Last: 10:45 AM (52MB)</span>
+<span class="">Next: 11:45 AM</span>
+</div>
+</div>
+<!-- Mount Target -->
+<div class="p-3 bg-slate-50 border border-slate-200 rounded-md text-xs space-y-1.5">
+<div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Emergency Target Flash Drive</div>
+<div class="font-mono text-slate-800 flex items-center justify-between">
+<span class="">/mnt/usb_backup/hwt_core.db</span>
+<span class="text-[10px] text-emerald-600 font-semibold">Mounted</span>
+</div>
+<div class="text-[10px] text-slate-500">External Kingston 128GB (LUKS Encrypted)</div>
+</div>
+<!-- Ledger Action Button -->
+<button class="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white rounded text-xs font-semibold flex items-center justify-center gap-2 shadow transition-colors" type="button">
+<svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dump Cryptographic Form 9 Ledger</span>
+</button>
+</div>
+<!-- Card: Distributed Conflict Resolution Policy -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 space-y-4" data-purpose="conflict-resolution-policy">
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+<svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Distributed Conflict Resolution Policy
+              </h3>
+</div>
+<!-- Policy 1: Master Node Authority -->
+<div class="text-xs space-y-1">
+<div class="font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                Master Node Stock Authority (FIFO Lock)
+              </div>
+<p class="text-slate-600 leading-relaxed text-[11px]">
+                In the event of concurrent counter requests for the same medicine batch, Master Node (192.168.1.10) adjudicates based on physical server nanosecond timestamp. Overdrafts are automatically prevented at counter terminals.
+              </p>
+</div>
+<!-- Policy 2: Offline Counter Tolerance -->
+<div class="text-xs space-y-1 pt-2 border-t border-slate-100">
+<div class="font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                24-Hour Offline Allowance
+              </div>
+<p class="text-slate-600 leading-relaxed text-[11px]">
+                Workstations isolated by LAN cable damage may bill against cached inventory for up to 24 hours before requiring an authorized Supervisor override key for cluster reconnection.
+              </p>
+</div>
+<!-- Policy 3: Controlled Schedule G Reconciliation -->
+<div class="p-2.5 bg-amber-50/80 border border-amber-200 rounded text-[11px] text-amber-900 leading-normal flex items-start gap-2">
+<svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">
+<strong>DRAP Warning:</strong> Schedule G Controlled drugs (e.g. Tramadol, Morphine) cannot be dispensed from disconnected counters without an active real-time peer handshake to Cat-A Pharmacist terminal.
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- END: Main Multi-Column Operational Grid -->
+</div>
+<!-- BEGIN: Bottom Fixed Telemetry Footer (Exact Match to Screenshot Telemetry) -->
+<footer class="bg-white border-t border-slate-200 px-6 py-2 flex items-center justify-between text-xs text-slate-600 flex-shrink-0 font-mono" data-purpose="telemetry-bar">
+<div class="flex items-center gap-6">
+<!-- Master Node -->
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-slate-500 font-sans">Master Node:</span>
+<span class="font-semibold text-slate-800">192.168.1.10</span>
+</div>
+<!-- Latency -->
+<div class="flex items-center gap-2 border-l border-slate-200 pl-6">
+<span class="w-1 h-1 rounded-full bg-slate-400"></span>
+<span class="text-slate-500 font-sans">Replication Latency:</span>
+<span class="font-semibold text-emerald-600">1.2 ms</span>
+</div>
+<!-- Active Workstations -->
+<div class="flex items-center gap-2 border-l border-slate-200 pl-6">
+<span class="w-1 h-1 rounded-full bg-slate-400"></span>
+<span class="text-slate-500 font-sans">Active Workstations:</span>
+<span class="font-semibold text-slate-800">4 Terminals</span>
+</div>
+<!-- Regulatory Certification -->
+<div class="hidden md:flex items-center gap-2 border-l border-slate-200 pl-6 text-slate-600">
+<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] border border-slate-200">
+            DRAP SRO 2024 / Form 9 Certified
+          </span>
+</div>
+</div>
+<!-- Station Name -->
+<div class="text-[11px] text-slate-500 font-sans hidden lg:block">
+        Hope Welfare Trust Pharmacy Workstation • Secure Local Peer Mesh
+      </div>
+</footer>
+<!-- END: Bottom Fixed Telemetry Footer -->
+</main>
+<!-- END: Main Workstation Body -->
+
+
+</body></html>

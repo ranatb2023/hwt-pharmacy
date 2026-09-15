@@ -3,8 +3,14 @@ import { api, setToken, getToken } from './api.js';
 
 const AuthContext = createContext(null);
 
+// Shape the app runs in until the server says otherwise. Defaulting to the
+// Phase 1 pharmacy avoids flashing hospital modules that a standalone install
+// does not have while /auth/me is still in flight.
+const DEFAULT_CONFIG = { deployment_mode: 'pharmacy', pharmacy_name: 'Pharmacy' };
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [config, setConfig] = useState(DEFAULT_CONFIG);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,7 +20,7 @@ export function AuthProvider({ children }) {
     }
     api
       .get('/auth/me')
-      .then((r) => setUser(r.user))
+      .then((r) => { setUser(r.user); if (r.config) setConfig(r.config); })
       .catch(() => setToken(null))
       .finally(() => setLoading(false));
   }, []);
@@ -23,6 +29,7 @@ export function AuthProvider({ children }) {
     const r = await api.post('/auth/login', { username, password });
     setToken(r.token);
     setUser(r.user);
+    if (r.config) setConfig(r.config);
     return r.user;
   }
 
@@ -34,8 +41,13 @@ export function AuthProvider({ children }) {
 
   const can = (perm) => !!user && user.permissions.includes(perm);
 
+  // Phase 1 ships as a standalone pharmacy; the hospital modules (patients,
+  // tokens, consultations, lab, dialysis) only exist once the deployment is
+  // switched to 'hospital'. Screens gate on this rather than being forked.
+  const hospitalMode = config.deployment_mode === 'hospital';
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, can }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, can, config, hospitalMode }}>
       {children}
     </AuthContext.Provider>
   );
@@ -84,6 +96,16 @@ export function isCashierHub(user) {
   if (!user) return false;
   const has = (p) => user.permissions?.includes(p);
   return has('cash.manage') && !has('pharmacy.sell') && !has('consult.manage') && !has('user.manage');
+}
+
+// A management user runs the trust, not a counter: anyone who administers
+// users or reads the reports. Their home is the Management Dashboard in the
+// sidebar frame (the executive-dashboard mockup); a counter user's home is
+// the pharmacy dashboard in the dock frame.
+export function isManagementUser(user) {
+  if (!user) return false;
+  const has = (p) => user.permissions?.includes(p);
+  return has('user.manage') || has('report.view');
 }
 
 // Any role-focused user that gets the simplified top-bar hub instead of the

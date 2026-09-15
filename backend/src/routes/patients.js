@@ -22,13 +22,33 @@ router.get(
       const like = `%${q}%`;
       rows = db
         .prepare(
-          `SELECT * FROM patients
-           WHERE patient_code LIKE ? OR full_name LIKE ? OR contact LIKE ? OR cnic LIKE ?
-           ORDER BY created_at DESC LIMIT 50`
+          // Departments hold a customer record so their invoices have somewhere to
+        // post, but they are not people. Without this the pharmacist searching
+        // for a customer is offered "Emergency" and "Laboratory".
+        //
+        // MOBILE FIRST. A credit account here is looked up by phone, so a number that
+        // matches must outrank a name that merely contains the same letters —
+        // ordering by date put the right person anywhere in fifty rows.
+        `SELECT * FROM patients
+           WHERE customer_type != 'department'
+             AND (patient_code LIKE ? OR full_name LIKE ? OR contact LIKE ? OR cnic LIKE ?)
+           ORDER BY
+             CASE
+               WHEN contact = :raw            THEN 0
+               WHEN contact LIKE :prefix      THEN 1
+               WHEN patient_code = :raw       THEN 2
+               WHEN cnic = :raw               THEN 3
+               WHEN full_name LIKE :prefix    THEN 4
+               ELSE 5
+             END,
+             created_at DESC
+           LIMIT 50`
         )
-        .all(like, like, like, like);
+        .all(like, like, like, like, { raw: q, prefix: `${q}%` });
     } else {
-      rows = db.prepare('SELECT * FROM patients ORDER BY created_at DESC LIMIT 50').all();
+      rows = db
+        .prepare("SELECT * FROM patients WHERE customer_type != 'department' ORDER BY created_at DESC LIMIT 50")
+        .all();
     }
     res.json(rows);
   })
@@ -142,12 +162,21 @@ router.post(
         .prepare(
           `INSERT INTO patients
            (patient_code, full_name, gender, dob, age, contact, cnic, guardian_name,
-            address, category, qr_token, consent_online, created_by)
+            address, category, qr_token, consent_online, created_by,
+            customer_type, staff_cap, designation)
            VALUES (@patient_code,@full_name,@gender,@dob,@age,@contact,@cnic,@guardian_name,
-                   @address,@category,@qr_token,@consent_online,@created_by)`
+                   @address,@category,@qr_token,@consent_online,@created_by,
+                   @customer_type,@staff_cap,@designation)`
         )
         .run({
           patient_code: code,
+          // Registering someone as Staff sets BOTH markers. `category` prices the
+          // bill, `customer_type` is what the staff lists filter on; setting one
+          // and not the other makes an employee who gets the discount but never
+          // appears on the allowance report.
+          customer_type: b.customer_type || (category === 'Staff' ? 'staff' : 'registered'),
+          staff_cap: b.staff_cap === '' || b.staff_cap == null ? null : Number(b.staff_cap),
+          designation: b.designation || null,
           full_name: b.full_name,
           gender: b.gender || null,
           dob: b.dob || null,
@@ -217,10 +246,22 @@ router.put(
       `UPDATE patients SET
          full_name=@full_name, gender=@gender, dob=@dob, age=@age, contact=@contact,
          cnic=@cnic, guardian_name=@guardian_name, address=@address, category=@category,
-         consent_online=@consent_online, updated_at=datetime('now')
+         consent_online=@consent_online, customer_type=@customer_type,
+         staff_cap=@staff_cap, designation=@designation, updated_at=datetime('now')
        WHERE id=@id`
     ).run({
       id: existing.id,
+      // Moving someone onto Staff has to move both markers together, or they get
+      // the discount without ever appearing on the allowance report.
+      customer_type: b.customer_type
+        ?? (category === 'Staff' ? 'staff'
+          : existing.customer_type === 'staff' ? 'registered' : existing.customer_type),
+      // An explicit null clears a personal cap and returns them to the default;
+      // omitting the field leaves whatever they had.
+      staff_cap: 'staff_cap' in b
+        ? (b.staff_cap === '' || b.staff_cap == null ? null : Number(b.staff_cap))
+        : existing.staff_cap,
+      designation: b.designation ?? existing.designation,
       full_name: b.full_name ?? existing.full_name,
       gender: b.gender ?? existing.gender,
       dob: b.dob ?? existing.dob,
@@ -236,5 +277,61 @@ router.put(
     res.json(db.prepare('SELECT * FROM patients WHERE id = ?').get(existing.id));
   })
 );
+
+// What this customer has bought, and what they brought back. The counter is
+// asked "did I get this here?" constantly, and a card holder queries a price
+// weeks later; without this the answer lives only in a paper file.
+router.get(
+  '/:id/purchases',
+  requirePermission(PERMISSIONS.PATIENT_VIEW, PERMISSIONS.BILLING_VIEW),
+  wrap((req, res) => {
+    const person = db.prepare('SELECT * FROM patients WHERE id = ?').get(req.params.id);
+    if (!person) return res.status(404).json({ error: 'Customer not found' });
+
+    const bills = db
+      .prepare(
+        `SELECT b.id, b.bill_no, b.created_at, b.gross_amount, b.discount, b.subsidy,
+                b.net_amount, b.paid_amount, b.status, b.payment_method, b.charge_class,
+                c.card_no
+           FROM bills b LEFT JOIN welfare_cards c ON c.id = b.welfare_card_id
+          WHERE b.patient_id = ? ORDER BY b.created_at DESC LIMIT 100`
+      )
+      .all(person.id);
+
+    const itemStmt = db.prepare(
+      'SELECT description, quantity, unit_price, line_total FROM bill_items WHERE bill_id = ?'
+    );
+    for (const b of bills) b.items = itemStmt.all(b.id);
+
+    const returns = db
+      .prepare(
+        `SELECT return_no, created_at, refund_amount, reason
+           FROM returns WHERE patient_id = ? ORDER BY created_at DESC LIMIT 50`
+      )
+      .all(person.id);
+
+    const t = db
+      .prepare(
+        `SELECT COUNT(*) AS bills,
+                COALESCE(SUM(gross_amount),0) AS gross,
+                COALESCE(SUM(discount + subsidy),0) AS helped,
+                COALESCE(SUM(net_amount),0) AS billed,
+                COALESCE(SUM(paid_amount),0) AS paid
+           FROM bills WHERE patient_id = ?`
+      )
+      .get(person.id);
+
+    res.json({
+      customer: person,
+      totals: { ...t, outstanding: round2(t.billed - t.paid) },
+      bills,
+      returns,
+    });
+  })
+);
+
+function round2(n) {
+  return Math.round((Number(n) + Number.EPSILON) * 100) / 100;
+}
 
 module.exports = router;

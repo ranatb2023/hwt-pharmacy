@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#001e12", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-primary-fixed": "#001b3f", "secondary-fixed-dim": "#aac7ff", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-fixed": "#d7e2ff", "tertiary-container": "#003523", "on-tertiary-fixed-variant": "#005137", "on-error": "#ffffff", "outline": "#747780", "on-primary": "#ffffff", "on-surface-variant": "#44474f", "inverse-surface": "#213145", "surface": "#f8f9ff", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#00458e", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "error-container": "#ffdad6", "primary-container": "#0f2d59", "on-secondary": "#ffffff", "secondary-container": "#5095fe", "secondary-fixed": "#d7e3ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#68dba9", "on-secondary-fixed": "#001b3e", "surface-container": "#e5eeff", "tertiary-fixed": "#85f8c4", "on-primary-fixed-variant": "#2c4674", "on-background": "#0b1c30", "secondary": "#005cba", "on-tertiary-fixed": "#002114", "on-secondary-container": "#002d61", "surface-container-high": "#dce9ff", "on-primary-container": "#7c95c8", "on-tertiary-container": "#2ca879", "outline-variant": "#c4c6d0", "surface-container-highest": "#d3e4fe", "primary": "#00183b", "surface-tint": "#455e8d", "surface-container-lowest": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#adc7fc", "primary-fixed-dim": "#adc7fc" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-2xs": "0.125rem", "space-3xl": "2rem", "space-md": "0.75rem", "space-2xl": "1.5rem", "container-pad": "1.5rem", "pos-sidebar-w": "340px", "table-row-h": "2.25rem", "space-lg": "1rem" }, "fontFamily": { "data-table": [ "JetBrains Mono" ], "headline-lg": [ "Manrope" ], "data-display-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "body-md": [ "Inter" ], "body-sm": [ "Inter" ], "label-shortcut": [ "JetBrains Mono" ], "label-caps": [ "Inter" ], "headline-xl": [ "Manrope" ], "data-display-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "data-table": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "fontWeight": "700" } ], "data-display-md": [ "16px", { "lineHeight": "22px", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "label-shortcut": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "data-display-lg": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col"><div class="px-space-xl py-space-lg bg-primary-container/60 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div><div class="font-headline-md text-headline-md text-on-primary leading-tight">Hope Welfare</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">Trust Hospital &amp; Pharmacy</div></div></div></div><div class="px-space-xl py-space-sm bg-tertiary-container flex items-center justify-between text-on-tertiary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-data-table text-data-table text-tertiary-fixed font-bold">LAN CORE</span><span class="font-data-table text-data-table text-on-tertiary-container">192.168.1.10</span></div><span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary text-tertiary-fixed rounded">NODE 01 OK</span></div><nav class="flex flex-col px-space-md py-space-md gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-bold"><div class="px-space-sm pt-space-sm pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Pakistani Formulary Master</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-formulary-master" href="#"><span class="material-symbols-outlined text-[18px]">medication</span><span class="font-body-md text-body-md">DRAP Formulary Master</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-audit-trail" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">DRAP Audit Trail</span></a><div class="px-space-sm pt-space-md pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Administration &amp; Governance</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold" data-path="users-and-prescribers" href="#"><span class="material-symbols-outlined text-[18px]">clinical_notes</span><span class="font-body-md text-body-md">Users &amp; Prescribers</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span class="font-body-md text-body-md">Roles &amp; Permissions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="employees-and-quotas" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Employees &amp; Quotas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="zakat-and-subsidy-accounts" href="#"><span class="material-symbols-outlined text-[18px]">volunteer_activism</span><span class="font-body-md text-body-md">Zakat &amp; Subsidy Accounts</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="offline-sync-and-cluster" href="#"><span class="material-symbols-outlined text-[18px]">sync</span><span class="font-body-md text-body-md">Offline Sync &amp; Cluster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="system-and-drap-rules" href="#"><span class="material-symbols-outlined text-[18px]">gavel</span><span class="font-body-md text-body-md">System &amp; DRAP Rules</span></a></nav></div><div class="p-space-md bg-primary-container/80"><div class="flex items-center gap-space-md px-space-sm py-space-xs"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 overflow-hidden"><div class="font-body-md text-body-md text-on-primary font-bold truncate">System Administrator</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase truncate">Governance Clearance Level 4</div></div><span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">shield</span></div></div></aside><div class="pl-pos-sidebar-w"><header class="fixed top-0 left-pos-sidebar-w right-0 z-40 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-container-pad flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-lg"><span class="font-label-shortcut text-label-shortcut text-secondary">DRAP REG:</span><span class="font-data-table text-data-table text-on-surface">002914-HWT/P</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Counter Subnet:</span><span class="font-data-table text-data-table text-on-surface">LAN-ZONE-A</span></div></div><nav class="hidden md:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-bold"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="drap-formulary-master" href="#">Formulary Catalog</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Registers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="offline-sync-and-cluster" href="#">Cluster Health</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-and-drap-rules" href="#">Policy Engine</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-tertiary-container rounded-lg text-on-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-label-shortcut text-label-shortcut text-tertiary-fixed">SYNC ACTIVE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 pb-12 bg-surface min-h-screen px-container-pad"><div class="flex flex-col w-full gap-space-lg">
+<!-- Operational Breadcrumb & Top Command Action Header -->
+<section class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-md p-space-lg bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="flex flex-col gap-space-2xs min-w-0">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">
+<span>Administration</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span>Governance</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span class="text-secondary font-bold">Offline Cloud Sync &amp; Outbox Engine</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm pt-space-2xs">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Sync Outbox &amp; LAN Cluster Telemetry</h1>
+<span class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-tertiary-container text-tertiary-fixed font-data-table text-data-table">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-pulse"></span>
+          LOCAL LAN CORE ONLINE
+        </span>
+<span class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-surface-container-highest text-on-secondary-container font-data-table text-data-table">
+<span class="material-symbols-outlined text-[14px]">satellite_alt</span>
+          WAN UPLINK: RESTRICTED/INTERMITTENT
+        </span>
+<span class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[13px]">shield_locked</span>
+          AIR-GAP ENFORCED
+        </span>
+</div>
+</div>
+<!-- Rapid Command Action Buttons (F-Keys & Shortcuts) -->
+<div class="flex flex-wrap items-center gap-space-sm self-stretch xl:self-auto">
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md text-body-md rounded-lg shadow-sm transition-colors cursor-pointer" id="export-ledger-btn">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>Export Sync Ledger</span>
+<span class="font-label-shortcut text-label-shortcut px-space-2xs py-0.5 bg-surface-container-highest rounded text-on-surface-variant ml-space-xs">Ctrl+P</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high text-secondary font-body-md text-body-md font-semibold rounded-lg shadow-sm transition-colors cursor-pointer" id="retry-queue-btn">
+<span class="material-symbols-outlined text-[18px]">sync_problem</span>
+<span>Retry Failed Queue</span>
+<span class="font-label-shortcut text-label-shortcut px-space-2xs py-0.5 bg-secondary/10 rounded text-secondary ml-space-xs">Ctrl+R</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-lg py-space-sm bg-secondary hover:bg-on-secondary-container text-on-secondary font-body-md text-body-md font-bold rounded-lg shadow-md transition-all cursor-pointer" id="flush-now-btn">
+<span class="material-symbols-outlined text-[20px] animate-spin" style="animation-duration: 3s;">sync</span>
+<span>Force Cloud Flush</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-primary rounded text-on-primary ml-space-xs">Alt+F</span>
+</button>
+</div>
+</section>
+<!-- Administrative Sub-Navigation Tabs matching IMAGE_57 -->
+<section class="flex items-center gap-space-xs overflow-x-auto pb-space-2xs">
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="users-and-prescribers" href="#">Users</a>
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="roles-and-permissions" href="#">Roles</a>
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="employees-and-quotas" href="#">Employees</a>
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="drap-formulary-master" href="#">Catalogue</a>
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="system-and-drap-rules" href="#">Settings</a>
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="drap-audit-trail" href="#">Audit Log</a>
+<a class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-body-md text-body-md rounded-lg shadow-sm transition-colors whitespace-nowrap" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Report</a>
+<a class="px-space-md py-space-xs bg-secondary text-on-secondary font-body-md text-body-md font-bold rounded-lg shadow-sm whitespace-nowrap flex items-center gap-space-xs" data-path="offline-sync-and-cluster" href="#">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Sync Engine</span>
+</a>
+</section>
+<!-- System Metric KPI Summary Cards (Translating Image 57: Pending 15, Synced 0, Online Connectivity, Last Sync 2026-07-07) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1: Pending Queue -->
+<div class="flex flex-col justify-between p-space-lg bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-secondary/5 transition-transform group-hover:scale-125 pointer-events-none"></div>
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-secondary font-bold">Pending Cloud Dispatch</span>
+<div class="font-data-display-lg text-data-display-lg text-secondary mt-space-xs flex items-baseline gap-space-xs">
+<span>15</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-normal">mutations</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-space-sm flex items-center justify-between">
+<span class="font-data-table text-data-table text-on-surface-variant">1 Bill · 1 Zakat · 13 Patients</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-secondary-container/20 text-on-secondary-container rounded font-bold">AIR-GAPPED</span>
+</div>
+</div>
+<!-- Card 2: LAN Committed -->
+<div class="flex flex-col justify-between p-space-lg bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-tertiary-fixed/10 transition-transform group-hover:scale-125 pointer-events-none"></div>
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">LAN Cluster Synced</span>
+<div class="font-data-display-lg text-data-display-lg text-on-surface mt-space-xs flex items-baseline gap-space-xs">
+<span>489,201</span>
+<span class="font-body-sm text-body-sm text-tertiary-fixed-dim font-semibold font-data-table">0 WAN</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary-container flex items-center justify-center text-tertiary-fixed">
+<span class="material-symbols-outlined text-[24px]">lan</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-space-sm flex items-center justify-between">
+<span class="font-data-table text-data-table text-on-surface-variant">100% committed to Nodes 01-03</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-tertiary-container text-tertiary-fixed rounded font-bold">RAFT OK</span>
+</div>
+</div>
+<!-- Card 3: Connectivity Status -->
+<div class="flex flex-col justify-between p-space-lg bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">Cluster Interconnect</span>
+<div class="mt-space-xs flex items-center gap-space-xs">
+<span class="px-space-sm py-space-2xs bg-tertiary-container text-tertiary-fixed font-data-table text-data-table rounded font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+              online
+            </span>
+<span class="font-body-md text-body-md text-on-surface-variant font-medium">192.168.1.10</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[24px]">hub</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-space-sm flex items-center justify-between">
+<span class="font-data-table text-data-table text-on-surface-variant">Latency: 0.38 ms</span>
+<span class="font-data-table text-data-table text-on-tertiary-container font-semibold">0% Pkt Loss</span>
+</div>
+</div>
+<!-- Card 4: Last Cloud Sync Session -->
+<div class="flex flex-col justify-between p-space-lg bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">Last Cloud Push</span>
+<div class="font-data-display-md text-data-display-md text-on-surface mt-space-xs tracking-tight">
+            2026-07-07 11:15:13
+          </div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[24px]">history</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/50 -mx-space-lg -mb-space-lg px-space-lg py-space-sm flex items-center justify-between">
+<span class="font-data-table text-data-table text-on-surface-variant">Delta: 3,412 min</span>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-surface-container-highest text-on-surface rounded">1.42 MB STAGED</span>
+</div>
+</div>
+</section>
+<!-- Interactive Search / Filter Sub-Bar for Queue Outbox -->
+<section class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="relative flex-1 max-w-xl">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full h-11 pl-10 pr-space-xl bg-surface-container-low text-on-surface placeholder:text-outline text-body-md font-body-md rounded-lg focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary transition-all outline-none" id="queue-search" placeholder="Search reference, patient MRN, voucher no, or entity type..." type="text"/>
+<span class="font-label-shortcut text-label-shortcut absolute right-space-md top-1/2 -translate-y-1/2 px-space-xs py-0.5 bg-surface-container-highest text-on-surface-variant rounded">F2</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg">
+<button class="px-space-md py-space-xs bg-surface-container-lowest text-secondary font-label-caps text-label-caps uppercase font-bold rounded shadow-sm">All Entities (15)</button>
+<button class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps uppercase rounded transition-colors">Patients (13)</button>
+<button class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps uppercase rounded transition-colors">Bills (1)</button>
+<button class="px-space-md py-space-xs text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps uppercase rounded transition-colors">Donations (1)</button>
+</div>
+<div class="h-6 w-px bg-surface-container-high hidden md:block"></div>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container text-on-surface font-body-sm text-body-sm rounded-lg hover:bg-surface-container-high transition-colors" id="batch-inspect-btn">
+<span class="material-symbols-outlined text-[16px]">data_object</span>
+<span>Inspect Bulk JSON</span>
+</button>
+</div>
+</section>
+<!-- Main Workstation Layout: Dual-Pane Outbox Queue Table & Topology Control Panels -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left 8-Cols: Pending Entity Outbox Queue & Conflict Resolution Table -->
+<section class="lg:col-span-8 flex flex-col bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-surface-container-lowest">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Sync Outbox Engine Pipeline</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Offline-first: operations are recorded locally and queued. The engine drains the queue to the cloud tier (donor &amp; patient portals) when WAN is validated — idempotent and resumable.
+          </p>
+</div>
+<div class="flex items-center gap-space-xs self-end sm:self-auto">
+<span class="font-data-table text-data-table text-secondary font-bold">15 MUTATIONS IN BUFFER</span>
+</div>
+</div>
+<!-- Entity Table Structure -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider">
+<th class="py-space-sm px-space-md">Entity / ID</th>
+<th class="py-space-sm px-space-md">Timestamp &amp; Mutation</th>
+<th class="py-space-sm px-space-md">Payload Size</th>
+<th class="py-space-sm px-space-md">Retries</th>
+<th class="py-space-sm px-space-md">WAN Dispatch State</th>
+<th class="py-space-sm px-space-md text-right">Outbox Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high/60 font-body-md text-body-md text-on-surface">
+<!-- Row 1: Patient Registration (from screencapture 13 patients) -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-secondary-container/20 text-secondary flex items-center justify-center font-data-table font-bold">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<div>
+<div class="font-data-table text-data-table text-on-surface font-bold">PT-2026-000021</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Rehana Kausar (Staff Dependent)</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="font-data-table text-data-table text-on-surface">2026-09-09 11:15:42</div>
+<span class="inline-flex items-center px-space-xs py-0.5 bg-surface-container font-label-caps text-label-caps uppercase text-on-surface-variant rounded">CREATE_OR_UPDATE</span>
+</td>
+<td class="py-space-md px-space-md font-data-table text-data-table">1.2 KB</td>
+<td class="py-space-md px-space-md font-data-table text-data-table text-on-surface-variant">0</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded bg-surface-container-highest text-on-secondary-container font-label-shortcut text-label-shortcut">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Queued (Air-gapped)
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="px-space-xs py-1 text-secondary hover:bg-secondary/10 rounded font-body-sm text-body-sm font-semibold transition-colors" onclick="inspectPayload('PT-2026-000021')">Inspect</button>
+<button class="px-space-xs py-1 text-on-tertiary-container hover:bg-tertiary-container/10 rounded font-body-sm text-body-sm font-semibold transition-colors">Prioritize</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Bill Item (from screencapture: bill 1) -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-tertiary-container/30 text-on-tertiary-container flex items-center justify-center font-data-table font-bold">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</div>
+<div>
+<div class="font-data-table text-data-table text-on-surface font-bold">INV-202609-00019</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Rs 50.00 cash dispensation</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="font-data-table text-data-table text-on-surface">2026-09-08 12:09:14</div>
+<span class="inline-flex items-center px-space-xs py-0.5 bg-tertiary-container/20 font-label-caps text-label-caps uppercase text-on-tertiary-container rounded">DISPENSE_TX</span>
+</td>
+<td class="py-space-md px-space-md font-data-table text-data-table">3.8 KB</td>
+<td class="py-space-md px-space-md font-data-table text-data-table text-on-surface-variant">0</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded bg-surface-container-highest text-on-secondary-container font-label-shortcut text-label-shortcut">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Idempotent UUID OK
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-xs py-1 text-secondary hover:bg-secondary/10 rounded font-body-sm text-body-sm font-semibold transition-colors" onclick="inspectPayload('INV-202609-00019')">Inspect</button>
+</td>
+</tr>
+<!-- Row 3: Donation / Zakat (from screencapture: donation 1) -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-error-container/40 text-on-error-container flex items-center justify-center font-data-table font-bold">
+<span class="material-symbols-outlined text-[18px]">volunteer_activism</span>
+</div>
+<div>
+<div class="font-data-table text-data-table text-on-surface font-bold">DON-2026-0814</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Rs 10,000 Dialysis welfare subsidy</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="font-data-table text-data-table text-on-surface">2026-07-07 11:15:10</div>
+<span class="inline-flex items-center px-space-xs py-0.5 bg-error-container/30 font-label-caps text-label-caps uppercase text-error rounded">WELFARE_CLAIM</span>
+</td>
+<td class="py-space-md px-space-md font-data-table text-data-table">2.1 KB</td>
+<td class="py-space-md px-space-md font-data-table text-data-table text-error font-bold">1</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface font-label-shortcut text-label-shortcut">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  Pending Remote Handshake
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-xs py-1 text-secondary hover:bg-secondary/10 rounded font-body-sm text-body-sm font-semibold transition-colors" onclick="verifyHash('DON-2026-0814')">Verify Hash</button>
+</td>
+</tr>
+<!-- Row 4: Patient 2 (Muhammad Rana) -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-secondary-container/20 text-secondary flex items-center justify-center font-data-table font-bold">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</div>
+<div>
+<div class="font-data-table text-data-table text-on-surface font-bold">PT-2026-000015</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Muhammad Rana (Welfare Card 50%)</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="font-data-table text-data-table text-on-surface">2026-09-08 10:18:00</div>
+<span class="inline-flex items-center px-space-xs py-0.5 bg-surface-container font-label-caps text-label-caps uppercase text-on-surface-variant rounded">CARD_QUOTA_SYNC</span>
+</td>
+<td class="py-space-md px-space-md font-data-table text-data-table">1.5 KB</td>
+<td class="py-space-md px-space-md font-data-table text-data-table text-on-surface-variant">0</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded bg-surface-container-highest text-on-secondary-container font-label-shortcut text-label-shortcut">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Queued
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-xs py-1 text-secondary hover:bg-secondary/10 rounded font-body-sm text-body-sm font-semibold transition-colors" onclick="inspectPayload('PT-2026-000015')">Inspect</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Expandable Accordion for Remaining 11 Patient Queues -->
+<div class="p-space-md bg-surface-container-low/60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">inventory_2</span>
+<span>11 additional patient records staged in idempotent SQLite Outbox table</span>
+</div>
+<button class="font-label-caps text-label-caps uppercase text-secondary hover:text-on-secondary-container font-bold flex items-center gap-1" id="toggle-queue-records">
+<span>Show Full Batch (15)</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<!-- Hidden expanded rows (controlled via lightweight JS below) -->
+<div class="hidden divide-y divide-surface-container-high/60" id="expanded-queue-container">
+<div class="p-space-md bg-surface-container-lowest flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-data-table text-data-table text-on-surface">PT-2026-000014</span>
+<span class="text-on-surface-variant">Amina Bibi · Zakat Dialysis Verification · 1.1 KB</span>
+</div>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-surface-container-highest rounded text-on-secondary-container">STAGED</span>
+</div>
+<div class="p-space-md bg-surface-container-lowest flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-data-table text-data-table text-on-surface">PT-2026-000013</span>
+<span class="text-on-surface-variant">Tariq Mahmood · Oncology Subsidized Quota · 1.3 KB</span>
+</div>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-surface-container-highest rounded text-on-secondary-container">STAGED</span>
+</div>
+<div class="p-space-md bg-surface-container-lowest flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-data-table text-data-table text-on-surface">PT-2026-000012</span>
+<span class="text-on-surface-variant">Farzana Parveen · Thalassemia Registry Sync · 1.2 KB</span>
+</div>
+<span class="font-label-shortcut text-label-shortcut px-space-xs py-0.5 bg-surface-container-highest rounded text-on-secondary-container">STAGED</span>
+</div>
+</div>
+</section>
+<!-- Right 4-Cols: Dual Operational Panels (LAN Replication + WAN Encryption Gateway) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Panel 1: Multi-Master SQLite Cluster Health -->
+<div class="flex flex-col p-space-lg bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed-dim">device_hub</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">LAN Cluster Mesh</h3>
+</div>
+<span class="font-data-table text-data-table px-space-xs py-0.5 rounded bg-tertiary-container text-tertiary-fixed font-bold">RAFT QUORUM 3/3</span>
+</div>
+<div class="mt-space-md space-y-space-sm">
+<!-- Node 01 Core -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed"></span>
+<div>
+<div class="font-data-table text-data-table font-bold text-on-surface">SRV-HWT-01 (LAN Core)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">192.168.1.10 · WAL Leader</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-data-table text-data-table text-tertiary-fixed-dim font-bold">0.12 ms</span>
+<div class="font-label-caps text-label-caps uppercase text-on-surface-variant">ACTIVE</div>
+</div>
+</div>
+<!-- Node 02 Counter Main -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed"></span>
+<div>
+<div class="font-data-table text-data-table font-bold text-on-surface">POS-HWT-02 (Counter A)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">192.168.1.22 · Replica 1</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-data-table text-data-table text-on-surface font-bold">0.44 ms</span>
+<div class="font-label-caps text-label-caps uppercase text-on-surface-variant">SYNCED</div>
+</div>
+</div>
+<!-- Node 03 OT Pharmacy -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed"></span>
+<div>
+<div class="font-data-table text-data-table font-bold text-on-surface">POS-HWT-OT (Emergency)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">192.168.1.45 · Replica 2</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-data-table text-data-table text-on-surface font-bold">0.51 ms</span>
+<div class="font-label-caps text-label-caps uppercase text-on-surface-variant">SYNCED</div>
+</div>
+</div>
+</div>
+<!-- Inline Visual Cluster Latency Sparkline Chart -->
+<div class="mt-space-md pt-space-md bg-surface-container-low/40 -mx-space-lg -mb-space-lg px-space-lg pb-space-md">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant mb-space-xs">
+<span>Mesh WAL Propagation Latency</span>
+<span class="font-data-table text-data-table text-secondary font-bold">Avg 0.38 ms</span>
+</div>
+<svg class="w-full h-10 text-secondary" fill="none" preserveaspectratio="none" viewbox="0 0 300 40">
+<path d="M0 25 L30 22 L60 27 L90 18 L120 20 L150 15 L180 23 L210 19 L240 22 L270 17 L300 21" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0 25 L30 22 L60 27 L90 18 L120 20 L150 15 L180 23 L210 19 L240 22 L270 17 L300 21 L300 40 L0 40 Z" fill="currentColor" fill-opacity="0.08"></path>
+</svg>
+</div>
+</div>
+<!-- Panel 2: Cloud Gateway Policy & End-to-End Encryption Configuration -->
+<div class="flex flex-col p-space-lg bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-secondary">vpn_lock</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">WAN Cloud Gateway</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase px-space-xs py-0.5 rounded bg-surface-container-highest text-on-secondary-container">TLS 1.3 / E2EE</span>
+</div>
+<div class="mt-space-sm space-y-space-sm font-body-sm text-body-sm">
+<div class="flex items-center justify-between py-space-2xs">
+<span class="text-on-surface-variant">Tunnel Endpoint:</span>
+<span class="font-data-table text-data-table text-on-surface font-semibold">api-gateway.hope-welfare.pk</span>
+</div>
+<div class="flex items-center justify-between py-space-2xs">
+<span class="text-on-surface-variant">Envelope Cipher:</span>
+<span class="font-data-table text-data-table text-on-surface">AES-256-GCM + SHA-256</span>
+</div>
+<div class="flex items-center justify-between py-space-2xs">
+<span class="text-on-surface-variant">Batch Chunk Limit:</span>
+<span class="font-data-table text-data-table text-on-surface">25 Mutations / Push</span>
+</div>
+<div class="flex items-center justify-between py-space-2xs">
+<span class="text-on-surface-variant">Cellular Throttle Mode:</span>
+<span class="font-data-table text-data-table text-secondary font-bold">Auto-Suppress on 2G/EDGE</span>
+</div>
+</div>
+<div class="mt-space-md p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim">verified</span>
+<span class="font-data-table text-data-table text-on-surface">DRAP Data Sovereignty Check</span>
+</div>
+<span class="font-label-shortcut text-label-shortcut text-on-tertiary-container font-bold">PASSED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Local Offline LAN Telemetry Operational Footer Bar -->
+<section class="flex flex-col md:flex-row items-center justify-between gap-space-sm p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-on-surface-variant">
+<div class="flex flex-wrap items-center gap-space-lg font-data-table text-data-table">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">database</span>
+<span class="text-on-surface font-bold">SQLite 3.42.0 WAL Active</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim">security</span>
+<span>Outbox Hash:</span>
+<span class="font-data-table text-data-table text-on-surface">e8f10b70a3c9df01..</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-outline">storage</span>
+<span>Spool Size: 1.42 MB</span>
+</div>
+</div>
+<!-- Keyboard Hotkey Operational Cheatsheet -->
+<div class="flex flex-wrap items-center gap-space-sm font-label-shortcut text-label-shortcut">
+<div class="flex items-center gap-1">
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-on-surface rounded">F1</span>
+<span>Help Docs</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-on-surface rounded">F5</span>
+<span>Refresh Queue</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-on-surface rounded">Alt+F</span>
+<span>Force Flush</span>
+</div>
+</div>
+</section>
+<!-- Interactive Modal for Payload Inspection -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-primary/40 backdrop-blur-sm hidden" id="payload-modal">
+<div class="w-full max-w-xl bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden p-space-xl flex flex-col gap-space-md m-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-secondary">code</span>
+<h4 class="font-headline-md text-headline-md text-on-surface" id="modal-title">Payload Inspection</h4>
+</div>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-outline cursor-pointer" onclick="closeModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="bg-primary text-on-primary p-space-md rounded-lg font-data-table text-data-table overflow-x-auto max-h-72">
+<pre id="modal-content">{
+  "entity": "patient",
+  "id": "PT-2026-000021",
+  "mutation": "CREATE_OR_UPDATE",
+  "data": {
+    "name": "Rehana Kausar",
+    "relation": "Staff Dependent (Nurse Ward 4)",
+    "zakat_eligible": false,
+    "hospital_discount_pct": 50,
+    "last_sync": null
+  },
+  "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"
+}</pre>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-space-xs bg-surface-container hover:bg-surface-container-high rounded font-body-md text-body-md text-on-surface cursor-pointer" onclick="closeModal()">Close</button>
+<button class="px-space-md py-space-xs bg-secondary hover:bg-on-secondary-container text-on-secondary rounded font-body-md text-body-md font-bold cursor-pointer" onclick="closeModal()">Re-queue Entity</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic Accordion Toggle for Outbox Records
+  const toggleBtn = document.getElementById('toggle-queue-records');
+  const expandedContainer = document.getElementById('expanded-queue-container');
+
+  if (toggleBtn && expandedContainer) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = expandedContainer.classList.contains('hidden');
+      if (isHidden) {
+        expandedContainer.classList.remove('hidden');
+        toggleBtn.innerHTML = '<span>Collapse Queue View</span><span class="material-symbols-outlined text-[16px]">expand_less</span>';
+      } else {
+        expandedContainer.classList.add('hidden');
+        toggleBtn.innerHTML = '<span>Show Full Batch (15)</span><span class="material-symbols-outlined text-[16px]">expand_more</span>';
+      }
+    });
+  }
+
+  // Payload Inspection Modal Handler
+  function inspectPayload(refId) {
+    const modal = document.getElementById('payload-modal');
+    const title = document.getElementById('modal-title');
+    const content = document.getElementById('modal-content');
+    
+    title.innerText = 'Outbox Envelope: ' + refId;
+    content.innerText = JSON.stringify({
+      entity_ref: refId,
+      station: "POS-HWT-01",
+      lane: "MAIN_DISPENSARY_A",
+      drap_license: "002914-HWT/P",
+      timestamp: new Date().toISOString(),
+      idempotency_key: "uuid-v4-" + Math.random().toString(36).substring(2, 11),
+      status: "AIRGAP_BUFFERED",
+      retry_attempt: 0
+    }, null, 2);
+
+    modal.classList.remove('hidden');
+  }
+
+  function verifyHash(refId) {
+    alert('Cryptographic SHA-256 integrity check verified for record ' + refId + '.\nPayload is tamper-evident and compliant with DRAP electronic ledger requirements.');
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('payload-modal');
+    modal.classList.add('hidden');
+  }
+
+  // Force Cloud Flush Simulation
+  const flushBtn = document.getElementById('flush-now-btn');
+  if (flushBtn) {
+    flushBtn.addEventListener('click', () => {
+      const originalHtml = flushBtn.innerHTML;
+      flushBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span><span>Negotiating Tunnel...</span>';
+      setTimeout(() => {
+        alert('Cloud Tunnel Attempt: WAN connection restricted or air-gapped. 15 operations retained securely in local SQLite WAL table.');
+        flushBtn.innerHTML = originalHtml;
+      }, 1200);
+    });
+  }
+
+  // Keyboard shortcut listener for F-keys and Alt+F
+  window.addEventListener('keydown', (e) => {
+    if (e.altKey && (e.key === 'f' || e.key === 'F')) {
+      e.preventDefault();
+      if (flushBtn) flushBtn.click();
+    } else if (e.ctrlKey && (e.key === 'r' || e.key === 'R')) {
+      e.preventDefault();
+      alert('Retrying failed items queue...');
+    } else if (e.key === 'F5') {
+      // Allow or suppress custom reload
+    }
+  });
+</script></main><footer class="fixed bottom-0 left-pos-sidebar-w right-0 h-10 bg-inverse-surface text-inverse-on-surface z-40 shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-between px-container-pad"><div class="flex items-center gap-space-xl font-data-table text-data-table"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">dns</span><span class="text-surface-variant">Master Node:</span><span class="text-tertiary-fixed font-bold">SRV-HWT-01 (192.168.1.10)</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary-fixed">speed</span><span class="text-surface-variant">Replication Latency:</span><span class="text-secondary-fixed font-bold">0.42 ms</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed">point_of_sale</span><span class="text-surface-variant">Active Workstations:</span><span class="text-primary-fixed font-bold">14 Online</span></div></div><div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed">verified_user</span><span>DRAP SRO 2024 / Form 9 Certified Hospital Governance</span></div></footer></div></body></html>

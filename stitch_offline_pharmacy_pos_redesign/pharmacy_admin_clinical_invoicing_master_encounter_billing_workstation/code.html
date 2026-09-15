@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#001e12", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-primary-fixed": "#001b3f", "secondary-fixed-dim": "#aac7ff", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-fixed": "#d7e2ff", "tertiary-container": "#003523", "on-tertiary-fixed-variant": "#005137", "on-error": "#ffffff", "outline": "#747780", "on-primary": "#ffffff", "on-surface-variant": "#44474f", "inverse-surface": "#213145", "surface": "#f8f9ff", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#00458e", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "error-container": "#ffdad6", "primary-container": "#0f2d59", "on-secondary": "#ffffff", "secondary-container": "#5095fe", "secondary-fixed": "#d7e3ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#68dba9", "on-secondary-fixed": "#001b3e", "surface-container": "#e5eeff", "tertiary-fixed": "#85f8c4", "on-primary-fixed-variant": "#2c4674", "on-background": "#0b1c30", "secondary": "#005cba", "on-tertiary-fixed": "#002114", "on-secondary-container": "#002d61", "surface-container-high": "#dce9ff", "on-primary-container": "#7c95c8", "on-tertiary-container": "#2ca879", "outline-variant": "#c4c6d0", "surface-container-highest": "#d3e4fe", "primary": "#00183b", "surface-tint": "#455e8d", "surface-container-lowest": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#adc7fc", "primary-fixed-dim": "#adc7fc" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-2xs": "0.125rem", "space-3xl": "2rem", "space-md": "0.75rem", "space-2xl": "1.5rem", "container-pad": "1.5rem", "pos-sidebar-w": "340px", "table-row-h": "2.25rem", "space-lg": "1rem" }, "fontFamily": { "data-table": [ "JetBrains Mono" ], "headline-lg": [ "Manrope" ], "data-display-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "body-md": [ "Inter" ], "body-sm": [ "Inter" ], "label-shortcut": [ "JetBrains Mono" ], "label-caps": [ "Inter" ], "headline-xl": [ "Manrope" ], "data-display-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "data-table": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "fontWeight": "700" } ], "data-display-md": [ "16px", { "lineHeight": "22px", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "label-shortcut": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "data-display-lg": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col"><div class="px-space-xl py-space-lg bg-primary-container/60 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div><div class="font-headline-md text-headline-md text-on-primary leading-tight">Hope Welfare</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">Trust Hospital &amp; Pharmacy</div></div></div></div><div class="px-space-xl py-space-sm bg-tertiary-container flex items-center justify-between text-on-tertiary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-data-table text-data-table text-tertiary-fixed font-bold">LAN CORE</span><span class="font-data-table text-data-table text-on-tertiary-container">192.168.1.10</span></div><span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary text-tertiary-fixed rounded">NODE 01 OK</span></div><nav class="flex flex-col px-space-md py-space-md gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-bold"><div class="px-space-sm pt-space-sm pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Pakistani Formulary Master</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-formulary-master" href="#"><span class="material-symbols-outlined text-[18px]">medication</span><span class="font-body-md text-body-md">DRAP Formulary Master</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-audit-trail" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">DRAP Audit Trail</span></a><div class="px-space-sm pt-space-md pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Administration &amp; Governance</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold" data-path="users-and-prescribers" href="#"><span class="material-symbols-outlined text-[18px]">clinical_notes</span><span class="font-body-md text-body-md">Users &amp; Prescribers</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span class="font-body-md text-body-md">Roles &amp; Permissions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="employees-and-quotas" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Employees &amp; Quotas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="zakat-and-subsidy-accounts" href="#"><span class="material-symbols-outlined text-[18px]">volunteer_activism</span><span class="font-body-md text-body-md">Zakat &amp; Subsidy Accounts</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="offline-sync-and-cluster" href="#"><span class="material-symbols-outlined text-[18px]">sync</span><span class="font-body-md text-body-md">Offline Sync &amp; Cluster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="system-and-drap-rules" href="#"><span class="material-symbols-outlined text-[18px]">gavel</span><span class="font-body-md text-body-md">System &amp; DRAP Rules</span></a></nav></div><div class="p-space-md bg-primary-container/80"><div class="flex items-center gap-space-md px-space-sm py-space-xs"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 overflow-hidden"><div class="font-body-md text-body-md text-on-primary font-bold truncate">System Administrator</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase truncate">Governance Clearance Level 4</div></div><span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">shield</span></div></div></aside><div class="pl-pos-sidebar-w"><header class="fixed top-0 left-pos-sidebar-w right-0 z-40 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-container-pad flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-lg"><span class="font-label-shortcut text-label-shortcut text-secondary">DRAP REG:</span><span class="font-data-table text-data-table text-on-surface">002914-HWT/P</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Counter Subnet:</span><span class="font-data-table text-data-table text-on-surface">LAN-ZONE-A</span></div></div><nav class="hidden md:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-bold"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="drap-formulary-master" href="#">Formulary Catalog</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Registers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="offline-sync-and-cluster" href="#">Cluster Health</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-and-drap-rules" href="#">Policy Engine</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-tertiary-container rounded-lg text-on-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-label-shortcut text-label-shortcut text-tertiary-fixed">SYNC ACTIVE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 pb-12 bg-surface min-h-screen px-container-pad"><div class="flex flex-col w-full">
+<!-- Top Command & Telemetry Context Sub-Bar -->
+<section class="flex flex-wrap items-center justify-between gap-space-md mb-space-lg bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span>Finance &amp; Billing</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">Clinical Invoicing &amp; Encounter Settlement</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-tertiary-container text-on-tertiary font-label-shortcut text-label-shortcut">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+          COUNTER 01 ONLINE
+        </span>
+<span class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-surface-container-high text-on-surface font-label-shortcut text-label-shortcut">
+<span class="material-symbols-outlined text-[14px] text-secondary">print</span>
+          THERMAL POS-80 READY
+        </span>
+<span class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[13px]">policy</span>
+          DRAP SRO 2024 V-09
+        </span>
+</div>
+</div>
+<!-- Rapid Hotkey Shortcuts -->
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-shortcut text-label-shortcut text-on-surface-variant">[ESC] Back</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-shortcut text-label-shortcut text-on-surface-variant">[F2] Search Visit</span>
+<span class="px-space-xs py-space-2xs rounded bg-primary text-on-primary font-label-shortcut text-label-shortcut">[F9] Finalize Master</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-label-shortcut text-label-shortcut text-on-surface-variant">[CTRL+P] Print A4</span>
+</div>
+</section>
+<!-- Executive Clinical KPI Summary -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Today's Invoices</span>
+<div class="font-data-display-lg text-data-display-lg text-on-surface mt-space-2xs">48</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-space-xs bg-surface-container-low/40 px-space-xs rounded">
+<span class="font-data-table text-data-table text-on-surface font-semibold">Rs. 184,320 Gross</span>
+<span class="text-error font-semibold">12 Pending Clearance</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Trust Subsidy &amp; Zakat Waived</span>
+<div class="font-data-display-lg text-data-display-lg text-secondary mt-space-2xs">Rs. 72,450</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-tertiary-container flex items-center justify-center text-tertiary-fixed">
+<span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-space-xs bg-surface-container-low/40 px-space-xs rounded">
+<span class="text-on-surface font-medium">39.3% Total Absorbed</span>
+<span class="text-on-surface-variant font-data-table text-data-table">19 Mustahiq Files</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Inpatient / Ward Dues Pending</span>
+<div class="font-data-display-lg text-data-display-lg text-error mt-space-2xs">Rs. 38,200</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-[20px]">bed</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-space-xs bg-surface-container-low/40 px-space-xs rounded">
+<span class="text-on-surface font-medium">7 Admitted Encounters</span>
+<span class="text-error font-semibold">Bed Checkout Lock</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Counter Cash &amp; Online Reconciled</span>
+<div class="font-data-display-lg text-data-display-lg text-on-surface mt-space-2xs">Rs. 73,670</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-space-xs bg-surface-container-low/40 px-space-xs rounded">
+<span class="text-on-tertiary-container font-semibold">100% Balanced</span>
+<span class="text-on-surface-variant font-data-table text-data-table">Till 01 &amp; 02 Confirmed</span>
+</div>
+</div>
+</section>
+<!-- Filter & Rapid Pull Form -->
+<section class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-lg flex flex-col lg:flex-row gap-space-md items-stretch lg:items-center justify-between">
+<!-- Search Pull Input with Hotkey Trigger -->
+<div class="flex-1 flex items-center gap-space-xs bg-surface-container-low rounded-lg px-space-md py-space-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent text-on-surface placeholder:text-on-surface-variant focus:outline-none w-full font-body-md text-body-md" id="encounterSearch" placeholder="Enter Visit ID (e.g. VIS-2026-0892), MRN, Patient Name, or Bed No... [F2]" type="text" value="VIS-2026-0892"/>
+<button class="bg-secondary text-on-secondary px-space-md py-space-xs rounded-lg font-headline-md text-body-sm flex items-center gap-space-xs hover:bg-secondary/90 transition-colors shrink-0" id="pullBtn" type="button">
+<span>Pull Patient Encounter</span>
+<span class="px-space-2xs rounded bg-on-secondary/20 font-label-shortcut text-label-shortcut text-on-primary">↵ Enter</span>
+</button>
+</div>
+<!-- Status Tabs Segmented Control -->
+<div class="flex flex-wrap items-center gap-space-2xs bg-surface-container rounded-lg p-space-2xs shrink-0">
+<button class="px-space-sm py-space-xs rounded font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">All Encounters (48)</button>
+<button class="px-space-sm py-space-xs rounded bg-surface-container-lowest text-secondary font-semibold font-body-sm text-body-sm shadow-sm">Awaiting Clearance (12)</button>
+<button class="px-space-sm py-space-xs rounded font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">Inpatient Discharges (8)</button>
+<button class="px-space-sm py-space-xs rounded font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">Subsidized / Zakat (19)</button>
+<button class="px-space-sm py-space-xs rounded font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">Settled Today (28)</button>
+</div>
+</section>
+<!-- Dual-Panel Billing Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT PANEL: Active Inpatient & OPD Encounter Slips (60% ~ 7 cols) -->
+<section class="lg:col-span-7 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="px-space-md py-space-sm bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">inventory</span>
+<span class="font-headline-md text-body-md text-on-surface font-bold">Active Inpatient &amp; OPD Encounter Slips</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-data-table text-data-table text-on-surface-variant">Queue: 4 Loaded</span>
+<button class="p-space-2xs rounded hover:bg-surface-container-high transition-colors" title="Reload queue">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">refresh</span>
+</button>
+</div>
+</div>
+<!-- Encounter Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps uppercase">
+<th class="py-space-xs px-space-md">Encounter / Slip</th>
+<th class="py-space-xs px-space-sm">Patient &amp; Ward Details</th>
+<th class="py-space-xs px-space-sm">Items</th>
+<th class="py-space-xs px-space-sm text-right">Gross</th>
+<th class="py-space-xs px-space-sm text-right">Subsidy</th>
+<th class="py-space-xs px-space-sm text-right">Net Due</th>
+<th class="py-space-xs px-space-md text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-sm text-body-sm">
+<!-- Row 1: Selected Record -->
+<tr class="bg-surface-container-high/60 cursor-pointer transition-colors" id="row-inv-412">
+<td class="py-space-sm px-space-md">
+<div class="font-data-table text-data-table font-bold text-secondary">INV-CLN-2026-0412</div>
+<div class="font-data-table text-data-table text-on-surface-variant">MRN: HWT-008921</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="font-headline-md text-body-md text-on-surface font-bold">Muhammad Farooq</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">Dialysis &amp; Nephro (Bed D-04)</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Prof. Tariq Mahmood</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-data-table text-data-table">6 Items</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table">
+                Rs. 8,400
+              </td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table text-on-tertiary-container">
+                -Rs. 4,200<br/>
+<span class="text-label-caps font-label-caps uppercase text-on-surface-variant">(50% HWC-01)</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table font-bold text-on-surface">
+                Rs. 4,200
+              </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-error-container text-on-error-container font-label-shortcut text-label-shortcut uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                  Pending Clearance
+                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest" id="row-inv-411">
+<td class="py-space-sm px-space-md">
+<div class="font-data-table text-data-table font-bold text-secondary">INV-CLN-2026-0411</div>
+<div class="font-data-table text-data-table text-on-surface-variant">MRN: HWT-007412</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="font-headline-md text-body-md text-on-surface font-semibold">Sakina Bibi</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">IPD Female Ward (Bed 12)</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Dr. Farhan Ali</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-data-table text-data-table">4 Items</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table">
+                Rs. 6,150
+              </td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table text-on-tertiary-container">
+                -Rs. 6,150<br/>
+<span class="text-label-caps font-label-caps uppercase text-tertiary-fixed-dim bg-tertiary px-1 rounded">(100% Zakat)</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table font-bold text-tertiary-fixed-variant">
+                Rs. 0
+              </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-tertiary-container text-on-tertiary font-label-shortcut text-label-shortcut uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+                  Discharge Cleared
+                </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest" id="row-inv-410">
+<td class="py-space-sm px-space-md">
+<div class="font-data-table text-data-table font-bold text-secondary">INV-CLN-2026-0410</div>
+<div class="font-data-table text-data-table text-on-surface-variant">MRN: HWT-009104</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="font-headline-md text-body-md text-on-surface font-semibold">Abdul Ghaffar</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">Emergency ICU (Bed E-02)</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Dr. Ayesha Khan</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-data-table text-data-table">8 Items</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table">
+                Rs. 14,800
+              </td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table text-on-surface-variant">
+                Rs. 0<br/>
+<span class="text-label-caps font-label-caps uppercase text-on-surface-variant">(Private Walk-in)</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table font-bold text-error">
+                Rs. 14,800
+              </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-surface-container-highest text-on-secondary-container font-label-shortcut text-label-shortcut uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Partial Credit
+                </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-lowest" id="row-inv-409">
+<td class="py-space-sm px-space-md">
+<div class="font-data-table text-data-table font-bold text-secondary">INV-CLN-2026-0409</div>
+<div class="font-data-table text-data-table text-on-surface-variant">MRN: HWT-005620</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="font-headline-md text-body-md text-on-surface font-semibold">Rehana Kausar</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm">Staff Sanitation &amp; Hygiene</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Prof. Tariq Mahmood</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container font-data-table text-data-table">3 Items</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table">
+                Rs. 1,450
+              </td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table text-secondary">
+                -Rs. 1,450<br/>
+<span class="text-label-caps font-label-caps uppercase text-secondary font-bold">(Staff Quota)</span>
+</td>
+<td class="py-space-sm px-space-sm text-right font-data-table text-data-table font-bold text-on-surface">
+                Rs. 0
+              </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-secondary-fixed text-on-secondary-fixed font-label-shortcut text-label-shortcut uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Quota Cleared
+                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Prescriber & Clinical Verification Footer -->
+<div class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-body-sm">
+            PM
+          </div>
+<div>
+<div class="font-body-md text-body-md font-semibold text-on-surface">Prof. Dr. Tariq Mahmood, FCPS Nephrology</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">PMDC #18274-P | Chief Clinical Pharmacologist Assigned: Dr. Sarah Malik (R-Pharm)</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase text-secondary">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+          Drug-Drug Interaction Checked (No Conflict)
+        </div>
+</div>
+</section>
+<!-- RIGHT PANEL: Master Clinical Invoice Breakdown & Discharge Gatepass (40% ~ 5 cols) -->
+<section class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Patient & Encounter Profile Header Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold font-headline-md text-headline-md">
+              MF
+            </div>
+<div>
+<div class="flex items-center gap-space-xs">
+<h2 class="font-headline-lg text-headline-md text-on-surface font-bold">Muhammad Farooq</h2>
+<span class="px-space-2xs rounded bg-surface-container-high font-label-caps text-label-caps text-on-surface uppercase">Age 54, M</span>
+</div>
+<div class="font-data-table text-data-table text-on-surface-variant">
+                CNIC: 35202-9182371-3 | Card: <span class="font-bold text-secondary">HWC-00001 (Mustahiq 50%)</span>
+</div>
+</div>
+</div>
+<span class="px-space-sm py-space-2xs rounded-full bg-primary-container text-primary-fixed font-label-shortcut text-label-shortcut">
+            BED: D-04
+          </span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm p-space-sm bg-surface-container-low rounded-lg text-body-sm font-body-sm">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Admission Record:</span>
+<div class="font-semibold text-on-surface">07-Sep-2026 (08:30 PKT)</div>
+<div class="text-on-surface-variant">Dialysis Renal Specialized Ward</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Attending Consultant:</span>
+<div class="font-semibold text-on-surface">Prof. Tariq Mahmood</div>
+<div class="text-on-surface-variant">Reg #18274-P (Formulary Appr.)</div>
+</div>
+</div>
+</div>
+<!-- Itemized Pharmacy Dispensing Breakdown -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">receipt</span>
+<span class="font-headline-md text-body-md text-on-surface font-bold">Itemized Formulary Dispensing Lines</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">DRAP Reg. Validated</span>
+</div>
+<!-- Dispensed Items Monospace List -->
+<div class="space-y-space-xs font-body-sm text-body-sm">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded">
+<div>
+<div class="font-semibold text-on-surface">1. Heparin Sodium 5,000 IU/ml Injection</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Batch: HP-9021 | Expiry: 11/2027 | 3 vials × Rs. 400</div>
+</div>
+<div class="font-data-table text-data-table font-bold text-on-surface">Rs. 1,200.00</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded">
+<div>
+<div class="font-semibold text-on-surface">2. Dialyzer Capillary Kit High-Flux F6</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Batch: DK-4410 | Expiry: 08/2028 | 1 complete set</div>
+</div>
+<div class="font-data-table text-data-table font-bold text-on-surface">Rs. 3,600.00</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded">
+<div>
+<div class="font-semibold text-on-surface">3. 0.9% Normal Saline Infusion 1000ml</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Batch: NS-1092 | Expiry: 03/2027 | 4 bottles × Rs. 120</div>
+</div>
+<div class="font-data-table text-data-table font-bold text-on-surface">Rs. 480.00</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded">
+<div>
+<div class="font-semibold text-on-surface">4. Erythropoietin Alfa 4,000 IU Prefilled</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Batch: EP-6612 | Expiry: 05/2027 | 2 syringes × Rs. 1,200</div>
+</div>
+<div class="font-data-table text-data-table font-bold text-on-surface">Rs. 2,400.00</div>
+</div>
+<!-- Item 5 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded">
+<div>
+<div class="font-semibold text-on-surface">5. Calcium Acetate 667mg Phosphate Binder</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Batch: CA-0988 | Expiry: 02/2028 | 1 blister strip (10 tabs)</div>
+</div>
+<div class="font-data-table text-data-table font-bold text-on-surface">Rs. 220.00</div>
+</div>
+<!-- Item 6 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded">
+<div>
+<div class="font-semibold text-on-surface">6. IV Infusion Bloodline Set &amp; Safety Cannula 20G</div>
+<div class="font-data-table text-data-table text-on-surface-variant">Batch: CS-8812 | Sterile Single Pack | 1 set</div>
+</div>
+<div class="font-data-table text-data-table font-bold text-on-surface">Rs. 500.00</div>
+</div>
+</div>
+<!-- Master Financial Math Summary -->
+<div class="mt-space-md pt-space-md bg-surface-container-low/50 p-space-sm rounded-lg space-y-space-xs">
+<div class="flex justify-between items-center text-body-sm font-body-sm text-on-surface-variant">
+<span>Encounter Pharmacy Gross Subtotal:</span>
+<span class="font-data-table text-data-table text-on-surface font-semibold">Rs. 8,400.00</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm text-secondary">
+<span class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[15px]">volunteer_activism</span>
+              Welfare Trust Subsidy (Card HWC-00001 - 50%):
+            </span>
+<span class="font-data-table text-data-table font-bold">-Rs. 4,200.00</span>
+</div>
+<div class="h-0.5 bg-surface-container-high my-space-xs"></div>
+<div class="flex justify-between items-center">
+<div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">Net Patient Payable:</span>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Exempt from General Sales Tax under DRAP Form 9</div>
+</div>
+<div class="text-right">
+<span class="font-data-display-lg text-data-display-lg text-primary font-bold">Rs. 4,200.00</span>
+</div>
+</div>
+</div>
+<!-- Settlement & Authorization Action Module -->
+<div class="mt-space-md p-space-sm bg-surface-container rounded-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Settlement Tender Channel</label>
+<span class="font-label-shortcut text-label-shortcut text-on-surface">POS TILL 01</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs">
+<button class="py-space-xs px-space-xs rounded bg-surface-container-lowest text-secondary font-semibold font-body-sm text-body-sm text-center shadow-sm">
+              Cash Drawer
+            </button>
+<button class="py-space-xs px-space-xs rounded bg-surface-container-low text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm text-center transition-colors">
+              Online / 1Link
+            </button>
+<button class="py-space-xs px-space-xs rounded bg-surface-container-low text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm text-center transition-colors">
+              Trust Credit
+            </button>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex-1 bg-surface-container-lowest px-space-sm py-space-xs rounded-lg flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Cash Tendered (PKR):</span>
+<input class="font-data-display-md text-data-display-md text-right text-on-surface bg-transparent focus:outline-none w-32" id="cashTendered" type="text" value="4200"/>
+</div>
+<div class="px-space-sm py-space-xs rounded-lg bg-tertiary-container text-tertiary-fixed font-data-table text-data-table text-center shrink-0">
+<div class="text-label-caps font-label-caps text-on-tertiary-container uppercase">Change Due</div>
+<div class="font-bold">Rs. 0.00</div>
+</div>
+</div>
+<!-- Execution Buttons -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary font-body-lg text-body-lg font-bold py-space-sm px-space-md rounded-lg flex items-center justify-between shadow-md transition-colors" id="finalizeBtn" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span>Finalize &amp; Authorize Discharge Gatepass</span>
+</div>
+<span class="px-space-xs py-space-2xs rounded bg-on-primary/20 font-label-shortcut text-label-shortcut text-on-primary">[F9]</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm py-space-xs px-space-sm rounded-lg flex items-center justify-center gap-space-xs shadow-sm transition-colors" id="printForm9Btn" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">print</span>
+<span>Print Form 9 Invoice [Ctrl+P]</span>
+</button>
+<button class="bg-surface-container-lowest hover:bg-surface-container-high text-on-surface-variant font-body-sm text-body-sm py-space-xs px-space-sm rounded-lg flex items-center justify-center gap-space-xs shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-error">pause_circle</span>
+<span>Hold / Clinical Query</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Operational Telemetry Bar (Standardized Local DB & DRAP Status) -->
+<section class="mt-space-xl p-space-sm bg-inverse-surface text-inverse-on-surface rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-space-md text-data-table font-data-table">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+<span>SQLite Local DB: <strong class="text-tertiary-fixed">Synced</strong></span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary-fixed">dns</span>
+<span>LAN: <strong>192.168.10.45 [Master Server Online]</strong></span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-surface-variant">verified</span>
+<span>DRAP SRO 2024 Compliant</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-md">
+<span>Shift: <strong class="text-primary-fixed">Morning (A)</strong></span>
+<span>Workstation: <strong>PHARM-ADMIN-01</strong></span>
+<span class="text-surface-variant font-semibold">Build: v4.3-clinical</span>
+</div>
+</section>
+</div>
+<script>
+  // Keyboard-first encounter management script
+  document.addEventListener('keydown', function(event) {
+    // F2: Jump to Search
+    if (event.key === 'F2') {
+      event.preventDefault();
+      const input = document.getElementById('encounterSearch');
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }
+    // F9: Finalize Sale / Authorize Gatepass
+    if (event.key === 'F9') {
+      event.preventDefault();
+      const finalizeBtn = document.getElementById('finalizeBtn');
+      if (finalizeBtn) finalizeBtn.click();
+    }
+    // Ctrl+P: Print Invoice
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'p') {
+      event.preventDefault();
+      const printBtn = document.getElementById('printForm9Btn');
+      if (printBtn) printBtn.click();
+    }
+    // Esc: Clear / Return
+    if (event.key === 'Escape') {
+      const activeElement = document.activeElement;
+      if (activeElement && activeElement.tagName === 'INPUT') {
+        activeElement.blur();
+      }
+    }
+  });
+
+  // Pull Button Interactive Simulation
+  const pullBtn = document.getElementById('pullBtn');
+  if (pullBtn) {
+    pullBtn.addEventListener('click', function() {
+      const searchVal = document.getElementById('encounterSearch').value;
+      if (searchVal) {
+        this.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span> Loading...';
+        setTimeout(() => {
+          this.innerHTML = '<span>Pull Patient Encounter</span><span class="px-space-2xs rounded bg-on-secondary/20 font-label-shortcut text-label-shortcut text-on-primary">↵ Enter</span>';
+        }, 350);
+      }
+    });
+  }
+
+  // Finalize Action
+  const finalizeBtn = document.getElementById('finalizeBtn');
+  if (finalizeBtn) {
+    finalizeBtn.addEventListener('click', function() {
+      this.classList.add('opacity-80');
+      this.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">autorenew</span> Authorizing Gatepass & Syncing...';
+      setTimeout(() => {
+        this.classList.remove('opacity-80');
+        this.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span> Gatepass Authorized & Thermal Printed';
+      }, 700);
+    });
+  }
+</script></main><footer class="fixed bottom-0 left-pos-sidebar-w right-0 h-10 bg-inverse-surface text-inverse-on-surface z-40 shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-between px-container-pad"><div class="flex items-center gap-space-xl font-data-table text-data-table"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">dns</span><span class="text-surface-variant">Master Node:</span><span class="text-tertiary-fixed font-bold">SRV-HWT-01 (192.168.1.10)</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary-fixed">speed</span><span class="text-surface-variant">Replication Latency:</span><span class="text-secondary-fixed font-bold">0.42 ms</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed">point_of_sale</span><span class="text-surface-variant">Active Workstations:</span><span class="text-primary-fixed font-bold">14 Online</span></div></div><div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed">verified_user</span><span>DRAP SRO 2024 / Form 9 Certified Hospital Governance</span></div></footer></div></body></html>

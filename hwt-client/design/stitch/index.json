@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "01-counter-multi-mode",
+    "id": "ae698fc168ec400c9c5dca8cb7b13bfb",
+    "title": "Pharmacy POS - Multi-Mode Counter Workstation",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 35646,
+    "png_bytes": 57138
+  },
+  {
+    "slug": "02-counter-dept-requisition",
+    "id": "52b31ab47ecf4ddca151090328a047e2",
+    "title": "Pharmacy POS - Hospital Dept Requisition Mode",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 36248,
+    "png_bytes": 52231
+  },
+  {
+    "slug": "03-counter-walk-in",
+    "id": "c1f53cef4cff47598b2f038550ae0782",
+    "title": "Pharmacy POS - Private Walk-In Mode",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 35130,
+    "png_bytes": 94319
+  },
+  {
+    "slug": "04-day-end-close",
+    "id": "861c4afbfe864d7fb375fdb473ad5056",
+    "title": "Pharmacy POS - Day-End Close & Cash Reconciliation",
+    "width": "2560",
+    "height": "2512",
+    "html_bytes": 30310,
+    "png_bytes": 112971
+  },
+  {
+    "slug": "05-dept-requisition-queue",
+    "id": "92c9513a0f0a41e18c978dd68b0b638b",
+    "title": "Pharmacy POS - Department Requisition & Ward Indent Queue",
+    "width": "2560",
+    "height": "2756",
+    "html_bytes": 39695,
+    "png_bytes": 74707
+  },
+  {
+    "slug": "06-inventory-batches",
+    "id": "1187cb87b1bc46ecb174714bd0bf8748",
+    "title": "Pharmacy POS - Inventory, Batch Stock & DRAP Compliance Workstation",
+    "width": "2560",
+    "height": "2284",
+    "html_bytes": 51510,
+    "png_bytes": 111331
+  },
+  {
+    "slug": "07-new-medicine",
+    "id": "6c15a5c921da47ca827d673a7a5f7e0d",
+    "title": "Pharmacy POS - New Medicine Master Workstation",
+    "width": "2560",
+    "height": "3370",
+    "html_bytes": 37246,
+    "png_bytes": 45061
+  },
+  {
+    "slug": "08-receive-stock-grn",
+    "id": "dfe89c7cc7184f1cabb82a5b8fa84c61",
+    "title": "Pharmacy POS - Receive Stock & Inward GRN Workstation",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 29332,
+    "png_bytes": 56963
+  },
+  {
+    "slug": "09-suppliers-vendors",
+    "id": "bc77d746dc664c1493101d9e3f84ef24",
+    "title": "Pharmacy POS - Suppliers & Vendors Management Workstation",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 42213,
+    "png_bytes": 64859
+  },
+  {
+    "slug": "10-vendor-ledger-payment",
+    "id": "e351a197ded04359a24f0ebd39fc3fde",
+    "title": "Pharmacy POS - Vendor Ledger Statement & Payment Voucher Workstation",
+    "width": "2560",
+    "height": "2916",
+    "html_bytes": 41026,
+    "png_bytes": 68795
+  },
+  {
+    "slug": "11-new-vendor",
+    "id": "bc3141877af344479ac5f28984d21bb1",
+    "title": "Pharmacy POS - New Vendor & Distributor Registration Workstation",
+    "width": "2560",
+    "height": "2078",
+    "html_bytes": 29870,
+    "png_bytes": 95269
+  },
+  {
+    "slug": "12-customer-cards-credit",
+    "id": "c94f718e6de54330b3f9870f923612b0",
+    "title": "Pharmacy POS - Customer Welfare Cards & Credit Ledger Workstation",
+    "width": "2560",
+    "height": "2132",
+    "html_bytes": 52962,
+    "png_bytes": 86130
+  },
+  {
+    "slug": "13-returns-refund",
+    "id": "dd6145fcb7f24f40a7b9148936cf1b46",
+    "title": "Pharmacy POS - Customer Returns & Refund Counter Workstation",
+    "width": "2560",
+    "height": "2992",
+    "html_bytes": 41936,
+    "png_bytes": 17004
+  },
+  {
+    "slug": "14-credit-settlement",
+    "id": "a991b4571c824ec7ae7e7ae6b5214e50",
+    "title": "Pharmacy POS - Patient Credit Settlement & Cash Receipt Workstation",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 34608,
+    "png_bytes": 109900
+  },
+  {
+    "slug": "15-cashflow-till",
+    "id": "bb72b038389b45f1b17c02d3f833c522",
+    "title": "Pharmacy POS - Cash Flow & Till Session Management Workstation",
+    "width": "2560",
+    "height": "2382",
+    "html_bytes": 37413,
+    "png_bytes": 116454
+  },
+  {
+    "slug": "16-clinical-billing",
+    "id": "3d7043e228bb42379bc27c41b7cf42e8",
+    "title": "Pharmacy POS - Central Clinical Billing & Encounter Charges Workstation",
+    "width": "2560",
+    "height": "2048",
+    "html_bytes": 41167,
+    "png_bytes": 98225
+  }
+]

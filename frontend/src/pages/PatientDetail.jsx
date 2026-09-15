@@ -90,7 +90,7 @@ export default function PatientDetail() {
           {can('token.manage') && activeVisit && (
             <div className="field">
               <label>Issue department token</label>
-              <div className="flex">
+              <div className="fx">
                 <Select value={dept} onChange={(e) => setDept(e.target.value)}>{DEPTS.map((d) => <option key={d}>{d}</option>)}</Select>
                 <button className="btn primary sm" onClick={issueToken}>Issue</button>
               </div>
@@ -118,11 +118,11 @@ export default function PatientDetail() {
         </div>
       </div>
 
-      <div className="grid cols-2">
+      <div className="gx cols-2">
         <HistoryCard title="Consultations" icon="stethoscope" count={p.consultations?.length} empty="No consultations yet.">
           {p.consultations?.map((c) => (
             <div key={c.id} className="pd-row pd-row-block">
-              <div className="flex between" style={{ width: '100%' }}><b>{c.diagnosis || 'Consultation'}</b><span className="muted">{c.created_at?.slice(0, 16)}</span></div>
+              <div className="fx between" style={{ width: '100%' }}><b>{c.diagnosis || 'Consultation'}</b><span className="muted">{c.created_at?.slice(0, 16)}</span></div>
               {c.complaint && <div className="muted sm">Complaint: {c.complaint}</div>}
               {c.vitals && <div className="muted sm">Vitals: {formatVitals(c.vitals)}</div>}
               {c.referral && <div className="muted sm">Referral: {c.referral}</div>}
@@ -153,7 +153,7 @@ export default function PatientDetail() {
           {p.bills?.map((b) => (
             <div key={b.id} className="pd-row">
               <div className="mono">{b.bill_no} <span className="muted">{b.created_at?.slice(0, 10)}</span></div>
-              <div className="flex"><span>{money(b.net_amount)}</span><StatusBadge status={b.status} /></div>
+              <div className="fx"><span>{money(b.net_amount)}</span><StatusBadge status={b.status} /></div>
             </div>
           ))}
         </HistoryCard>

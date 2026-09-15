@@ -41,7 +41,9 @@ router.get(
     res.json(
       db
         .prepare(
-          `SELECT u.id, u.username, u.full_name, u.department, u.is_active, u.last_login, r.name AS role
+          `SELECT u.id, u.username, u.full_name, u.department, u.is_active, u.last_login, r.name AS role,
+                  u.locked_until,
+                  CASE WHEN u.locked_until IS NOT NULL AND u.locked_until > datetime('now') THEN 1 ELSE 0 END AS locked
            FROM users u JOIN roles r ON r.id = u.role_id ORDER BY u.full_name`
         )
         .all()
@@ -72,6 +74,19 @@ router.post(
 );
 
 // Deactivate without deleting historical activity.
+// S2-12: lift a lockout early.
+router.post(
+  '/:id/unlock',
+  requirePermission(PERMISSIONS.USER_MANAGE),
+  wrap((req, res) => {
+    const u = db.prepare('SELECT id, username FROM users WHERE id = ?').get(req.params.id);
+    if (!u) return res.status(404).json({ error: 'User not found' });
+    db.prepare('UPDATE users SET failed_logins = 0, locked_until = NULL WHERE id = ?').run(u.id);
+    audit(req, 'auth.unlock', 'user', u.id, { username: u.username });
+    res.json({ ok: true });
+  })
+);
+
 router.put(
   '/:id/active',
   requirePermission(PERMISSIONS.USER_MANAGE),

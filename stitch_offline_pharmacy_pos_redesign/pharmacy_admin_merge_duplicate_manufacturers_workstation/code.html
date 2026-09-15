@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy Admin - Merge Duplicate Manufacturers Workstation</title>
+<!-- Tailwind CSS v3 with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-scrollbar">
+    /* Custom thin scrollbar for smooth clinical UI feel */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<style data-purpose="typography-enhancements">
+    body {
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<!-- BEGIN: MainLayoutWrapper -->
+<div class="flex-1 flex overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-[#0a192f] text-slate-300 flex flex-col flex-shrink-0 border-r border-slate-800 select-none" data-purpose="main-sidebar">
+<!-- Brand & Hospital Logo -->
+<div class="p-4 border-b border-slate-800/80 flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/20">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h1 class="font-bold text-white text-sm tracking-tight leading-none">Hope Welfare Trust</h1>
+<p class="text-[11px] text-blue-400 font-medium tracking-wide uppercase mt-1">Clinical Pharmacy ERP</p>
+</div>
+</div>
+<!-- Network Node Status Pill -->
+<div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800/60 flex items-center justify-between text-[11px]">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-mono text-slate-300">192.168.1.10</span>
+</div>
+<span class="text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/60 px-1.5 py-0.5 rounded">NODE-01 OK</span>
+</div>
+<!-- Navigation Links Container -->
+<div class="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+<!-- Group: Clinical & Operations -->
+<div>
+<span class="px-3 text-[10px] font-bold tracking-wider text-slate-500 uppercase">Clinical &amp; POS Operations</span>
+<nav class="mt-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Pharmacy Counter</span>
+</div>
+<span class="text-[10px] bg-slate-800 border border-slate-700 px-1 rounded text-slate-400 font-mono">F2</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Day Close &amp; Shift Register</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Formulary &amp; Stock Ledger</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Billing &amp; Hospital Invoices</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Returns &amp; Credit Slips</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Hospital Transfer Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Reports &amp; Analytics</span>
+</a>
+</nav>
+</div>
+<!-- Group: Administration & Governance -->
+<div>
+<span class="px-3 text-[10px] font-bold tracking-wider text-slate-500 uppercase">Administration &amp; Governance</span>
+<nav class="mt-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Users &amp; Roles [RBAC]</span>
+</a>
+<!-- Active Navigation Item -->
+<a class="flex items-center justify-between px-3 py-2 text-xs font-medium rounded-md bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Catalogue &amp; Manufacturers</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-white"></span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>DRAP Audit Registry</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Zakat &amp; Subsidy Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Offline Cluster Sync</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md hover:bg-slate-800 hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>System Settings</span>
+</a>
+</nav>
+</div>
+</div>
+<!-- Current User Profile Footer -->
+<div class="p-3 border-t border-slate-800 bg-[#071322] flex items-center justify-between" data-purpose="user-status-card">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-blue-700 text-white font-semibold text-xs flex items-center justify-center">
+            SA
+          </div>
+<div>
+<div class="text-xs font-bold text-white leading-tight">System Admin (Gov-4)</div>
+<div class="text-[10px] text-slate-400 font-mono">ID: 8820-PHARM · DRAP AUTH</div>
+</div>
+</div>
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-100">
+<!-- BEGIN: TopBar -->
+<header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shrink-0 shadow-sm" data-purpose="page-header">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-medium text-slate-500">
+<a class="hover:text-blue-600 transition-colors" href="#">Administration</a>
+<span class="text-slate-300">/</span>
+<a class="hover:text-blue-600 transition-colors" href="#">Drug Manufacturers</a>
+<span class="text-slate-300">/</span>
+<span class="text-slate-900 font-semibold">Merge Duplicates</span>
+</nav>
+<!-- Right Action Buttons -->
+<div class="flex items-center gap-3">
+<!-- Back Button -->
+<a class="inline-flex items-center gap-1.5 px-3.5 py-1.5 border border-slate-300 rounded-md text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/20" href="#">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Back to Directory
+          </a>
+<!-- Primary Action CTA -->
+<button class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-700 hover:bg-blue-800 text-white rounded-md text-xs font-semibold shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-1" type="button">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Execute Safe Merge
+          </button>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- Scrollable Main Viewport -->
+<main class="flex-1 overflow-y-auto p-6 space-y-6" data-purpose="workstation-viewport">
+<!-- BEGIN: InformationalNotice -->
+<section class="bg-white border border-slate-200/80 rounded-lg p-5 shadow-sm" data-purpose="guidance-banner">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-start gap-3">
+<div class="p-2.5 bg-blue-50 text-blue-700 rounded-lg border border-blue-100 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-base font-bold text-slate-900 tracking-tight">Merge Duplicate Pharmaceutical Manufacturers</h2>
+<p class="text-xs text-slate-600 mt-0.5 leading-relaxed max-w-4xl">
+                  Merging consolidates duplicate company profiles into a single verified master. All linked medicine formulations, batch inventory history, purchase orders, and supplier ledgers will be safely reassigned to the primary company.
+                </p>
+</div>
+</div>
+<!-- Audit Notice Badge -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-200 text-amber-900 rounded-md text-[11px] font-medium shrink-0">
+<svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Irreversible DRAP Audit Action</span>
+</div>
+</div>
+</section>
+<!-- END: InformationalNotice -->
+<!-- BEGIN: SideBySideComparisonWorkspace -->
+<section class="grid grid-cols-1 lg:grid-cols-11 gap-4 items-stretch" data-purpose="merge-comparison-grid">
+<!-- Left Column: Source Duplicate -->
+<div class="lg:col-span-5 bg-white border border-amber-200 rounded-lg p-5 shadow-sm flex flex-col justify-between relative" data-purpose="source-manufacturer-card">
+<div>
+<!-- Card Header -->
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center">1</div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Duplicate Company <span class="text-slate-500 font-normal">(Will be Archived)</span></h3>
+</div>
+<span class="px-2 py-0.5 bg-amber-100 text-amber-800 font-bold text-[10px] rounded uppercase tracking-wider">Source to Merge</span>
+</div>
+<!-- Selection Input -->
+<div class="mt-4">
+<label class="block text-xs font-semibold text-slate-700 mb-1.5" for="source-manufacturer-select">Select Duplicate Manufacturer Profile</label>
+<div class="relative">
+<select class="w-full text-xs font-medium border-slate-300 rounded-md py-2 pl-3 pr-8 focus:border-amber-500 focus:ring focus:ring-amber-200" id="source-manufacturer-select">
+<option selected="">Aboot Pharma (Duplicate Flagged) — 1 linked item</option>
+<option>Getz Phrma (Pvt) — 0 items</option>
+<option>Searle Pakistan — 4 items</option>
+</select>
+</div>
+</div>
+<!-- Profile Details Inspection -->
+<div class="mt-4 bg-slate-50 rounded-md border border-slate-200 p-3.5 space-y-2.5 text-xs">
+<div class="flex items-center justify-between">
+<span class="text-slate-500">DML License No:</span>
+<span class="font-mono text-slate-500 italic bg-slate-200/70 px-1.5 py-0.5 rounded text-[11px]">Not Specified / Missing</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Registered Location:</span>
+<span class="font-medium text-slate-800">Karachi</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Active Formulations Linked:</span>
+<div class="flex items-center gap-1.5">
+<span class="font-semibold text-amber-700">1 item</span>
+<span class="text-[11px] text-slate-500 font-mono">(Paracetamol 500mg - Aboot Tab)</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Record Created:</span>
+<span class="text-slate-700 text-[11px]">14-Aug-2025 by <span class="font-mono font-medium">Cashier-02</span></span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-slate-200">
+<span class="text-slate-500">Verification Status:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                    Unverified / Flagged
+                  </span>
+</div>
+</div>
+</div>
+<!-- Fate indicator -->
+<div class="mt-4 pt-3 border-t border-dashed border-slate-200 text-[11px] text-amber-800 flex items-center gap-1.5">
+<svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>This record will be archived as a synonym. New products cannot be added to it.</span>
+</div>
+</div>
+<!-- Middle Column: Visual Transfer Bridge -->
+<div class="lg:col-span-1 flex flex-col items-center justify-center py-2" data-purpose="reassignment-indicator">
+<div class="hidden lg:flex flex-col items-center justify-center gap-2">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 rotate-90 my-2">Reassigns</span>
+<div class="w-10 h-10 rounded-full bg-blue-100 border border-blue-300 text-blue-700 flex items-center justify-center shadow-sm">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 rotate-90 my-2">Into Master</span>
+</div>
+<!-- Mobile breakpoint horizontal display -->
+<div class="lg:hidden flex items-center gap-2 text-slate-500 my-1">
+<span class="text-xs font-semibold uppercase">Reassigns to target</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Right Column: Target Master -->
+<div class="lg:col-span-5 bg-white border border-emerald-300 rounded-lg p-5 shadow-sm flex flex-col justify-between" data-purpose="target-master-card">
+<div>
+<!-- Card Header -->
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center justify-center">2</div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Primary Verified Manufacturer</h3>
+</div>
+<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded uppercase tracking-wider">Master Target</span>
+</div>
+<!-- Selection Input -->
+<div class="mt-4">
+<label class="block text-xs font-semibold text-slate-700 mb-1.5" for="master-manufacturer-select">Select Primary Master Manufacturer Record</label>
+<div class="relative">
+<select class="w-full text-xs font-medium border-slate-300 rounded-md py-2 pl-3 pr-8 focus:border-emerald-500 focus:ring focus:ring-emerald-200" id="master-manufacturer-select">
+<option selected="">Abbott Laboratories Pakistan Ltd — 142 linked items</option>
+<option>Getz Pharma (Pvt) Ltd — 218 linked items</option>
+<option>GlaxoSmithKline (GSK) Pakistan — 165 linked items</option>
+<option>Sami Pharmaceuticals (Pvt) Ltd — 94 linked items</option>
+<option>The Searle Company Ltd — 174 linked items</option>
+</select>
+</div>
+</div>
+<!-- Profile Details Inspection -->
+<div class="mt-4 bg-slate-50 rounded-md border border-slate-200 p-3.5 space-y-2.5 text-xs">
+<div class="flex items-center justify-between">
+<span class="text-slate-500">DML License No:</span>
+<span class="font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-[11px]">DML-000018</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Head Office / Plant Site:</span>
+<span class="font-medium text-slate-800">Landhi Industrial Area, Karachi</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Active Formulations Linked:</span>
+<div class="flex items-center gap-1.5">
+<span class="font-bold text-emerald-700">142 items</span>
+<span class="text-[11px] text-emerald-600 font-medium">(+1 incoming from merge = 143)</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-500">Corporate NTN:</span>
+<span class="font-mono text-slate-700 text-[11px]">0812940-1 (FBR Verified Active)</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-slate-200">
+<span class="text-slate-500">Verification Status:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    DRAP SRO-2024 Compliant
+                  </span>
+</div>
+</div>
+</div>
+<!-- Retention notice -->
+<div class="mt-4 pt-3 border-t border-dashed border-slate-200 text-[11px] text-emerald-800 flex items-center gap-1.5">
+<svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>This record remains active as the primary authorized pharmaceutical entity.</span>
+</div>
+</div>
+</section>
+<!-- END: SideBySideComparisonWorkspace -->
+<!-- BEGIN: ConsolidationImpactAssessment -->
+<section class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm" data-purpose="impact-assessment-panel">
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-900">Consolidation Impact Assessment</h3>
+<p class="text-xs text-slate-500 mt-0.5">Summary of ledger transfers and inventory pointer reassignments upon confirmation.</p>
+</div>
+<span class="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded border border-slate-200">Pre-Merge Simulation: Safe</span>
+</div>
+<!-- 4 Summary Metric Impact Cards -->
+<div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Box 1 -->
+<div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold text-slate-600 uppercase">Formulation SKUs</span>
+<span class="p-1 rounded bg-blue-100 text-blue-700">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-2 text-xl font-bold text-slate-900">1 Item</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-snug">Will be safely transferred to Abbott Laboratories master catalog.</p>
+</div>
+<span class="mt-3 text-[10px] font-semibold text-blue-600">Reassignment Pending</span>
+</div>
+<!-- Box 2 -->
+<div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold text-slate-600 uppercase">Batch Stock Records</span>
+<span class="p-1 rounded bg-emerald-100 text-emerald-700">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-2 text-xl font-bold text-slate-900">0 Batches</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-snug">No active quarantined batches found under source duplicate.</p>
+</div>
+<span class="mt-3 text-[10px] font-semibold text-emerald-600">No Conflict Detected</span>
+</div>
+<!-- Box 3 -->
+<div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold text-slate-600 uppercase">Vendor Invoices &amp; GRNs</span>
+<span class="p-1 rounded bg-indigo-100 text-indigo-700">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-2 text-xl font-bold text-slate-900">2 Invoices</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-snug">Historical receiving vouchers will maintain pointer to new master ID.</p>
+</div>
+<span class="mt-3 text-[10px] font-semibold text-indigo-600">Audit Pointers Preserved</span>
+</div>
+<!-- Box 4 -->
+<div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-semibold text-slate-600 uppercase">Post-Merge Status</span>
+<span class="p-1 rounded bg-amber-100 text-amber-700">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-2 text-xl font-bold text-slate-900">Alias Created</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-snug">"Aboot" will automatically route POS &amp; GRN barcode searches to Abbott.</p>
+</div>
+<span class="mt-3 text-[10px] font-semibold text-amber-700">Prevents Re-Creation</span>
+</div>
+</div>
+</section>
+<!-- END: ConsolidationImpactAssessment -->
+<!-- BEGIN: PotentialDuplicatesQueue -->
+<section class="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm" data-purpose="heuristic-duplicates-queue">
+<div class="p-4 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-900">Detected Potential Duplicate Pairs (System Heuristics)</h3>
+</div>
+<span class="text-xs text-slate-500 font-medium">3 Suggestions Requiring Resolution</span>
+</div>
+<!-- Duplicates Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead class="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-200 text-[11px]">
+<tr>
+<th class="py-3 px-4" scope="col">Flagged Duplicate (Candidate)</th>
+<th class="py-3 px-4" scope="col">Suggested Verified Master</th>
+<th class="py-3 px-4 text-center" scope="col">Name Similarity</th>
+<th class="py-3 px-4 text-center" scope="col">Linked Catalog Comparison</th>
+<th class="py-3 px-4 text-right" scope="col">Workstation Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 font-medium">
+<!-- Row 1: Abbott (Currently Active) -->
+<tr class="bg-blue-50/40 hover:bg-blue-50/70 transition-colors">
+<td class="py-3.5 px-4 font-semibold text-slate-900 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+<span>Aboot Pharma</span>
+<span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono">Unverified</span>
+</td>
+<td class="py-3.5 px-4 text-slate-800">
+<div class="font-semibold">Abbott Laboratories Pakistan Ltd</div>
+<div class="text-[11px] text-slate-500 font-mono">DML-000018 · Karachi</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">88% Match</span>
+</td>
+<td class="py-3.5 px-4 text-center text-slate-600 font-mono text-[11px]">
+<span class="text-amber-700 font-semibold">1 item</span> vs <span class="text-emerald-700 font-semibold">142 items</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="inline-flex items-center gap-1 px-3 py-1 bg-slate-200 text-slate-600 rounded text-xs font-semibold cursor-default" disabled="" type="button">
+<span>Active in Merger</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Getz -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="py-3.5 px-4 font-semibold text-slate-900 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+<span>Getz Phrma</span>
+<span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono">Typo Flagged</span>
+</td>
+<td class="py-3.5 px-4 text-slate-800">
+<div class="font-semibold">Getz Pharma (Pvt) Ltd</div>
+<div class="text-[11px] text-slate-500 font-mono">DML-000045 · Korangi, Karachi</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">92% Match</span>
+</td>
+<td class="py-3.5 px-4 text-center text-slate-600 font-mono text-[11px]">
+<span class="text-slate-500">0 items</span> vs <span class="text-emerald-700 font-semibold">218 items</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="inline-flex items-center gap-1 px-3 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded text-xs font-semibold shadow-sm transition-all" type="button">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Load in Merger</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Searle -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="py-3.5 px-4 font-semibold text-slate-900 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+<span>Searle Pakistan</span>
+<span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono">Legacy Entry</span>
+</td>
+<td class="py-3.5 px-4 text-slate-800">
+<div class="font-semibold">The Searle Company Ltd</div>
+<div class="text-[11px] text-slate-500 font-mono">DML-000029 · Port Qasim, Karachi</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">85% Match</span>
+</td>
+<td class="py-3.5 px-4 text-center text-slate-600 font-mono text-[11px]">
+<span class="text-amber-700 font-semibold">4 items</span> vs <span class="text-emerald-700 font-semibold">174 items</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="inline-flex items-center gap-1 px-3 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded text-xs font-semibold shadow-sm transition-all" type="button">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Load in Merger</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- END: PotentialDuplicatesQueue -->
+</main>
+<!-- BEGIN: TelemetryFooter -->
+<footer class="bg-white border-t border-slate-200 px-6 py-2 flex flex-wrap items-center justify-between text-[11px] text-slate-500 shrink-0 select-none" data-purpose="system-telemetry-footer">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-medium text-slate-700">Station ID: <span class="font-mono">NODE-01</span></span>
+</div>
+<span class="text-slate-300">|</span>
+<div class="font-mono text-slate-600">Engine: SQLite 3.42 WAL Active</div>
+<span class="text-slate-300">|</span>
+<div class="text-emerald-700 font-medium">DRAP Audit Engine Ready</div>
+</div>
+<div class="flex items-center gap-2 font-mono text-slate-400">
+<span>v2.4.9-pk</span>
+<span>·</span>
+<span>Hope Welfare Trust Pharmacy Counter Workstation</span>
+</div>
+</footer>
+<!-- END: TelemetryFooter -->
+</div>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: MainLayoutWrapper -->
+</body></html>

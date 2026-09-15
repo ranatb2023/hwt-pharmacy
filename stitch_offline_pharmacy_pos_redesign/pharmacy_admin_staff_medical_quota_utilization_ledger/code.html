@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#001e12", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-primary-fixed": "#001b3f", "secondary-fixed-dim": "#aac7ff", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-fixed": "#d7e2ff", "tertiary-container": "#003523", "on-tertiary-fixed-variant": "#005137", "on-error": "#ffffff", "outline": "#747780", "on-primary": "#ffffff", "on-surface-variant": "#44474f", "inverse-surface": "#213145", "surface": "#f8f9ff", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#00458e", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "error-container": "#ffdad6", "primary-container": "#0f2d59", "on-secondary": "#ffffff", "secondary-container": "#5095fe", "secondary-fixed": "#d7e3ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#68dba9", "on-secondary-fixed": "#001b3e", "surface-container": "#e5eeff", "tertiary-fixed": "#85f8c4", "on-primary-fixed-variant": "#2c4674", "on-background": "#0b1c30", "secondary": "#005cba", "on-tertiary-fixed": "#002114", "on-secondary-container": "#002d61", "surface-container-high": "#dce9ff", "on-primary-container": "#7c95c8", "on-tertiary-container": "#2ca879", "outline-variant": "#c4c6d0", "surface-container-highest": "#d3e4fe", "primary": "#00183b", "surface-tint": "#455e8d", "surface-container-lowest": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#adc7fc", "primary-fixed-dim": "#adc7fc" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-2xs": "0.125rem", "space-3xl": "2rem", "space-md": "0.75rem", "space-2xl": "1.5rem", "container-pad": "1.5rem", "pos-sidebar-w": "340px", "table-row-h": "2.25rem", "space-lg": "1rem" }, "fontFamily": { "data-table": [ "JetBrains Mono" ], "headline-lg": [ "Manrope" ], "data-display-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "body-md": [ "Inter" ], "body-sm": [ "Inter" ], "label-shortcut": [ "JetBrains Mono" ], "label-caps": [ "Inter" ], "headline-xl": [ "Manrope" ], "data-display-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "data-table": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "fontWeight": "700" } ], "data-display-md": [ "16px", { "lineHeight": "22px", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "label-shortcut": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "data-display-lg": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col"><div class="px-space-xl py-space-lg bg-primary-container/60 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div><div class="font-headline-md text-headline-md text-on-primary leading-tight">Hope Welfare</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">Trust Hospital &amp; Pharmacy</div></div></div></div><div class="px-space-xl py-space-sm bg-tertiary-container flex items-center justify-between text-on-tertiary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-data-table text-data-table text-tertiary-fixed font-bold">LAN CORE</span><span class="font-data-table text-data-table text-on-tertiary-container">192.168.1.10</span></div><span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary text-tertiary-fixed rounded">NODE 01 OK</span></div><nav class="flex flex-col px-space-md py-space-md gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-bold"><div class="px-space-sm pt-space-sm pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Pakistani Formulary Master</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-formulary-master" href="#"><span class="material-symbols-outlined text-[18px]">medication</span><span class="font-body-md text-body-md">DRAP Formulary Master</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-audit-trail" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">DRAP Audit Trail</span></a><div class="px-space-sm pt-space-md pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Administration &amp; Governance</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold" data-path="users-and-prescribers" href="#"><span class="material-symbols-outlined text-[18px]">clinical_notes</span><span class="font-body-md text-body-md">Users &amp; Prescribers</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span class="font-body-md text-body-md">Roles &amp; Permissions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="employees-and-quotas" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Employees &amp; Quotas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="zakat-and-subsidy-accounts" href="#"><span class="material-symbols-outlined text-[18px]">volunteer_activism</span><span class="font-body-md text-body-md">Zakat &amp; Subsidy Accounts</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="offline-sync-and-cluster" href="#"><span class="material-symbols-outlined text-[18px]">sync</span><span class="font-body-md text-body-md">Offline Sync &amp; Cluster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="system-and-drap-rules" href="#"><span class="material-symbols-outlined text-[18px]">gavel</span><span class="font-body-md text-body-md">System &amp; DRAP Rules</span></a></nav></div><div class="p-space-md bg-primary-container/80"><div class="flex items-center gap-space-md px-space-sm py-space-xs"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 overflow-hidden"><div class="font-body-md text-body-md text-on-primary font-bold truncate">System Administrator</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase truncate">Governance Clearance Level 4</div></div><span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">shield</span></div></div></aside><div class="pl-pos-sidebar-w"><header class="fixed top-0 left-pos-sidebar-w right-0 z-40 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-container-pad flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-lg"><span class="font-label-shortcut text-label-shortcut text-secondary">DRAP REG:</span><span class="font-data-table text-data-table text-on-surface">002914-HWT/P</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Counter Subnet:</span><span class="font-data-table text-data-table text-on-surface">LAN-ZONE-A</span></div></div><nav class="hidden md:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-bold"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="drap-formulary-master" href="#">Formulary Catalog</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Registers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="offline-sync-and-cluster" href="#">Cluster Health</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-and-drap-rules" href="#">Policy Engine</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-tertiary-container rounded-lg text-on-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-label-shortcut text-label-shortcut text-tertiary-fixed">SYNC ACTIVE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 pb-12 bg-surface min-h-screen px-container-pad"><div class="flex flex-col w-full">
+<!-- Breadcrumb Navigation & Top Action Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-xl">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">
+<a class="hover:text-secondary transition-colors" data-path="employees-and-quotas" href="#">Administration</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-secondary transition-colors" data-path="employees-and-quotas" href="#">Employees &amp; Quotas</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary font-bold">Rehana Kausar (HWT-000020)</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface">Utilization Ledger</span>
+</div>
+<div class="flex items-center gap-space-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Staff Medical Quota Ledger</h1>
+<div class="flex items-center gap-space-2xs px-space-sm py-space-2xs bg-tertiary-container text-tertiary-fixed rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+<span class="font-label-shortcut text-label-shortcut">ACTIVE ENROLLMENT</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<a class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface rounded transition-colors shadow-sm" data-path="employees-and-quotas" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="font-body-md text-body-md font-semibold">Staff Directory</span>
+<span class="font-label-shortcut text-label-shortcut bg-surface-container-highest px-space-2xs py-0.5 rounded text-on-surface-variant">Esc</span>
+</a>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface rounded transition-colors shadow-sm" onclick="window.print()">
+<span class="material-symbols-outlined text-[18px]">print</span>
+<span class="font-body-md text-body-md font-semibold">Print Ledger</span>
+<span class="font-label-shortcut text-label-shortcut bg-surface-container-highest px-space-2xs py-0.5 rounded text-on-surface-variant">Ctrl+P</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface rounded transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span class="font-body-md text-body-md font-semibold">Export CSV</span>
+<span class="font-label-shortcut text-label-shortcut bg-surface-container-highest px-space-2xs py-0.5 rounded text-on-surface-variant">Alt+E</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-secondary hover:bg-secondary-container text-on-secondary rounded transition-colors shadow-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="font-body-md text-body-md">Manual Adjustment</span>
+<span class="font-label-shortcut text-label-shortcut bg-on-secondary-container/30 px-space-2xs py-0.5 rounded text-on-secondary">F7</span>
+</button>
+</div>
+</div>
+<!-- Staff Dossier Profile Banner -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg mb-space-xl shadow-sm">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-lg">
+<div class="w-14 h-14 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[32px]">badge</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Rehana Kausar</span>
+<span class="px-space-xs py-space-2xs bg-surface-container-high text-secondary font-data-table text-data-table font-bold rounded">HWT-000020</span>
+<span class="px-space-xs py-space-2xs bg-tertiary-container text-tertiary-fixed font-label-caps text-label-caps uppercase rounded">Grade 1-4 Essential</span>
+</div>
+<div class="flex items-center gap-space-md mt-space-2xs text-on-surface-variant flex-wrap font-body-sm text-body-sm">
+<span class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[15px] text-secondary">cleaning_services</span>
+              Sanitary Worker • Department of Sanitation
+            </span>
+<span>•</span>
+<span class="flex items-center gap-space-2xs font-data-table text-data-table">
+<span class="material-symbols-outlined text-[15px] text-secondary">id_card</span>
+              CNIC: 35201-1112225-2
+            </span>
+<span>•</span>
+<span class="flex items-center gap-space-2xs font-data-table text-data-table">
+<span class="material-symbols-outlined text-[15px] text-secondary">call</span>
+              0300-1112225
+            </span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-md bg-surface-container-low px-space-md py-space-sm rounded-lg self-stretch lg:self-auto">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Subsidy Framework</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">100% Trust Subsidized</span>
+<span class="font-label-shortcut text-label-shortcut text-on-tertiary-container">HWT Welfare Board SRO-2024</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-[28px]">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Metric Overview Cards (4-Grid) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<!-- Card 1: Annual Quota -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Annual Allocation (FY 26-27)</span>
+<span class="material-symbols-outlined text-[20px] text-secondary">account_balance_wallet</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-body-md text-body-md text-secondary font-bold">PKR</span>
+<span class="font-data-display-lg text-data-display-lg font-bold text-on-surface">15,000</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">Trust Medical Quota Baseline</div>
+</div>
+<div class="mt-space-md pt-space-xs bg-surface-container-low rounded p-space-xs flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Period</span>
+<span class="font-data-table text-data-table text-on-surface font-semibold">01 Jul 26 - 30 Jun 27</span>
+</div>
+</div>
+<!-- Card 2: Utilized to Date -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Utilized to Date</span>
+<span class="material-symbols-outlined text-[20px] text-secondary">receipt_long</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-body-md text-body-md text-secondary font-bold">PKR</span>
+<span class="font-data-display-lg text-data-display-lg font-bold text-on-surface">1,250</span>
+</div>
+<div class="flex items-center gap-space-xs mt-space-2xs">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 8.33%;"></div>
+</div>
+<span class="font-data-table text-data-table text-secondary font-bold">8.3%</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs bg-surface-container-low rounded p-space-xs flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Encounters</span>
+<span class="font-data-table text-data-table text-on-surface font-semibold">3 Dispensing Cycles</span>
+</div>
+</div>
+<!-- Card 3: Remaining Balance -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Remaining Balance</span>
+<span class="material-symbols-outlined text-[20px] text-on-tertiary-container">savings</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-body-md text-body-md text-on-tertiary-container font-bold">PKR</span>
+<span class="font-data-display-lg text-data-display-lg font-bold text-on-surface">13,750</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-tertiary-container font-medium mt-space-2xs">Healthy Reserve Available</div>
+</div>
+<div class="mt-space-md pt-space-xs bg-tertiary-container rounded p-space-xs flex items-center justify-between text-tertiary-fixed">
+<span class="font-label-caps text-label-caps uppercase">Burn Velocity</span>
+<span class="font-data-table text-data-table font-semibold">PKR 416.60 / Mo</span>
+</div>
+</div>
+<!-- Card 4: Registered Dependents -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Eligible Dependents</span>
+<span class="material-symbols-outlined text-[20px] text-secondary">family_restroom</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-data-display-lg text-data-display-lg font-bold text-on-surface">3</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Active</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">1 Spouse • 2 Minor Children</div>
+</div>
+<div class="mt-space-md pt-space-xs bg-surface-container-low rounded p-space-xs flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Shared Pool</span>
+<span class="font-data-table text-data-table text-secondary font-semibold">Single Envelope</span>
+</div>
+</div>
+</div>
+<!-- Ledger Filters & Query Toolbar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-md">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<!-- Date Horizon Filter -->
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">calendar_today</span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Horizon:</span>
+<select class="bg-transparent font-body-sm text-body-sm text-on-surface font-semibold focus:outline-none cursor-pointer">
+<option selected="">Current FY 2026–2027</option>
+<option>Previous FY 2025–2026</option>
+<option>Custom Date Horizon</option>
+</select>
+</div>
+<!-- Category Selector -->
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">category</span>
+<select class="bg-transparent font-body-sm text-body-sm text-on-surface font-semibold focus:outline-none cursor-pointer">
+<option selected="">All Prescriptions &amp; Bills</option>
+<option>Chronic Care Only</option>
+<option>Acute &amp; Emergency Dispensing</option>
+<option>Dependent Specific Orders</option>
+</select>
+</div>
+<!-- Live Search Field -->
+<div class="relative flex-1 min-w-[240px]">
+<span class="material-symbols-outlined absolute left-space-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full pl-8 pr-space-md py-space-xs bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded focus:outline-none focus:bg-surface-container transition-colors" placeholder="Search Bill #, Doctor, Drug name, or PMDC... [F2]" type="text"/>
+<span class="absolute right-space-sm top-1/2 -translate-y-1/2 font-label-shortcut text-label-shortcut text-on-surface-variant">F2</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm rounded transition-colors">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>Reset Filters</span>
+</button>
+<div class="h-6 w-px bg-surface-container-highest mx-space-xs"></div>
+<span class="font-data-table text-data-table text-on-surface-variant">Showing 3 of 3 Encounters</span>
+</div>
+</div>
+</div>
+<!-- Medical Quota Utilization Ledger Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-space-xl">
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-left">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant">
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider">Transaction / Bill #</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider">Date &amp; Time</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider">Prescribing Doctor</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider">Diagnosis / Encounter</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider">Items Dispensed</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider text-right">Total Bill</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider text-right">Trust Subsidy</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider text-right">Employee Co-Pay</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider text-right">Remaining Balance</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider">Pharmacist Sign-off</th>
+<th class="py-space-sm px-space-md font-label-caps text-label-caps uppercase tracking-wider text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="text-on-surface font-body-md text-body-md divide-y divide-surface-container-low">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-data-table text-data-table text-secondary font-bold">INV-202609-00019</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">POS Counter A</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-data-table text-data-table font-semibold">08/09/2026</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">12:09:42 PM</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold">Dr. Tariq Mahmood</span>
+<span class="font-label-shortcut text-label-shortcut text-secondary">PMDC #33910-P</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md">General OPD</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Viral Fever &amp; Myalgia</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col gap-space-2xs max-w-xs">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium">Panadol 500mg (Paracetamol)</span>
+<span class="font-data-table text-data-table text-on-surface-variant">20 tabs</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium">Flygel 400mg (Metronidazole)</span>
+<span class="font-data-table text-data-table text-on-surface-variant">10 tabs</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right font-data-table text-data-table font-bold">
+              PKR 50.00
+            </td>
+<td class="py-space-sm px-space-md text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-table text-data-table text-on-tertiary-container font-bold">PKR 50.00</span>
+<span class="font-label-caps text-label-caps bg-tertiary-container text-tertiary-fixed px-space-2xs rounded">100% COVERED</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right font-data-table text-data-table text-on-surface-variant">
+              PKR 0.00
+            </td>
+<td class="py-space-sm px-space-md text-right">
+<span class="font-data-display-md text-data-display-md font-bold text-secondary">13,750.00</span>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-bold">Bashir Ahmed, RPh</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">Lic. #PB-88219</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-secondary transition-colors" title="View Dispensing Slip">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors" title="Audit Trail #489,201">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-data-table text-data-table text-secondary font-bold">INV-202608-00412</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">POS Counter B</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-data-table text-data-table font-semibold">24/08/2026</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">10:45:18 AM</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold">Dr. Ayesha Khan</span>
+<span class="font-label-shortcut text-label-shortcut text-secondary">Medical Director</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md">Emergency Floor</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Acute Respiratory Infection</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col gap-space-2xs max-w-xs">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium">Amoxicillin 500mg (Antibiotic)</span>
+<span class="font-data-table text-data-table text-on-surface-variant">15 caps</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium">Paracetamol Suspension 120mg</span>
+<span class="font-data-table text-data-table text-on-surface-variant">1 btl (60ml)</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right font-data-table text-data-table font-bold">
+              PKR 420.00
+            </td>
+<td class="py-space-sm px-space-md text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-table text-data-table text-on-tertiary-container font-bold">PKR 420.00</span>
+<span class="font-label-caps text-label-caps bg-tertiary-container text-tertiary-fixed px-space-2xs rounded">100% COVERED</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right font-data-table text-data-table text-on-surface-variant">
+              PKR 0.00
+            </td>
+<td class="py-space-sm px-space-md text-right">
+<span class="font-data-display-md text-data-display-md font-bold text-secondary">13,800.00</span>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-bold">Bashir Ahmed, RPh</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">Lic. #PB-88219</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-secondary transition-colors" title="View Dispensing Slip">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors" title="Audit Trail #472,110">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-data-table text-data-table text-secondary font-bold">INV-202607-00108</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">POS Counter A</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-data-table text-data-table font-semibold">15/07/2026</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">03:18:05 PM</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold">Dr. Salman Farooq</span>
+<span class="font-label-shortcut text-label-shortcut text-secondary">Consultant Nephrologist</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md">Dialysis OPD</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Gastroprotection / Dependent</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col gap-space-2xs max-w-xs">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium">Omeprazole 20mg (Cap)</span>
+<span class="font-data-table text-data-table text-on-surface-variant">14 caps</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium">ORS WHO Formula Lemon</span>
+<span class="font-data-table text-data-table text-on-surface-variant">6 sachets</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right font-data-table text-data-table font-bold">
+              PKR 780.00
+            </td>
+<td class="py-space-sm px-space-md text-right">
+<div class="flex flex-col items-end">
+<span class="font-data-table text-data-table text-on-tertiary-container font-bold">PKR 780.00</span>
+<span class="font-label-caps text-label-caps bg-tertiary-container text-tertiary-fixed px-space-2xs rounded">100% COVERED</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right font-data-table text-data-table text-on-surface-variant">
+              PKR 0.00
+            </td>
+<td class="py-space-sm px-space-md text-right">
+<span class="font-data-display-md text-data-display-md font-bold text-secondary">14,220.00</span>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-bold">Muhammad Usman</span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">Lead Pharmacist</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-secondary transition-colors" title="View Dispensing Slip">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors" title="Audit Trail #450,094">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+<!-- Summary Balance Footer Row -->
+<tfoot>
+<tr class="bg-surface-container font-bold">
+<td class="py-space-md px-space-md font-headline-md text-headline-md text-on-surface" colspan="5">
+              Fiscal Period Aggregate (3 Encounters)
+            </td>
+<td class="py-space-md px-space-md text-right font-data-table text-data-table text-on-surface">
+              PKR 1,250.00
+            </td>
+<td class="py-space-md px-space-md text-right font-data-table text-data-table text-on-tertiary-container">
+              PKR 1,250.00
+            </td>
+<td class="py-space-md px-space-md text-right font-data-table text-data-table text-on-surface">
+              PKR 0.00
+            </td>
+<td class="py-space-md px-space-md text-right font-data-display-md text-data-display-md text-secondary">
+              PKR 13,750.00
+            </td>
+<td class="py-space-md px-space-md text-right font-label-caps text-label-caps text-on-surface-variant uppercase" colspan="2">
+              Audited Ledger Integrity Valid
+            </td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Bottom Auxiliary Panels: Dependents & Quota Governance (2-Column) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-xl mb-space-xl">
+<!-- Left Card: Registered Dependents Entitlement -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Registered Dependents Entitlement</h2>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Eligible family members claiming against HWT-000020 allocation</div>
+</div>
+</div>
+<button class="flex items-center gap-space-2xs px-space-sm py-space-xs bg-surface-container hover:bg-surface-container-high text-secondary rounded font-body-sm text-body-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+<span>+ Manage Dependents</span>
+</button>
+</div>
+<div class="space-y-space-sm">
+<!-- Dependent 1: Spouse -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<span class="material-symbols-outlined text-secondary text-[24px]">man</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md font-bold text-on-surface">Tariq Mehmood</span>
+<span class="px-space-2xs py-0.5 bg-surface-container text-on-surface-variant font-label-caps text-label-caps uppercase rounded">Spouse</span>
+</div>
+<div class="font-data-table text-data-table text-on-surface-variant">CNIC: 35201-884129-1</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-tertiary-container text-tertiary-fixed font-label-caps text-label-caps uppercase rounded">100% Trust Covered</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">check_circle</span>
+</div>
+</div>
+<!-- Dependent 2: Child 1 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<span class="material-symbols-outlined text-secondary text-[24px]">child_care</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md font-bold text-on-surface">Zainab Tariq</span>
+<span class="px-space-2xs py-0.5 bg-surface-container text-on-surface-variant font-label-caps text-label-caps uppercase rounded">Daughter • Age 8</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Form-B / Registration: 35201-091283-2</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-tertiary-container text-tertiary-fixed font-label-caps text-label-caps uppercase rounded">Pediatric Formulary</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">check_circle</span>
+</div>
+</div>
+<!-- Dependent 3: Child 2 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<span class="material-symbols-outlined text-secondary text-[24px]">boy</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md font-bold text-on-surface">Hamza Tariq</span>
+<span class="px-space-2xs py-0.5 bg-surface-container text-on-surface-variant font-label-caps text-label-caps uppercase rounded">Son • Age 12</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Form-B / Registration: 35201-118231-1</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-tertiary-container text-tertiary-fixed font-label-caps text-label-caps uppercase rounded">Routine Formulary</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant uppercase">
+<span>Trust Verification Date: 01 Jul 2026</span>
+<span class="text-secondary font-bold">Policy Ref: HWT-STAFF-POL-2026-G1</span>
+</div>
+</div>
+<!-- Right Card: Quota Governance & Policy Rules -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Quota Governance &amp; Policy Rules</h2>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Operating parameters approved by Executive Medical Board</div>
+</div>
+</div>
+<span class="px-space-xs py-space-2xs bg-surface-container font-data-table text-data-table text-on-surface font-semibold rounded">
+            DRAP SRO 2024
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs text-secondary mb-space-2xs">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+<span class="font-label-caps text-label-caps uppercase font-bold">Monthly Burn Ceiling</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+              No monthly draw cap enforced. Staff member may draw up to the PKR 15,000 annual ceiling as clinically required.
+            </p>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs text-secondary mb-space-2xs">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span class="font-label-caps text-label-caps uppercase font-bold">Excluded Categories</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+              Cosmetics, dermatological aesthetics, and unverified OTC dietary supplements require Medical Superintendent manual override.
+            </p>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs text-secondary mb-space-2xs">
+<span class="material-symbols-outlined text-[18px]">prescriptions</span>
+<span class="font-label-caps text-label-caps uppercase font-bold">Mandatory Prescription</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+              Zero OTC dispensing without an authenticated PMDC/HWT licensed physician prescription on file.
+            </p>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs text-secondary mb-space-2xs">
+<span class="material-symbols-outlined text-[18px]">autorenew</span>
+<span class="font-label-caps text-label-caps uppercase font-bold">Annual Rollover</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+              Unutilized quota lapses on 30 June 2027. New annual baseline allocation resets automatically via LAN cron daemon.
+            </p>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Board Seal: Hope Welfare Trust Governance Executive</span>
+</div>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant">REG-HWT-EXEC-2024</span>
+</div>
+</div>
+</div>
+<!-- Local Node Telemetry Bar -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col md:flex-row items-center justify-between gap-space-sm font-data-table text-data-table text-on-surface-variant">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+<span class="text-on-surface font-bold">LAN Master Node</span>
+<span>SRV-HWT-01 (192.168.1.10)</span>
+</div>
+<span>•</span>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[15px] text-secondary">database</span>
+<span>SQLite 3.42 WAL Active</span>
+</div>
+<span>•</span>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[15px] text-secondary">verified_user</span>
+<span>DRAP SRO 2024 / Form 9 Certified</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span>Replication Latency:</span>
+<span class="text-secondary font-bold">0.38 ms</span>
+</div>
+<span class="px-space-xs py-space-2xs bg-surface-container font-label-shortcut text-label-shortcut text-on-surface rounded">
+        COUNTER-NODE-01 OK
+      </span>
+</div>
+</div>
+</div></main><footer class="fixed bottom-0 left-pos-sidebar-w right-0 h-10 bg-inverse-surface text-inverse-on-surface z-40 shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-between px-container-pad"><div class="flex items-center gap-space-xl font-data-table text-data-table"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">dns</span><span class="text-surface-variant">Master Node:</span><span class="text-tertiary-fixed font-bold">SRV-HWT-01 (192.168.1.10)</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary-fixed">speed</span><span class="text-surface-variant">Replication Latency:</span><span class="text-secondary-fixed font-bold">0.42 ms</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed">point_of_sale</span><span class="text-surface-variant">Active Workstations:</span><span class="text-primary-fixed font-bold">14 Online</span></div></div><div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed">verified_user</span><span>DRAP SRO 2024 / Form 9 Certified Hospital Governance</span></div></footer></div></body></html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html><html class="h-full bg-slate-100" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Hope Welfare Trust - Clinical Pharmacy POS</title>
+<!-- Tailwind CSS v3 with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter font for crisp, clinical typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Consolas', 'monospace']
+          },
+          colors: {
+            navy: {
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#090d16',
+            },
+            clinical: {
+              primary: '#0369a1', /* Professional hospital blue */
+              dark: '#075985',
+              border: '#cbd5e1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Classic, clean scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+    /* Disable ugly spin arrows on numbers in classic POS */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased select-none overflow-hidden bg-slate-100">
+<!-- ========================================================================= -->
+<!-- 1. CLEAN, ORGANIZED CLASSIC HEADER (Structured & Production Feasible)      -->
+<!-- ========================================================================= -->
+<header class="bg-white border-b border-slate-300 shadow-xs shrink-0 z-20" data-purpose="pos-header">
+<div class="px-4 py-2 flex items-center justify-between gap-4">
+<!-- Left: Organization Identity & Terminal -->
+<div class="flex items-center space-x-3">
+<a class="flex items-center space-x-2.5 group focus:outline-none" href="#dashboard" title="Back to Hospital ERP / Dashboard">
+<div class="h-8 w-8 bg-slate-900 text-white rounded flex items-center justify-center font-bold text-base border border-slate-700">
+            H+
+          </div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-bold text-slate-900 text-sm tracking-tight">HOPE WELFARE TRUST</span>
+<span class="text-[11px] font-semibold text-slate-600 bg-slate-100 border border-slate-300 px-1.5 py-0.2 rounded">Counter 01</span>
+</div>
+<p class="text-[11px] text-slate-500 font-normal leading-none mt-0.5">Hospital Pharmacy Management System</p>
+</div>
+</a>
+</div>
+<!-- Center: Streamlined Operational Telemetry & Clock -->
+<div class="hidden lg:flex items-center space-x-6 text-xs text-slate-600">
+<!-- Unified System Connectivity Status -->
+<div class="flex items-center space-x-2 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded text-[11px]">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+</span>
+<span class="font-medium text-slate-700">LAN Connected (192.168.1.100)</span>
+<span class="text-slate-300">|</span>
+<span class="text-slate-600">Citizen POS-80 (Ready)</span>
+</div>
+<!-- Date & Time Live -->
+<div class="flex items-center space-x-2 font-mono text-[11px] text-slate-600">
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="font-semibold text-slate-800">Wednesday, Sep 09, 2026</span>
+<span class="text-slate-400">10:45:12 AM</span>
+</div>
+</div>
+<!-- Right: Shift Pharmacist, Till Cash & Direct POS Operations -->
+<div class="flex items-center space-x-3">
+<!-- Staff Shift Profile -->
+<div class="flex items-center space-x-2 border-r border-slate-200 pr-3">
+<div class="text-right">
+<div class="text-xs font-bold text-slate-800">Pharm. Tariq Mahmood</div>
+<div class="text-[10px] text-slate-500 font-mono">Shift A • Reg #0482</div>
+</div>
+<div class="h-7 w-7 rounded bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center border border-slate-300">
+            TM
+          </div>
+</div>
+<!-- Float Till Status -->
+<div class="hidden sm:flex flex-col text-right">
+<span class="text-[10px] text-slate-500 font-semibold uppercase">Till Cash</span>
+<span class="text-xs font-mono font-bold text-slate-900">PKR 5,000.00</span>
+</div>
+<!-- Standard Utility Actions -->
+<div class="flex items-center space-x-1.5">
+<button class="px-2 py-1 text-xs font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded flex items-center space-x-1" title="Open Cash Drawer" type="button">
+<span class="">Drawer</span>
+<kbd class="text-[10px] font-mono text-slate-500 bg-slate-100 px-1 py-0.2 rounded border border-slate-200">F11</kbd>
+</button>
+<button class="px-2 py-1 text-xs font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded flex items-center space-x-1" title="End Shift / Day Close" type="button">
+<span class="">Day Close</span>
+<kbd class="text-[10px] font-mono text-slate-500 bg-slate-100 px-1 py-0.2 rounded border border-slate-200">F10</kbd>
+</button>
+<button class="p-1 text-slate-500 hover:text-rose-700 hover:bg-rose-50 border border-slate-200 rounded" title="Sign Out" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- 2. MAIN POS WORKSPACE: Clinical Grid Layout                               -->
+<!-- ========================================================================= -->
+<main class="flex-1 flex flex-col p-3 gap-3 overflow-hidden" data-purpose="pos-workspace">
+<!-- TOP SECTION: Omnibar Item Search & Quick Functional F-Key Bar -->
+<div class="bg-white rounded-md border border-slate-300 p-3 shadow-xs shrink-0">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+<!-- Search Input with clear, non-neon clinical border -->
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<!-- Barcode Scanner SVG Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4v16m-8-12v8m4-6v4m8-6v6m4-4v2M4 4h2v2H4V4zm14 0h2v2h-2V4zm-14 14h2v2H4v-2zm14 0h2v2h-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input autofocus="" class="block w-full pl-10 pr-32 py-2 text-sm bg-slate-50 border border-slate-300 rounded focus:border-slate-800 focus:bg-white focus:ring-1 focus:ring-slate-800 font-medium text-slate-900 placeholder-slate-400 transition" placeholder="Scan Barcode or Search Drug Name, Generic Salt, Brand or DRAP # ... [Press F2]" type="text">
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+<span class="text-[11px] font-mono font-medium text-slate-500 bg-slate-200/70 border border-slate-300 px-2 py-0.5 rounded">
+              SCANNER READY
+            </span>
+</div>
+</div>
+<!-- Production F-Key Shortcuts Legend -->
+<div class="flex items-center flex-wrap gap-1.5 text-xs shrink-0">
+<button class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded font-medium text-slate-700 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-white px-1 py-0.2 rounded border border-slate-300 text-slate-900">F2</kbd> Search
+          </button>
+<button class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded font-medium text-slate-700 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-white px-1 py-0.2 rounded border border-slate-300 text-slate-900">F3</kbd> Edit Qty
+          </button>
+<button class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded font-medium text-slate-700 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-white px-1 py-0.2 rounded border border-slate-300 text-slate-900">F4</kbd> Tender
+          </button>
+<button class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded font-medium text-slate-700 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-white px-1 py-0.2 rounded border border-slate-300 text-slate-900">F6</kbd> Hold (2)
+          </button>
+<button class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded font-medium text-slate-700 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-white px-1 py-0.2 rounded border border-slate-300 text-slate-900">F7</kbd> Recall
+          </button>
+<button class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded font-medium text-slate-700 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-white px-1 py-0.2 rounded border border-slate-300 text-slate-900">F8</kbd> Subsidy
+          </button>
+<button class="px-2 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded font-medium flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-slate-700 px-1 py-0.2 rounded border border-slate-600 text-white">F9</kbd> Dispense
+          </button>
+<button class="px-2 py-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded font-medium text-slate-600 flex items-center gap-1 text-[11px]" type="button">
+<kbd class="font-mono font-bold bg-slate-100 px-1 py-0.2 rounded border border-slate-200 text-slate-700">Esc</kbd> Clear
+          </button>
+</div>
+</div>
+</div>
+<!-- MAIN TWO-COLUMN LAYOUT -->
+<div class="flex-1 grid grid-cols-12 gap-3 min-h-0">
+<!-- LEFT REGION: Patient Details + Prescription Basket (Cols: 9) -->
+<section class="col-span-12 xl:col-span-9 flex flex-col gap-3 min-h-0">
+<!-- COMPONENT A: Department Requisition Context Header -->
+<div class="bg-white rounded-md border border-slate-300 shadow-xs shrink-0 overflow-hidden" data-purpose="patient-welfare-header">
+<!-- Mode Selection Segment Tabs -->
+<div class="flex items-center justify-between border-b border-slate-300 bg-slate-100 px-3 py-2">
+<div class="flex items-center space-x-2">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mr-1">Billing Mode:</span>
+<button class="px-2.5 py-1 text-xs font-semibold rounded bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 flex items-center space-x-1.5 transition" type="button">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="">1. Welfare / Zakat Beneficiary</span>
+</button>
+<button class="px-2.5 py-1 text-xs font-semibold rounded bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 flex items-center space-x-1.5 transition" type="button">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="">2. Private / Regular Walk-In</span>
+</button>
+<button class="px-2.5 py-1 text-xs font-semibold rounded bg-slate-800 text-white shadow-xs flex items-center space-x-1.5 border border-slate-900" type="button">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+<span class="">3. Hospital Dept Requisition (OT / Dialysis / ER / ICU)</span>
+<span class="text-[10px] font-mono bg-slate-700 px-1 rounded text-slate-200">F5</span>
+</button>
+</div>
+<div class="flex items-center space-x-2 text-[11px] text-slate-500">
+<span class="font-mono">Slip Type: <strong class="text-slate-800 font-semibold">Internal Department Issue / Indent Slip</strong></span>
+<span class="text-slate-300">|</span>
+<span class="text-purple-800 font-bold bg-purple-50 border border-purple-300 px-2 py-0.5 rounded text-[10px] font-mono">Cost-Center Transfer</span>
+</div>
+</div>
+<!-- Adaptive Requisition Context Grid -->
+<div class="p-3"><div class="space-y-2.5"><div class="grid grid-cols-1 md:grid-cols-12 gap-2.5 items-end"><div class="md:col-span-3"><label class="block text-[11px] font-bold text-slate-700 uppercase tracking-tight mb-1">Charge this sale to</label><select class="block w-full py-1.5 px-2 text-xs font-semibold bg-slate-50 border border-slate-300 rounded focus:ring-1 focus:ring-slate-800 focus:border-slate-800 text-slate-800"><option>The customer at the counter</option><option selected="">Laboratory — on account</option><option>Emergency — on account</option><option>Ward / IPD — on account</option><option>Operating Theatre — on account</option><option>Dialysis Unit — on account</option><option>Administration — on account</option></select></div><div class="md:col-span-3"><label class="block text-[11px] font-bold text-slate-700 uppercase tracking-tight mb-1">Collected by *</label><input class="block w-full py-1.5 px-2.5 text-xs font-medium border border-slate-300 rounded focus:ring-1 focus:ring-slate-800 focus:border-slate-800 placeholder-slate-400 bg-white" placeholder="Who is taking it" type="text" value="Staff Nurse Farzana (HWT-NUR-041)"></div><div class="md:col-span-2"><label class="block text-[11px] font-bold text-slate-700 uppercase tracking-tight mb-1">Their mobile</label><input class="block w-full py-1.5 px-2.5 text-xs font-mono font-medium border border-slate-300 rounded focus:ring-1 focus:ring-slate-800 focus:border-slate-800 placeholder-slate-400 bg-white" placeholder="03xx-xxxxxxx" type="text" value="0301-5582914"></div><div class="md:col-span-2"><label class="block text-[11px] font-bold text-slate-700 uppercase tracking-tight mb-1">Patient / ward / bed</label><input class="block w-full py-1.5 px-2.5 text-xs font-medium border border-slate-300 rounded focus:ring-1 focus:ring-slate-800 focus:border-slate-800 placeholder-slate-400 bg-white" placeholder="Optional" type="text" value="Bed #04 - Dialysis"></div><div class="md:col-span-2"><label class="block text-[11px] font-bold text-slate-700 uppercase tracking-tight mb-1">Slip serial</label><input class="block w-full py-1.5 px-2.5 text-xs font-mono font-medium border border-slate-300 rounded focus:ring-1 focus:ring-slate-800 focus:border-slate-800 placeholder-slate-400 bg-white" placeholder="Slip serial" type="text" value="IND-2026-0909-08"></div></div><div class="bg-slate-50 border border-slate-200 rounded px-3 py-2 flex items-center justify-between text-xs text-slate-700"><div class="flex items-center space-x-2"><svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span class="">Billed to <strong class="font-bold text-slate-900">Laboratory</strong> on account at cost price. No money is taken now and the cash drawer is not touched — the amount goes on the department's account and appears in hospital expense.</span></div><span class="font-mono text-[10px] text-purple-800 bg-purple-50 border border-purple-300 px-2 py-0.5 rounded font-bold uppercase tracking-wider shrink-0">Internal Expense Ledger</span></div></div></div>
+</div>
+<!-- COMPONENT B: Classic Clinical Active Dispensing Table -->
+<div class="flex-1 bg-white rounded-md border border-slate-300 shadow-xs flex flex-col min-h-0 overflow-hidden" data-purpose="cart-table-card">
+<!-- Table Bar Header -->
+<div class="px-3 py-2 bg-slate-100 border-b border-slate-300 flex items-center justify-between shrink-0">
+<div class="flex items-center space-x-2">
+<span class="text-xs font-bold text-slate-800 uppercase tracking-tight">Active Indent Items</span>
+<span class="text-xs font-mono font-semibold text-slate-600 bg-white border border-slate-300 px-1.5 py-0.2 rounded">3 Lines • 31 Units</span>
+<span class="text-xs text-slate-400">|</span>
+<span class="text-xs font-mono text-slate-500">Requisition Voucher: IND-2026-0909-08</span>
+</div>
+<div class="flex items-center space-x-2 text-xs">
+<button class="text-slate-600 hover:text-rose-700 flex items-center gap-1 font-medium transition" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Clear Items [Esc]</span>
+</button>
+</div>
+</div>
+<!-- Table Body Container -->
+<div class="flex-1 overflow-y-auto min-h-0">
+<table class="w-full text-left text-xs border-collapse" id="pos-items-table">
+<thead class="bg-slate-50 text-slate-700 uppercase tracking-wider font-semibold text-[11px] border-b border-slate-200 sticky top-0 z-10 select-none">
+<tr>
+<th class="py-2 pl-3 pr-1 text-center w-8">#</th>
+<th class="py-2 px-2.5">Medicine Name &amp; Formulation</th>
+<th class="py-2 px-2.5">Batch &amp; Expiry</th>
+<th class="py-2 px-2.5 text-center">Available Stock</th>
+<th class="py-2 px-2.5 text-center w-36">Dispense Qty</th>
+<th class="py-2 px-2.5 text-right">Unit Cost</th>
+<th class="py-2 px-2.5 text-right">Dept Allocation</th>
+<th class="py-2 px-2.5 text-right font-bold">Line Total</th>
+<th class="py-2 pr-3 pl-1 text-center w-8">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 font-normal">
+<!-- Row 1: Amoxicillin (Standard Item) -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="py-2 pl-3 pr-1 text-center font-mono text-slate-500 font-semibold text-[11px]">01</td>
+<td class="py-2 px-2.5">
+<div class="font-bold text-slate-900 text-xs">Amoxicillin 500mg</div>
+<div class="text-[10px] text-slate-500">Capsule • 10/strip (GSK) • Reg: 018442 <span class="font-mono text-slate-600 bg-slate-100 px-1 border border-slate-200 rounded">Rx / Antibiotic</span></div>
+</td>
+<td class="py-2 px-2.5 whitespace-nowrap">
+<span class="font-mono font-semibold text-slate-800">B# 4490</span>
+<div class="text-[10px] font-mono text-slate-600">Exp: 11/2027</div>
+</td>
+<td class="py-2 px-2.5 text-center whitespace-nowrap font-mono text-slate-700">
+                    140 cap
+                  </td>
+<td class="py-2 px-2.5">
+<div class="flex items-center justify-center space-x-1">
+<button class="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center" type="button">-</button>
+<input class="w-10 h-6 text-center font-mono font-bold text-xs bg-white border border-slate-300 rounded p-0 focus:ring-1 focus:ring-slate-800" type="text" value="2">
+<button class="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center" type="button">+</button>
+<span class="text-[10px] text-slate-500 ml-0.5">Strips</span>
+</div>
+</td>
+<td class="py-2 px-2.5 text-right font-mono text-slate-800">
+                    Rs 80.00 <span class="text-[10px] text-slate-400 block font-sans">/ strip</span>
+</td>
+<td class="py-2 px-2.5 text-right font-mono text-slate-600">
+                    Charge CC-704 <span class="text-[9px] text-slate-400 block font-sans">(Dialysis Unit)</span>
+</td>
+<td class="py-2 px-2.5 text-right font-mono font-bold text-slate-900 text-xs">
+                    Rs 160.00
+                  </td>
+<td class="py-2 pr-3 pl-1 text-center">
+<button class="text-slate-400 hover:text-rose-600 p-0.5" title="Remove line" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</td>
+</tr>
+<!-- Row 2: Flygel (Near Expiry Alert - quiet clinical warning) -->
+<tr class="hover:bg-slate-50 transition-colors bg-amber-50/30">
+<td class="py-2 pl-3 pr-1 text-center font-mono text-slate-500 font-semibold text-[11px]">02</td>
+<td class="py-2 px-2.5">
+<div class="font-bold text-slate-900 text-xs flex items-center space-x-1.5">
+<span class="">Flygel 2000</span>
+<span class="text-[9px] font-semibold text-amber-900 bg-amber-100 border border-amber-300 px-1 py-0.2 rounded">Near Expiry</span>
+</div>
+<div class="text-[10px] text-slate-500">Tablet • Metronidazole • Generic Pharma <span class="font-mono text-slate-600 bg-slate-100 px-1 border border-slate-200 rounded">Prescription</span></div>
+</td>
+<td class="py-2 px-2.5 whitespace-nowrap">
+<span class="font-mono font-semibold text-slate-800">B# 1226</span>
+<div class="text-[10px] font-mono text-amber-800 font-semibold">Exp: 09/2026 (21d)</div>
+</td>
+<td class="py-2 px-2.5 text-center whitespace-nowrap font-mono text-slate-700">
+                    1,200 tab
+                  </td>
+<td class="py-2 px-2.5">
+<div class="flex items-center justify-center space-x-1">
+<button class="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center" type="button">-</button>
+<input class="w-10 h-6 text-center font-mono font-bold text-xs bg-white border border-slate-300 rounded p-0 focus:ring-1 focus:ring-slate-800" type="text" value="1">
+<button class="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center" type="button">+</button>
+<span class="text-[10px] text-slate-500 ml-0.5">Strip</span>
+</div>
+</td>
+<td class="py-2 px-2.5 text-right font-mono text-slate-800">
+                    Rs 50.00 <span class="text-[10px] text-slate-400 block font-sans">/ strip</span>
+</td>
+<td class="py-2 px-2.5 text-right font-mono text-slate-600">
+                    Charge CC-704 <span class="text-[9px] text-slate-400 block font-sans">(Dialysis Unit)</span>
+</td>
+<td class="py-2 px-2.5 text-right font-mono font-bold text-slate-900 text-xs">
+                    Rs 50.00
+                  </td>
+<td class="py-2 pr-3 pl-1 text-center">
+<button class="text-slate-400 hover:text-rose-600 p-0.5" title="Remove line" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</td>
+</tr>
+<!-- Row 3: Panadol 500mg (OTC) -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="py-2 pl-3 pr-1 text-center font-mono text-slate-500 font-semibold text-[11px]">03</td>
+<td class="py-2 px-2.5">
+<div class="font-bold text-slate-900 text-xs">Panadol 500mg</div>
+<div class="text-[10px] text-slate-500">Paracetamol • OTC Analgesic • GS Brand <span class="font-mono text-slate-600 bg-slate-100 px-1 border border-slate-200 rounded">OTC</span></div>
+</td>
+<td class="py-2 px-2.5 whitespace-nowrap">
+<span class="font-mono font-semibold text-slate-800">B# 8812</span>
+<div class="text-[10px] font-mono text-slate-600">Exp: 05/2028</div>
+</td>
+<td class="py-2 px-2.5 text-center whitespace-nowrap font-mono text-slate-700">
+                    850 tab
+                  </td>
+<td class="py-2 px-2.5">
+<div class="flex items-center justify-center space-x-1">
+<button class="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center" type="button">-</button>
+<input class="w-10 h-6 text-center font-mono font-bold text-xs bg-white border border-slate-300 rounded p-0 focus:ring-1 focus:ring-slate-800" type="text" value="1">
+<button class="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center" type="button">+</button>
+<span class="text-[10px] text-slate-500 ml-0.5">Strip</span>
+</div>
+</td>
+<td class="py-2 px-2.5 text-right font-mono text-slate-800">
+                    Rs 30.00 <span class="text-[10px] text-slate-400 block font-sans">/ strip</span>
+</td>
+<td class="py-2 px-2.5 text-right font-mono text-slate-600">
+                    Charge CC-704 <span class="text-[9px] text-slate-400 block font-sans">(Dialysis Unit)</span>
+</td>
+<td class="py-2 px-2.5 text-right font-mono font-bold text-slate-900 text-xs">
+                    Rs 30.00
+                  </td>
+<td class="py-2 pr-3 pl-1 text-center">
+<button class="text-slate-400 hover:text-rose-600 p-0.5" title="Remove line" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</td>
+</tr>
+<!-- Prompt Row Ready For Scanner -->
+<tr class="bg-slate-50/60 font-mono text-xs text-slate-500">
+<td class="py-2 text-center text-slate-400 font-bold">»</td>
+<td class="py-2 px-2.5 italic" colspan="8">
+                    Scan or enter item barcode to append to internal requisition...
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Classic Bottom Status Strip -->
+<div class="px-3 py-2 bg-slate-100 border-t border-slate-300 flex items-center justify-between text-xs text-slate-600 shrink-0"><div class="flex items-center space-x-4">
+<span class="">Lines: <strong class="font-mono text-slate-900">3</strong></span>
+<span class="">Total Units: <strong class="font-mono text-slate-900">31</strong> (20 caps + 11 tabs)</span>
+<span class="text-slate-300">|</span>
+<span class="text-slate-600 text-[11px]">Mode: <strong class="text-slate-800">Internal Dept Indent (Zero Cash Transfer)</strong></span>
+<span class="text-slate-300">|</span>
+<span class="text-slate-600 text-[11px]">Validation: <span class="font-medium text-emerald-800">Schedule G Internal Requisition Approved</span></span>
+</div>
+<div class="text-[11px] font-mono text-slate-500">
+  Tax Exempt (Hospital Internal Transfer - Hope Welfare Trust)
+</div></div>
+</div>
+</section>
+<!-- RIGHT REGION: Production Settlement, Financials & Checkout (Cols: 3) -->
+<section class="col-span-12 xl:col-span-3 flex flex-col gap-3 min-h-0" data-purpose="checkout-sidebar">
+<div class="bg-white rounded-md border border-slate-300 p-3 shadow-xs flex flex-col justify-between flex-1 overflow-y-auto space-y-3">
+<div class="space-y-3">
+<!-- Financial Primary Net Display - Zero Cash Patient Payable -->
+<div class="bg-slate-900 text-white rounded p-3 border border-slate-800 shadow-inner">
+<div class="flex justify-between items-center text-[11px] text-slate-400 uppercase tracking-wider font-semibold">
+<span class="">PATIENT CASH PAYABLE</span>
+<span class="font-mono text-emerald-400 bg-slate-800 px-1.5 py-0.2 rounded border border-slate-700 font-bold">ZERO CASH</span>
+</div>
+<!-- Large Clear Number -->
+<div class="text-3xl font-black font-mono tracking-tight text-white mt-1 flex items-baseline justify-between">
+<span class="text-lg text-slate-400 font-sans font-normal">Rs</span>
+<span class="text-3xl text-emerald-400">0.00</span>
+</div>
+<!-- Breakdown Ledger -->
+<div class="mt-2.5 pt-2 border-t border-slate-800 text-xs space-y-1 font-mono text-slate-300"><div class="flex justify-between"><span class="text-slate-400 font-sans">Billed at Cost Price:</span><span class="">Rs 240.00</span></div><div class="flex justify-between text-emerald-400"><span class="font-sans">Charged to Dept Ledger:</span><span class="">- Rs 240.00</span></div><div class="flex justify-between text-slate-400"><span class="font-sans">Cash Drawer Status:</span><span class="font-sans text-[11px] text-slate-300">Untouched (Rs 0.00)</span></div><div class="flex justify-between text-slate-400 pt-1 border-t border-slate-800"><span class="font-sans text-[10px] text-slate-400">Ledger Account:</span><span class="text-[10px] text-slate-300">Hospital Expense (CC-704)</span></div></div>
+</div>
+<!-- Payment Mode Standard Segment -->
+<div>
+<label class="block text-[11px] font-bold uppercase tracking-tight text-slate-700 mb-1">
+                Settlement Channel
+              </label>
+<div class="grid grid-cols-2 gap-1 text-xs">
+<button class="py-2 px-2 rounded bg-slate-800 text-white font-semibold text-center border border-slate-900 flex items-center justify-center space-x-1 shadow-xs col-span-2" type="button">
+<span class="">Dept Ledger (Zero Cash)</span>
+<span class="text-[9px] font-mono text-emerald-300 font-bold bg-slate-700 px-1.5 py-0.2 rounded">CC-704 Active</span>
+</button>
+<button class="py-1.5 px-2 rounded bg-slate-100 text-slate-400 font-medium text-center border border-slate-200 cursor-not-allowed opacity-70" disabled="" type="button">
+<span class="">Cash (Patient)</span>
+</button>
+<button class="py-1.5 px-2 rounded bg-slate-100 text-slate-400 font-medium text-center border border-slate-200 cursor-not-allowed opacity-70" disabled="" type="button">
+<span class="">JazzCash / QR</span>
+</button>
+</div>
+</div>
+<!-- Department Requisition Summary in place of Tender/Calculator -->
+<div class="bg-slate-50 border border-slate-200 rounded p-3 space-y-2 text-xs">
+<div class="flex justify-between items-center border-b border-slate-200 pb-1.5">
+<span class="text-[11px] font-bold text-slate-700 uppercase tracking-tight">Requisition Summary</span>
+<span class="text-[10px] font-mono text-slate-500">2 Print Copies</span>
+</div>
+<div class="space-y-1.5 text-[11px] font-mono"><div class="flex justify-between text-slate-600"><span class="text-slate-500 font-sans">Charge To:</span><span class="font-bold text-slate-900">Laboratory (On Account)</span></div><div class="flex justify-between text-slate-600"><span class="text-slate-500 font-sans">Slip Serial #:</span><span class="font-bold text-slate-900">IND-2026-0909-08</span></div><div class="flex justify-between text-slate-600"><span class="text-slate-500 font-sans">Collected By:</span><span class="text-slate-800 font-medium">Staff Nurse Farzana</span></div><div class="flex justify-between text-slate-600"><span class="text-slate-500 font-sans">Mobile Contact:</span><span class="text-slate-800 font-mono">0301-5582914</span></div><div class="flex justify-between text-slate-600"><span class="text-slate-500 font-sans">Patient / Bed:</span><span class="text-slate-800 font-medium">Bed #04 - Dialysis</span></div><div class="flex justify-between text-slate-600 pt-1 border-t border-slate-200/80"><span class="text-slate-500 font-sans">Valuation Basis:</span><span class="text-emerald-700 font-bold">Hospital Cost Price</span></div></div>
+</div>
+<!-- Authorization Status Container -->
+<div class="bg-slate-50 border border-slate-300 rounded p-2.5">
+<div class="flex justify-between items-center text-[10px] font-bold text-slate-700 uppercase">
+<span class="">Authorization Status</span>
+<span class="font-mono bg-emerald-100 border border-emerald-300 px-1 py-0.2 rounded text-[10px] text-emerald-800 font-semibold">APPROVED</span>
+</div>
+<div class="text-xs font-mono font-bold text-slate-800 mt-1 flex items-center space-x-1.5">
+<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">AUDIT LOGGED &amp; VERIFIED</span>
+</div>
+</div>
+</div>
+<!-- Checkout CTAs -->
+<div class="mt-3 pt-2.5 border-t border-slate-200 space-y-2">
+<!-- Primary Action: Solid Production Complete Button -->
+<button class="w-full py-2.5 px-3 bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white rounded font-bold text-sm flex items-center justify-between transition shadow-xs" type="button">
+<span class="flex items-center gap-1.5">
+<svg class="w-4 h-4 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">DISPENSE &amp; PRINT DEPT VOUCHERS</span>
+</span>
+<kbd class="bg-slate-700 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-slate-600">F9</kbd>
+</button>
+<!-- Secondary Actions -->
+<div class="grid grid-cols-2 gap-1.5">
+<button class="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center space-x-1" type="button">
+<span class="">Hold Indent</span>
+<kbd class="text-[9px] font-mono bg-white px-1 border border-slate-300 rounded text-slate-500">F6</kbd>
+</button>
+<button class="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center space-x-1" type="button">
+<span class="">Cancel Requisition</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- ========================================================================= -->
+<!-- 3. PRODUCTION FOOTER: System Status & Hotkey Reference                    -->
+<!-- ========================================================================= -->
+<footer class="bg-slate-900 text-slate-400 text-xs px-4 py-1 border-t border-slate-800 flex items-center justify-between shrink-0 font-medium select-none z-20" data-purpose="offline-resilience-footer">
+<div class="flex items-center space-x-3 text-[11px]">
+<div class="flex items-center space-x-1.5 text-slate-300">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-semibold">Local SQLite DB Synced</span>
+</div>
+<span class="text-slate-700">•</span>
+<span class="font-mono text-slate-400">Queue: <strong class="text-slate-200">0</strong> pending</span>
+<span class="text-slate-700">•</span>
+<span class="text-slate-400">Drug Database Rev: <span class="font-mono text-slate-200">2026.09.01</span></span>
+</div>
+<div class="flex items-center space-x-4 text-[11px]">
+<div class="font-mono text-slate-400">
+        Today's Total Sales: <strong class="text-slate-100">PKR 48,250.00</strong> (41 Slips)
+      </div>
+<span class="text-slate-700">•</span>
+<div class="text-slate-400">
+        Build: <span class="font-mono text-slate-300">v4.3-clinical</span>
+</div>
+</div>
+</footer>
+<!-- ========================================================================= -->
+<!-- 4. KEYBOARD SHORTCUTS CONTROLLER                                          -->
+<!-- ========================================================================= -->
+<script data-purpose="keyboard-shortcuts">
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'F2') {
+        event.preventDefault();
+        const searchInput = document.querySelector('input[placeholder*="Scan Barcode"]');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      } else if (event.key === 'F4') {
+        event.preventDefault();
+        const tenderInput = document.querySelector('input[type="number"]');
+        if (tenderInput) {
+          tenderInput.focus();
+          tenderInput.select();
+        }
+      } else if (event.key === 'F9') {
+        event.preventDefault();
+        // Trigger complete sale action
+        console.info('Initiating print on Citizen Thermal POS printer...');
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        const searchInput = document.querySelector('input[placeholder*="Scan Barcode"]');
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
+      }
+    });
+  </script>
+
+
+</body></html>

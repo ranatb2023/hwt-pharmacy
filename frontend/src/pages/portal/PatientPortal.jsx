@@ -38,7 +38,7 @@ export default function PatientPortal() {
           </div>
         )}
         {data && (
-          <div className="grid cols-2">
+          <div className="gx cols-2">
             <Section title="Consultations" rows={data.consultations} cols={['created_at', 'diagnosis', 'complaint']} labels={['Date', 'Diagnosis', 'Complaint']} />
             <Section title="Prescriptions" rows={data.prescriptions} cols={['medicine_name', 'dosage', 'frequency', 'duration']} labels={['Medicine', 'Dosage', 'Frequency', 'Duration']} />
             <Section title="Lab Results" rows={data.lab} cols={['test_name', 'result_value', 'status', 'report_path']} labels={['Test', 'Result', 'Status', 'Report']}

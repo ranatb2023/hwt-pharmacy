@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy Admin - Cash Flow, Float &amp; Till Sessions Workstation</title>
+<!-- Tailwind CSS CDN with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5fa',
+              100: '#e1ecf5',
+              600: '#005bb5',
+              700: '#0b3975',
+              800: '#0f2d59',
+              900: '#0b1f3b',
+              950: '#061325',
+            },
+            emerald: {
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            },
+            slate: {
+              850: '#152033',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Menlo', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="base-layout">
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f3f5f9;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-tabular {
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+    /* Custom compact scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden bg-[#f3f5f9] text-slate-800 text-[13px]">
+<!-- BEGIN: ApplicationLayout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- BEGIN: MainSidebar -->
+<aside class="w-64 bg-[#0b1f3b] text-slate-300 flex flex-col justify-between shrink-0 select-none border-r border-slate-800 z-20">
+<div class="flex flex-col h-full">
+<!-- Logo & LAN Status Badge -->
+<div class="p-4 border-b border-slate-800 bg-[#08172c]">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+</div>
+<div>
+<div class="text-white font-bold tracking-tight text-sm uppercase leading-tight">Hope Welfare</div>
+<div class="text-[10px] text-blue-300 font-medium tracking-wider uppercase">Trust Hospital &amp; Pharmacy</div>
+</div>
+</div>
+<div class="mt-3 flex items-center justify-between text-[11px] bg-slate-900/80 px-2.5 py-1.5 rounded border border-slate-800 font-mono">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="text-slate-300 text-[10.5px]">LAN CORE: 192.168.1.10</span>
+</div>
+<span class="text-emerald-400 font-semibold text-[10px]">NODE 01 OK</span>
+</div>
+</div>
+<!-- Scrollable Navigation Menus -->
+<nav class="flex-1 overflow-y-auto px-3 py-3 space-y-4 text-xs font-medium">
+<!-- Section: Executive -->
+<div>
+<div class="px-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Executive</div>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Executive Dashboard</span>
+</a>
+</div>
+<!-- Section: Clinical Operations -->
+<div>
+<div class="px-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Clinical Operations</div>
+<div class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Pharmacy Counter (POS)</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Day-End Close &amp; Z-Report</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Inventory &amp; Stock Control</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Department Indents</span>
+</a>
+</div>
+</div>
+<!-- Section: Patients & Welfare -->
+<div>
+<div class="px-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Patients &amp; Welfare</div>
+<div class="space-y-0.5">
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<div class="flex items-center gap-2.5">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Customers &amp; Cards</span>
+</div>
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Credit Accounts &amp; Pledges</span>
+</a>
+</div>
+</div>
+<!-- Section: Finance & Billing -->
+<div>
+<div class="px-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Finance &amp; Billing</div>
+<div class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Clinical Invoicing</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Returns &amp; Refunds</span>
+</a>
+<!-- Active Item: Cash Flow & Till Sessions -->
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded-md bg-blue-600 text-white font-semibold shadow-sm" href="#">
+<div class="flex items-center gap-2.5">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Cash Flow &amp; Till Sessions</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+</a>
+</div>
+</div>
+<!-- Section: Administration -->
+<div>
+<div class="px-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Administration</div>
+<div class="space-y-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Subsidy Audit Reports</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-slate-800 text-slate-300" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>System Settings &amp; Sync</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Bottom User Profile Component -->
+<div class="p-3 border-t border-slate-800 bg-[#08172c] flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-xs">
+              SA
+            </div>
+<div>
+<div class="text-xs font-semibold text-white leading-tight">System Administrator</div>
+<div class="text-[10px] text-emerald-400 font-medium">● Governance Lvl 4</div>
+</div>
+</div>
+<button class="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded" title="Sign out">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</aside>
+<!-- END: MainSidebar -->
+<!-- BEGIN: MainContentArea -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f3f5f9]">
+<!-- BEGIN: TopBar -->
+<header class="h-14 bg-white border-b border-slate-200 px-5 flex items-center justify-between shrink-0 shadow-sm z-10">
+<!-- Breadcrumb & Workspace Title -->
+<div class="flex items-center gap-3">
+<div class="flex items-center text-xs text-slate-500 font-medium gap-1.5">
+<span>Finance &amp; Billing</span>
+<span class="text-slate-400">›</span>
+<span class="text-slate-800 font-semibold">Cash Flow, Float &amp; Till Sessions</span>
+</div>
+<span class="h-4 w-[1px] bg-slate-200 mx-1"></span>
+<!-- DRAP Reg Tag -->
+<div class="flex items-center gap-1.5 bg-blue-50 text-blue-800 px-2 py-0.5 rounded text-[11px] font-mono font-medium border border-blue-200">
+<span>DRAP REG:</span>
+<span class="font-bold">02914-HWT/P</span>
+</div>
+</div>
+<!-- Telemetry Tags & Quick Action Keys -->
+<div class="flex items-center gap-2.5">
+<!-- Hardware Status Pills -->
+<div class="hidden xl:flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-medium font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Till 01 &amp; 02 Synced
+            </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[11px] font-medium font-mono">
+<svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Citizen POS-80 USB
+            </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-medium font-mono">
+              Form 9 Compliant
+            </span>
+</div>
+<span class="h-4 w-[1px] bg-slate-200 mx-0.5"></span>
+<!-- Workstation Action Buttons -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-medium shadow-sm transition-colors">
+<span class="font-mono text-[10px] bg-blue-700/80 px-1 py-0.5 rounded font-bold">[F2]</span>
+<span>New Till Session</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-medium border border-slate-200 transition-colors" title="Print Current Float Audit Slip">
+<svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="font-mono text-[10px] text-slate-500 font-bold">[Ctrl+P]</span>
+</button>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- BEGIN: ScrollableDashboardArea -->
+<div class="flex-1 overflow-y-auto p-4 space-y-3.5">
+<!-- BEGIN: KeyMetricsBar -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3" data-purpose="kpi-metrics-bar">
+<!-- Card 1: Active Till Drawers -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Active Till Drawers</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                ONLINE
+              </span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-2xl font-black text-slate-900 font-tabular tracking-tight">02</span>
+<span class="text-xs text-slate-500 font-medium">Drawers Active</span>
+</div>
+<div class="mt-2 text-[11px] text-slate-600 flex justify-between border-t border-slate-100 pt-1.5 font-mono">
+<span>Till 01 (OPD): <strong class="text-slate-800 font-semibold">Rs. 54,200</strong></span>
+<span>Till 02: <strong class="text-slate-800 font-semibold">Rs. 43,280</strong></span>
+</div>
+</div>
+<!-- Card 2: Day Net Cash Collected -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Day Net Cash Collected</span>
+<span class="p-1 rounded bg-blue-50 text-blue-600">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="text-xs font-semibold text-slate-500">PKR</span>
+<span class="text-2xl font-black text-blue-700 font-tabular tracking-tight">92,480</span>
+</div>
+<div class="mt-2 text-[11px] text-slate-500 flex justify-between border-t border-slate-100 pt-1.5">
+<span>Gross: <strong class="text-slate-700 font-tabular">Rs. 98,120</strong></span>
+<span class="text-rose-600 font-semibold font-tabular">Refunds: -Rs. 5,640</span>
+</div>
+</div>
+<!-- Card 3: Opening Floats Total -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Assigned Base Floats</span>
+<span class="p-1 rounded bg-purple-50 text-purple-600">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="text-xs font-semibold text-slate-500">PKR</span>
+<span class="text-2xl font-black text-slate-900 font-tabular tracking-tight">10,000</span>
+</div>
+<div class="mt-2 text-[11px] text-slate-600 flex justify-between border-t border-slate-100 pt-1.5 font-mono">
+<span>Till 01: <strong>Rs. 5,000</strong></span>
+<span>Till 02: <strong>Rs. 5,000</strong></span>
+</div>
+</div>
+<!-- Card 4: Cash Variance & Audits -->
+<div class="bg-white rounded-lg p-3.5 border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Audited Till Variance</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                100% BALANCED
+              </span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="text-xs font-semibold text-emerald-600">PKR</span>
+<span class="text-2xl font-black text-emerald-600 font-tabular tracking-tight">0.00</span>
+</div>
+<div class="mt-2 text-[11px] text-slate-500 flex justify-between border-t border-slate-100 pt-1.5">
+<span>Closed Shifts: <strong class="text-slate-800">4 Audited</strong></span>
+<span class="text-emerald-700 font-semibold font-mono">0 Short / 0 Excess</span>
+</div>
+</div>
+</section>
+<!-- END: KeyMetricsBar -->
+<!-- BEGIN: MainWorkspaceSplitLayout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-3.5 items-start">
+<!-- LEFT COLUMN: Quick Float Opener & Sessions Ledger (7 Cols) -->
+<div class="xl:col-span-7 space-y-3.5">
+<!-- Quick Open Till Session Form Card -->
+<section class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden" data-purpose="open-session-card">
+<div class="bg-slate-50/80 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+<h2 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Open New Cash Session / Dispatch Float</h2>
+</div>
+<span class="text-[11px] text-slate-500 font-mono">Terminal #POS-01</span>
+</div>
+<div class="p-4 space-y-3">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<!-- Select Counter -->
+<div>
+<label class="block text-[11px] font-semibold text-slate-600 uppercase mb-1">Counter Terminal</label>
+<select class="w-full text-xs rounded border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white font-medium">
+<option value="1">Counter 1 - OPD Pharmacy</option>
+<option value="2">Counter 2 - Emergency / Night</option>
+<option value="3">Counter 3 - Inpatient Ward Dispense</option>
+</select>
+</div>
+<!-- Select Staff User -->
+<div>
+<label class="block text-[11px] font-semibold text-slate-600 uppercase mb-1">Duty Cashier / Pharmacist</label>
+<select class="w-full text-xs rounded border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white font-medium">
+<option value="rehana">Rehana Kausar (Staff Reg: 4410)</option>
+<option value="tariq">Tariq Mehmood (R-Pharm)</option>
+<option value="farooq">Muhammad Farooq (Cashier)</option>
+<option value="zubaida">Zubaida Bibi (Junior Dispenser)</option>
+</select>
+</div>
+<!-- Select Shift -->
+<div>
+<label class="block text-[11px] font-semibold text-slate-600 uppercase mb-1">Operating Shift</label>
+<select class="w-full text-xs rounded border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white font-medium">
+<option value="morning">Morning Shift (08:00 - 16:00)</option>
+<option value="evening">Evening Shift (16:00 - 00:00)</option>
+<option value="night">Night Emergency (00:00 - 08:00)</option>
+</select>
+</div>
+</div>
+<!-- Opening Float Amount and Quick Selection Chips -->
+<div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<label class="block text-[11px] font-bold text-slate-700 uppercase">Opening Cash Float Amount (PKR)</label>
+<p class="text-[11px] text-slate-500">Physical change base loaded into till drawer prior to sales</p>
+</div>
+<!-- Quick Amount Chips -->
+<div class="flex items-center gap-1.5">
+<button class="px-2 py-1 text-xs font-semibold rounded bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-mono transition-colors" type="button">Rs. 2,000</button>
+<button class="px-2 py-1 text-xs font-bold rounded bg-blue-100 border border-blue-400 text-blue-800 font-mono shadow-xs" type="button">Rs. 5,000</button>
+<button class="px-2 py-1 text-xs font-semibold rounded bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-mono transition-colors" type="button">Rs. 10,000</button>
+</div>
+</div>
+<div class="mt-2.5 flex items-center gap-3">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 font-semibold text-xs">
+                        Rs.
+                      </div>
+<input class="block w-full pl-9 pr-3 py-1.5 text-sm font-bold text-slate-800 rounded border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-tabular" placeholder="Enter float amount" type="number" value="5000"/>
+</div>
+<button class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-bold tracking-wide uppercase shadow-sm transition-colors shrink-0 flex items-center gap-2">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Open Session</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent & Active Till Sessions Ledger Table Card -->
+<section class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden flex flex-col" data-purpose="sessions-ledger-card">
+<!-- Card Header with Filter Tabs -->
+<div class="px-4 py-3 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+<div>
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Till Sessions &amp; Shift Register</h3>
+<p class="text-[11px] text-slate-500">Real-time drawer balance reconciliation &amp; variance tracking</p>
+</div>
+<!-- Tabs -->
+<div class="flex items-center bg-slate-100 p-0.5 rounded border border-slate-200 text-[11px] font-medium">
+<button class="px-2.5 py-1 rounded bg-white text-blue-700 font-bold shadow-xs">All (14)</button>
+<button class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900">Active (2)</button>
+<button class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900">Closed Today (6)</button>
+<button class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900">Variance (0)</button>
+</div>
+</div>
+<!-- Sessions Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="bg-slate-50/90 text-slate-500 font-semibold text-[10.5px] uppercase border-b border-slate-200 tracking-wider">
+<th class="py-2.5 px-3">Counter</th>
+<th class="py-2.5 px-3">Cashier / Staff</th>
+<th class="py-2.5 px-2.5">Shift Window</th>
+<th class="py-2.5 px-3 text-right">Expected Drawer</th>
+<th class="py-2.5 px-3 text-right">Physically Counted</th>
+<th class="py-2.5 px-3 text-center">Variance</th>
+<th class="py-2.5 px-3 text-center">Status</th>
+<th class="py-2.5 px-3 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200">
+<!-- Row 1: Active Selected (Counter 1) -->
+<tr class="bg-blue-50/50 hover:bg-blue-50/80 transition-colors border-l-4 border-l-blue-600">
+<td class="py-2.5 px-3 font-semibold text-slate-900">
+                        Counter 1
+                        <span class="block text-[10px] text-slate-500 font-normal">OPD Main</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-medium text-slate-800">Rehana Kausar</div>
+<div class="text-[10px] text-slate-500 font-mono">STAFF-4410</div>
+</td>
+<td class="py-2.5 px-2.5 font-mono text-[11px] text-slate-600">
+<div>08:00 AM</div>
+<div class="text-[10px] text-emerald-600 font-semibold">Active Now</div>
+</td>
+<td class="py-2.5 px-3 text-right font-bold text-slate-900 font-tabular">
+                        Rs. 52,720
+                        <span class="block text-[10px] text-slate-500 font-normal">Float: Rs. 5,000</span>
+</td>
+<td class="py-2.5 px-3 text-right font-bold text-blue-700 font-tabular">
+                        Rs. 52,720
+                        <span class="block text-[10px] text-emerald-600 font-normal">Counting</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 font-mono">Rs. 0</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                          OPEN
+                        </span>
+</td>
+<td class="py-2.5 px-3 text-right">
+<button class="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-semibold transition-colors shadow-xs">
+                          Inspect
+                        </button>
+</td>
+</tr>
+<!-- Row 2: Active (Counter 2) -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-slate-800">
+                        Counter 2
+                        <span class="block text-[10px] text-slate-500 font-normal">ER / Night Till</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-medium text-slate-800">Tariq Mehmood</div>
+<div class="text-[10px] text-slate-500 font-mono">PMDC-18274</div>
+</td>
+<td class="py-2.5 px-2.5 font-mono text-[11px] text-slate-600">
+<div>08:30 AM</div>
+<div class="text-[10px] text-emerald-600 font-semibold">Active Now</div>
+</td>
+<td class="py-2.5 px-3 text-right font-bold text-slate-900 font-tabular">
+                        Rs. 43,280
+                        <span class="block text-[10px] text-slate-500 font-normal">Float: Rs. 5,000</span>
+</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-400 font-tabular">—</td>
+<td class="py-2.5 px-3 text-center font-mono text-slate-400 text-xs">—</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                          OPEN
+                        </span>
+</td>
+<td class="py-2.5 px-3 text-right">
+<button class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-semibold border border-slate-200 transition-colors">
+                          Close Shift
+                        </button>
+</td>
+</tr>
+<!-- Row 3: Closed (Earlier Morning) -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-3 font-medium text-slate-700">
+                        Counter 1
+                        <span class="block text-[10px] text-slate-500">OPD Night-A</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-medium text-slate-800">Muhammad Iqbal</div>
+<div class="text-[10px] text-slate-500 font-mono">STAFF-3309</div>
+</td>
+<td class="py-2.5 px-2.5 font-mono text-[11px] text-slate-500">
+<div>00:00 – 08:00</div>
+<div class="text-[10px] text-slate-400">Sep 09, 2026</div>
+</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-700 font-tabular">Rs. 68,400</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-700 font-tabular">Rs. 68,400</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">Rs. 0</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                          CLOSED
+                        </span>
+</td>
+<td class="py-2.5 px-3 text-right">
+<button class="text-blue-600 hover:text-blue-800 text-[11px] font-semibold" title="View Audit Slip">Audit Slip</button>
+</td>
+</tr>
+<!-- Row 4: Closed with Minor Variance (Yesterday) -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-3 font-medium text-slate-700">
+                        Counter 1
+                        <span class="block text-[10px] text-slate-500">OPD Evening</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-medium text-slate-800">Zubaida Bibi</div>
+<div class="text-[10px] text-slate-500 font-mono">STAFF-2811</div>
+</td>
+<td class="py-2.5 px-2.5 font-mono text-[11px] text-slate-500">
+<div>16:00 – 00:00</div>
+<div class="text-[10px] text-slate-400">Sep 08, 2026</div>
+</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-700 font-tabular">Rs. 45,200</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-700 font-tabular">Rs. 45,150</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200 font-mono">-Rs. 50</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                          CLOSED
+                        </span>
+</td>
+<td class="py-2.5 px-3 text-right">
+<button class="text-blue-600 hover:text-blue-800 text-[11px] font-semibold">Audit Slip</button>
+</td>
+</tr>
+<!-- Row 5: Closed Shift -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-3 font-medium text-slate-700">
+                        Counter 2
+                        <span class="block text-[10px] text-slate-500">Emergency</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-medium text-slate-800">Farooq Shah</div>
+<div class="text-[10px] text-slate-500 font-mono">STAFF-1102</div>
+</td>
+<td class="py-2.5 px-2.5 font-mono text-[11px] text-slate-500">
+<div>08:00 – 16:00</div>
+<div class="text-[10px] text-slate-400">Sep 08, 2026</div>
+</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-700 font-tabular">Rs. 32,800</td>
+<td class="py-2.5 px-3 text-right font-semibold text-slate-700 font-tabular">Rs. 32,800</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">Rs. 0</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                          CLOSED
+                        </span>
+</td>
+<td class="py-2.5 px-3 text-right">
+<button class="text-blue-600 hover:text-blue-800 text-[11px] font-semibold">Audit Slip</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="bg-slate-50 px-4 py-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+<span>Showing 1 to 5 of 14 sessions</span>
+<div class="flex items-center gap-2">
+<button class="px-2 py-0.5 rounded bg-white border border-slate-200 hover:bg-slate-100 text-slate-600 disabled:opacity-50">Prev</button>
+<span class="font-bold text-slate-800">Page 1 / 3</span>
+<button class="px-2 py-0.5 rounded bg-white border border-slate-200 hover:bg-slate-100 text-slate-600">Next</button>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Physical Cash Count & Denomination Deep Dive (5 Cols) -->
+<div class="xl:col-span-5 space-y-3.5">
+<section class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden flex flex-col" data-purpose="denomination-reconciliation-card">
+<!-- Card Header -->
+<div class="bg-[#0b1f3b] text-white px-4 py-3 flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-emerald-500 text-[10px] font-extrabold tracking-wider uppercase">Active Till 01</span>
+<h3 class="text-xs font-bold uppercase tracking-wide">Physical Cash Count &amp; Handover</h3>
+</div>
+<p class="text-[11px] text-slate-300 mt-0.5">Shift: Morning A • Cashier: Rehana Kausar</p>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-slate-400 uppercase font-mono block">Session Started</span>
+<span class="text-xs font-mono font-bold text-emerald-400">08:00:14 PKT</span>
+</div>
+</div>
+<!-- Mathematical Reconciliation Breakdown -->
+<div class="p-3.5 bg-blue-50/40 border-b border-slate-200 space-y-2">
+<div class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+<span>Cash Flow Formula</span>
+<span class="text-[10px] font-normal text-slate-500 font-mono">DRAP Cash Standard</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="bg-white p-2 rounded border border-slate-200">
+<span class="text-[10px] text-slate-500 block uppercase font-medium">Opening Float</span>
+<span class="font-bold text-slate-900 font-tabular text-sm">Rs. 5,000</span>
+</div>
+<div class="bg-white p-2 rounded border border-slate-200">
+<span class="text-[10px] text-slate-500 block uppercase font-medium">Gross Cash Inflow</span>
+<span class="font-bold text-emerald-600 font-tabular text-sm">+Rs. 49,200</span>
+</div>
+<div class="bg-white p-2 rounded border border-slate-200">
+<span class="text-[10px] text-slate-500 block uppercase font-medium">Refunds / Returns Out</span>
+<span class="font-bold text-rose-600 font-tabular text-sm">-Rs. 1,480</span>
+</div>
+<div class="bg-white p-2 rounded border border-slate-200">
+<span class="text-[10px] text-slate-500 block uppercase font-medium">Petty Expenses</span>
+<span class="font-bold text-slate-600 font-tabular text-sm">Rs. 0</span>
+</div>
+</div>
+<!-- Expected Drawer Net Target -->
+<div class="mt-2 pt-2 border-t border-blue-100 flex items-center justify-between">
+<span class="text-xs font-bold text-slate-800">Expected Physical Drawer Target:</span>
+<span class="text-base font-black text-blue-800 font-mono font-tabular">Rs. 52,720</span>
+</div>
+</div>
+<!-- Denomination Tally Table -->
+<div class="p-3.5 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Physical Pakistani Rupee (PKR) Denominations</span>
+<button class="text-[11px] text-blue-600 hover:text-blue-800 font-semibold">Zero All</button>
+</div>
+<table class="w-full text-xs font-tabular">
+<thead>
+<tr class="text-[10.5px] uppercase font-bold text-slate-400 border-b border-slate-200 text-left pb-1">
+<th class="pb-1.5">Note (PKR)</th>
+<th class="pb-1.5 text-center w-28">Note Count</th>
+<th class="pb-1.5 text-right">Subtotal</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+<!-- 5000 Note -->
+<tr>
+<td class="py-1.5 font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded bg-amber-600/80"></span>
+                        Rs. 5,000 Note
+                      </td>
+<td class="py-1.5 text-center">
+<input class="w-20 text-center font-bold text-xs py-1 rounded border-slate-300 focus:border-blue-500 focus:ring-0" type="number" value="6"/>
+</td>
+<td class="py-1.5 text-right font-bold font-mono text-slate-900">Rs. 30,000</td>
+</tr>
+<!-- 1000 Note -->
+<tr>
+<td class="py-1.5 font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded bg-blue-600/80"></span>
+                        Rs. 1,000 Note
+                      </td>
+<td class="py-1.5 text-center">
+<input class="w-20 text-center font-bold text-xs py-1 rounded border-slate-300 focus:border-blue-500 focus:ring-0" type="number" value="15"/>
+</td>
+<td class="py-1.5 text-right font-bold font-mono text-slate-900">Rs. 15,000</td>
+</tr>
+<!-- 500 Note -->
+<tr>
+<td class="py-1.5 font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded bg-emerald-600/80"></span>
+                        Rs. 500 Note
+                      </td>
+<td class="py-1.5 text-center">
+<input class="w-20 text-center font-bold text-xs py-1 rounded border-slate-300 focus:border-blue-500 focus:ring-0" type="number" value="10"/>
+</td>
+<td class="py-1.5 text-right font-bold font-mono text-slate-900">Rs. 5,000</td>
+</tr>
+<!-- 100 Note -->
+<tr>
+<td class="py-1.5 font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded bg-rose-600/80"></span>
+                        Rs. 100 Note
+                      </td>
+<td class="py-1.5 text-center">
+<input class="w-20 text-center font-bold text-xs py-1 rounded border-slate-300 focus:border-blue-500 focus:ring-0" type="number" value="23"/>
+</td>
+<td class="py-1.5 text-right font-bold font-mono text-slate-900">Rs. 2,300</td>
+</tr>
+<!-- 50 Note -->
+<tr>
+<td class="py-1.5 font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded bg-purple-600/80"></span>
+                        Rs. 50 Note
+                      </td>
+<td class="py-1.5 text-center">
+<input class="w-20 text-center font-bold text-xs py-1 rounded border-slate-300 focus:border-blue-500 focus:ring-0" type="number" value="6"/>
+</td>
+<td class="py-1.5 text-right font-bold font-mono text-slate-900">Rs. 300</td>
+</tr>
+<!-- 20 & 10 & Coins -->
+<tr>
+<td class="py-1.5 font-bold text-slate-800 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded bg-amber-700"></span>
+                        Rs. 20, 10 &amp; Coins
+                      </td>
+<td class="py-1.5 text-center">
+<input class="w-20 text-center font-bold text-xs py-1 rounded border-slate-300 focus:border-blue-500 focus:ring-0" type="number" value="12"/>
+</td>
+<td class="py-1.5 text-right font-bold font-mono text-slate-900">Rs. 120</td>
+</tr>
+</tbody>
+</table>
+<!-- Real-time Counted Total vs Expected Box -->
+<div class="p-3 bg-emerald-50 rounded-lg border border-emerald-300 flex items-center justify-between">
+<div>
+<span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block">Physical Count Total</span>
+<span class="text-xl font-black text-emerald-800 font-mono">Rs. 52,720</span>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block">Drawer Variance</span>
+<span class="inline-flex items-center gap-1 font-bold text-emerald-700 font-mono text-sm bg-white px-2 py-0.5 rounded border border-emerald-300">
+<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+                      Rs. 0.00 (Balanced)
+                    </span>
+</div>
+</div>
+<!-- Shift Handover Supervisor Verification -->
+<div class="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-2.5">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-slate-700 uppercase flex items-center gap-1">
+<svg class="w-3.5 h-3.5 text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" fill-rule="evenodd"></path></svg>
+                      Supervisor PMDC / PIN Verification
+                    </span>
+<span class="text-[10px] text-rose-600 font-bold uppercase">Mandatory</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div>
+<label class="block text-[10px] text-slate-500 font-medium mb-0.5">Duty Pharmacist PMDC#</label>
+<input class="w-full text-xs font-mono font-medium rounded bg-slate-100 border-slate-300 text-slate-700 py-1" readonly="" type="text" value="PMDC #18274-P"/>
+</div>
+<div>
+<label class="block text-[10px] text-slate-500 font-medium mb-0.5">Security PIN / Password</label>
+<input class="w-full text-xs font-mono font-bold rounded border-slate-300 focus:border-blue-500 py-1" type="password" value="••••••"/>
+</div>
+</div>
+</div>
+<!-- Final Action Buttons -->
+<div class="space-y-2 pt-1">
+<button class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded text-xs flex items-center justify-center gap-2 shadow-sm transition-colors">
+<span class="bg-blue-800/80 px-1 py-0.5 rounded text-[10px] font-mono">[F9]</span>
+<span>Reconcile Drawer &amp; Authorize Safe Drop</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded text-xs border border-slate-300 flex items-center justify-center gap-1.5 transition-colors">
+<svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Print Z-Report</span>
+</button>
+<button class="py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded text-xs border border-slate-300 flex items-center justify-center gap-1.5 transition-colors">
+<svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Transfer to Safe</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- END: MainWorkspaceSplitLayout -->
+</div>
+<!-- END: ScrollableDashboardArea -->
+<!-- BEGIN: TelemetryFooter -->
+<footer class="h-8 bg-[#0b1f3b] text-slate-400 text-[11px] px-4 flex items-center justify-between shrink-0 border-t border-slate-800 font-mono select-none" data-purpose="telemetry-footer">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="text-slate-300">SQLite Local DB: Synced (0.18ms)</span>
+</div>
+<span class="text-slate-600">|</span>
+<span>LAN: 192.168.10.45 [Master Server Online]</span>
+<span class="text-slate-600 hidden md:inline">|</span>
+<span class="text-emerald-400 hidden md:inline">DRAP SRO 2024 Compliant</span>
+</div>
+<div class="flex items-center gap-3">
+<span>Shift: Morning (A)</span>
+<span class="text-slate-600">|</span>
+<span>Workstation: <strong class="text-slate-200 font-semibold">PHARM-ADMIN-01</strong></span>
+<span class="text-slate-600">|</span>
+<span class="text-slate-400">Build: v4.3-clinical</span>
+</div>
+</footer>
+<!-- END: TelemetryFooter -->
+</main>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: ApplicationLayout -->
+</body></html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#001e12", "surface-variant": "#d3e4fe", "surface-container-low": "#eff4ff", "on-primary-fixed": "#001b3f", "secondary-fixed-dim": "#aac7ff", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-fixed": "#d7e2ff", "tertiary-container": "#003523", "on-tertiary-fixed-variant": "#005137", "on-error": "#ffffff", "outline": "#747780", "on-primary": "#ffffff", "on-surface-variant": "#44474f", "inverse-surface": "#213145", "surface": "#f8f9ff", "surface-dim": "#cbdbf5", "on-secondary-fixed-variant": "#00458e", "surface-bright": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "error-container": "#ffdad6", "primary-container": "#0f2d59", "on-secondary": "#ffffff", "secondary-container": "#5095fe", "secondary-fixed": "#d7e3ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#68dba9", "on-secondary-fixed": "#001b3e", "surface-container": "#e5eeff", "tertiary-fixed": "#85f8c4", "on-primary-fixed-variant": "#2c4674", "on-background": "#0b1c30", "secondary": "#005cba", "on-tertiary-fixed": "#002114", "on-secondary-container": "#002d61", "surface-container-high": "#dce9ff", "on-primary-container": "#7c95c8", "on-tertiary-container": "#2ca879", "outline-variant": "#c4c6d0", "surface-container-highest": "#d3e4fe", "primary": "#00183b", "surface-tint": "#455e8d", "surface-container-lowest": "#ffffff", "background": "#f8f9ff", "inverse-primary": "#adc7fc", "primary-fixed-dim": "#adc7fc" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-2xs": "0.125rem", "space-3xl": "2rem", "space-md": "0.75rem", "space-2xl": "1.5rem", "container-pad": "1.5rem", "pos-sidebar-w": "340px", "table-row-h": "2.25rem", "space-lg": "1rem" }, "fontFamily": { "data-table": [ "JetBrains Mono" ], "headline-lg": [ "Manrope" ], "data-display-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "body-md": [ "Inter" ], "body-sm": [ "Inter" ], "label-shortcut": [ "JetBrains Mono" ], "label-caps": [ "Inter" ], "headline-xl": [ "Manrope" ], "data-display-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "data-table": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "32px", "fontWeight": "700" } ], "data-display-md": [ "16px", { "lineHeight": "22px", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "label-shortcut": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "data-display-lg": [ "28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-pos-sidebar-w bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)]"><div class="flex flex-col"><div class="px-space-xl py-space-lg bg-primary-container/60 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">local_hospital</span></div><div><div class="font-headline-md text-headline-md text-on-primary leading-tight">Hope Welfare</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase tracking-wider">Trust Hospital &amp; Pharmacy</div></div></div></div><div class="px-space-xl py-space-sm bg-tertiary-container flex items-center justify-between text-on-tertiary"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-data-table text-data-table text-tertiary-fixed font-bold">LAN CORE</span><span class="font-data-table text-data-table text-on-tertiary-container">192.168.1.10</span></div><span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary text-tertiary-fixed rounded">NODE 01 OK</span></div><nav class="flex flex-col px-space-md py-space-md gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-bold"><div class="px-space-sm pt-space-sm pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Pakistani Formulary Master</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-formulary-master" href="#"><span class="material-symbols-outlined text-[18px]">medication</span><span class="font-body-md text-body-md">DRAP Formulary Master</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="drap-audit-trail" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">DRAP Audit Trail</span></a><div class="px-space-sm pt-space-md pb-space-2xs font-label-caps text-label-caps uppercase text-on-primary-container tracking-wider">Administration &amp; Governance</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold" data-path="users-and-prescribers" href="#"><span class="material-symbols-outlined text-[18px]">clinical_notes</span><span class="font-body-md text-body-md">Users &amp; Prescribers</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="roles-and-permissions" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span class="font-body-md text-body-md">Roles &amp; Permissions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="employees-and-quotas" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Employees &amp; Quotas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="zakat-and-subsidy-accounts" href="#"><span class="material-symbols-outlined text-[18px]">volunteer_activism</span><span class="font-body-md text-body-md">Zakat &amp; Subsidy Accounts</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="offline-sync-and-cluster" href="#"><span class="material-symbols-outlined text-[18px]">sync</span><span class="font-body-md text-body-md">Offline Sync &amp; Cluster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary transition-colors" data-path="system-and-drap-rules" href="#"><span class="material-symbols-outlined text-[18px]">gavel</span><span class="font-body-md text-body-md">System &amp; DRAP Rules</span></a></nav></div><div class="p-space-md bg-primary-container/80"><div class="flex items-center gap-space-md px-space-sm py-space-xs"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 overflow-hidden"><div class="font-body-md text-body-md text-on-primary font-bold truncate">System Administrator</div><div class="font-label-caps text-label-caps text-primary-fixed-dim uppercase truncate">Governance Clearance Level 4</div></div><span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">shield</span></div></div></aside><div class="pl-pos-sidebar-w"><header class="fixed top-0 left-pos-sidebar-w right-0 z-40 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-container-pad flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-lg"><span class="font-label-shortcut text-label-shortcut text-secondary">DRAP REG:</span><span class="font-data-table text-data-table text-on-surface">002914-HWT/P</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Counter Subnet:</span><span class="font-data-table text-data-table text-on-surface">LAN-ZONE-A</span></div></div><nav class="hidden md:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-bold"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="drap-formulary-master" href="#">Formulary Catalog</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="zakat-and-subsidy-accounts" href="#">Subsidy Registers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="offline-sync-and-cluster" href="#">Cluster Health</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-and-drap-rules" href="#">Policy Engine</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-tertiary-container rounded-lg text-on-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span><span class="font-label-shortcut text-label-shortcut text-tertiary-fixed">SYNC ACTIVE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 pb-12 bg-surface min-h-screen px-container-pad"><div class="flex flex-col w-full gap-space-xl">
+<!-- Dynamic Clinical Viewport Scrim -->
+<div class="relative w-full">
+<!-- Top Action Breadcrumb & Context Header Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-md border-b-0">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">
+<span>Administration</span>
+<span class="material-symbols-outlined text-[13px]">chevron_right</span>
+<span>Reports &amp; Analytics</span>
+<span class="material-symbols-outlined text-[13px]">chevron_right</span>
+<span class="text-secondary font-bold">Category &amp; Margin Analysis</span>
+</div>
+<div class="flex items-center gap-space-md">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Category &amp; Profit Margin Analysis</h1>
+<span class="font-data-table text-data-table px-space-sm py-space-2xs bg-surface-container rounded-lg text-secondary font-bold uppercase tracking-wider">Formulary Audit 2026</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-tertiary-container rounded-lg text-on-tertiary shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-fixed animate-pulse"></span>
+<span class="font-label-shortcut text-label-shortcut text-tertiary-fixed font-bold tracking-wider">COUNTER CONNECTED</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container-low rounded-lg text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[16px]">calendar_today</span>
+<span class="font-data-table text-data-table font-semibold">01/09/2026 — 09/09/2026</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-semibold rounded-lg shadow-sm transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Print / PDF</span>
+<span class="font-label-shortcut text-label-shortcut bg-surface-container-highest px-space-2xs rounded text-on-surface-variant">Ctrl+P</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs bg-primary hover:bg-primary-container text-on-primary font-body-md text-body-md font-semibold rounded-lg shadow-sm transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Export CSV / Excel</span>
+</button>
+</div>
+</div>
+<!-- Parameter / Filtering Clinical Toolbar -->
+<div class="mt-space-md bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<form class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-end" onsubmit="event.preventDefault()">
+<div class="md:col-span-3 flex flex-col gap-space-2xs">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Category Scope</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-sm text-[16px] text-on-surface-variant">category</span>
+<select class="w-full pl-8 pr-space-md py-space-xs bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg appearance-none focus:outline-none focus:bg-surface-container">
+<option selected="">All Categories (Drugs, Surgical, Consumables)</option>
+<option>Prescription Drugs (POM Only)</option>
+<option>Over-The-Counter (OTC Proprietary)</option>
+<option>Surgical &amp; Wound Dressing</option>
+<option>Dialysis &amp; Nephro Consumables</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm text-[16px] text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<div class="md:col-span-2 flex flex-col gap-space-2xs">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">From Date</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-sm text-[16px] text-on-surface-variant">event</span>
+<input class="w-full pl-8 pr-space-sm py-space-xs bg-surface-container-low text-on-surface font-data-table text-data-table rounded-lg focus:outline-none focus:bg-surface-container" type="text" value="01/09/2026"/>
+</div>
+</div>
+<div class="md:col-span-2 flex flex-col gap-space-2xs">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">To Date</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-sm text-[16px] text-on-surface-variant">event</span>
+<input class="w-full pl-8 pr-space-sm py-space-xs bg-surface-container-low text-on-surface font-data-table text-data-table rounded-lg focus:outline-none focus:bg-surface-container" type="text" value="09/09/2026"/>
+</div>
+</div>
+<div class="md:col-span-2 flex flex-col gap-space-2xs">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Margin Basis</label>
+<div class="relative flex items-center">
+<select class="w-full px-space-sm py-space-xs bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg appearance-none focus:outline-none focus:bg-surface-container">
+<option selected="">Trade Price vs MRP (Notified)</option>
+<option>Actual Inward Invoice Net Cost</option>
+<option>Net Realized Post-Welfare Subsidy</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm text-[16px] text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<div class="md:col-span-2 flex flex-col gap-space-2xs">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Threshold</label>
+<div class="relative flex items-center">
+<select class="w-full px-space-sm py-space-xs bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg appearance-none focus:outline-none focus:bg-surface-container">
+<option selected="">All Margins</option>
+<option>&lt; 15% (Strict DRAP Cap)</option>
+<option>15% – 30% (Standard Normal)</option>
+<option>&gt; 30% (High Commercial Yield)</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm text-[16px] text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<div class="md:col-span-1 flex">
+<button class="w-full h-[36px] bg-primary hover:bg-primary-container text-on-primary rounded-lg flex items-center justify-center gap-space-2xs shadow-sm transition-all active:scale-[0.98]" type="submit">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+<span class="font-body-md text-body-md font-bold">Run</span>
+</button>
+</div>
+</form>
+</div>
+<!-- 4 KPI Summary Cards -->
+<div class="mt-space-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1: Total Sales Turnover -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Total Sales Turnover</span>
+<span class="p-space-xs rounded-lg bg-surface-container text-secondary material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-md text-headline-md font-normal text-secondary">Rs</span>
+<span class="font-data-display-lg text-data-display-lg text-primary tracking-tight">548.00</span>
+</div>
+<div class="flex items-center justify-between mt-space-2xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">7 bills processed</span>
+<span class="font-data-table text-data-table text-on-surface font-semibold">COGS: Rs 428.50</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<!-- Card 2: Gross Profit Realized -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Gross Profit Realized</span>
+<span class="p-space-xs rounded-lg bg-surface-container text-tertiary-container material-symbols-outlined text-[18px]">trending_up</span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-md text-headline-md font-normal text-on-tertiary-container">Rs</span>
+<span class="font-data-display-lg text-data-display-lg text-tertiary-container tracking-tight">119.50</span>
+</div>
+<div class="flex items-center justify-between mt-space-2xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Blended Net Margin</span>
+<span class="font-data-table text-data-table px-space-xs py-space-2xs bg-tertiary-fixed text-tertiary font-bold rounded">21.8%</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-on-tertiary-container h-full rounded-full" style="width: 21.8%"></div>
+</div>
+</div>
+<!-- Card 3: Highest Margin Category -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Highest Margin Category</span>
+<span class="p-space-xs rounded-lg bg-surface-container text-secondary material-symbols-outlined text-[18px]">medical_services</span>
+</div>
+<div class="my-space-xs">
+<div class="font-headline-md text-headline-md text-primary truncate" title="Surgical Consumables">Surgical Consumables</div>
+<div class="flex items-center justify-between mt-space-2xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">High Yield Non-Price Cap</span>
+<span class="font-data-table text-data-table text-secondary font-bold">32.4% avg</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 32.4%"></div>
+</div>
+</div>
+<!-- Card 4: Price Controlled DRAP Volume -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Price Controlled (DRAP SRO)</span>
+<span class="p-space-xs rounded-lg bg-surface-container text-error material-symbols-outlined text-[18px]">gavel</span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-data-display-lg text-data-display-lg text-primary tracking-tight">68.2%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-semibold">of Total Volume</span>
+</div>
+<div class="flex items-center justify-between mt-space-2xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Regulated Ceiling</span>
+<span class="font-data-table text-data-table px-space-xs py-space-2xs bg-surface-container-high text-primary font-bold rounded">Cap: 15% max</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-outline text-surface-tint h-full rounded-full" style="width: 68.2%"></div>
+</div>
+</div>
+</div>
+<!-- Category Breakdown Data Table -->
+<div class="mt-space-lg bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="px-space-lg py-space-md bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">table_chart</span>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Category Margins &amp; Cost of Goods Sold (COGS)</h2>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Calculated against verified invoice lot numbers &amp; official DRAP MRP ceilings</div>
+</div>
+</div>
+<span class="self-start sm:self-auto font-data-table text-data-table px-space-sm py-space-2xs bg-surface-container rounded-lg text-on-surface-variant font-medium">
+          Audited against inward purchase invoices
+        </span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-lowest text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider">
+<th class="px-space-lg py-space-sm font-semibold">Category</th>
+<th class="px-space-md py-space-sm text-right font-semibold">Units Sold</th>
+<th class="px-space-md py-space-sm text-right font-semibold">Total COGS (Rs)</th>
+<th class="px-space-md py-space-sm text-right font-semibold">Gross Revenue (Rs)</th>
+<th class="px-space-md py-space-sm text-right font-semibold">Gross Profit (Rs)</th>
+<th class="px-space-md py-space-sm text-center font-semibold">Margin %</th>
+<th class="px-space-md py-space-sm font-semibold">Regulatory SRO Cap</th>
+<th class="px-space-lg py-space-sm text-center font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-body-md text-body-md">
+<!-- Row 1: Prescription Drugs -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors group">
+<td class="px-space-lg py-space-md font-semibold text-primary flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">pill</span>
+<div>
+<div class="font-bold text-on-surface">Prescription Drugs (POM)</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Class A &amp; B Regulated</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">48 units</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">280.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-semibold text-on-surface">330.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold text-tertiary-container">50.00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-block px-space-sm py-space-2xs rounded bg-surface-container font-data-table text-data-table font-bold text-primary">15.2%</span>
+</td>
+<td class="px-space-md py-space-md font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[15px] text-secondary">lock</span>
+<span>Capped at 15.0%</span>
+</div>
+</td>
+<td class="px-space-lg py-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-tertiary-container text-on-tertiary font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+                  Compliant
+                </span>
+</td>
+</tr>
+<!-- Row 2: Over-The-Counter -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors group">
+<td class="px-space-lg py-space-md font-semibold text-primary flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">medication_liquid</span>
+<div>
+<div class="font-bold text-on-surface">Over-The-Counter (OTC)</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">General Sales List (GSL)</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">22 units</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">85.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-semibold text-on-surface">115.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold text-tertiary-container">30.00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-block px-space-sm py-space-2xs rounded bg-surface-container font-data-table text-data-table font-bold text-primary">26.1%</span>
+</td>
+<td class="px-space-md py-space-md font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-on-surface">Deregulated</span>
+</td>
+<td class="px-space-lg py-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-secondary text-on-secondary font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+                  Healthy
+                </span>
+</td>
+</tr>
+<!-- Row 3: Surgical & Dressing -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors group">
+<td class="px-space-lg py-space-md font-semibold text-primary flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">healing</span>
+<div>
+<div class="font-bold text-on-surface">Surgical &amp; Dressing</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Sterile disposables, sutures</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">14 units</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">42.50</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-semibold text-on-surface">68.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold text-tertiary-container">25.50</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-block px-space-sm py-space-2xs rounded bg-surface-container font-data-table text-data-table font-bold text-on-tertiary-fixed-variant">37.5%</span>
+</td>
+<td class="px-space-md py-space-md font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-on-surface">Standard Trade</span>
+</td>
+<td class="px-space-lg py-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-tertiary text-tertiary-fixed font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+                  High Yield
+                </span>
+</td>
+</tr>
+<!-- Row 4: Dialysis Consumables -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors group">
+<td class="px-space-lg py-space-md font-semibold text-primary flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">water_drop</span>
+<div>
+<div class="font-bold text-on-surface">Dialysis Consumables</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Lines, dialyzers, acid baths</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">8 units</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table text-on-surface">21.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-semibold text-on-surface">35.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold text-tertiary-container">14.00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-block px-space-sm py-space-2xs rounded bg-surface-container font-data-table text-data-table font-bold text-secondary">40.0%</span>
+</td>
+<td class="px-space-md py-space-md font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-on-surface">Subsidized Base</span>
+</td>
+<td class="px-space-lg py-space-md text-center">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-primary-container text-on-primary-fixed font-label-caps text-label-caps uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+                  Welfare Standard
+                </span>
+</td>
+</tr>
+</tbody>
+<!-- Summary Total Row -->
+<tfoot>
+<tr class="bg-surface-container text-on-surface font-headline-md text-headline-md">
+<td class="px-space-lg py-space-md font-bold text-primary">TOTAL SUMMARY</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold">92 units</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold">Rs 428.50</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold text-secondary">Rs 548.00</td>
+<td class="px-space-md py-space-md text-right font-data-table text-data-table font-bold text-tertiary-container">Rs 119.50</td>
+<td class="px-space-md py-space-md text-center font-data-table text-data-table font-bold text-primary">
+                21.8% Avg
+              </td>
+<td class="px-space-md py-space-md font-body-sm text-body-sm text-on-surface-variant" colspan="2">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">verified</span>
+<span class="font-data-table text-data-table font-semibold text-tertiary-container">100% Audited &amp; Reconciled</span>
+</div>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Visual Analysis Split Row -->
+<div class="mt-space-lg grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Card 1: Revenue vs Cost Distribution (Bar Visual) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">bar_chart</span>
+<h3 class="font-headline-md text-headline-md text-primary font-bold">Revenue vs Cost Distribution</h3>
+</div>
+<div class="flex items-center gap-space-md font-body-sm text-body-sm">
+<div class="flex items-center gap-space-2xs">
+<span class="w-3 h-3 rounded bg-outline-variant"></span>
+<span class="text-on-surface-variant">COGS</span>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="w-3 h-3 rounded bg-secondary"></span>
+<span class="text-primary font-semibold">Gross Profit</span>
+</div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Realized yield proportion comparing acquisition expenditure against counter retail collection.</p>
+<!-- Distribution Stack Bars -->
+<div class="flex flex-col gap-space-md">
+<!-- Prescription Drugs -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface">Prescription Drugs (POM)</span>
+<div class="flex items-center gap-space-sm font-data-table text-data-table">
+<span class="text-on-surface-variant">Cost: Rs 280.00 (84.8%)</span>
+<span class="text-secondary font-bold">Margin: Rs 50.00 (15.2%)</span>
+</div>
+</div>
+<div class="w-full h-4 bg-surface-container rounded-lg overflow-hidden flex">
+<div class="bg-outline-variant h-full" style="width: 84.8%" title="COGS: 84.8%"></div>
+<div class="bg-secondary h-full" style="width: 15.2%" title="Margin: 15.2%"></div>
+</div>
+</div>
+<!-- Over-The-Counter -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface">Over-The-Counter (OTC)</span>
+<div class="flex items-center gap-space-sm font-data-table text-data-table">
+<span class="text-on-surface-variant">Cost: Rs 85.00 (73.9%)</span>
+<span class="text-secondary font-bold">Margin: Rs 30.00 (26.1%)</span>
+</div>
+</div>
+<div class="w-full h-4 bg-surface-container rounded-lg overflow-hidden flex">
+<div class="bg-outline-variant h-full" style="width: 73.9%" title="COGS: 73.9%"></div>
+<div class="bg-secondary h-full" style="width: 26.1%" title="Margin: 26.1%"></div>
+</div>
+</div>
+<!-- Surgical & Dressing -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface">Surgical &amp; Dressing</span>
+<div class="flex items-center gap-space-sm font-data-table text-data-table">
+<span class="text-on-surface-variant">Cost: Rs 42.50 (62.5%)</span>
+<span class="text-secondary font-bold">Margin: Rs 25.50 (37.5%)</span>
+</div>
+</div>
+<div class="w-full h-4 bg-surface-container rounded-lg overflow-hidden flex">
+<div class="bg-outline-variant h-full" style="width: 62.5%" title="COGS: 62.5%"></div>
+<div class="bg-secondary h-full" style="width: 37.5%" title="Margin: 37.5%"></div>
+</div>
+</div>
+<!-- Dialysis Consumables -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface">Dialysis Consumables</span>
+<div class="flex items-center gap-space-sm font-data-table text-data-table">
+<span class="text-on-surface-variant">Cost: Rs 21.00 (60.0%)</span>
+<span class="text-secondary font-bold">Margin: Rs 14.00 (40.0%)</span>
+</div>
+</div>
+<div class="w-full h-4 bg-surface-container rounded-lg overflow-hidden flex">
+<div class="bg-outline-variant h-full" style="width: 60.0%" title="COGS: 60.0%"></div>
+<div class="bg-secondary h-full" style="width: 40.0%" title="Margin: 40.0%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-data-table text-data-table text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span>Total Cost Ratio: 78.2% | Net Realized Ratio: 21.8%</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase font-bold tracking-wider">DRAP SRO Compliant</span>
+</div>
+</div>
+<!-- Card 2: Low-Margin & Near-Loss Alerts -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-[20px]">warning</span>
+<h3 class="font-headline-md text-headline-md text-primary font-bold">Low-Margin &amp; Subsidy Alerts</h3>
+</div>
+<span class="px-space-xs py-space-2xs bg-error-container text-on-error-container font-label-shortcut text-label-shortcut rounded">2 Active Flags</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Medicines dispensed at near-zero or subsidized below-wholesale rate under Trust welfare programs.</p>
+<div class="flex flex-col gap-space-sm">
+<!-- Alert 1: Insulin Isophane -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm hover:bg-surface-container transition-colors">
+<div class="p-space-xs rounded bg-error-container text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">emergency</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<div class="font-bold text-on-surface text-body-md truncate">Insulin NPH 100IU/ml 10ml</div>
+<span class="font-data-table text-data-table px-space-xs py-space-2xs bg-surface-container-highest text-error font-bold rounded">Margin: 0.0%</span>
+</div>
+<div class="font-data-table text-body-sm text-on-surface-variant mt-space-2xs">
+                  Wholesale Cost: Rs 112.00 | Billed: Rs 112.00
+                </div>
+<div class="flex items-center gap-space-xs mt-space-xs font-label-caps text-label-caps uppercase text-secondary font-semibold">
+<span class="material-symbols-outlined text-[12px]">volunteer_activism</span>
+<span>Trust 100% Subsidy Override (Zakat Registry #884)</span>
+</div>
+</div>
+</div>
+<!-- Alert 2: Ceftriaxone 1g Inj -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm hover:bg-surface-container transition-colors">
+<div class="p-space-xs rounded bg-surface-container text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<div class="font-bold text-on-surface text-body-md truncate">Ceftriaxone 1g IV Inj (Batch #CF-902)</div>
+<span class="font-data-table text-data-table px-space-xs py-space-2xs bg-surface-container-highest text-primary font-bold rounded">Margin: 4.8%</span>
+</div>
+<div class="font-data-table text-body-sm text-on-surface-variant mt-space-2xs">
+                  Trade Price: Rs 78.50 | Sold: Rs 82.25
+                </div>
+<div class="flex items-center gap-space-xs mt-space-xs font-label-caps text-label-caps uppercase text-on-surface-variant font-semibold">
+<span class="material-symbols-outlined text-[12px]">timelapse</span>
+<span>Short Expiry (&lt;45d left) Liquidation Protocol</span>
+</div>
+</div>
+</div>
+<!-- Alert 3: Dialyzer Polysulfone -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm hover:bg-surface-container transition-colors">
+<div class="p-space-xs rounded bg-surface-container text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<div class="font-bold text-on-surface text-body-md truncate">Low-Flux Dialyzer 1.4m²</div>
+<span class="font-data-table text-data-table px-space-xs py-space-2xs bg-surface-container-highest text-secondary font-bold rounded">Margin: 8.5%</span>
+</div>
+<div class="font-data-table text-body-sm text-on-surface-variant mt-space-2xs">
+                  Procured via Direct Importer Tender (Batch #D-2024-X)
+                </div>
+<div class="flex items-center gap-space-xs mt-space-xs font-label-caps text-label-caps uppercase text-secondary font-semibold">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+<span>Ward Inpatient Welfare Fixed Tariff Rate</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-space-md py-space-xs bg-surface-container hover:bg-surface-container-high text-primary font-body-md text-body-md font-semibold rounded-lg flex items-center justify-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">rule</span>
+<span>Review All 14 Welfare Exemption Vouchers</span>
+</button>
+</div>
+</div>
+<!-- Quick Keyboard Shortcut Bar -->
+<div class="mt-space-lg bg-surface-container-low p-space-sm rounded-lg flex flex-wrap items-center justify-between gap-space-md text-on-surface-variant">
+<div class="flex items-center gap-space-md font-label-shortcut text-label-shortcut">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-surface-container-highest text-primary rounded font-bold">F1</span>
+<span>Help / Regulatory Docs</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-surface-container-highest text-primary rounded font-bold">F2</span>
+<span>Filter Focus</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-surface-container-highest text-primary rounded font-bold">F5</span>
+<span>Refresh Ledger</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs bg-surface-container-highest text-primary rounded font-bold">Ctrl+P</span>
+<span>Print Statement</span>
+</div>
+</div>
+<div class="font-data-table text-data-table text-on-surface-variant">
+        Audit Hash: <span class="text-primary font-bold">SHA-256: 4f8b9e...01c4</span> • DRAP SRO Form 9 Compliant
+      </div>
+</div>
+</div>
+</div></main><footer class="fixed bottom-0 left-pos-sidebar-w right-0 h-10 bg-inverse-surface text-inverse-on-surface z-40 shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-between px-container-pad"><div class="flex items-center gap-space-xl font-data-table text-data-table"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">dns</span><span class="text-surface-variant">Master Node:</span><span class="text-tertiary-fixed font-bold">SRV-HWT-01 (192.168.1.10)</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-secondary-fixed">speed</span><span class="text-surface-variant">Replication Latency:</span><span class="text-secondary-fixed font-bold">0.42 ms</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed">point_of_sale</span><span class="text-surface-variant">Active Workstations:</span><span class="text-primary-fixed font-bold">14 Online</span></div></div><div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed">verified_user</span><span>DRAP SRO 2024 / Form 9 Certified Hospital Governance</span></div></footer></div></body></html>

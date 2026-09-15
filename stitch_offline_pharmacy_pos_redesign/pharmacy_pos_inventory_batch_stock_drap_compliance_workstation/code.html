@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hope Welfare Trust - Pharmacy Inventory &amp; Batches</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#2c4674",
+            "secondary-container": "#5095fe",
+            "surface-variant": "#d3e4fe",
+            "on-secondary-fixed": "#001b3e",
+            "tertiary": "#001e12",
+            "outline-variant": "#c4c6d0",
+            "tertiary-fixed": "#85f8c4",
+            "error-container": "#ffdad6",
+            "outline": "#747780",
+            "on-tertiary": "#ffffff",
+            "inverse-primary": "#adc7fc",
+            "on-primary-fixed": "#001b3f",
+            "on-background": "#0b1c30",
+            "tertiary-fixed-dim": "#68dba9",
+            "primary-fixed-dim": "#adc7fc",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#002114",
+            "on-error": "#ffffff",
+            "tertiary-container": "#003523",
+            "surface-tint": "#455e8d",
+            "on-primary-container": "#7c95c8",
+            "surface": "#f8f9ff",
+            "surface-container": "#e5eeff",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-fixed": "#d7e3ff",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-bright": "#f8f9ff",
+            "primary-container": "#0f2d59",
+            "surface-container-low": "#eff4ff",
+            "on-surface-variant": "#44474f",
+            "on-error-container": "#93000a",
+            "secondary": "#005cba",
+            "surface-dim": "#cbdbf5",
+            "inverse-surface": "#213145",
+            "on-secondary": "#ffffff",
+            "on-tertiary-container": "#2ca879",
+            "primary": "#00183b",
+            "primary-fixed": "#d7e2ff",
+            "on-surface": "#0b1c30",
+            "secondary-fixed-dim": "#aac7ff",
+            "on-primary": "#ffffff",
+            "on-secondary-container": "#002d61",
+            "background": "#f8f9ff",
+            "surface-container-high": "#dce9ff",
+            "on-secondary-fixed-variant": "#00458e",
+            "on-tertiary-fixed-variant": "#005137"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-2xs": "0.125rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "0.75rem",
+            "space-lg": "1rem",
+            "space-xl": "1.25rem",
+            "space-2xl": "1.5rem",
+            "space-3xl": "2rem",
+            "container-pad": "1.5rem",
+            "table-row-h": "2.25rem"
+          },
+          "fontFamily": {
+            "label-caps": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "headline-lg": ["Manrope", "sans-serif"],
+            "headline-md": ["Manrope", "sans-serif"],
+            "headline-xl": ["Manrope", "sans-serif"],
+            "data-table": ["JetBrains Mono", "monospace"],
+            "data-display-md": ["JetBrains Mono", "monospace"],
+            "data-display-lg": ["JetBrains Mono", "monospace"],
+            "label-shortcut": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "label-caps": ["10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "body-lg": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-sm": ["11px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "data-table": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "data-display-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "data-display-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-shortcut": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface select-none min-h-screen flex flex-col">
+<!-- GLOBAL TOP HEADER (Full-width, No Sidebar Layout matching SCREEN_4) -->
+<header class="fixed top-0 left-0 right-0 z-50 h-14 bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-space-lg shadow-[0_1px_4px_rgba(15,45,89,0.05)]">
+<!-- Left: Hospital Branding & Identity -->
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[19px]">local_pharmacy</span>
+</div>
+<div>
+<div class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Hope Welfare Trust</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Hospital Management &amp; Pharmacy System</div>
+</div>
+</div>
+<div class="h-6 w-px bg-outline-variant"></div>
+<!-- Station Status & Hardware Indicators -->
+<div class="flex items-center gap-space-xs px-space-sm py-space-2xs rounded bg-surface-container border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span class="font-label-shortcut text-label-shortcut text-primary-container font-semibold">Counter 01 Connected</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-data-table text-data-table">
+<span class="material-symbols-outlined text-[15px] text-secondary">lan</span>
+<span>192.168.10.45</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-data-table text-data-table">
+<span class="material-symbols-outlined text-[16px] text-secondary">print</span>
+<span>Citizen POS-80</span>
+<span class="font-label-caps text-label-caps text-on-tertiary-container bg-surface-container px-space-2xs py-0.5 rounded font-bold">Ready</span>
+</div>
+</div>
+<!-- Center/Right: Navigation Shortcut Pills & Till Info -->
+<div class="flex items-center gap-space-md">
+<!-- Top Navigation Shortcut Pills matching POS Screen 4 -->
+<div class="flex items-center gap-space-xs font-label-shortcut text-label-shortcut">
+<a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container text-primary-container hover:bg-surface-container-high transition-colors border border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[14px]">point_of_sale</span>
+<span>Main POS</span>
+<span class="bg-outline-variant text-on-surface px-1 rounded font-bold">F2</span>
+</a>
+<a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container text-primary-container hover:bg-surface-container-high transition-colors border border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[14px]">receipt_long</span>
+<span>Requisitions</span>
+<span class="bg-outline-variant text-on-surface px-1 rounded font-bold">F7</span>
+</a>
+<a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-primary text-on-primary font-bold shadow-sm" href="#">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span>
+<span>Inventory</span>
+<span class="bg-primary-container text-on-primary px-1 rounded font-bold">F3</span>
+</a>
+<a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container text-primary-container hover:bg-surface-container-high transition-colors border border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[14px]">lock_clock</span>
+<span>Day Close</span>
+<span class="bg-outline-variant text-on-surface px-1 rounded font-bold">F10</span>
+</a>
+</div>
+<div class="h-6 w-px bg-outline-variant"></div>
+<!-- Till Amount and Live Time -->
+<div class="text-right">
+<div class="font-data-table text-data-table text-primary font-bold leading-tight">Till: PKR 5,000.00</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant leading-none">Wednesday, Sep 09, 2026</div>
+</div>
+<div class="h-6 w-px bg-outline-variant"></div>
+<!-- Duty Pharmacist Badge -->
+<div class="flex items-center gap-space-sm pl-space-xs">
+<div class="text-right">
+<div class="font-headline-md text-body-md text-primary font-bold leading-tight">Pharm. Tariq Mahmood, R.Ph</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Shift A • Reg #0482</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN FULL-WIDTH WORKSPACE (No Sidebar, Pl-0, Full Span) -->
+<main class="w-full flex-1 pt-14 pb-10 bg-surface">
+<div class="w-full px-space-lg py-space-md flex flex-col gap-space-md">
+<!-- Subheader Title & Operational Toolbar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40 flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+</div>
+<div>
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-md text-headline-md text-primary font-bold">Pharmacy Inventory, Batches &amp; DRAP Compliance</h1>
+<span class="bg-surface-container text-primary px-space-xs py-0.5 rounded font-label-caps text-label-caps uppercase font-bold">Formulary v2024.10</span>
+</div>
+<div class="flex items-center gap-space-md mt-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">DRAP Registration Audit: <strong class="text-primary font-semibold">Active</strong></span>
+</div>
+<span class="text-outline-variant font-body-sm text-body-sm">•</span>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">database</span>
+<span>SQLite Local Offline Node <strong class="text-primary font-semibold">192.168.10.45</strong></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container hover:bg-surface-container-high text-primary font-body-sm text-body-sm font-semibold transition-colors cursor-pointer border border-outline-variant/60" type="button">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Sync Ledger</span>
+<span class="bg-surface-container-highest text-on-surface-variant px-1 rounded font-label-shortcut text-label-shortcut">F5</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs rounded bg-secondary hover:bg-on-secondary-fixed-variant text-on-secondary font-body-sm text-body-sm font-bold transition-colors cursor-pointer shadow-sm" onclick="document.getElementById('newProductModal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>New Medicine Master</span>
+<span class="bg-primary-container text-on-primary px-1 rounded font-label-shortcut text-label-shortcut">Alt+N</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary hover:bg-primary-container text-on-primary font-body-sm text-body-sm font-bold transition-colors cursor-pointer shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">move_to_inbox</span>
+<span>Receive Stock / GRN</span>
+<span class="bg-secondary text-on-secondary px-1 rounded font-label-shortcut text-label-shortcut">F3</span>
+</button>
+</div>
+</div>
+<!-- 4 Clinical KPI Cards (Matching SCREEN_4's Soft Non-Glare Elevation) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Card 1: Stock Valuation -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-bold tracking-wider">Active Stock Valuation</span>
+<span class="font-headline-lg text-headline-lg text-secondary font-bold mt-1">Rs 260,141.00</span>
+</div>
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low px-space-sm py-space-2xs rounded flex items-center justify-between border border-outline-variant/30">
+<span class="font-data-table text-data-table text-on-surface-variant">Cost: <strong class="text-primary font-bold">Rs 99,580.20</strong></span>
+<span class="font-label-shortcut text-label-shortcut text-on-surface-variant font-medium">4,280 Total SKUs</span>
+</div>
+</div>
+<!-- Card 2: Near-Expiry Watch -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-bold tracking-wider">Near-Expiry Watch (≤30 Days)</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">02</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Batches Quarantined</span>
+</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">event_busy</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-error-container/30 px-space-sm py-space-2xs rounded flex items-center justify-between border border-error-container">
+<span class="font-body-sm text-body-sm text-error font-medium truncate">Flygel 2000 (21d left)</span>
+<span class="font-label-caps text-label-caps uppercase bg-error text-on-error px-1.5 py-0.5 rounded font-bold">Claim Due</span>
+</div>
+</div>
+<!-- Card 3: Stock-Out & Low Reorder -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-bold tracking-wider">Stock-Out / Reorder Alert</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-headline-lg text-headline-lg text-error font-bold">03</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Items Critical</span>
+</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low px-space-sm py-space-2xs rounded flex items-center justify-between border border-outline-variant/30">
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Panadol 1000mg, ORS</span>
+<span class="font-label-shortcut text-label-shortcut text-secondary font-bold">PO Pending</span>
+</div>
+</div>
+<!-- Card 4: DRAP Compliance -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-bold tracking-wider">DRAP Regulatory Gap</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">09</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Missing Reg Numbers</span>
+</div>
+</div>
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low px-space-sm py-space-2xs rounded flex items-center justify-between border border-outline-variant/30">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Form 12-A Compliance</span>
+<button class="font-label-caps text-label-caps uppercase text-secondary hover:text-on-secondary-fixed-variant font-bold" type="button">Audit Form</button>
+</div>
+</div>
+</div>
+<!-- Main Dual Column Workspace (Left 68% Table / Right 32% Active Dossier & GRN Pane) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<!-- Left 68% Inventory Table Panel (Col 8/12 on large screens) -->
+<div class="lg:col-span-8 flex flex-col gap-space-sm bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40">
+<!-- Search & Filter Omnibar -->
+<div class="flex flex-col md:flex-row items-center gap-space-sm">
+<div class="relative w-full flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">barcode_scanner</span>
+<input class="w-full h-11 pl-10 pr-24 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary border border-outline-variant/40 transition-all" id="inventorySearch" placeholder="Scan barcode or type brand / generic (e.g. ESC CLEAR)" type="text"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 bg-surface-container text-on-surface-variant font-label-shortcut text-label-shortcut px-1.5 py-0.5 rounded uppercase font-bold border border-outline-variant/40">Esc Clear</span>
+</div>
+<div class="w-full md:w-auto flex items-center gap-space-xs">
+<select class="h-11 px-space-sm rounded-lg bg-surface-container-low font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40 cursor-pointer">
+<option>All Drug Schedules</option>
+<option>Prescription Only (Rx)</option>
+<option>Over The Counter (OTC)</option>
+<option>Schedule G (Controlled Narcotics)</option>
+<option>Dialysis Consumables</option>
+</select>
+</div>
+</div>
+<!-- Filter Pills Bar -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-1">
+<button class="px-space-sm py-1 rounded bg-primary text-on-primary font-label-shortcut text-label-shortcut whitespace-nowrap font-bold shadow-xs" type="button">All Medicines (11)</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-shortcut text-label-shortcut whitespace-nowrap transition-colors" type="button">Low Stock (3)</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-shortcut text-label-shortcut whitespace-nowrap transition-colors" type="button">Near Expiry (2)</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-shortcut text-label-shortcut whitespace-nowrap transition-colors" type="button">DRAP Missing (9)</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-shortcut text-label-shortcut whitespace-nowrap transition-colors" type="button">Schedule G (1)</button>
+</div>
+<!-- High-Density Clinical Inventory Table -->
+<div class="overflow-x-auto border border-surface-container rounded-lg">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps uppercase border-b border-surface-container">
+<th class="py-2.5 px-3">Product &amp; Formula</th>
+<th class="py-2.5 px-3">Schedule</th>
+<th class="py-2.5 px-3">DRAP Reg</th>
+<th class="py-2.5 px-3 text-right">On Hand</th>
+<th class="py-2.5 px-3 text-right">Price / MRP</th>
+<th class="py-2.5 px-3 text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-md text-body-md text-on-surface">
+<!-- Row 1: Amoxicillin -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group cursor-pointer">
+<td class="py-3 px-3">
+<div class="font-headline-md text-body-md text-primary font-bold">Amoxicillin 500mg</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Amoxicillin • Capsule • MED-AMOX</div>
+<div class="font-data-table text-body-sm text-secondary font-medium">Batch B#4490 • Exp: 11/2027</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-surface-container text-secondary font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">Rx</span>
+</td>
+<td class="py-3 px-3">
+<span class="bg-error-container/40 text-on-error-container font-label-shortcut text-label-shortcut px-2 py-0.5 rounded font-semibold">missing</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-primary font-bold leading-tight">199</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">199 unit • reorder 40</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 8<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Cost: Rs 6.40</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Edit</button>
+<button class="px-2.5 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Receive</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Flygel 2000 (Active Selection Example with Alert) -->
+<tr class="bg-surface-container/50 border-l-4 border-l-secondary group cursor-pointer">
+<td class="py-3 px-3">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-body-md text-primary font-bold">Flygel 2000</span>
+<span class="bg-error-container text-on-error-container font-label-caps text-label-caps px-1.5 py-0.5 rounded font-bold uppercase">21d Left</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Metronidazole • Tablet • 10/strip • 60 strips/box</div>
+<div class="font-data-table text-body-sm text-error font-semibold">Batch #1226 • Exp: 09/2026 (Quarantined)</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">OTC</span>
+</td>
+<td class="py-3 px-3">
+<span class="text-on-surface-variant font-data-table text-data-table">—</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-primary font-bold leading-tight">6000</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">10 box • reorder 10</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 5<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Rs 50/strip • MRP Rs 5</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Edit</button>
+<button class="px-2.5 py-1 bg-secondary text-on-secondary rounded font-label-shortcut text-label-shortcut font-bold shadow-xs" type="button">Receive</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Panadol 1000mg -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group cursor-pointer">
+<td class="py-3 px-3">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-body-md text-primary font-bold">Panadol 1000mg</span>
+<span class="bg-error-container/60 text-on-error-container font-label-caps text-label-caps px-1.5 py-0.5 rounded font-bold uppercase">Low Stock</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Paracetamol • Tablet • 10/strip • 10 strips/box • pndl-1</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Batch #8812 • Exp: 05/2028</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">OTC</span>
+</td>
+<td class="py-3 px-3">
+<span class="font-data-table text-data-table font-semibold text-primary">1234</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-error font-bold leading-tight">20</div>
+<div class="font-body-sm text-body-sm text-error font-medium">2 strip • reorder at 40</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 5<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Rs 50/strip • MRP Rs 5</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Edit</button>
+<button class="px-2.5 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Receive</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Dialyzer Kit -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group cursor-pointer">
+<td class="py-3 px-3">
+<div class="font-headline-md text-body-md text-primary font-bold">Dialyzer Kit</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Hemodialysis Filter &amp; Line • Kit • DLY-KIT</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Batch D-991 • Exp: 12/2028</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-surface-container text-secondary font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">Rx</span>
+</td>
+<td class="py-3 px-3">
+<span class="bg-error-container/40 text-on-error-container font-label-shortcut text-label-shortcut px-2 py-0.5 rounded font-semibold">missing</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-primary font-bold leading-tight">98</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">98 unit • reorder at 20</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 1,200<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">MRP Rs 1,200</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Edit</button>
+<button class="px-2.5 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Receive</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Metformin 500mg -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group cursor-pointer">
+<td class="py-3 px-3">
+<div class="font-headline-md text-body-md text-primary font-bold">Metformin 500mg</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Metformin HCl • Tablet • MED-METF</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Batch M-104 • Exp: 04/2027</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-surface-container text-secondary font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">Rx</span>
+</td>
+<td class="py-3 px-3">
+<span class="bg-error-container/40 text-on-error-container font-label-shortcut text-label-shortcut px-2 py-0.5 rounded font-semibold">missing</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-primary font-bold leading-tight">200</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">200 unit • reorder 40</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 3<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">MRP Rs 3</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Edit</button>
+<button class="px-2.5 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Receive</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Paracetamol 500mg High Volume -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group cursor-pointer">
+<td class="py-3 px-3">
+<div class="font-headline-md text-body-md text-primary font-bold">Paracetamol 500mg</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Paracetamol • Tablet • MED-PARA</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Batch P-330 • Exp: 10/2027</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-surface-container text-secondary font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">Rx</span>
+</td>
+<td class="py-3 px-3">
+<span class="bg-error-container/40 text-on-error-container font-label-shortcut text-label-shortcut px-2 py-0.5 rounded font-semibold">missing</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-primary font-bold leading-tight">40,287</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">40,287 unit • reorder 50</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 2<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">MRP Rs 2</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Edit</button>
+<button class="px-2.5 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Receive</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: Inj. Tramadol (Schedule G Controlled) -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group cursor-pointer bg-error-container/10">
+<td class="py-3 px-3">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-body-md text-primary font-bold">Inj. Tramadol 100mg/2ml</span>
+<span class="bg-error text-on-error font-label-caps text-label-caps px-1.5 py-0.5 rounded font-bold uppercase">Schedule G</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Tramadol HCl • Ampoule • NAR-TRAM</div>
+<div class="font-data-table text-body-sm text-on-surface-variant">Batch T-009 • Exp: 01/2028 • Strict Double Lock Safe</div>
+</td>
+<td class="py-3 px-3">
+<span class="bg-error-container text-on-error-container font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">Narcotic</span>
+</td>
+<td class="py-3 px-3">
+<span class="font-data-table text-data-table font-semibold text-primary">008741</span>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-data-display-md text-primary font-bold leading-tight">58</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">58 ampoules • reorder 10</div>
+</td>
+<td class="py-3 px-3 text-right">
+<div class="font-data-table text-body-md text-primary font-bold leading-tight">Rs 100<span class="text-on-surface-variant font-normal">/unit</span></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">MRP Rs 100</div>
+</td>
+<td class="py-3 px-3 text-center">
+<div class="flex items-center justify-center gap-space-xs">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Audit</button>
+<button class="px-2.5 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-primary font-label-shortcut text-label-shortcut border border-outline-variant/40" type="button">Receive</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Bar -->
+<div class="flex items-center justify-between pt-space-xs border-t border-surface-container text-on-surface-variant font-body-sm text-body-sm">
+<span>Showing 7 of 11 items in active dispensary cache</span>
+<div class="flex items-center gap-space-xs">
+<button class="px-3 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-data-table text-data-table disabled:opacity-50 border border-outline-variant/40 transition-colors" disabled="" type="button">&lt; Prev</button>
+<span class="font-data-table text-data-table font-bold text-primary px-2">Page 1 / 2</span>
+<button class="px-3 py-1 bg-surface-container hover:bg-surface-container-high rounded text-primary font-data-table text-data-table border border-outline-variant/40 transition-colors" type="button">Next &gt;</button>
+</div>
+</div>
+</div>
+<!-- Right 32% Active Batch Dossier & Direct GRN Inward Receipt (Col 4/12) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Active Medicine Dossier Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-outline-variant/40 flex flex-col gap-space-md">
+<div class="flex items-start justify-between border-b border-surface-container pb-space-sm">
+<div>
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold tracking-wider">Active Batch Dossier</span>
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Flygel 2000</h2>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Metronidazole 400mg equiv • Film Coated</div>
+</div>
+<span class="bg-error-container text-on-error-container font-label-caps text-label-caps uppercase px-2 py-0.5 rounded font-bold">Quarantine Batch</span>
+</div>
+<!-- Packaging Unit Math Info Box -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-space-2xs border border-outline-variant/30">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase text-primary font-bold">
+<span class="material-symbols-outlined text-[16px] text-secondary">calculate</span>
+<span>Packaging Breakdown Math</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface">
+<strong class="text-primary font-bold">1 box = 10 strips = 100 units.</strong> Stock is counted in units, sellable as <strong>box</strong>, <strong>strip</strong>, or <strong>loose tablets</strong> from the counter shelf.
+              </div>
+</div>
+<!-- Expiry Claim Window Status -->
+<div class="p-space-sm bg-error-container/20 rounded-lg flex flex-col gap-space-2xs border border-error-container/50">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-error font-bold">Supplier Claim Window</span>
+<span class="font-data-table text-data-table font-bold text-error">21 Days Left</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Batch #1226 eligible for 100% manufacturer credit note if logged before 30-Sep-2026.
+              </p>
+<button class="mt-space-xs w-full py-2 bg-error text-on-error rounded font-body-sm text-body-sm font-bold hover:bg-on-error-container transition-colors flex items-center justify-center gap-space-xs cursor-pointer shadow-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Generate Supplier Claim Voucher</span>
+<span class="bg-primary-container text-on-primary px-1 rounded font-label-shortcut text-label-shortcut">Alt+C</span>
+</button>
+</div>
+<!-- Quick Inward GRN Stock Form -->
+<div class="flex flex-col gap-space-sm pt-space-xs border-t border-surface-container">
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-body-md text-primary font-bold">Quick Inward Batch Log</span>
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">Counter GRN</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<div>
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant block mb-1">Batch Lot No *</label>
+<input class="w-full h-9 px-space-sm bg-surface-container-low rounded font-data-table text-data-table text-primary focus:outline-none focus:ring-1 focus:ring-secondary border border-outline-variant/30" placeholder="e.g. B#9921" type="text" value="B#9921"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant block mb-1">Expiry Date *</label>
+<input class="w-full h-9 px-space-sm bg-surface-container-low rounded font-data-table text-data-table text-primary focus:outline-none focus:ring-1 focus:ring-secondary border border-outline-variant/30" placeholder="MM/YYYY" type="text" value="10/2028"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-xs">
+<div>
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant block mb-1">Qty (Units)</label>
+<input class="w-full h-9 px-space-sm bg-surface-container-low rounded font-data-table text-data-table text-primary focus:outline-none focus:ring-1 focus:ring-secondary border border-outline-variant/30" placeholder="0" type="number" value="500"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant block mb-1">Cost / Unit</label>
+<input class="w-full h-9 px-space-sm bg-surface-container-low rounded font-data-table text-data-table text-primary focus:outline-none focus:ring-1 focus:ring-secondary border border-outline-variant/30" placeholder="PKR" type="text" value="3.80"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant block mb-1">MRP / Unit</label>
+<input class="w-full h-9 px-space-sm bg-surface-container-low rounded font-data-table text-data-table text-primary focus:outline-none focus:ring-1 focus:ring-secondary border border-outline-variant/30" placeholder="PKR" type="text" value="5.00"/>
+</div>
+</div>
+<button class="mt-space-xs w-full py-2.5 bg-secondary text-on-secondary rounded font-body-sm text-body-sm font-bold hover:bg-on-secondary-fixed-variant transition-colors flex items-center justify-center gap-space-xs cursor-pointer shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add_box</span>
+<span>Commit Batch &amp; Print Barcode</span>
+<span class="bg-primary-container text-on-primary px-1 rounded font-label-shortcut text-label-shortcut">F9</span>
+</button>
+</div>
+<!-- DRAP Sign-off Notice -->
+<div class="p-space-xs bg-surface-container rounded flex items-center gap-space-xs border border-outline-variant/30">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified</span>
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+                Compliance verified by <strong class="text-primary font-bold">Pharm. Tariq Mahmood, R.Ph</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- New Product Master Modal -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-primary/40 backdrop-blur-xs p-space-md" id="newProductModal">
+<div class="bg-surface-container-lowest w-full max-w-xl rounded-xl shadow-xl overflow-hidden flex flex-col max-h-[921px] border border-outline-variant/60">
+<!-- Modal Header -->
+<div class="px-space-lg py-space-md bg-surface-container-lowest flex items-center justify-between border-b border-surface-container">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary font-bold">New Product Master</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Register clinical item into hospital formulary database</p>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant flex items-center justify-center cursor-pointer transition-colors" onclick="document.getElementById('newProductModal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-space-lg overflow-y-auto flex flex-col gap-space-md">
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">Brand Name *</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" placeholder="e.g. Augmentin 625mg" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">Generic Name</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" placeholder="e.g. Paracetamol" type="text"/>
+</div>
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">Strength</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" placeholder="e.g. 500mg" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">Form *</label>
+<select class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40 cursor-pointer">
+<option>Tablet</option>
+<option>Capsule</option>
+<option>Syrup / Suspension</option>
+<option>Injectable Ampoule</option>
+<option>Sachet / Powder</option>
+<option>Dialysis Consumable</option>
+</select>
+</div>
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">Base Unit *</label>
+<select class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40 cursor-pointer">
+<option>unit (piece/tablet)</option>
+<option>strip</option>
+<option>box</option>
+<option>bottle</option>
+<option>vial</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">SKU / Item Code</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" placeholder="MED-AUG-625" type="text"/>
+</div>
+<div>
+<label class="font-body-sm text-body-sm text-on-surface font-semibold block mb-1">Barcode / EAN</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" placeholder="896400019281" type="text"/>
+</div>
+</div>
+<!-- Packaging Section -->
+<div class="flex flex-col gap-space-sm pt-space-xs border-t border-surface-container">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold">Packaging — How the medicine is boxed</span>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Units per Strip</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-data-table text-data-table text-primary focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" id="unitPerStripInput" type="number" value="10"/>
+</div>
+<div>
+<label class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Strips per Box</label>
+<input class="w-full h-10 px-space-sm bg-surface-container-low rounded-lg font-data-table text-data-table text-primary focus:outline-none focus:ring-2 focus:ring-secondary border border-outline-variant/40" id="stripsPerBoxInput" type="number" value="10"/>
+</div>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg text-body-sm text-body-sm text-secondary font-medium border border-outline-variant/30">
+            One box = <span class="font-bold" id="stripCalc">10 strips</span> = <span class="font-bold" id="unitCalc">100 units</span>. Stock is counted in units, so any of the three can be sold from the same shelf.
+          </div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-space-lg py-space-sm bg-surface-container-low flex items-center justify-end gap-space-sm border-t border-surface-container">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm font-semibold cursor-pointer transition-colors" onclick="document.getElementById('newProductModal').classList.add('hidden')" type="button">Cancel</button>
+<button class="px-space-lg py-2 rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-fixed-variant font-body-sm text-body-sm font-bold cursor-pointer shadow-sm transition-colors" onclick="document.getElementById('newProductModal').classList.add('hidden')" type="button">Save Product Master</button>
+</div>
+</div>
+</div>
+<!-- PERSISTENT OFFLINE LAN STATUS BAR (Full-width Across Bottom) -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 h-8 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between px-space-lg text-on-surface-variant font-data-table text-data-table shadow-[0_-1px_3px_rgba(15,45,89,0.04)]">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>
+<span class="text-primary font-semibold">SQLite Local DB: Synced</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary">lan</span>
+<span>LAN: 192.168.10.45 [Master Online]</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs">
+<span>Queue Pending:</span>
+<span class="font-bold text-error">03 Prescriptions</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<div>
+<span>Drug DB Rev:</span>
+<span class="text-primary font-semibold ml-1">2024.10-PK</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div>
+<span>Shift Sales Summary:</span>
+<span class="text-secondary font-bold ml-1">Rs. 184,250.00 (142 Bills)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[13px] text-on-tertiary-container">check_circle</span>
+<span>Thermal Printer Ready</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="font-label-caps text-label-caps bg-surface-container px-space-xs py-0.5 rounded text-primary-container font-bold">v4.3-clinical</div>
+</div>
+</footer>
+<script>
+    // Live Packaging Formula Calculation
+    const unitInput = document.getElementById('unitPerStripInput');
+    const stripInput = document.getElementById('stripsPerBoxInput');
+    const stripCalc = document.getElementById('stripCalc');
+    const unitCalc = document.getElementById('unitCalc');
+
+    function updatePackCalc() {
+      if (unitInput && stripInput && stripCalc && unitCalc) {
+        const u = parseInt(unitInput.value, 10) || 1;
+        const s = parseInt(stripInput.value, 10) || 1;
+        stripCalc.textContent = `${s} strips`;
+        unitCalc.textContent = `${s * u} units`;
+      }
+    }
+
+    if (unitInput && stripInput) {
+      unitInput.addEventListener('input', updatePackCalc);
+      stripInput.addEventListener('input', updatePackCalc);
+    }
+
+    // Keyboard Shortcuts Listener
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const search = document.getElementById('inventorySearch');
+        if (search) search.value = '';
+        const modal = document.getElementById('newProductModal');
+        if (modal) modal.classList.add('hidden');
+      }
+      if (e.altKey && (e.key === 'n' || e.key === 'N')) {
+        e.preventDefault();
+        const modal = document.getElementById('newProductModal');
+        if (modal) modal.classList.remove('hidden');
+      }
+    });
+  </script>
+</body></html>

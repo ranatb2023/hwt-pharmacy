@@ -22,8 +22,8 @@ export default function Patients() {
     <div>
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <div className="card">
-        <div className="flex between mb">
-          <form className="flex" onSubmit={(e) => { e.preventDefault(); load(q); }} style={{ flex: 1, maxWidth: 460 }}>
+        <div className="fx between mb">
+          <form className="fx" onSubmit={(e) => { e.preventDefault(); load(q); }} style={{ flex: 1, maxWidth: 460 }}>
             <input placeholder="Search by Patient ID, name, contact or CNIC…" value={q} onChange={(e) => setQ(e.target.value)} />
             <button className="btn">Search</button>
           </form>
