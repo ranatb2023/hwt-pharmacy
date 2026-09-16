@@ -6,10 +6,10 @@ import { Icon } from '../icons.jsx';
 // shadow, KPI tiles with an icon square, uppercase tracking on table heads and
 // section labels, pills for state. Kept small so every screen reads the same.
 
-export const BTN = 'h-9 min-h-[44px] lg:min-h-0 px-3 bg-white hover:bg-slate-50 border border-slate-300 rounded-md font-semibold text-slate-700 inline-flex items-center gap-1.5 text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed shadow-sm';
-export const BTN_PRIMARY = 'h-9 min-h-[44px] lg:min-h-0 px-3.5 bg-[#0284c7] hover:bg-blue-600 text-white rounded-md font-bold inline-flex items-center gap-1.5 text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed shadow-sm';
-export const BTN_DARK = 'h-9 min-h-[44px] lg:min-h-0 px-3.5 bg-[#0b1f3d] hover:bg-[#122e54] text-white rounded-md font-bold inline-flex items-center gap-1.5 text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
-export const BTN_SM = 'h-7 min-h-[44px] lg:min-h-0 px-2.5 bg-white hover:bg-slate-50 border border-slate-300 rounded font-semibold text-slate-700 inline-flex items-center gap-1 text-[11px] whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
+export const BTN = 'h-9 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-3 bg-white hover:bg-slate-50 border border-slate-300 rounded-md font-semibold text-slate-700 inline-flex items-center gap-1.5 text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed shadow-sm';
+export const BTN_PRIMARY = 'h-9 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-3.5 bg-[#0284c7] hover:bg-blue-600 text-white rounded-md font-bold inline-flex items-center gap-1.5 text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed shadow-sm';
+export const BTN_DARK = 'h-9 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-3.5 bg-[#0b1f3d] hover:bg-[#122e54] text-white rounded-md font-bold inline-flex items-center gap-1.5 text-xs whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
+export const BTN_SM = 'h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2.5 bg-white hover:bg-slate-50 border border-slate-300 rounded font-semibold text-slate-700 inline-flex items-center gap-1 text-[11px] whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
 export const CTL = 'h-10 min-h-0 py-0 px-3 text-sm border border-slate-300 rounded-md bg-white focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] w-full';
 export const NUM = `${CTL} font-mono`;
 export const LABEL = 'block text-[13px] font-semibold text-slate-800 mb-1.5';
@@ -28,7 +28,7 @@ export function PageHead({ title, sub, chip, right }) {
   return (
     <div className="flex items-start justify-between gap-4 flex-wrap">
       <div>
-        {title && <h2 className="hidden print:block text-xl font-extrabold text-[#0b1f3d] tracking-tight font-headline m-0">{title}</h2>}
+        {title && <h2 className="ws-h1 print:!block text-base font-bold text-slate-900 m-0">{title}</h2>}
         {chip && <div className="flex items-center gap-2 flex-wrap print:hidden">{chip}</div>}
         {sub && <p className="text-xs text-slate-500 mt-1 mb-0 max-w-3xl">{sub}</p>}
       </div>
@@ -105,7 +105,7 @@ export function Chips({ items, value, onChange }) {
     <div className="flex items-center gap-1.5 flex-wrap">
       {items.map(([k, label, n]) => (
         <button key={k} type="button" onClick={() => onChange(k)}
-          className={`h-8 min-h-[44px] lg:min-h-0 px-3 rounded-md text-xs font-semibold border transition-colors ${value === k ? 'bg-[#0284c7] text-white border-[#0284c7]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'}`}>
+          className={`h-8 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-3 rounded-md text-xs font-semibold border transition-colors ${value === k ? 'bg-[#0284c7] text-white border-[#0284c7]' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'}`}>
           {label}{n != null ? ` (${n})` : ''}
         </button>
       ))}
@@ -168,15 +168,17 @@ function labelCells(children, labels) {
   });
 }
 
-export function Tbl({ head, right = [], children, dense, stack = false, pin = false }) {
+export function Tbl({ head, right = [], children, dense, stack = false, pin = false, tight = false }) {
   const labels = head.map((h) => (typeof h === 'string' || typeof h === 'number' ? String(h) : ''));
+  const px = tight ? 'px-2' : 'px-4';
+  const tdPad = tight ? '[&>tr>td]:px-2' : '[&>tr>td]:px-4';
   return (
     <div className="overflow-x-auto">
       <table className={`w-full text-xs border-collapse ${stack ? 'table-stack' : ''} ${pin ? 'table-pin-first' : ''}`}>
         <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] font-bold border-b border-slate-200">
-          <tr>{head.map((h, i) => <th key={i} className={`${dense ? 'py-2' : 'py-3'} px-4 ${right.includes(i) ? 'text-right' : 'text-left'}`}>{h}</th>)}</tr>
+          <tr>{head.map((h, i) => <th key={i} className={`${dense ? 'py-2' : 'py-3'} ${px} ${right.includes(i) ? 'text-right' : 'text-left'}`}>{h}</th>)}</tr>
         </thead>
-        <tbody className="divide-y divide-slate-100 [&>tr>td]:px-4 [&>tr>td]:py-3 [&>tr:hover]:bg-slate-50/70">{stack ? labelCells(children, labels) : children}</tbody>
+        <tbody className={`divide-y divide-slate-100 ${tdPad} [&>tr>td]:py-3 [&>tr:hover]:bg-slate-50/70`}>{stack ? labelCells(children, labels) : children}</tbody>
       </table>
     </div>
   );

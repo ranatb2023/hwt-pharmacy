@@ -9,3 +9,5 @@ frontend/dist/
 # Playwright saved login (e2e/mobile-layout.spec.ts)
 frontend/e2e/auth.json
 frontend/test-results/
+frontend/e2e/auth-pharmacist.json
+frontend/playwright-report/

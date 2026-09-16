@@ -43,6 +43,8 @@ export default function Dashboard({ management = false }) {
   const [msg, setMsg] = useState('');
   const [busy, setBusy] = useState(false);
   const [confirm, confirmDialog] = useConfirm();
+  // Phones fold the secondary panels behind one toggle (mobile spec, item 14).
+  const [moreToday, setMoreToday] = useState(false);
 
   const load = useCallback(() => {
     if (can('report.view') || can('billing.view')) api.get('/reports/dashboard').then(setStats).catch((e) => setErr(e.message)); else setStats({});
@@ -132,19 +134,19 @@ export default function Dashboard({ management = false }) {
       {confirmDialog}
 
       {/* Banner */}
-      <section className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm relative overflow-hidden">
+      <section className="bg-white rounded-lg border border-slate-200 p-3 sm:p-5 shadow-sm relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#0284c7]" />
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-extrabold text-[#0b1f3d] tracking-tight flex items-center gap-2 font-headline m-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 sm:gap-4">
+          <div className="min-w-0">
+            <h2 className="text-base sm:text-lg font-extrabold text-[#0b1f3d] tracking-tight flex items-center gap-2 flex-wrap font-headline m-0">
               Welcome, {user?.full_name}
               <span className={`text-xs font-medium px-2 py-0.5 rounded border ${till ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>{till ? 'Shift Active' : 'No shift open'}</span>
             </h2>
-            <p className="text-xs text-slate-600 mt-1 mb-0">
+            <p className="hidden sm:block text-xs text-slate-600 mt-1 mb-0">
               Role: <strong className="text-slate-800">{user?.role}</strong>{user?.department ? ` • ${user.department}` : ''} • {config.pharmacy_name || (hospitalMode ? 'Hospital' : 'Pharmacy')}. Use the menu or the hotkey launchpads below to enter a workstation.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-slate-600 bg-slate-50 px-3.5 py-2 rounded-md border border-slate-200 shrink-0 min-w-0">
+          <div className="hidden sm:flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-slate-600 bg-slate-50 px-3.5 py-2 rounded-md border border-slate-200 shrink-0 min-w-0">
             <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-500" /><span>SQLite WAL Engine</span></div>
             <span className="text-slate-300">|</span>
             <div>Business day: <span className="font-bold text-slate-800 font-mono">{ph?.business_date || '—'}</span></div>
@@ -232,19 +234,19 @@ export default function Dashboard({ management = false }) {
             <span className="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded">{till ? `${till.counter} · opened ${fmtTime(till.opened_at)}` : 'No till session'}</span>
           </div>
           <div className="overflow-x-auto -mx-5 sm:mx-0">
-            <table className="w-full text-left text-xs">
+            <table className="table-stack w-full text-left text-xs">
               <thead className="bg-slate-50 text-slate-600 font-semibold border-y border-slate-100">
                 <tr><th className="py-2.5 px-3">Bill #</th><th className="py-2.5 px-3">Time</th><th className="py-2.5 px-3">Customer</th><th className="py-2.5 px-3">Category</th><th className="py-2.5 px-3 text-right">Amount</th><th className="py-2.5 px-3 text-right">Status</th></tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {(ph?.recent_sales || []).slice(0, 8).map((b) => (
                   <tr key={b.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-3 font-mono font-bold text-[#0284c7] whitespace-nowrap">{b.bill_no}</td>
-                    <td className="py-3 px-3 font-mono text-slate-500">{fmtTime(b.created_at)}</td>
-                    <td className="py-3 px-3 font-medium max-w-[14rem] truncate" title={b.buyer}>{b.buyer}{b.patient_code ? <span className="text-slate-400 font-mono font-normal"> · {b.patient_code}</span> : null}</td>
-                    <td className="py-3 px-3"><span className={`px-2 py-0.5 rounded text-[10px] font-bold ${b.category === 'Paid' ? 'bg-slate-100 text-slate-700' : b.category === 'Complete Free' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-700'}`}>{b.category}</span></td>
-                    <td className="py-3 px-3 text-right font-mono font-semibold whitespace-nowrap">{money(b.net_amount)}</td>
-                    <td className="py-3 px-3 text-right whitespace-nowrap"><span className={`px-2 py-0.5 rounded font-medium ${b.payment_method === 'credit' ? 'bg-amber-50 text-amber-700' : b.status === 'amended' ? 'bg-rose-50 text-rose-700' : 'bg-emerald-50 text-emerald-700'}`}>{b.payment_method === 'credit' ? 'On account' : b.status === 'amended' ? 'Amended' : 'Paid'}</span></td>
+                    <td className="stack-title py-3 px-3 font-mono font-bold text-[#0284c7] whitespace-nowrap" data-label="">{b.bill_no}</td>
+                    <td className="py-3 px-3 font-mono text-slate-500" data-label="Time">{fmtTime(b.created_at)}</td>
+                    <td className="py-3 px-3 font-medium max-w-[14rem] truncate" data-label="Customer" title={b.buyer}>{b.buyer}{b.patient_code ? <span className="text-slate-400 font-mono font-normal"> · {b.patient_code}</span> : null}</td>
+                    <td className="py-3 px-3" data-label="Category"><span className={`px-2 py-0.5 rounded text-[10px] font-bold ${b.category === 'Paid' ? 'bg-slate-100 text-slate-700' : b.category === 'Complete Free' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-700'}`}>{b.category}</span></td>
+                    <td className="py-3 px-3 text-right font-mono font-semibold whitespace-nowrap" data-label="Amount">{money(b.net_amount)}</td>
+                    <td className="py-3 px-3 text-right whitespace-nowrap" data-label="Status"><span className={`px-2 py-0.5 rounded font-medium ${b.payment_method === 'credit' ? 'bg-amber-50 text-amber-700' : b.status === 'amended' ? 'bg-rose-50 text-rose-700' : 'bg-emerald-50 text-emerald-700'}`}>{b.payment_method === 'credit' ? 'On account' : b.status === 'amended' ? 'Amended' : 'Paid'}</span></td>
                   </tr>
                 ))}
                 {ph && (ph.recent_sales || []).length === 0 && <tr><td colSpan={6} className="py-6 text-center text-slate-500">No bills yet today.</td></tr>}
@@ -255,13 +257,13 @@ export default function Dashboard({ management = false }) {
           <div className="mt-3 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
             <span>Showing the latest {Math.min(8, (ph?.recent_sales || []).length)} bills of {ph?.business_date || 'today'}</span>
             <span className="flex items-center gap-3">
-              {can('return.manage') && <Link to="/returns" className="text-slate-600 hover:underline font-semibold">Process a return</Link>}
-              <Link to="/pharmacy-close" className="text-[#0284c7] hover:underline font-semibold">View the day book →</Link>
+              {can('return.manage') && <Link to="/returns" className="inline-flex items-center min-h-[44px] lg:min-h-0 touch:min-h-[44px] text-slate-600 hover:underline font-semibold">Process a return</Link>}
+              <Link to="/pharmacy-close" className="inline-flex items-center min-h-[44px] lg:min-h-0 touch:min-h-[44px] text-[#0284c7] hover:underline font-semibold">View the day book →</Link>
             </span>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm flex flex-col justify-between self-start">
+        <div className={`${moreToday ? 'flex' : 'hidden md:flex'} bg-white rounded-lg border border-slate-200 p-5 shadow-sm flex-col justify-between self-start`}>
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
               <h3 className="text-sm font-bold text-[#0b1f3d] m-0 font-headline">Ward &amp; Unit Indents</h3>
@@ -287,9 +289,13 @@ export default function Dashboard({ management = false }) {
               Process Requisitions Now
             </button>
           ) : (
-            <Link to="/departments" className="block mt-3 text-xs text-[#0284c7] font-semibold hover:underline">Open the requisition queue →</Link>
+            <Link to="/departments" className="inline-flex items-center min-h-[44px] lg:min-h-0 touch:min-h-[44px] mt-3 text-xs text-[#0284c7] font-semibold hover:underline">Open the requisition queue →</Link>
           )}
         </div>
+        <button type="button" onClick={() => setMoreToday((v) => !v)} aria-expanded={moreToday}
+          className="md:hidden ws-btn justify-center w-full">
+          {moreToday ? 'Less for today ▴' : 'More for today ▾'}
+        </button>
       </section>
 
       {/* The counter's own panels */}
@@ -297,13 +303,13 @@ export default function Dashboard({ management = false }) {
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card flush title="Reorder List" sub="At or under the reorder level — order back to a month's cover" right={<>{(ph.reorder || []).length ? <Pill tone="amber">{ph.reorder.length} to order</Pill> : <Pill tone="emerald">all above reorder</Pill>}{can('inventory.manage') && <Link to="/inventory" className={BTN_SM}>Receive stock</Link>}</>}>
             {(ph.reorder || []).length === 0 ? <Empty>Every item is above its reorder level.</Empty> : (
-              <Tbl head={['Medicine', 'On hand', 'Reorder at', 'Used (30 d)', 'Suggest']} right={[1, 2, 3, 4]} dense>
+              <Tbl stack head={['Medicine', 'On hand', 'Reorder at', 'Used (30 d)', 'Suggest']} right={[1, 2, 3, 4]} dense>
                 {ph.reorder.map((r) => {
                   const target = Math.max(r.used_30d, r.reorder_level); const suggest = Math.max(0, target - r.on_hand);
                   const perBox = (r.units_per_strip || 1) * (r.strips_per_box || 1); const boxes = perBox > 1 ? Math.ceil(suggest / perBox) : null;
                   return (
                     <tr key={r.id}>
-                      <td className="font-semibold text-slate-900">{r.name}{strengthOf(r) ? <span className="text-slate-500 font-normal"> {strengthOf(r)}</span> : null}</td>
+                      <td className="stack-title font-semibold text-slate-900" data-label="">{r.name}{strengthOf(r) ? <span className="text-slate-500 font-normal"> {strengthOf(r)}</span> : null}</td>
                       <td className="text-right"><Pill tone={r.on_hand <= 0 ? 'rose' : 'amber'} mono>{r.on_hand}</Pill></td>
                       <td className="text-right font-mono">{r.reorder_level}</td>
                       <td className="text-right font-mono">{r.used_30d}</td>
@@ -316,7 +322,7 @@ export default function Dashboard({ management = false }) {
           </Card>
 
           <Card flush title="Expiry & Claims" sub="Soonest first — the order FEFO takes them" right={<><Pill tone="slate" mono>claim window {expiry.claim_window_days} d</Pill><Link to="/reports/expiry" className={BTN_SM}>Full ledger</Link></>}>
-            <div className="grid grid-cols-4 gap-2 p-4 border-b border-slate-100">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-4 border-b border-slate-100">
               {[['rose', 'Expired', expiry.expired, 'off the shelf'], ['amber', 'Within 30 days', expiry.within_30, 'sell first'], ['sky', `Within ${expiry.near_expiry_days} days`, expiry.near, 'watch'], ['emerald', 'Still claimable', expiry.claimable, 'return to supplier']].map(([tone, label, b, note]) => (
                 <div key={label} className={`rounded-md border px-3 py-2 ${{ rose: 'border-rose-200 bg-rose-50/40', amber: 'border-amber-200 bg-amber-50/40', sky: 'border-blue-200 bg-blue-50/40', emerald: 'border-emerald-200 bg-emerald-50/40' }[tone]}`}>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{label}</div>
@@ -327,10 +333,10 @@ export default function Dashboard({ management = false }) {
               ))}
             </div>
             {expiry.batches.length === 0 ? <Empty>No batch expires within {expiry.near_expiry_days} days.</Empty> : (
-              <Tbl head={['Medicine', 'Batch', 'Expires', 'Qty', 'Value', '']} right={[3, 4, 5]} dense>
+              <Tbl stack tight head={['Medicine', 'Batch', 'Expires', 'Qty', 'Value', '']} right={[3, 4, 5]} dense>
                 {expiry.batches.slice(0, 6).map((b) => (
                   <tr key={b.id} className={b.quarantined ? 'opacity-60' : ''}>
-                    <td><div className="font-semibold text-slate-900">{b.name}{strengthOf(b) ? <span className="text-slate-500 font-normal"> {strengthOf(b)}</span> : null}</div>{b.vendor_name && <div className="text-[10px] text-slate-500">{b.vendor_name}</div>}</td>
+                    <td className="stack-title" data-label=""><div className="font-semibold text-slate-900">{b.name}{strengthOf(b) ? <span className="text-slate-500 font-normal"> {strengthOf(b)}</span> : null}</div>{b.vendor_name && <div className="text-[10px] text-slate-500">{b.vendor_name}</div>}</td>
                     <td className="font-mono">{b.batch_no || '—'}</td>
                     <td className="font-mono">{b.expiry_date} <Pill tone={b.days_left < 0 ? 'rose' : b.days_left <= 30 ? 'rose' : 'amber'}>{b.days_left < 0 ? 'expired' : `${b.days_left}d left`}</Pill></td>
                     <td className="text-right font-mono">{b.quantity}</td>
@@ -342,7 +348,7 @@ export default function Dashboard({ management = false }) {
             )}
           </Card>
 
-          <Card title="Moving Today" sub="Units out per medicine, today" right={<Pill tone="slate">{sales?.distinct_items || 0} distinct item{sales?.distinct_items === 1 ? '' : 's'}</Pill>}>
+          <Card className={moreToday ? '' : 'hidden md:block'} title="Moving Today" sub="Units out per medicine, today" right={<Pill tone="slate">{sales?.distinct_items || 0} distinct item{sales?.distinct_items === 1 ? '' : 's'}</Pill>}>
             {(ph.top_sellers || []).length === 0 ? <Empty>Nothing dispensed yet today.</Empty> : (
               <div className="space-y-3">
                 {ph.top_sellers.map((r) => { const max = ph.top_sellers.reduce((m, x) => Math.max(m, x.units), 0) || 1; return (
@@ -356,9 +362,9 @@ export default function Dashboard({ management = false }) {
             )}
           </Card>
 
-          <Card flush title="Controlled Drug Register" sub={controlled ? `${controlled.skus} item(s) · ${controlled.units} units held` : ''} right={<Pill tone={controlled?.today_entries ? 'violet' : 'slate'} mono>{controlled?.today_entries || 0} entries today</Pill>}>
+          <Card className={moreToday ? '' : 'hidden md:block'} flush title="Controlled Drug Register" sub={controlled ? `${controlled.skus} item(s) · ${controlled.units} units held` : ''} right={<Pill tone={controlled?.today_entries ? 'violet' : 'slate'} mono>{controlled?.today_entries || 0} entries today</Pill>}>
             {!controlled || controlled.skus === 0 ? <Empty>No Schedule G or narcotic items are stocked.</Empty> : controlled.recent.length === 0 ? <Empty>No entries recorded yet.</Empty> : (
-              <Tbl head={['Entry', 'Medicine', 'Qty', 'Collected by', 'Prescriber']} right={[2]} dense>
+              <Tbl stack head={['Entry', 'Medicine', 'Qty', 'Collected by', 'Prescriber']} right={[2]} dense>
                 {controlled.recent.slice(0, 6).map((r) => (
                   <tr key={r.entry_no}>
                     <td className="font-mono"><div>{r.entry_no}</div><div className="text-[10px] text-slate-500">{(r.created_at || '').slice(0, 10)}</div></td>

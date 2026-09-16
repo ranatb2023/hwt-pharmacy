@@ -1206,7 +1206,7 @@ export default function Pharmacy() {
                       ['credit', 'On account', 'no cash'],
                     ].map(([k, label, tag]) => (
                       <button key={k} type="button" onClick={() => setMethod(k)}
-                        className={`py-1.5 min-h-[44px] lg:min-h-0 px-2 rounded font-semibold text-center border flex items-center justify-center gap-1 ${
+                        className={`py-1.5 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 rounded font-semibold text-center border flex items-center justify-center gap-1 ${
                           method === k ? 'bg-slate-800 text-white border-slate-900 shadow-xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300'}`}>
                         <span>{label}</span>
                         {tag && <span className={`text-[9px] font-mono font-bold px-1 rounded ${method === k ? 'bg-slate-700 text-emerald-300' : 'bg-emerald-100 text-emerald-700'}`}>{tag}</span>}
@@ -1237,12 +1237,12 @@ export default function Pharmacy() {
                   </div>
                   <div className="grid grid-cols-3 gap-1 pt-1">
                     <button type="button" onClick={() => setTendered(String(Math.ceil(net)))}
-                      className="py-1 min-h-[44px] lg:min-h-0 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-xs font-mono font-semibold text-slate-800">
+                      className="py-1 min-h-[44px] lg:min-h-0 touch:min-h-[44px] bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-xs font-mono font-semibold text-slate-800">
                       Exact ({Math.ceil(net)})
                     </button>
                     {QUICK_CASH.filter((n) => n >= net).slice(0, 5).map((n) => (
                       <button key={n} type="button" onClick={() => setTendered(String(n))}
-                        className={`py-1 min-h-[44px] lg:min-h-0 border rounded text-xs font-mono font-semibold ${String(n) === tendered ? 'bg-slate-200 border-slate-400 text-slate-900 ring-1 ring-slate-400' : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'}`}>
+                        className={`py-1 min-h-[44px] lg:min-h-0 touch:min-h-[44px] border rounded text-xs font-mono font-semibold ${String(n) === tendered ? 'bg-slate-200 border-slate-400 text-slate-900 ring-1 ring-slate-400' : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'}`}>
                         {n.toLocaleString()}
                       </button>
                     ))}
@@ -1283,11 +1283,11 @@ export default function Pharmacy() {
               )}
               <div className="grid grid-cols-2 gap-2">
                 <button type="button" onClick={parkSale} disabled={!cart.length || holdBusy}
-                  className="py-1.5 min-h-[44px] lg:min-h-0 px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
+                  className="py-1.5 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
                   Hold bill <Kbd>F6</Kbd>
                 </button>
                 <button type="button" onClick={() => lastReceipt && setReceipt(lastReceipt)} disabled={!lastReceipt}
-                  className="py-1.5 min-h-[44px] lg:min-h-0 px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
+                  className="py-1.5 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
                   Reprint last
                 </button>
               </div>
@@ -1332,7 +1332,7 @@ function useMedia(query) {
 function ModeTab({ on, n, label, short, onClick }) {
   return (
     <button type="button" onClick={onClick}
-      className={`px-2 sm:px-3 min-h-[44px] sm:min-h-0 sm:h-7 text-xs font-semibold rounded inline-flex items-center justify-center sm:justify-start gap-1.5 border transition ${
+      className={`px-2 sm:px-3 min-h-[44px] sm:min-h-0 touch:min-h-[44px] sm:h-7 text-xs font-semibold rounded inline-flex items-center justify-center sm:justify-start gap-1.5 border transition ${
         on ? 'bg-slate-800 text-white border-slate-900 shadow-xs' : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300'}`}>
       <span className={`w-2 h-2 rounded-full shrink-0 ${on ? 'bg-emerald-400' : 'bg-slate-400'}`} />
       <span className="sm:hidden">{short || label}</span>

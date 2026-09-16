@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
+import { isTouch, useRevealOnSelect } from '../components/touch.js';
 import { useAuth } from '../auth.jsx';
 import Select from '../components/Select.jsx';
 import { Icon } from '../components/icons.jsx';
@@ -124,7 +125,7 @@ export default function Inventory() {
       else if (e.key === 'F3' && can('inventory.manage')) {
         e.preventDefault();
         if (selected) setReceiveFor(selected);
-        else { searchRef.current?.focus(); setMsg('Pick the medicine first — click its row (or find it above), then press F3 to receive stock into it.'); }
+        else { searchRef.current?.focus(); setMsg(isTouch() ? 'Select a medicine in the list first, then tap Receive.' : 'Pick the medicine first — click its row (or find it above), then press F3 to receive stock into it.'); }
       }
       else if (e.key === 'Escape') {
         if (document.activeElement === searchRef.current || !typing) { e.preventDefault(); setQ(''); searchRef.current?.focus(); }
@@ -159,7 +160,7 @@ export default function Inventory() {
           {can('inventory.manage') && (
             <>
               <button type="button" className={BTN_DARK} onClick={() => setShowNew(true)}><Icon name="plus" size={13} /> New medicine master <Kbd className="!bg-slate-700 !border-slate-600 !text-white">Alt+N</Kbd></button>
-              <button type="button" className={BTN} onClick={() => (selected ? setReceiveFor(selected) : (searchRef.current?.focus(), setMsg('Pick the medicine first — click its row (or find it above), then press F3 to receive stock into it.')))}
+              <button type="button" className={BTN} onClick={() => (selected ? setReceiveFor(selected) : (searchRef.current?.focus(), setMsg(isTouch() ? 'Select a medicine in the list first, then tap Receive.' : 'Pick the medicine first — click its row (or find it above), then press F3 to receive stock into it.')))}
                 title={selected ? `Receive ${selected.name}` : 'Pick a medicine, then receive into it'}>
                 <Icon name="box" size={13} /> {selected ? `Receive into ${selected.name}` : 'Receive stock / GRN'} <Kbd>F3</Kbd>
               </button>
@@ -179,11 +180,11 @@ export default function Inventory() {
         <Tile label="Stock-out / reorder alert" value={tiles.out + tiles.low} unit={(tiles.out + tiles.low) === 1 ? 'item' : 'items'} icon="warning"
           tone={tiles.out ? 'danger' : tiles.low ? 'warn' : 'ok'}
           sub={tiles.out || tiles.low ? `${tiles.out} out of stock · ${tiles.low} at or under reorder` : 'all items above reorder level'}
-          right={alerts.low_stock.length ? <button type="button" onClick={() => setPill('low')} className="text-[9px] font-bold uppercase text-amber-900 bg-amber-100 border border-amber-300 px-1 rounded">show</button> : null} />
+          right={alerts.low_stock.length ? <button type="button" onClick={() => setPill('low')} className="text-[9px] font-bold uppercase text-amber-900 bg-amber-100 border border-amber-300 px-1 rounded touch:min-h-[44px] touch:px-2 inline-flex items-center">show</button> : null} />
         <Tile label="DRAP regulatory gap" value={tiles.drap} unit="missing reg. no" icon="shield"
           tone={tiles.drap ? 'warn' : 'ok'}
           sub={tiles.aboveMrp ? `${tiles.aboveMrp} priced above MRP` : 'no medicine priced above MRP'}
-          right={tiles.drap ? <button type="button" onClick={() => setPill('drap')} className="text-[9px] font-bold uppercase text-amber-900 bg-amber-100 border border-amber-300 px-1 rounded">audit</button> : null} />
+          right={tiles.drap ? <button type="button" onClick={() => setPill('drap')} className="text-[9px] font-bold uppercase text-amber-900 bg-amber-100 border border-amber-300 px-1 rounded touch:min-h-[44px] touch:px-2 inline-flex items-center">audit</button> : null} />
       </div>
 
       <div className="grid grid-cols-12 gap-3 items-start">
@@ -208,14 +209,14 @@ export default function Inventory() {
           <div className="px-3 py-2 border-b border-slate-200 flex items-center gap-1 flex-wrap">
             {[['all', 'All medicines'], ['low', 'Low stock'], ['expiry', 'Near expiry'], ['drap', 'DRAP missing'], ['controlled', 'Schedule G / controlled']].map(([k, l]) => (
               <button key={k} type="button" onClick={() => setPill(k)}
-                className={`h-7 min-h-[44px] lg:min-h-0 px-2.5 text-[11px] font-semibold rounded border ${pill === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'} ${k !== 'all' && counts[k] && pill !== k ? (k === 'low' || k === 'expiry' ? '!text-rose-800' : '!text-amber-800') : ''}`}>
+                className={`h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2.5 text-[11px] font-semibold rounded border ${pill === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'} ${k !== 'all' && counts[k] && pill !== k ? (k === 'low' || k === 'expiry' ? '!text-rose-800' : '!text-amber-800') : ''}`}>
                 {l} ({counts[k]})
               </button>
             ))}
           </div>
 
           <div className="overflow-x-auto">
-            <table className="table-stack w-full text-xs border-collapse">
+            <table className="table-stack table-pin-first w-full text-xs border-collapse">
               <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                 <tr>
                   <th className="text-left py-2 pl-3 pr-2">Product &amp; formula</th>
@@ -233,7 +234,7 @@ export default function Inventory() {
                   return (
                     <tr key={p.id} onClick={() => setSelected(p)}
                       className={`cursor-pointer ${on ? 'bg-sky-50 shadow-[inset_3px_0_0_#0369a1]' : 'hover:bg-slate-50'}`}>
-                      <td className="py-2 pl-3 pr-2" data-label="">
+                      <td className="stack-title py-2 pl-3 pr-2" data-label="">
                         <div className="font-bold text-slate-900 flex items-center gap-1.5 flex-wrap">
                           <span>{p.name}{strengthOf(p) ? <span className="text-slate-500 font-normal"> {strengthOf(p)}</span> : null}</span>
                           {isLow(p) && <Tag tone={p.on_hand <= 0 ? 'red' : 'amber'}>{p.on_hand <= 0 ? 'out of stock' : 'low stock'}</Tag>}
@@ -252,21 +253,25 @@ export default function Inventory() {
                         {p.drap_reg_no || (p.drug_schedule !== 'OTC' ? <Tag tone="amber">missing</Tag> : <span className="text-slate-400">—</span>)}
                       </td>
                       <td className="py-2 px-2 text-right whitespace-nowrap" data-label="On hand">
-                        <div className={`font-mono font-bold ${p.on_hand <= 0 ? 'text-rose-700' : isLow(p) ? 'text-amber-700' : 'text-slate-900'}`}>{p.on_hand.toLocaleString()}</div>
-                        <div className="text-[10px] text-slate-500 font-mono">{p.stock_label || `${p.on_hand} ${p.unit || ''}`} • reorder {p.reorder_level}</div>
+                        <div className="cell">
+                          <div className={`font-mono font-bold ${p.on_hand <= 0 ? 'text-rose-700' : isLow(p) ? 'text-amber-700' : 'text-slate-900'}`}>{p.on_hand.toLocaleString()}</div>
+                          <div className="text-[10px] text-slate-500 font-mono">{p.stock_label || `${p.on_hand} ${p.unit || ''}`} • reorder {p.reorder_level}</div>
+                        </div>
                       </td>
                       <td className="py-2 px-2 text-right whitespace-nowrap font-mono" data-label="Price / MRP">
+                        <div className="cell">
                         <div className="font-bold text-slate-900">{money(p.sale_price)}<span className="text-[10px] text-slate-500 font-normal">/{p.unit || 'unit'}</span></div>
                         <div className={`text-[10px] ${p.mrp > 0 && p.sale_price > p.mrp ? 'text-rose-700 font-bold' : 'text-slate-500'}`}>
                           {p.strip_price != null ? `${money(p.strip_price)}/strip • ` : ''}MRP {p.mrp > 0 ? money(p.mrp) : '—'}
+                        </div>
                         </div>
                       </td>
                       <td className="py-2 pl-2 pr-3 text-right whitespace-nowrap" data-label="">
                         {can('inventory.manage') && (
                           <div className="inline-flex gap-1">
-                            <button type="button" className="h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
+                            <button type="button" className="h-6 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 text-[10px] font-semibold rounded border bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
                               onClick={(e) => { e.stopPropagation(); setSelected(p); setEditing(p); }}>Edit</button>
-                            <button type="button" className="h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border bg-slate-800 text-white border-slate-900 hover:bg-slate-900"
+                            <button type="button" className="h-6 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 text-[10px] font-semibold rounded border bg-slate-800 text-white border-slate-900 hover:bg-slate-900"
                               onClick={(e) => { e.stopPropagation(); setSelected(p); setReceiveFor(p); }}>Receive</button>
                           </div>
                         )}

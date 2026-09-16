@@ -77,7 +77,9 @@ function Home() {
 // sidebar; a counter hub user's home stays in the dock. The sidebar links to
 // the counter screens and the dock's More menu links back — one page tree,
 // two frames, never both.
-const SIDEBAR_ROUTES = ['/admin', '/reports', '/margin', '/amend', '/dialysis', '/stock-audit'];
+// Only the admin-only screens force the sidebar frame (mobile spec, item 8):
+// a pharmacist opening Stock Audit or Dialysis stays in the dock they came from.
+const SIDEBAR_ROUTES = ['/admin', '/reports', '/margin', '/amend'];
 function Shell() {
   const { user, hospitalMode, config } = useAuth();
   // The browser tab names the pharmacy, not the hospital product (QA S4-38).

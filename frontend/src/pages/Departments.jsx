@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from '../components/Select.jsx';
 import { api } from '../api.js';
+import { isTouch, useRevealOnSelect } from '../components/touch.js';
 import { useAuth } from '../auth.jsx';
 import { Icon } from '../components/icons.jsx';
 import { Alert, money } from '../components/ui.jsx';
@@ -43,6 +44,9 @@ export default function Departments() {
   const [rows, setRows] = useState([]);          // every slip the server lists (latest 200)
   const [deptFilter, setDeptFilter] = useState('');
   const [open, setOpen] = useState(null);         // slip being inspected
+  // Narrow screens stack the queue above the slip (mobile spec, item 4).
+  const detailRef = useRevealOnSelect(open?.id);
+  const listRef = useRef(null);
   const [cursor, setCursor] = useState(0);        // the row ▲/▼ sit on
   const [creating, setCreating] = useState(false);
   const [err, setErr] = useState('');
@@ -128,14 +132,14 @@ export default function Departments() {
 
       <div className="grid grid-cols-12 gap-3 items-start">
         {/* ================= LEFT: the queue ============================== */}
-        <div className="col-span-12 xl:col-span-8 flex flex-col gap-3 print:hidden">
+        <div ref={listRef} className="col-span-12 xl:col-span-8 flex flex-col gap-3 print:hidden scroll-mt-3">
           <div className="bg-white rounded-md border border-slate-300 shadow-xs">
             <div className="flex items-center justify-between gap-3 px-3 py-2 border-b border-slate-200 bg-slate-50 rounded-t-md flex-wrap">
               <div className="flex items-center gap-1">
                 {[['pending', `Awaiting dispense${pending.length ? ` (${pending.length})` : ''}`], ['all', 'All slips'], ['depts', 'Departments']]
                   .map(([k, l]) => (
                     <button key={k} type="button" onClick={() => setTab(k)}
-                      className={`h-7 px-2.5 text-[11px] font-semibold rounded border ${tab === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>
+                      className={`h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2.5 text-[11px] font-semibold rounded border ${tab === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>
                       {l}
                     </button>
                   ))}
@@ -204,7 +208,7 @@ export default function Departments() {
                           <td className="py-2 px-2 whitespace-nowrap" data-label="Status"><Status r={r} /></td>
                           <td className="py-2 pl-2 pr-3 text-right" data-label="">
                             <button type="button" onClick={(e) => { e.stopPropagation(); setCursor(i); inspect(r); }}
-                              className={`h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border ${isOpen ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>
+                              className={`h-6 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 text-[10px] font-semibold rounded border ${isOpen ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>
                               {isOpen ? 'Inspecting' : r.status === 'received' ? 'Load' : 'View'}
                             </button>
                           </td>
@@ -240,15 +244,20 @@ export default function Departments() {
         </div>
 
         {/* ================= RIGHT: the slip under inspection =============== */}
-        <div className="col-span-12 xl:col-span-4 print:col-span-12">
+        <div ref={detailRef} className="col-span-12 xl:col-span-4 print:col-span-12 scroll-mt-3">
           {open ? (
+            <>
+              <button type="button" className="xl:hidden ws-btn mb-2 print:hidden" onClick={() => { setOpen(null); listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+                ← Back to list
+              </button>
             <SlipDetail key={open.id} slip={open} depts={depts} can={can}
               onClose={() => setOpen(null)} onErr={setErr} onDone={done} />
+            </>
           ) : (
             <div className="bg-white rounded-md border border-dashed border-slate-300 p-6 text-center text-xs text-slate-500 print:hidden">
               <Icon name="file" size={22} />
               <div className="mt-2 font-semibold text-slate-700">No slip under inspection</div>
-              <div className="mt-1">Pick one from the queue, or press <Kbd>Enter</Kbd> on the highlighted row.</div>
+              <div className="mt-1">{isTouch() ? 'Tap a slip in the queue to open it.' : <>Pick one from the queue, or press <Kbd>Enter</Kbd> on the highlighted row.</>}</div>
             </div>
           )}
         </div>
@@ -421,7 +430,7 @@ function SlipForm({ depts, onClose, onErr }) {
         </div>
 
         <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1.5">For which patient <span className="font-normal normal-case">— optional</span></div>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <Field label="Patient / ward / bed"><input className={`${CTL} w-full`} value={f.patient_name} onChange={set('patient_name')} placeholder="As on the slip" /></Field>
           <Field label="Their MR number"><input className={`${CTL} w-full font-mono`} value={f.patient_ref} onChange={set('patient_ref')} /></Field>
           <Field label="Slip serial"><input className={`${CTL} w-full font-mono`} value={f.slip_ref} onChange={set('slip_ref')} placeholder="Their reference" /></Field>

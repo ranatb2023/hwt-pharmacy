@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select from '../components/Select.jsx';
 import { api } from '../api.js';
+import { isTouch, useRevealOnSelect } from '../components/touch.js';
 import { useAuth } from '../auth.jsx';
 import { Icon } from '../components/icons.jsx';
 import { Alert, money } from '../components/ui.jsx';
@@ -59,6 +60,9 @@ export default function Customers() {
   const [accounts, setAccounts] = useState([]); // every ledger account (latest 100)
   const [open, setOpen] = useState(null);
   const [tab, setTab] = useState('customers');
+  // Narrow screens stack the directory above the file (mobile spec, item 4).
+  const detailRef = useRevealOnSelect(open?.id);
+  const listRef = useRef(null);
   const [pill, setPill] = useState('all');
   const [showNew, setShowNew] = useState(false);
   const [err, setErr] = useState('');
@@ -146,13 +150,13 @@ export default function Customers() {
       <div className="flex items-center gap-1 print:hidden">
         {[['customers', 'Directory'], ['cards', 'Welfare card register'], ['tiers', 'Tiers & funds']].map(([k, l]) => (
           <button key={k} type="button" onClick={() => setTab(k)}
-            className={`h-7 min-h-[44px] lg:min-h-0 px-2.5 text-[11px] font-semibold rounded border ${tab === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
+            className={`h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2.5 text-[11px] font-semibold rounded border ${tab === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
         ))}
       </div>
 
       {tab === 'customers' && (
         <div className="grid grid-cols-12 gap-3 items-start">
-          <div className="col-span-12 xl:col-span-5 bg-white rounded-md border border-slate-300 shadow-xs print:hidden">
+          <div ref={listRef} className="col-span-12 xl:col-span-5 bg-white rounded-md border border-slate-300 shadow-xs print:hidden scroll-mt-3">
             <div className="p-3 border-b border-slate-200 space-y-2">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400"><Icon name="search" size={14} /></div>
@@ -195,16 +199,21 @@ export default function Customers() {
             </div>
           </div>
 
-          <div className="col-span-12 xl:col-span-7 print:col-span-12">
+          <div ref={detailRef} className="col-span-12 xl:col-span-7 print:col-span-12 scroll-mt-3">
             {open ? (
+              <>
+                <button type="button" className="xl:hidden ws-btn mb-2 print:hidden" onClick={() => { setOpen(null); listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+                  ← Back to list
+                </button>
               <CustomerFile key={open.id} customer={open} card={cardOf.get(open.id)} account={acctOf.get(open.id)} can={can}
                 onClose={() => setOpen(null)} onErr={setErr} onDone={(m) => { setMsg(m); load(); loadSide(); }}
                 onSettle={() => acctOf.get(open.id) && nav('/credit', { state: { accountId: acctOf.get(open.id).id } })} />
+              </>
             ) : (
               <div className="bg-white rounded-md border border-dashed border-slate-300 p-6 text-center text-xs text-slate-500 print:hidden">
                 <Icon name="patients" size={22} />
                 <div className="mt-2 font-semibold text-slate-700">No customer under review</div>
-                <div className="mt-1">Find them by mobile on the left, or press <Kbd>Alt+N</Kbd> to register one.</div>
+                <div className="mt-1">Search by mobile or name to open an account.{can('patient.manage') && <> Or use <b>Register customer</b> to add one.</>}</div>
               </div>
             )}
           </div>
@@ -285,20 +294,20 @@ function CustomerFile({ customer, card, account, can, onClose, onErr, onDone, on
         <div className="flex items-center gap-1.5">
           {card && <button type="button" className={BTN} onClick={() => setPrinting(cards.find((c) => c.id === card.id) || card)}><Icon name="idcard" size={13} /> Print card <Kbd>F4</Kbd></button>}
           {account && (account.balance > 0 || can('cash.manage')) && <button type="button" className={BTN_DARK} onClick={onSettle}>Pay / settle <Kbd className="!bg-slate-700 !border-slate-600 !text-white">Alt+P</Kbd></button>}
-          <button type="button" className={`${BTN} !bg-white`} onClick={onClose}>✕ <Kbd>Esc</Kbd></button>
+          <button type="button" className={`${BTN} !bg-white`} onClick={onClose} aria-label="Close" title="Close">✕ <Kbd>Esc</Kbd></button>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 p-3 border-b border-slate-200">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 border-b border-slate-200">
         <div className="border border-slate-200 rounded px-2.5 py-1.5"><div className="text-[9px] font-bold uppercase tracking-wide text-slate-500">Approved credit limit</div><div className="font-mono font-bold text-sm">{account ? (account.credit_limit == null ? <span className="text-slate-400 font-normal">no limit</span> : money(account.credit_limit)) : <span className="text-slate-400 font-normal">no account</span>}</div></div>
         <div className={`rounded px-2.5 py-1.5 border ${account?.balance > 0 ? 'bg-rose-50 border-rose-200' : 'border-slate-200'}`}><div className={`text-[9px] font-bold uppercase tracking-wide ${account?.balance > 0 ? 'text-rose-800' : 'text-slate-500'}`}>Balance owed</div><div className={`font-mono font-bold text-sm ${account?.balance > 0 ? 'text-rose-900' : 'text-slate-900'}`}>{money(account?.balance || 0)}</div></div>
-        <div className="border border-slate-200 rounded px-2.5 py-1.5"><div className="text-[9px] font-bold uppercase tracking-wide text-slate-500">Lifetime at this counter</div><div className="font-mono font-bold text-sm">{hist ? money(hist.totals.gross || 0) : '…'}</div><div className="text-[10px] text-slate-500">{hist ? `${hist.totals.bills || 0} bills · helped with ${money(hist.totals.helped || 0)}` : ''}</div></div>
+        <div className="col-span-2 sm:col-span-1 border border-slate-200 rounded px-2.5 py-1.5"><div className="text-[9px] font-bold uppercase tracking-wide text-slate-500">Lifetime at this counter</div><div className="font-mono font-bold text-sm">{hist ? money(hist.totals.gross || 0) : '…'}</div><div className="text-[10px] text-slate-500">{hist ? `${hist.totals.bills || 0} bills · helped with ${money(hist.totals.helped || 0)}` : ''}</div></div>
       </div>
 
       <div className="px-3 pt-2 flex items-center gap-1 flex-wrap border-b border-slate-200">
         {[['ledger', `Ledger & dispense history (${bills.length})`], ['welfare', `Welfare cards & entitlement (${cards.length})`], ['credit', 'Credit & staff allowance']].map(([k, l]) => (
           <button key={k} type="button" onClick={() => setTab(k)}
-            className={`px-2.5 py-1.5 text-[11px] font-semibold border-b-2 -mb-px ${tab === k ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-500 hover:text-slate-800'}`}>{l}</button>
+            className={`px-2.5 py-1.5 min-h-[44px] lg:min-h-0 touch:min-h-[44px] text-[11px] font-semibold border-b-2 -mb-px ${tab === k ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-500 hover:text-slate-800'}`}>{l}</button>
         ))}
       </div>
 

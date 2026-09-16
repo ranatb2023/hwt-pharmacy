@@ -1092,3 +1092,64 @@ html[data-offline] .ws-tile-sub::before, html[data-offline] .ws-empty::before { 
   z-index: 2;
   background: #f8fafc;
 }
+
+/* ===========================================================================
+   Pharmacist shell patch (hwt-pharmacist-mobile-fix-spec.md).
+   =========================================================================== */
+
+/* 9. touch sizing on any touch screen, including iPads in landscape */
+@media (hover: none) and (pointer: coarse) {
+  .ws-content,
+  .admin-content {
+    --ctl-h: 2.75rem;
+    --ctl-fs: 16px;
+    --btn-fs: 13px;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  select,
+  textarea { font-size: 16px !important; }
+}
+
+/* 3. fade the right edge so the tab strip reads as scrollable */
+@media (max-width: 767px) {
+  .nav-strip {
+    padding-right: 24px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  }
+
+  .nav-strip::-webkit-scrollbar { display: none; }
+}
+
+/* 11. stacked cards: a title cell, grouped two-part values, a sans label */
+@media (max-width: 767px) {
+  .table-stack > tbody > tr > td.stack-title {
+    display: block;
+    text-align: left;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--line, #e2e8f0);
+  }
+
+  .table-stack > tbody > tr > td.stack-title::before { content: none; }
+
+  .table-stack > tbody > tr > td::before {
+    flex-shrink: 0;
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  .table-stack > tbody > tr > td > .cell {
+    min-width: 0;
+    text-align: right;
+  }
+
+  /* A pinned first column has nothing to pin to once the rows are cards. */
+  .table-stack.table-pin-first > tbody > tr > td:first-child,
+  .table-stack.table-pin-first > thead > tr > th:first-child { position: static; box-shadow: none; }
+}
+
+/* 17. the pinned column keeps the row's highlight instead of painting white over it */
+.table-pin-first > tbody > tr:hover > td:first-child { background: #f8fafc; }
+.table-pin-first > tbody > tr.bg-sky-50 > td:first-child { background: #f0f9ff; }

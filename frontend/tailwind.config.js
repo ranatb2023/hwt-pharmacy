@@ -9,6 +9,12 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
+      // Any touch-only screen, an iPad in landscape included, gets the 44px
+      // targets that the width breakpoints alone would deny it (mobile spec,
+      // item 9). Extended screens come last, so `touch:` beats `lg:`.
+      screens: {
+        touch: { raw: '(hover: none) and (pointer: coarse)' },
+      },
       colors: {
         // Brand primary — #086bd7. Kept for the pages not yet restyled.
         primary: {

@@ -183,10 +183,10 @@ export default function CashFlow() {
                   <div className="flex items-center justify-between"><label className={LABEL}>Transaction amount (PKR)</label><span className="text-[10px] text-slate-500 font-mono">Pakistani rupee</span></div>
                   <div className="relative"><span className="absolute inset-y-0 left-2.5 flex items-center text-sm text-slate-500 font-mono font-semibold">Rs</span>
                     <input type="number" min="0" className={`${NUM} pl-9 h-10 text-base font-bold`} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0.00" /></div>
-                  <div className="flex items-center gap-1 mt-1.5">
+                  <div className="flex flex-wrap items-center gap-1 mt-1.5">
                     <span className="text-[10px] text-slate-500 mr-1">Quick add:</span>
-                    {QUICK.map((n) => <button key={n} type="button" onClick={() => setAmount(String(Number(amount || 0) + n))} className="h-12 min-w-[4rem] lg:h-6 lg:min-w-0 px-2 text-[10px] font-mono font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">+{n.toLocaleString()}</button>)}
-                    <button type="button" onClick={() => setAmount('')} className="h-12 min-w-[4rem] lg:h-6 lg:min-w-0 px-2 text-[10px] font-semibold rounded border bg-white border-slate-300 hover:bg-slate-100">Clear</button>
+                    {QUICK.map((n) => <button key={n} type="button" onClick={() => setAmount(String(Number(amount || 0) + n))} className="h-12 min-w-[4rem] lg:h-6 lg:min-w-0 touch:h-12 touch:min-w-[4rem] px-2 text-[10px] font-mono font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">+{n.toLocaleString()}</button>)}
+                    <button type="button" onClick={() => setAmount('')} className="h-12 min-w-[4rem] lg:h-6 lg:min-w-0 touch:h-12 touch:min-w-[4rem] px-2 text-[10px] font-semibold rounded border bg-white border-slate-300 hover:bg-slate-100">Clear</button>
                   </div>
                 </div>
                 <div><label className={LABEL}>Voucher reference / reason</label><input aria-label="Voucher reference / reason" className={CTL} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g. mid-day skim to the hospital safe · distilled water purchase" /></div>
@@ -250,17 +250,17 @@ export default function CashFlow() {
           <div className="bg-white rounded-md border border-slate-300 shadow-xs">
             <div className="px-3 py-2 border-b border-slate-200 bg-slate-50 rounded-t-md flex items-center justify-between gap-2 flex-wrap">
               <span className="text-[11px] font-bold uppercase tracking-wide text-slate-700">Recent sessions &amp; variance log</span>
-              <input value={filter} onChange={(e) => setFilter(e.target.value)} className={`${CTL} !w-48 !h-7`} placeholder="Filter cashier or counter…" />
+              <input value={filter} onChange={(e) => setFilter(e.target.value)} className={`${CTL} !w-full sm:!w-48 !h-11 sm:!h-7`} placeholder="Filter cashier or counter…" />
             </div>
             <div className="overflow-x-auto">
-              <table className="table-stack w-full text-xs border-collapse">
+              <table className="table-stack table-pin-first w-full text-xs border-collapse">
                 <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                   <tr><th className="text-left py-2 pl-3 pr-2">Counter</th><th className="text-left py-2 px-2">Operator</th><th className="text-left py-2 px-2">Opened</th><th className="text-left py-2 px-2">Closed</th><th className="text-right py-2 px-2">Float</th><th className="text-right py-2 px-2">Expected</th><th className="text-right py-2 px-2">Counted</th><th className="text-right py-2 px-2">Variance</th><th className="text-left py-2 pl-2 pr-3">Status</th></tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {rows.map((s) => (
                     <tr key={s.id} className={s.status === 'open' ? 'bg-emerald-50/40' : ''}>
-                      <td className="py-1.5 pl-3 pr-2 font-semibold" data-label="Counter">{s.counter}</td>
+                      <td className="stack-title py-1.5 pl-3 pr-2 font-semibold" data-label="">{s.counter}</td>
                       <td className="py-1.5 px-2" data-label="Operator">{s.user_name}</td>
                       <td className="py-1.5 px-2 font-mono text-slate-600 whitespace-nowrap" data-label="Opened">{fmtTs(s.opened_at)}</td>
                       <td className="py-1.5 px-2 font-mono text-slate-600 whitespace-nowrap" data-label="Closed">{s.closed_at ? fmtTs(s.closed_at) : '—'}</td>

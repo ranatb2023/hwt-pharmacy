@@ -1,10 +1,8 @@
 // Guard for the mobile fix spec (hwt-pharmacy-mobile-fix-spec.md, "Retest").
 //
-// Setup, once per machine:
-//   npm i -D @playwright/test && npx playwright install chromium
-//   npx playwright codegen http://localhost:4000 --save-storage=e2e/auth.json
-// Then, with the backend serving the built frontend on :4000:
-//   npx playwright test
+// With the backend serving the built frontend on :4000 (`npm run build`, then
+// `npm start --prefix backend`): `npm run test:e2e`. The setup project
+// (auth.setup.ts) logs in and writes e2e/auth.json first.
 import { test, expect } from '@playwright/test';
 
 const routes = [

@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Select from '../components/Select.jsx';
 import { api } from '../api.js';
+import { isTouch, useRevealOnSelect } from '../components/touch.js';
 import { useAuth } from '../auth.jsx';
 import { Icon } from '../components/icons.jsx';
 import { Alert, money } from '../components/ui.jsx';
@@ -33,6 +34,9 @@ export default function Vendors() {
   const [products, setProducts] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [selected, setSelected] = useState(null);
+  // Narrow screens stack the directory above the file (mobile spec, item 4).
+  const detailRef = useRevealOnSelect(selected?.id);
+  const listRef = useRef(null);
   const [view, setView] = useState('file');        // 'file' | 'statement'
   const [q, setQ] = useState('');
   const [pill, setPill] = useState('all');
@@ -141,10 +145,10 @@ export default function Vendors() {
       ) : (
         <div className="grid grid-cols-12 gap-3 items-start">
           {/* ================= LEFT: directory ============================ */}
-          <div className="col-span-12 xl:col-span-5 bg-white rounded-md border border-slate-300 shadow-xs">
+          <div ref={listRef} className="col-span-12 xl:col-span-5 bg-white rounded-md border border-slate-300 shadow-xs scroll-mt-3">
             <div className="px-3 py-2 border-b border-slate-200 bg-slate-50 rounded-t-md flex items-center justify-between">
               <span className="text-[11px] font-bold uppercase tracking-wide text-slate-700">Vendors &amp; distributors</span>
-              {can('vendor.manage') && <button type="button" className={`${BTN} !h-7`} onClick={() => setShowNew(true)}><Icon name="plus" size={12} /> New</button>}
+              {can('vendor.manage') && <button type="button" className={`${BTN} !h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px]`} onClick={() => setShowNew(true)}><Icon name="plus" size={12} /> New</button>}
             </div>
             <div className="p-3 border-b border-slate-200 space-y-2">
               <div className="relative">
@@ -154,7 +158,7 @@ export default function Vendors() {
               <div className="flex items-center gap-1 flex-wrap">
                 {[['all', `All vendors (${vendors.length})`], ['due', `Balance due (${vendors.filter((v) => v.balance > 0).length})`], ['orders', `Active orders (${new Set(pending.map((b) => b.vendor_id)).size})`]].map(([k, l]) => (
                   <button key={k} type="button" onClick={() => setPill(k)}
-                    className={`h-7 px-2.5 text-[11px] font-semibold rounded border ${pill === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
+                    className={`h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2.5 text-[11px] font-semibold rounded border ${pill === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
                 ))}
               </div>
             </div>
@@ -186,7 +190,7 @@ export default function Vendors() {
           </div>
 
           {/* ================= RIGHT: the vendor's file ==================== */}
-          <div className="col-span-12 xl:col-span-7">
+          <div ref={detailRef} className="col-span-12 xl:col-span-7 scroll-mt-3">
             {!selected ? (
               <div className="bg-white rounded-md border border-dashed border-slate-300 p-6 text-center text-xs text-slate-500">
                 <Icon name="vendors" size={22} />
@@ -194,10 +198,15 @@ export default function Vendors() {
                 <div className="mt-1">Pick one from the directory to see orders, GRNs, payments and reclaims.</div>
               </div>
             ) : (
+              <>
+                <button type="button" className="xl:hidden ws-btn mb-2" onClick={() => { setSelected(null); listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+                  ← Back to list
+                </button>
               <VendorFile vendor={selected} bookings={bookings.filter((b) => b.vendor_id === selected.id)} can={can}
                 onStatement={() => setView('statement')} onAction={setModal} onBookingStatus={async (b, status) => {
                   try { await api.put(`/vendors/bookings/${b.id}`, { status }); load(); } catch (e) { setErr(e.message); }
                 }} />
+              </>
             )}
           </div>
         </div>
@@ -315,7 +324,7 @@ function VendorFile({ vendor: v, bookings, can, onStatement, onAction, onBooking
             <div className="text-[11px] text-slate-500 truncate">{[v.contact, v.address].filter(Boolean).join(' • ') || 'no contact on file'}{v.notes ? ` • ${v.notes}` : ''}</div>
           </div>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           <button type="button" className={BTN} onClick={onStatement}><Icon name="file" size={13} /> Statement</button>
           {can('vendor.manage') && (
             <>
@@ -499,7 +508,7 @@ function Statement({ vendor: v, can, onBack, onErr, onDone, onPay }) {
             <div className="flex items-center gap-1 print:hidden">
               {[['all', 'All entries'], ['grn', 'Invoices / GRNs'], ['pay', 'Payments'], ['cn', 'Returns & credit notes']].map(([k, l]) => (
                 <button key={k} type="button" onClick={() => setFilter(k)}
-                  className={`h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border ${filter === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
+                  className={`h-6 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 text-[10px] font-semibold rounded border ${filter === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
               ))}
             </div>
           </div>
@@ -568,9 +577,9 @@ function Statement({ vendor: v, can, onBack, onErr, onDone, onPay }) {
                     <input type="number" min="0" step="0.01" className={`${NUM} pl-8 h-10 text-base font-bold`} value={pay.amount} onChange={(e) => setPay({ ...pay, amount: e.target.value })} placeholder="0.00" /></div>
                 </Field>
                 <div className="grid grid-cols-3 gap-1">
-                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, balance)) })} className="h-7 min-h-[44px] lg:min-h-0 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Full balance</button>
-                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, Math.round(balance / 2))) })} className="h-7 min-h-[44px] lg:min-h-0 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Half</button>
-                  <button type="button" onClick={() => setPay({ ...pay, amount: '' })} className="h-7 min-h-[44px] lg:min-h-0 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Clear</button>
+                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, balance)) })} className="h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Full balance</button>
+                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, Math.round(balance / 2))) })} className="h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Half</button>
+                  <button type="button" onClick={() => setPay({ ...pay, amount: '' })} className="h-7 min-h-[44px] lg:min-h-0 touch:min-h-[44px] text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Clear</button>
                 </div>
                 <div>
                   <label className={LABEL}>Payment mode</label>

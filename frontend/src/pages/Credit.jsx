@@ -101,7 +101,7 @@ export default function Credit() {
               <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400"><Icon name="search" size={14} /></div>
               <input value={q} onChange={(e) => setQ(e.target.value)} autoFocus className={`${CTL} pl-8`} placeholder="Mobile number or name — mobile first" />
             </div>
-            <label className="inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+            <label className="inline-flex items-center gap-2 py-3 lg:py-0 touch:py-3 text-xs text-slate-700 cursor-pointer">
               <input type="checkbox" checked={owingOnly} onChange={(e) => setOwingOnly(e.target.checked)} /> Only those who owe
             </label>
           </div>
