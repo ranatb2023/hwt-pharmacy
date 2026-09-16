@@ -38,6 +38,8 @@ const ICONS = {
   snowflake: (<><path d="M12 2v20" /><path d="m4.9 7 14.2 10" /><path d="m19.1 7-14.2 10" /><path d="M12 6.5 9.5 4M12 6.5 14.5 4M12 17.5 9.5 20M12 17.5l2.5 2.5" /></>),
   trend: (<><path d="m3 17 6-6 4 4 8-8" /><path d="M14 7h7v7" /></>),
   box: (<><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" /><path d="M2 4h20v4H2z" /><path d="M10 12h4" /></>),
+  menu: (<><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></>),
+  close: (<><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>),
 };
 
 export function Icon({ name, size = 20, strokeWidth = 2, className = '', style }) {

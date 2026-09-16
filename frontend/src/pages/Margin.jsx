@@ -48,7 +48,7 @@ export default function Margin() {
     // The low-margin panel always reads by product, whatever the table groups by.
     api.get(`/reports/margin?${params('product')}`).then(setLow).catch(() => setLow(null));
   }, [params, group]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   const all = d?.rows || [];
@@ -85,7 +85,7 @@ export default function Margin() {
         <p className="text-[11px] text-slate-500 mt-3 mb-0">Fiscal year runs from month {d?.fiscal_year_start_month || 7} — set in Settings; the trust is audited on it.</p>
       </Card>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Total sales turnover" value={money(t?.revenue || 0)} icon="billing" sub={t ? `${t.bills} bills · COGS ${money(t.cost)}` : ''} />
         <Kpi label="Gross profit realised" value={money(t?.margin || 0)} tone={t && t.margin < 0 ? 'rose' : 'emerald'} icon="trend" sub={t ? `Blended net margin ${t.margin_pct}%` : ''} />
         <Kpi label="Highest margin group" value={best ? best.group_name : '—'} mono={false} tone="sky" icon="check" sub={best ? `${best.margin_pct}% on ${money(best.revenue)}` : 'nothing sold'} />

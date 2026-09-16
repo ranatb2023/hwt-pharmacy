@@ -88,12 +88,12 @@ export default function StockAudit() {
         chip={<Pill tone="sky" mono>FEFO batch ledger</Pill>}
         right={<>
           <button type="button" className={BTN} onClick={() => printPaper('a4', { modal: false })}><Icon name="printer" size={14} /> Print discrepancy sheet</button>
-          {can('inventory.manage') && <button type="button" className={BTN_PRIMARY} onClick={post} disabled={!changed.length || busy}><Icon name="check" size={14} /> Post adjustments <kbd className="text-[10px] font-mono bg-blue-800/60 px-1.5 py-0.5 rounded border border-blue-300/40">F9</kbd></button>}
+          {can('inventory.manage') && <button type="button" className={BTN_PRIMARY} onClick={post} disabled={!changed.length || busy}><Icon name="check" size={14} /> Post adjustments <kbd className="kbd-hint text-[10px] font-mono bg-blue-800/60 px-1.5 py-0.5 rounded border border-blue-300/40">F9</kbd></button>}
         </>} />
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <Alert type="ok" onClose={() => setMsg('')}>{msg}</Alert>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Total formulary value" value={money(st?.value_at_cost || 0)} icon="billing" sub={st ? `${st.skus} registered SKUs · at retail ${money(st.value_at_retail)}` : ''} />
         <Kpi label="Counted this session" value={posted.length} unit="adjustments" tone="sky" icon="check" sub={posted.length ? `last: ${posted[0].product}` : 'nothing posted yet'} />
         <Kpi label="Discrepancy variance (session)" value={`${sessionVar < 0 ? '− ' : '+ '}${money(Math.abs(sessionVar))}`} tone={sessionVar < 0 ? 'rose' : sessionVar > 0 ? 'amber' : 'emerald'} icon="trend" sub="at batch cost, posted this session" />
@@ -113,7 +113,7 @@ export default function StockAudit() {
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
         <Card className="xl:col-span-7" flush title="Active Formulary Audit Roster" sub="Pick a medicine to count its batches" right={<Pill tone="navy" mono>FIRST EXPIRED FIRST OUT</Pill>}>
-          <Tbl head={['SKU / molecule & brand', 'Schedule', 'Ledger stock', 'Reorder', 'Shelf value', 'Status']} right={[2, 3, 4]}>
+          <Tbl stack head={['SKU / molecule & brand', 'Schedule', 'Ledger stock', 'Reorder', 'Shelf value', 'Status']} right={[2, 3, 4]}>
             {rows.map((p) => (
               <tr key={p.id} onClick={() => open(p)} className={`cursor-pointer ${sel?.id === p.id ? '!bg-blue-50/60' : ''}`}>
                 <td><div className="font-bold text-[#0284c7]">{p.name}{p.strength ? <span className="text-slate-500 font-normal"> {p.strength}</span> : null}</div><div className="text-[11px] text-slate-500">{[p.generic_name, p.manufacturer, p.drap_reg_no ? `DRAP ${p.drap_reg_no}` : null].filter(Boolean).join(' • ')}</div></td>
@@ -164,7 +164,7 @@ export default function StockAudit() {
                 {can('inventory.manage') && (
                   <button type="button" onClick={post} disabled={!changed.length || busy} className="w-full py-2.5 px-3 bg-[#0b1f3d] hover:bg-[#122e54] disabled:bg-slate-300 disabled:text-slate-500 text-white rounded-md font-bold text-sm flex items-center justify-between">
                     <span className="inline-flex items-center gap-2"><Icon name="check" size={15} /> {busy ? 'Posting…' : 'Post stock adjustment & commit ledger'}</span>
-                    <kbd className="bg-white/15 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-white/30">F9</kbd>
+                    <kbd className="kbd-hint bg-white/15 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-white/30">F9</kbd>
                   </button>
                 )}
               </div>
@@ -174,7 +174,7 @@ export default function StockAudit() {
           )}
 
           <Card flush title="Adjustments posted this session" right={<Pill tone="slate">{posted.length}</Pill>}>
-            <Tbl head={['When', 'Medicine', 'Batch', 'Δ', 'At cost']} right={[3, 4]} dense>
+            <Tbl stack head={['When', 'Medicine', 'Batch', 'Δ', 'At cost']} right={[3, 4]} dense>
               {posted.map((p, i) => <tr key={i}><td className="font-mono">{p.at.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</td><td className="font-semibold">{p.product}</td><td className="font-mono">{p.batch || '—'}</td><td className={`text-right font-mono font-bold ${p.delta < 0 ? 'text-rose-700' : 'text-emerald-700'}`}>{p.delta > 0 ? `+${p.delta}` : p.delta}</td><td className="text-right font-mono">{money(p.delta * p.cost)}</td></tr>)}
               {posted.length === 0 && <tr><td colSpan={5}><Empty>Nothing posted yet.</Empty></td></tr>}
             </Tbl>

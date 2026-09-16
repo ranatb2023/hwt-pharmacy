@@ -49,7 +49,7 @@ export default function Dashboard({ management = false }) {
     if (can('pharmacy.sell') || can('pharmacy.dispense') || can('inventory.view')) api.get('/pharmacy/dashboard').then(setPh).catch(() => setPh({}));
     if (can('pharmacy.dispense') || can('inventory.view')) api.get('/departments/requests?status=received').then(setIndents).catch(() => {});
   }, [can]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => {
     window.addEventListener('hwt:refresh', load);
     const id = setInterval(load, 60000);
@@ -144,7 +144,7 @@ export default function Dashboard({ management = false }) {
               Role: <strong className="text-slate-800">{user?.role}</strong>{user?.department ? ` • ${user.department}` : ''} • {config.pharmacy_name || (hospitalMode ? 'Hospital' : 'Pharmacy')}. Use the menu or the hotkey launchpads below to enter a workstation.
             </p>
           </div>
-          <div className="flex items-center gap-4 text-xs font-medium text-slate-600 bg-slate-50 px-3.5 py-2 rounded-md border border-slate-200 shrink-0">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-slate-600 bg-slate-50 px-3.5 py-2 rounded-md border border-slate-200 shrink-0 min-w-0">
             <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-500" /><span>SQLite WAL Engine</span></div>
             <span className="text-slate-300">|</span>
             <div>Business day: <span className="font-bold text-slate-800 font-mono">{ph?.business_date || '—'}</span></div>
@@ -159,7 +159,7 @@ export default function Dashboard({ management = false }) {
 
       {/* KPIs */}
       <section>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[...cards, ...cards2].map((c) => <Kpi key={c.label} {...c} />)}
         </div>
       </section>
@@ -200,7 +200,7 @@ export default function Dashboard({ management = false }) {
       <section>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 m-0">Service Workstations &amp; Quick Action Hub</h3>
-          <span className="text-xs text-slate-400">Use shortcut keys or click a tile to enter a workstation</span>
+          <span className="hidden sm:inline text-xs text-slate-400">Use shortcut keys or click a tile to enter a workstation</span>
         </div>
         {/* One compact row (UI report 8.7 / N3): the sidebar already carries
             these destinations; the tiles are the F-key map, not a second menu.
@@ -210,9 +210,9 @@ export default function Dashboard({ management = false }) {
             <Link key={t.to} to={t.to} title={t.desc} className="group flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-[#0284c7] hover:shadow-md transition-all duration-150 no-underline text-inherit min-w-0">
               <div className="w-9 h-9 rounded-lg bg-blue-50 text-[#0284c7] flex items-center justify-center shrink-0"><Icon name={t.icon} size={18} /></div>
               <div className="min-w-0 flex-1">
-                <div className="text-[13px] font-extrabold text-[#0b1f3d] group-hover:text-[#0284c7] font-headline leading-tight truncate">{t.title}</div>
+                <div className="text-[13px] font-extrabold text-[#0b1f3d] group-hover:text-[#0284c7] font-headline leading-tight line-clamp-2">{t.title}</div>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  {t.key && <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 font-mono">{t.key}</span>}
+                  {t.key && <span className="kbd-hint text-[10px] font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 font-mono">{t.key}</span>}
                   {t.badge && <span className="text-[10px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">{t.badge}</span>}
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function Dashboard({ management = false }) {
             </div>
             <span className="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded">{till ? `${till.counter} · opened ${fmtTime(till.opened_at)}` : 'No till session'}</span>
           </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-5 sm:mx-0">
             <table className="w-full text-left text-xs">
               <thead className="bg-slate-50 text-slate-600 font-semibold border-y border-slate-100">
                 <tr><th className="py-2.5 px-3">Bill #</th><th className="py-2.5 px-3">Time</th><th className="py-2.5 px-3">Customer</th><th className="py-2.5 px-3">Category</th><th className="py-2.5 px-3 text-right">Amount</th><th className="py-2.5 px-3 text-right">Status</th></tr>

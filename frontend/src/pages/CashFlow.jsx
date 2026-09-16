@@ -51,7 +51,7 @@ export default function CashFlow() {
     api.get('/cashflow/current').then((r) => { setSession(r.session); setOthers(r.others || []); }).catch((e) => setErr(e.message));
     api.get('/cashflow/sessions').then(setSessions).catch(() => {});
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { const id = setInterval(load, 30000); return () => clearInterval(id); }, [load]);
 
   async function open() {
@@ -113,7 +113,7 @@ export default function CashFlow() {
           <div className="ws-crumb text-[10px] font-bold uppercase tracking-wider text-slate-500">Pharmacy cash management › till sessions &amp; float audit</div>
           <h1 className="ws-h1 text-base font-bold text-slate-900 m-0">Cash Flow &amp; Till Session Management</h1>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
           <button type="button" className={BTN} onClick={load}><Icon name="returns" size={13} /> Refresh</button>
           <button type="button" className={session ? BTN_DARK : BTN} onClick={() => nav('/pharmacy-close')} disabled={!session}>
             <Icon name="clock" size={13} /> Count &amp; close till <Kbd className={session ? '!bg-slate-700 !border-slate-600 !text-white' : ''}>F10</Kbd>
@@ -185,8 +185,8 @@ export default function CashFlow() {
                     <input type="number" min="0" className={`${NUM} pl-9 h-10 text-base font-bold`} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0.00" /></div>
                   <div className="flex items-center gap-1 mt-1.5">
                     <span className="text-[10px] text-slate-500 mr-1">Quick add:</span>
-                    {QUICK.map((n) => <button key={n} type="button" onClick={() => setAmount(String(Number(amount || 0) + n))} className="h-6 px-2 text-[10px] font-mono font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">+{n.toLocaleString()}</button>)}
-                    <button type="button" onClick={() => setAmount('')} className="h-6 px-2 text-[10px] font-semibold rounded border bg-white border-slate-300 hover:bg-slate-100">Clear</button>
+                    {QUICK.map((n) => <button key={n} type="button" onClick={() => setAmount(String(Number(amount || 0) + n))} className="h-12 min-w-[4rem] lg:h-6 lg:min-w-0 px-2 text-[10px] font-mono font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">+{n.toLocaleString()}</button>)}
+                    <button type="button" onClick={() => setAmount('')} className="h-12 min-w-[4rem] lg:h-6 lg:min-w-0 px-2 text-[10px] font-semibold rounded border bg-white border-slate-300 hover:bg-slate-100">Clear</button>
                   </div>
                 </div>
                 <div><label className={LABEL}>Voucher reference / reason</label><input aria-label="Voucher reference / reason" className={CTL} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g. mid-day skim to the hospital safe · distilled water purchase" /></div>
@@ -195,7 +195,7 @@ export default function CashFlow() {
                   <button type="button" onClick={post} disabled={!(Number(amount) > 0) || busy}
                     className="flex-1 py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded font-bold text-sm flex items-center justify-between shadow-xs">
                     <span className="inline-flex items-center gap-1.5"><Icon name="check" size={14} /> {busy ? 'Recording…' : 'Authorise & record'}</span>
-                    <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+                    <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
                   </button>
                   <button type="button" className={`${BTN} h-10`} disabled={!last} onClick={() => printPaper('thermal', { modal: false })}><Icon name="printer" size={13} /> Voucher slip</button>
                 </div>
@@ -253,22 +253,22 @@ export default function CashFlow() {
               <input value={filter} onChange={(e) => setFilter(e.target.value)} className={`${CTL} !w-48 !h-7`} placeholder="Filter cashier or counter…" />
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs border-collapse">
+              <table className="table-stack w-full text-xs border-collapse">
                 <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                   <tr><th className="text-left py-2 pl-3 pr-2">Counter</th><th className="text-left py-2 px-2">Operator</th><th className="text-left py-2 px-2">Opened</th><th className="text-left py-2 px-2">Closed</th><th className="text-right py-2 px-2">Float</th><th className="text-right py-2 px-2">Expected</th><th className="text-right py-2 px-2">Counted</th><th className="text-right py-2 px-2">Variance</th><th className="text-left py-2 pl-2 pr-3">Status</th></tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {rows.map((s) => (
                     <tr key={s.id} className={s.status === 'open' ? 'bg-emerald-50/40' : ''}>
-                      <td className="py-1.5 pl-3 pr-2 font-semibold">{s.counter}</td>
-                      <td className="py-1.5 px-2">{s.user_name}</td>
-                      <td className="py-1.5 px-2 font-mono text-slate-600 whitespace-nowrap">{fmtTs(s.opened_at)}</td>
-                      <td className="py-1.5 px-2 font-mono text-slate-600 whitespace-nowrap">{s.closed_at ? fmtTs(s.closed_at) : '—'}</td>
-                      <td className="py-1.5 px-2 text-right font-mono">{money(s.opening_float)}</td>
-                      <td className="py-1.5 px-2 text-right font-mono">{s.expected_cash != null ? money(s.expected_cash) : s.status === 'open' && sum && s.id === session?.id ? money(sum.expected) : '—'}</td>
-                      <td className="py-1.5 px-2 text-right font-mono">{s.counted_cash != null ? money(s.counted_cash) : '—'}</td>
-                      <td className={`py-1.5 px-2 text-right font-mono font-bold ${s.variance == null ? '' : s.variance === 0 ? 'text-emerald-700' : 'text-rose-700'}`}>{s.variance == null ? '—' : `${s.variance > 0 ? '+' : ''}${money(s.variance)}`}</td>
-                      <td className="py-1.5 pl-2 pr-3">
+                      <td className="py-1.5 pl-3 pr-2 font-semibold" data-label="Counter">{s.counter}</td>
+                      <td className="py-1.5 px-2" data-label="Operator">{s.user_name}</td>
+                      <td className="py-1.5 px-2 font-mono text-slate-600 whitespace-nowrap" data-label="Opened">{fmtTs(s.opened_at)}</td>
+                      <td className="py-1.5 px-2 font-mono text-slate-600 whitespace-nowrap" data-label="Closed">{s.closed_at ? fmtTs(s.closed_at) : '—'}</td>
+                      <td className="py-1.5 px-2 text-right font-mono" data-label="Float">{money(s.opening_float)}</td>
+                      <td className="py-1.5 px-2 text-right font-mono" data-label="Expected">{s.expected_cash != null ? money(s.expected_cash) : s.status === 'open' && sum && s.id === session?.id ? money(sum.expected) : '—'}</td>
+                      <td className="py-1.5 px-2 text-right font-mono" data-label="Counted">{s.counted_cash != null ? money(s.counted_cash) : '—'}</td>
+                      <td data-label="Variance" className={`py-1.5 px-2 text-right font-mono font-bold ${s.variance == null ? '' : s.variance === 0 ? 'text-emerald-700' : 'text-rose-700'}`}>{s.variance == null ? '—' : `${s.variance > 0 ? '+' : ''}${money(s.variance)}`}</td>
+                      <td className="py-1.5 pl-2 pr-3" data-label="Status">
                         <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded border ${s.status === 'open' ? 'text-emerald-900 bg-emerald-100 border-emerald-300' : s.force_closed ? 'text-rose-900 bg-rose-100 border-rose-300' : 'text-slate-700 bg-slate-100 border-slate-300'}`}>{s.force_closed ? 'force closed' : s.status}</span>
                         {s.status === 'open' && s.id === session?.id && <button type="button" className="ml-2 text-[10px] font-semibold text-slate-700 hover:underline" onClick={() => nav('/pharmacy-close')}>Close till</button>}
                       </td>
@@ -309,13 +309,14 @@ export default function CashFlow() {
 function Tile({ label, value, sub, tone = '', mono = true, right }) {
   const t = { danger: 'text-rose-700', warn: 'text-amber-700', ok: 'text-emerald-700' }[tone] || 'text-slate-900';
   return (
-    <div className="ws-tile bg-white border flex items-start justify-between gap-2" data-tone={tone}>
-      <div className="min-w-0">
+    <div className="ws-tile bg-white border min-w-0" data-tone={tone}>
+      <div className="flex items-start justify-between gap-2">
         <div className="ws-tile-label text-[10px] font-bold uppercase tracking-wide text-slate-500 line-clamp-2 min-h-[2.4em] leading-[1.2]">{label}</div>
-        <div className={`ws-tile-value ${mono ? 'ws-tile-mono' : ''} font-bold leading-tight mt-0.5 break-words ${t}`}>{value}</div>
-        <div className="ws-tile-sub text-[10px] text-slate-500 line-clamp-2">{sub}</div>
+        {right && <div className="hidden sm:block shrink-0">{right}</div>}
       </div>
-      {right}
+      {right && <div className="sm:hidden mt-1">{right}</div>}
+      <div className={`ws-tile-value ${mono ? 'ws-tile-mono' : ''} font-bold leading-tight mt-0.5 ${t}`}>{value}</div>
+      <div className="ws-tile-sub text-[10px] text-slate-500 line-clamp-2">{sub}</div>
     </div>
   );
 }

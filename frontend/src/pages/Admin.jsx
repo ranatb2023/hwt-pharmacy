@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Select from '../components/Select.jsx';
 import { api } from '../api.js';
@@ -90,7 +90,7 @@ function Settings() {
       </div>
     </Field>
   );
-  const SaveBtn = <button type="button" className={BTN_PRIMARY} onClick={save} disabled={busy}><Icon name="check" size={14} /> {busy ? 'Saving…' : 'Save Settings'} <kbd className="text-[10px] font-mono bg-blue-800/60 px-1.5 py-0.5 rounded border border-blue-300/40">Ctrl+S</kbd></button>;
+  const SaveBtn = <button type="button" className={BTN_PRIMARY} onClick={save} disabled={busy}><Icon name="check" size={14} /> {busy ? 'Saving…' : 'Save Settings'} <kbd className="kbd-hint text-[10px] font-mono bg-blue-800/60 px-1.5 py-0.5 rounded border border-blue-300/40">Ctrl+S</kbd></button>;
 
   return (
     <>
@@ -196,7 +196,7 @@ function Users() {
     api.get('/users').then(setUsers).catch((e) => setErr(e.message));
     api.get('/users/roles').then((r) => setRoles(r.roles)).catch(() => {});
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   async function create(e) {
@@ -231,7 +231,7 @@ function Users() {
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <Alert type="ok" onClose={() => setMsg('')}>{msg}</Alert>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Total staff members" value={users.length} unit={(users.length) === 1 ? 'user' : 'users'} icon="patients" sub="Registered on this server" />
         <Kpi label="Active accounts" value={users.filter((u) => u.is_active).length} unit="active" tone="emerald" icon="check" sub="Can sign in on the LAN" />
         <Kpi label="Signed in recently" value={users.filter((u) => u.last_login && Date.now() - new Date(`${String(u.last_login).replace(' ', 'T')}Z`) < 7 * 86400000).length} unit="this week" tone="sky" icon="clock" sub="From the last-login stamp" />
@@ -242,7 +242,7 @@ function Users() {
         <Card className={adding ? 'xl:col-span-8' : ''} flush
           title="Enterprise User Roster" sub={`Showing ${rows.length} of ${users.length} staff accounts`}
           right={<Chips value={chip} onChange={setChip} items={[['all', 'All Users', users.length], ...roleNames.map((r) => [r, r, users.filter((u) => u.role === r).length])]} />}>
-          <Tbl head={['Staff member', 'Username / department', 'Assigned role', 'Last sign-in', 'Status', 'Actions']} right={[5]}>
+          <Tbl stack head={['Staff member', 'Username / department', 'Assigned role', 'Last sign-in', 'Status', 'Actions']} right={[5]}>
             {rows.map((u) => (
               <tr key={u.id}>
                 <td><div className="flex items-center gap-3"><Avatar name={u.full_name} tone={roleTone(u.role)} /><div><div className="font-bold text-slate-900 text-[13px]">{u.full_name}</div><div className="text-[11px] text-slate-500">User #{u.id}</div></div></div></td>
@@ -326,8 +326,15 @@ function Roles() {
   const [creating, setCreating] = useState(false);
   const [nf, setNf] = useState({ name: '', description: '', permissions: [] });
   const [err, setErr] = useState(''); const [msg, setMsg] = useState('');
+  // On a narrow screen the role list stacks above the editor; picking a role
+  // scrolls the editor into view instead of leaving it six cards down.
+  const editorRef = useRef(null);
+  const focusEditor = () => {
+    if (!window.matchMedia('(max-width: 1279px)').matches) return;
+    setTimeout(() => editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+  };
   const load = useCallback(() => api.get('/users/roles').then((d) => { setData(d); setSel((s) => s || d.roles[0] || null); }).catch((e) => setErr(e.message)), []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
 
   async function create() {
     try {
@@ -353,7 +360,7 @@ function Roles() {
           <Search value={q} onChange={setQ} placeholder="Filter roles…" className="mb-3" />
           <div className="space-y-2">
             {roles.map((r) => (
-              <button type="button" key={r.id} onClick={() => { setSel(r); setCreating(false); }}
+              <button type="button" key={r.id} onClick={() => { setSel(r); setCreating(false); focusEditor(); }}
                 className={`w-full text-left rounded-md border p-3 transition-colors ${!creating && sel?.id === r.id ? 'border-[#0284c7] ring-1 ring-[#0284c7] bg-blue-50/40' : 'border-slate-200 hover:bg-slate-50'}`}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="text-sm font-bold text-slate-900">{r.name}</div>
@@ -364,11 +371,12 @@ function Roles() {
               </button>
             ))}
           </div>
-          <button type="button" onClick={() => { setCreating(true); setNf({ name: '', description: '', permissions: [] }); }}
+          <button type="button" onClick={() => { setCreating(true); setNf({ name: '', description: '', permissions: [] }); focusEditor(); }}
             className="w-full mt-3 h-10 border border-dashed border-slate-300 rounded-md text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:border-[#0284c7]">+ New Role</button>
         </Card>
 
-        <Card className="xl:col-span-8" flush>
+        <div ref={editorRef} className="xl:col-span-8 scroll-mt-3">
+        <Card flush>
           <div className="px-5 py-4 border-b border-slate-200 flex items-start justify-between gap-3 flex-wrap">
             {creating ? (
               <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -409,6 +417,7 @@ function Roles() {
             ))}
           </div>
         </Card>
+        </div>
       </div>
     </>
   );
@@ -433,7 +442,7 @@ function Employees({ can }) {
   const [f, setF] = useState({ full_name: '', designation: '', contact: '', cnic: '', staff_cap: '' });
 
   const load = useCallback(() => { api.get('/reports/staff-allowances').then(setRows).catch((e) => setErr(e.message)); }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   async function register() {
@@ -472,7 +481,7 @@ function Employees({ can }) {
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <Alert type="ok" onClose={() => setMsg('')}>{msg}</Alert>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Registered staff" value={rows.length} unit="staff" icon="patients" sub="On the staff rate" />
         <Kpi label="Total yearly budget" value={money(budget)} icon="billing" sub="Sum of every employee's allowance" />
         <Kpi label="Allowance used" value={money(used)} tone="amber" icon="trend" sub={budget ? `${Math.round((used / budget) * 100)}% spent this fiscal year` : '—'} />
@@ -514,7 +523,7 @@ function Employees({ can }) {
 
       <Card flush title="Staff Medical Allowance Ledger & Welfare Quotas" sub="Employees and clinical staff covered under the trust's staff allowance"
         right={<Search value={q} onChange={setQ} placeholder="Search staff name, CNIC, employee ID…" className="w-72" />}>
-        <Tbl head={['Staff member', 'CNIC & mobile', 'Designation', 'Annual quota', 'Utilised', 'Remaining balance', 'On credit', 'Status', 'Actions']} right={[3, 4, 5, 6, 8]}>
+        <Tbl stack head={['Staff member', 'CNIC & mobile', 'Designation', 'Annual quota', 'Utilised', 'Remaining balance', 'On credit', 'Status', 'Actions']} right={[3, 4, 5, 6, 8]}>
           {list.map((r) => {
             const pct = r.entitlement ? Math.min(100, Math.round((r.consumed / r.entitlement) * 100)) : 0;
             const status = r.exceeded_by > 0 ? ['rose', 'Over cap'] : pct >= 90 ? ['amber', 'Near limit'] : ['emerald', 'Active'];
@@ -568,7 +577,7 @@ function StaffLedger({ row, st, onClose }) {
           </div>
           <div className="flex items-center gap-2">
             <button type="button" className={BTN} onClick={() => printPaper('a4', { modal: true })}><Icon name="printer" size={14} /> Print ledger</button>
-            <button type="button" className={BTN} onClick={onClose}>Back <kbd className="text-[10px] font-mono bg-slate-100 px-1 rounded border border-slate-200">Esc</kbd></button>
+            <button type="button" className={BTN} onClick={onClose}>Back <kbd className="kbd-hint text-[10px] font-mono bg-slate-100 px-1 rounded border border-slate-200">Esc</kbd></button>
           </div>
         </div>
         <div className="p-5 space-y-5 max-h-[75vh] overflow-y-auto">
@@ -579,7 +588,7 @@ function StaffLedger({ row, st, onClose }) {
             <Kpi label="To recover" value={money(st.recoverable)} tone={st.recoverable > 0 ? 'rose' : 'slate'} icon="warning" sub={st.exceeded_by > 0 ? `Over the cap by ${money(st.exceeded_by)}` : 'Nothing owed'} />
           </div>
           <Card flush title="Dispensing against the allowance" sub="Every staff-rate bill this fiscal year">
-            <Tbl head={['Date', 'Bill', 'Gross', 'Covered by allowance', 'Paid', 'Owed']} right={[2, 3, 4, 5]} dense>
+            <Tbl stack head={['Date', 'Bill', 'Gross', 'Covered by allowance', 'Paid', 'Owed']} right={[2, 3, 4, 5]} dense>
               {(st.bills || []).map((b) => (
                 <tr key={b.id || b.bill_no}>
                   <td className="font-mono">{String(b.created_at || '').slice(0, 10)}</td>
@@ -629,7 +638,7 @@ function Catalogue() {
     api.get('/inventory/base-units').then(setUnits).catch((e) => setErr(e.message));
     api.get('/inventory/products').then(setProducts).catch(() => {});
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   const wrap = (fn) => async () => {
@@ -685,7 +694,7 @@ function Catalogue() {
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
         <Card className="xl:col-span-7" flush title="Dosage Forms & Drug Schedules" sub="Physical formulations, expiry requirements and sale restrictions" right={<Pill tone="sky">{types.length} types</Pill>}>
-          <Tbl head={['Form name', 'Batch & expiry', 'Prescription rule', 'Counted in', 'Medicines', 'Actions']} right={[4, 5]}>
+          <Tbl stack head={['Form name', 'Batch & expiry', 'Prescription rule', 'Counted in', 'Medicines', 'Actions']} right={[4, 5]}>
             {tRows.map((t) => (
               <tr key={t.id} className={t.is_active ? '' : 'opacity-50'}>
                 <td><div className="font-bold text-slate-900 text-[13px]">{t.name}</div>{!t.is_active && <div className="text-[10px] text-rose-700 font-semibold uppercase">deactivated</div>}</td>
@@ -715,7 +724,7 @@ function Catalogue() {
 
         <div className="xl:col-span-5 space-y-6">
           <Card flush title="Packaging Base Units & Conversion" sub="The smallest thing that can be handed over — printed on the receipt" right={<Pill tone="emerald">{units.length} units</Pill>}>
-            <Tbl head={['Unit', 'Usage description', 'Suggested by']} dense>
+            <Tbl stack head={['Unit', 'Usage description', 'Suggested by']} dense>
               {uRows.map((u) => {
                 const from = types.filter((t) => t.default_unit === u.name).map((t) => t.name);
                 return <tr key={u.id}><td className="font-mono font-bold text-[#0284c7]">{u.name}</td><td className="text-slate-700">{u.descr || '—'}</td><td className="text-[11px] text-slate-500">{from.length ? from.join(', ') : '—'}</td></tr>;
@@ -730,7 +739,7 @@ function Catalogue() {
 
           <Card flush title="Approved Drug Manufacturers" sub="One row per company; merge the duplicates before a company-wise report"
             right={<button type="button" className={`${BTN} !bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600`} onClick={() => { setMergeFrom(makers[0] || null); setMergeInto(''); }} disabled={makers.length < 2}>Merge Duplicates</button>}>
-            <Tbl head={['Manufacturer', 'Medicines', 'Action']} right={[1, 2]} dense>
+            <Tbl stack head={['Manufacturer', 'Medicines', 'Action']} right={[1, 2]} dense>
               {mRows.map((m) => (
                 <tr key={m.id}>
                   <td><div className="font-bold text-slate-900">{m.name}</div><div className="text-[10px] text-slate-500 font-mono">MFR-{String(m.id).padStart(5, '0')}</div></td>
@@ -825,7 +834,7 @@ function DialysisForm({ can }) {
     api.get('/dialysis/template').then(setTpl).catch((e) => setErr(e.message));
     api.get('/dialysis/shifts').then(setShifts).catch(() => {});
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   const unmapped = tpl ? tpl.items.filter((i) => !i.is_freetext && !(i.products || []).length) : [];
 
   return (
@@ -943,7 +952,7 @@ function AuditLog() {
   const [group, setGroup] = useState('all');
   const [sel, setSel] = useState(null);
   const load = useCallback(() => { api.get('/reports/audit').then(setRows).catch((e) => setErr(e.message)); }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   const count = (fn) => rows.filter((r) => fn(r.action || '')).length;
@@ -961,7 +970,7 @@ function AuditLog() {
         </>} />
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Actions logged" value={rows.length} unit={(rows.length) === 1 ? 'entry' : 'entries'} icon="file" sub="Saved permanently on the local server" />
         <Kpi label="Controlled drugs dispensed" value={count(AUDIT_GROUPS[1][2])} unit={(count(AUDIT_GROUPS[1][2])) === 1 ? 'entry' : 'entries'} tone="sky" icon="shield" sub="Register entries with a prescriber" />
         <Kpi label="Overrides & corrections" value={count(AUDIT_GROUPS[2][2])} unit={(count(AUDIT_GROUPS[2][2])) === 1 ? 'entry' : 'entries'} tone="amber" icon="warning" sub="Needed billing override or amend" />
@@ -980,7 +989,7 @@ function AuditLog() {
           </div>
           <div className="text-[11px] text-slate-500 font-mono">Storage: <span className="text-emerald-700 font-bold">LOCAL SQLITE · WAL</span></div>
         </div>
-        <Tbl head={['Date & time', 'Staff member', 'Action type', 'Details & reference', 'Entity', 'Origin', '']} right={[6]}>
+        <Tbl stack head={['Date & time', 'Staff member', 'Action type', 'Details & reference', 'Entity', 'Origin', '']} right={[6]}>
           {list.map((a) => (
             <tr key={a.id} className={sel?.id === a.id ? '!bg-blue-50/60' : ''}>
               <td className="font-mono text-slate-700 whitespace-nowrap">{a.created_at}</td>
@@ -1005,7 +1014,7 @@ function AuditLog() {
                 <div className="text-[11px] text-slate-500">Administration <span className="text-slate-300 mx-1">/</span> Audit history <span className="text-slate-300 mx-1">/</span> <span className="font-mono">AUD-{sel.id}</span></div>
                 <h2 className="text-lg font-extrabold text-[#0b1f3d] m-0 font-headline flex items-center gap-2"><Pill tone={actionTone(sel.action || '')} mono>{(sel.action || '').toUpperCase()}</Pill> {sel.entity}{sel.entity_id ? ` #${sel.entity_id}` : ''}</h2>
               </div>
-              <button type="button" className={BTN} onClick={() => setSel(null)}>Back to audit ledger <kbd className="text-[10px] font-mono bg-slate-100 px-1 rounded border border-slate-200">Esc</kbd></button>
+              <button type="button" className={BTN} onClick={() => setSel(null)}>Back to audit ledger <kbd className="kbd-hint text-[10px] font-mono bg-slate-100 px-1 rounded border border-slate-200">Esc</kbd></button>
             </div>
             <div className="p-5 space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -1049,7 +1058,7 @@ function Subsidy() {
     api.get(`/reports/subsidy-by-fund${qs}`).then(setFunds).catch(() => setFunds(null));
     api.get('/cards').then(setCards).catch(() => {});
   }, [range]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   const tot = rows.reduce((a, r) => ({ bills: a.bills + r.bills, gross: a.gross + r.gross, discount: a.discount + r.discount, subsidy: a.subsidy + r.subsidy, net: a.net + r.net }), { bills: 0, gross: 0, discount: 0, subsidy: 0, net: 0 });
@@ -1069,7 +1078,7 @@ function Subsidy() {
         </>} />
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Total subsidy & discounts given" value={money(tot.discount + tot.subsidy)} icon="idcard" sub={`Across ${tot.bills} bills · ${label}`} />
         <Kpi label="Zakat fund utilised" value={money(zakat?.given || 0)} tone="emerald" icon="shield" sub={zakat ? `${zakat.bills} bills on Zakat-attributed cards` : 'No Zakat fund set up under Tiers & funds'} />
         <Kpi label="Other welfare & donations" value={money(other)} tone="amber" icon="billing" sub={`${byFund.filter((f) => !/zakat/i.test(f.fund)).length} other funds, incl. unattributed`} />
@@ -1077,7 +1086,7 @@ function Subsidy() {
       </div>
 
       <Card flush title="Active Charity & Subsidy Funds" sub="Every rupee waived on a card is booked against the fund the card was issued under" right={<Pill tone="slate" mono>{funds ? `${funds.from} → ${funds.to}` : ''}</Pill>}>
-        <Tbl head={['Fund name & donor source', 'Bills', 'Discounts given', 'Subsidy given', 'Total given', 'Status']} right={[1, 2, 3, 4]}>
+        <Tbl stack head={['Fund name & donor source', 'Bills', 'Discounts given', 'Subsidy given', 'Total given', 'Status']} right={[1, 2, 3, 4]}>
           {byFund.map((f) => (
             <tr key={f.fund}>
               <td><div className="font-bold text-slate-900">{f.fund_name}</div><div className="text-[11px] text-slate-500 font-mono">{f.fund}</div></td>
@@ -1094,7 +1103,7 @@ function Subsidy() {
       </Card>
 
       <Card flush title="Discount & Subsidy Breakdown by Patient Category" sub="Reconciliation of gross billings against subsidies absorbed and net collections" right={<span className="text-xs text-slate-500 font-mono">Audit period: {label}</span>}>
-        <Tbl head={['Patient category', 'Total bills', 'Gross amount', 'Discount', 'Trust subsidy', 'Net collected']} right={[1, 2, 3, 4, 5]}>
+        <Tbl stack head={['Patient category', 'Total bills', 'Gross amount', 'Discount', 'Trust subsidy', 'Net collected']} right={[1, 2, 3, 4, 5]}>
           {rows.map((r) => (
             <tr key={r.category}>
               <td><div className="font-bold text-slate-900">{r.category}</div><div className="text-[11px] text-slate-500">{CAT_TEXT[r.category] || ''}</div></td>
@@ -1122,7 +1131,7 @@ function Sync() {
   const [status, setStatus] = useState(null);
   const [err, setErr] = useState(''); const [msg, setMsg] = useState('');
   const load = useCallback(() => { api.get('/sync/status').then(setStatus).catch((e) => setErr(e.message)); }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   async function run() {
     try { const r = await api.post('/sync/run'); setMsg(`Synced ${r.synced} record(s).`); load(); } catch (e) { setErr(e.message); }
   }
@@ -1134,7 +1143,7 @@ function Sync() {
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <Alert type="ok" onClose={() => setMsg('')}>{msg}</Alert>
       <Notice tone="amber" title="Phase 08 — portals & sync — has not started">The cloud tier, the USB-carried transfer and the cluster telemetry in the mockup do not exist yet. The queue below is real; "sync now" stamps it as sent to the local tier.</Notice>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Pending dispatch" value={status.pending} unit={(status.pending) === 1 ? 'mutation' : 'mutations'} tone={status.pending ? 'amber' : 'emerald'} icon="clock" sub="Queued on this node" />
         <Kpi label="Synced" value={status.synced} unit={(status.synced) === 1 ? 'record' : 'records'} tone="emerald" icon="check" sub="Stamped as sent" />
         <Kpi label="Connectivity" value="LAN only" mono={false} icon="shield" sub="No internet by design on this site" />

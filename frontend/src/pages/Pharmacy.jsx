@@ -594,6 +594,83 @@ export default function Pharmacy() {
   const mode = deptId ? 'dept' : (patient || wantCustomer) ? 'customer' : 'walkin';
   const customerRef = useRef(null);
 
+  // The quantity stepper and the rate box, drawn once and used by both the
+  // table (tablet and up) and the card list (phones) so the two never drift.
+  const lineWarn = (i) => baseQty(i) > i.stock
+    || (i.mrp > 0 && i.unit_price > i.mrp)
+    || (i.uom === 'unit' && !i.allow_loose && i.units_per_strip > 1 && i.quantity % i.units_per_strip !== 0);
+  const qtyControls = (i) => (
+    <>
+      <div className="flex flex-wrap items-center justify-start md:justify-center gap-1">
+        <button type="button" className="w-11 h-11 md:w-6 md:h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center"
+          onClick={(e) => { e.stopPropagation(); setQty(i.product_id, i.quantity - 1); }}>−</button>
+        <input type="number" min="1" value={i.quantity} aria-label={`Quantity of ${i.name}`}
+          className="w-14 h-11 md:w-12 md:h-6 min-h-0 text-center font-mono font-bold text-xs bg-white border border-slate-300 rounded p-0 focus:ring-1 focus:ring-slate-800 focus:border-slate-800"
+          ref={(el) => { if (el) qtyRefs.current[i.product_id] = el; else delete qtyRefs.current[i.product_id]; }}
+          onFocus={(e) => { setActiveLine(i.product_id); e.target.select(); }}
+          onChange={(e) => setQty(i.product_id, Number(e.target.value))}
+          onKeyDown={(e) => {
+            // Enter accepts the quantity and hands the counter
+            // straight back to the scanner; Escape does the same
+            // without letting the global handler clear the sale.
+            if (e.key === 'Enter' || e.key === 'Escape') {
+              e.preventDefault(); e.stopPropagation(); focusSearch();
+            }
+          }} />
+        <button type="button" className="w-11 h-11 md:w-6 md:h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center"
+          onClick={(e) => { e.stopPropagation(); setQty(i.product_id, i.quantity + 1); }}>+</button>
+        {/* Sell the same shelf by tablet, strip or box. Segmented
+            buttons rather than a dropdown: one click instead of
+            two, and no popup to clip inside the scrolling table. */}
+        {(i.units_per_strip > 1 || i.units_per_box > 1) ? (
+          <div className="inline-flex border border-slate-300 rounded overflow-hidden ml-1" role="group" aria-label="Unit of sale">
+            {[
+              ['unit', i.unit_name, i.allow_loose || i.units_per_strip === 1],
+              ['strip', 'strip', i.units_per_strip > 1],
+              ['box', 'box', i.units_per_box > i.units_per_strip],
+            ].filter(([, , show]) => show).map(([key, label]) => (
+              <button key={key} type="button" title={`Sell by ${label}`}
+                className={`px-2 md:px-1.5 h-11 md:h-6 text-[10px] font-semibold ${i.uom === key ? 'bg-slate-800 text-white' : 'bg-white text-slate-600 hover:bg-slate-100'}`}
+                onClick={(e) => { e.stopPropagation(); setUom(i.product_id, key); }}>
+                {label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <span className="text-[10px] text-slate-500 ml-1">{i.unit_name}</span>
+        )}
+      </div>
+      {i.uom !== 'unit' && (
+        <div className="text-left md:text-center text-[10px] text-slate-500 mt-0.5 font-mono">= {baseQty(i)} {i.unit_name}</div>
+      )}
+    </>
+  );
+  const rateControls = (i) => (
+    <>
+      {/* One box, editing the rate for the unit this line is
+          set to — showing a computed rate and an input side by
+          side just printed the same number twice. */}
+      <input type="number" min="0" step="0.5" className={`${NUM} w-28 h-11 md:w-24 md:h-6 disabled:bg-slate-50 disabled:text-slate-600`}
+        value={round2(i.unit_price * unitsIn(i))}
+        disabled={!can('pharmacy.override_price')}
+        title={can('pharmacy.override_price') ? 'Charging other than the catalogue price is recorded in the audit log' : 'The catalogue price. Changing it needs the price-override permission.'}
+        aria-label={`Rate per ${i.uom === 'unit' ? i.unit_name : i.uom}`}
+        onFocus={(e) => e.target.select()}
+        onChange={(e) => setRate(i.product_id, e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === 'Escape') {
+            e.preventDefault(); e.stopPropagation(); focusSearch();
+          }
+        }} />
+      {/* All three rates the customer might ask for, from the one
+          stored per-unit price. "Kitne ka patta?" is answered here. */}
+      <div className="text-[10px] text-slate-500 mt-0.5 font-mono leading-tight whitespace-nowrap" title={[`box ${money(i.unit_price * i.units_per_box)}`, `strip ${money(i.unit_price * i.units_per_strip)}`, `${i.unit_name} ${money(i.unit_price)}`, i.mrp > 0 ? `MRP ${money(i.mrp)}/${i.unit_name}` : null].filter(Boolean).join(' · ')}>
+        / {i.uom === 'unit' ? i.unit_name : i.uom}{i.units_per_strip > 1 && i.uom !== 'strip' ? ` · strip ${money(i.unit_price * i.units_per_strip)}` : i.uom !== 'unit' ? ` · ${i.unit_name} ${money(i.unit_price)}` : ''}
+      </div>
+    </>
+  );
+  const wide = useMedia('(min-width: 768px)');
+
   if (receipt) {
     return (
       <Receipt bill={receipt} config={config} user={user}
@@ -602,31 +679,32 @@ export default function Pharmacy() {
   }
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col gap-3">
+    <div className="flex-1 min-h-0 flex flex-col gap-3 pb-24 md:pb-0">
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
 
       {/* ---------------- Toolbar: one search box, the keys beside it ------ */}
       {confirmDialog}
-      <div className="bg-white rounded-md border border-slate-300 p-3 shadow-xs shrink-0 sticky top-0 z-20">
+      <div className="bg-white rounded-md border border-slate-300 p-3 shadow-xs shrink-0 lg:sticky lg:top-0 z-20">
         {/* The scan field is the control the whole product runs on (UI report
             1.1): it takes the width, the key row wraps beneath it when the
             screen is short of room, never the other way round. */}
         <div className="flex flex-wrap items-center gap-3">
           <ProductSearch inputRef={searchRef} onPick={addToCart} onError={setErr} />
-          <div className="flex items-center flex-wrap gap-1.5">
-            <button type="button" className={BTN} onClick={focusSearch}><Kbd>F2</Kbd> Search</button>
-            <button type="button" className={BTN} onClick={editQty} disabled={!cart.length}><Kbd>F3</Kbd> Edit Qty</button>
-            <button type="button" className={BTN} disabled={!!dept || method !== 'cash'}
+          {/* Phones: a 4-column grid of 44px keys (item 8); a row from `sm` up. */}
+          <div className="grid grid-cols-4 gap-1.5 w-full sm:w-auto sm:flex sm:items-center sm:flex-wrap">
+            <button type="button" className={`${BTN} justify-center sm:justify-start`} onClick={focusSearch}><Kbd>F2</Kbd> Search</button>
+            <button type="button" className={`${BTN} justify-center sm:justify-start`} onClick={editQty} disabled={!cart.length}><Kbd>F3</Kbd> Edit Qty</button>
+            <button type="button" className={`${BTN} justify-center sm:justify-start`} disabled={!!dept || method !== 'cash'}
               onClick={() => document.getElementById('tendered-input')?.focus()}><Kbd>F4</Kbd> Tender</button>
-            <button type="button" className={BTN} onClick={parkSale} disabled={!cart.length || holdBusy}>
+            <button type="button" className={`${BTN} justify-center sm:justify-start`} onClick={parkSale} disabled={!cart.length || holdBusy}>
               <Kbd>F6</Kbd> Hold{held.length ? ` (${held.length})` : ''}
             </button>
-            <button type="button" className={BTN} disabled={!held.length || holdBusy}
+            <button type="button" className={`${BTN} justify-center sm:justify-start`} disabled={!held.length || holdBusy}
               onClick={() => held.length && resumeHeld(held[0])}><Kbd>F5</Kbd> Resume</button>
-            <button type="button" className={BTN_DARK} onClick={checkout} disabled={!cart.length || blocked || busy}>
+            <button type="button" className={`${BTN_DARK} justify-center sm:justify-start`} onClick={checkout} disabled={!cart.length || blocked || busy}>
               <Kbd className="!bg-slate-700 !border-slate-600 !text-white">F9</Kbd> {dept ? 'Issue' : 'Pay'}
             </button>
-            <button type="button" className={`${BTN} !bg-white`} onClick={clearSale} disabled={!cart.length && !patient && !deptId}>
+            <button type="button" className={`${BTN} !bg-white justify-center sm:justify-start`} onClick={clearSale} disabled={!cart.length && !patient && !deptId}>
               <Kbd>Esc</Kbd> Clear
             </button>
           </div>
@@ -646,17 +724,19 @@ export default function Pharmacy() {
           {/* Billing mode + the customer context, in one card as the design has it. */}
           <div className="bg-white rounded-md border border-slate-300 shadow-xs shrink-0 overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-300 bg-slate-100 px-3 py-2 gap-3 flex-wrap">
-              <div className="flex items-center gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 mr-1">Billing mode:</span>
-                <ModeTab on={mode === 'customer'} n="1" label="Customer / Welfare card"
-                  onClick={() => { setDeptId(''); setDeptPatient(BLANK_DEPT); setWantCustomer(true); setTimeout(() => customerRef.current?.focus(), 0); }} />
-                <ModeTab on={mode === 'walkin'} n="2" label="Walk-in"
-                  onClick={() => { setDeptId(''); setDeptPatient(BLANK_DEPT); setWantCustomer(false); setPatient(null); setPrescriptions([]); setAllowance(null); }} />
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 w-full sm:w-auto">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 sm:mr-1">Billing mode:</span>
+                <div className="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center">
+                  <ModeTab on={mode === 'customer'} n="1" label="Customer / Welfare card" short="Customer"
+                    onClick={() => { setDeptId(''); setDeptPatient(BLANK_DEPT); setWantCustomer(true); setTimeout(() => customerRef.current?.focus(), 0); }} />
+                  <ModeTab on={mode === 'walkin'} n="2" label="Walk-in" short="Walk-in"
+                    onClick={() => { setDeptId(''); setDeptPatient(BLANK_DEPT); setWantCustomer(false); setPatient(null); setPrescriptions([]); setAllowance(null); }} />
 
-                {depts.length > 0 && (
-                  <ModeTab on={mode === 'dept'} n="3" label="Department requisition"
-                    onClick={() => { if (!deptId) setDeptId(String(depts[0].id)); }} />
-                )}
+                  {depts.length > 0 && (
+                    <ModeTab on={mode === 'dept'} n="3" label="Department requisition" short="Dept."
+                      onClick={() => { if (!deptId) setDeptId(String(depts[0].id)); }} />
+                  )}
+                </div>
               </div>
               <div className="flex items-center gap-2 text-[11px] text-slate-500">
                 <span className="font-mono">
@@ -845,17 +925,66 @@ export default function Pharmacy() {
               )}
             </div>
 
-            <div className="flex-1 overflow-y-auto min-h-0">
-              <table className="w-full table-fixed text-left text-xs border-collapse">
+            <div className="flex-1 overflow-y-auto overflow-x-auto min-h-0">
+              {!wide ? (
+                /* Phones: one card per line (mobile spec, item 3). */
+                <ul className="divide-y divide-slate-200 m-0 p-0 list-none">
+                  {cart.map((i, n) => {
+                    const warn = lineWarn(i);
+                    return (
+                      <li key={i.product_id} onClick={() => setActiveLine(i.product_id)}
+                        className={`py-3 px-3 flex gap-3 ${i.product_id === activeLine ? 'bg-sky-50 shadow-[inset_3px_0_0_#0369a1]' : ''} ${warn ? 'bg-rose-50/40' : ''}`}>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-slate-900 text-sm m-0 truncate">
+                            <span className="font-mono text-slate-500 text-[11px]">{String(n + 1).padStart(2, '0')}</span> {i.name}
+                            {strengthOf(i) ? <span className="text-slate-500 font-normal"> {strengthOf(i)}</span> : null}
+                          </p>
+                          <p className="text-xs text-slate-500 m-0 mt-0.5">
+                            Exp {i.next_expiry ? <span className={expiryTone(i.next_expiry)}>{i.next_expiry}</span> : 'FEFO'} · {i.stock} {i.unit_name} on shelf
+                            {i.generic_name ? ` · ${i.generic_name}` : ''}
+                          </p>
+                          {(i.drug_schedule === 'Narcotic' || i.drug_schedule === 'G' || i.drug_schedule === 'Rx' || warn) && (
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {i.drug_schedule === 'Narcotic' && <Tag tone="red">Controlled</Tag>}
+                              {i.drug_schedule === 'G' && <Tag tone="amber">Sch. G</Tag>}
+                              {i.drug_schedule === 'Rx' && <Tag tone="blue">Rx</Tag>}
+                              {baseQty(i) > i.stock && <Tag tone="red">exceeds stock</Tag>}
+                              {i.mrp > 0 && i.unit_price > i.mrp && <Tag tone="red">above MRP</Tag>}
+                              {i.uom === 'unit' && !i.allow_loose && i.units_per_strip > 1 && i.quantity % i.units_per_strip !== 0 && (
+                                <Tag tone="red">full strips of {i.units_per_strip} only</Tag>
+                              )}
+                            </div>
+                          )}
+                          <div className="mt-2">{qtyControls(i)}</div>
+                          <div className="mt-2 flex items-center gap-2">
+                            <span className="text-[11px] font-semibold uppercase text-slate-500">Rate</span>
+                            <div className="text-right">{rateControls(i)}</div>
+                          </div>
+                        </div>
+                        <div className="shrink-0 text-right flex flex-col items-end">
+                          <p className="font-bold font-mono tabular-nums text-slate-900 m-0">{money(lineTotal(i))}</p>
+                          <button type="button" aria-label="Remove line" title="Remove line"
+                            className="mt-2 h-11 w-11 inline-flex items-center justify-center rounded border border-slate-300 text-slate-500 hover:text-rose-600 hover:border-rose-300"
+                            onClick={(e) => { e.stopPropagation(); removeItem(i.product_id); }}>✕</button>
+                        </div>
+                      </li>
+                    );
+                  })}
+                  <li className="py-4 px-3 text-xs text-slate-500 italic">
+                    {cart.length ? 'Scan the next item, or type its name in the search bar above…' : 'Scan a barcode or start typing a medicine name.'}
+                  </li>
+                </ul>
+              ) : (
+              <table className="w-full table-fixed min-w-[44rem] text-left text-xs border-collapse">
                 <colgroup>
-                  <col className="w-8" /><col /><col className="w-24" /><col className="w-20" /><col className="w-64" /><col className="w-32" /><col className="w-24" /><col className="w-8" />
+                  <col className="w-8" /><col /><col className="w-20" /><col className="w-16" /><col className="w-48" /><col className="w-24" /><col className="w-24" /><col className="w-8" />
                 </colgroup>
                 <thead className="bg-slate-50 text-slate-700 uppercase tracking-wider font-semibold text-[11px] border-b border-slate-200 sticky top-0 z-10 select-none">
                   <tr>
                     <th className="py-2 pl-3 pr-1 text-center">#</th>
                     <th className="py-2 px-2.5">Medicine &amp; formulation</th>
                     <th className="py-2 px-2.5 whitespace-nowrap">Expiry</th>
-                    <th className="py-2 px-2.5 text-center whitespace-nowrap">On shelf</th>
+                    <th className="py-2 px-1.5 text-center whitespace-nowrap">Shelf</th>
                     <th className="py-2 px-2.5 text-center">Dispense qty</th>
                     <th className="py-2 px-2.5 text-right">Rate</th>
                     <th className="py-2 px-2.5 text-right font-bold">Line total</th>
@@ -864,9 +993,7 @@ export default function Pharmacy() {
                 </thead>
                 <tbody className="divide-y divide-slate-200">
                   {cart.map((i, n) => {
-                    const warn = baseQty(i) > i.stock
-                      || (i.mrp > 0 && i.unit_price > i.mrp)
-                      || (i.uom === 'unit' && !i.allow_loose && i.units_per_strip > 1 && i.quantity % i.units_per_strip !== 0);
+                    const warn = lineWarn(i);
                     return (
                       <tr key={i.product_id}
                         className={`transition-colors cursor-default ${i.product_id === activeLine ? 'bg-sky-50 shadow-[inset_3px_0_0_#0369a1]' : 'hover:bg-slate-50'} ${warn ? 'bg-rose-50/40' : ''}`}
@@ -903,70 +1030,10 @@ export default function Pharmacy() {
                           {i.stock} <span className="font-sans text-slate-500">{i.unit_name}</span>
                         </td>
                         <td className="py-2 px-2.5">
-                          <div className="flex items-center justify-center gap-1">
-                            <button type="button" className="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center"
-                              onClick={(e) => { e.stopPropagation(); setQty(i.product_id, i.quantity - 1); }}>−</button>
-                            <input type="number" min="1" value={i.quantity} aria-label={`Quantity of ${i.name}`}
-                              className="w-12 h-6 min-h-0 text-center font-mono font-bold text-xs bg-white border border-slate-300 rounded p-0 focus:ring-1 focus:ring-slate-800 focus:border-slate-800"
-                              ref={(el) => { if (el) qtyRefs.current[i.product_id] = el; else delete qtyRefs.current[i.product_id]; }}
-                              onFocus={(e) => { setActiveLine(i.product_id); e.target.select(); }}
-                              onChange={(e) => setQty(i.product_id, Number(e.target.value))}
-                              onKeyDown={(e) => {
-                                // Enter accepts the quantity and hands the counter
-                                // straight back to the scanner; Escape does the same
-                                // without letting the global handler clear the sale.
-                                if (e.key === 'Enter' || e.key === 'Escape') {
-                                  e.preventDefault(); e.stopPropagation(); focusSearch();
-                                }
-                              }} />
-                            <button type="button" className="w-6 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-slate-700 font-bold flex items-center justify-center"
-                              onClick={(e) => { e.stopPropagation(); setQty(i.product_id, i.quantity + 1); }}>+</button>
-                            {/* Sell the same shelf by tablet, strip or box. Segmented
-                                buttons rather than a dropdown: one click instead of
-                                two, and no popup to clip inside the scrolling table. */}
-                            {(i.units_per_strip > 1 || i.units_per_box > 1) ? (
-                              <div className="inline-flex border border-slate-300 rounded overflow-hidden ml-1" role="group" aria-label="Unit of sale">
-                                {[
-                                  ['unit', i.unit_name, i.allow_loose || i.units_per_strip === 1],
-                                  ['strip', 'strip', i.units_per_strip > 1],
-                                  ['box', 'box', i.units_per_box > i.units_per_strip],
-                                ].filter(([, , show]) => show).map(([key, label]) => (
-                                  <button key={key} type="button" title={`Sell by ${label}`}
-                                    className={`px-1.5 h-6 text-[10px] font-semibold ${i.uom === key ? 'bg-slate-800 text-white' : 'bg-white text-slate-600 hover:bg-slate-100'}`}
-                                    onClick={(e) => { e.stopPropagation(); setUom(i.product_id, key); }}>
-                                    {label}
-                                  </button>
-                                ))}
-                              </div>
-                            ) : (
-                              <span className="text-[10px] text-slate-500 ml-1">{i.unit_name}</span>
-                            )}
-                          </div>
-                          {i.uom !== 'unit' && (
-                            <div className="text-center text-[10px] text-slate-500 mt-0.5 font-mono">= {baseQty(i)} {i.unit_name}</div>
-                          )}
+                          {qtyControls(i)}
                         </td>
                         <td className="py-2 px-2.5 text-right">
-                          {/* One box, editing the rate for the unit this line is
-                              set to — showing a computed rate and an input side by
-                              side just printed the same number twice. */}
-                          <input type="number" min="0" step="0.5" className={`${NUM} w-24 h-6 disabled:bg-slate-50 disabled:text-slate-600`}
-                            value={round2(i.unit_price * unitsIn(i))}
-                            disabled={!can('pharmacy.override_price')}
-                            title={can('pharmacy.override_price') ? 'Charging other than the catalogue price is recorded in the audit log' : 'The catalogue price. Changing it needs the price-override permission.'}
-                            aria-label={`Rate per ${i.uom === 'unit' ? i.unit_name : i.uom}`}
-                            onFocus={(e) => e.target.select()}
-                            onChange={(e) => setRate(i.product_id, e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' || e.key === 'Escape') {
-                                e.preventDefault(); e.stopPropagation(); focusSearch();
-                              }
-                            }} />
-                          {/* All three rates the customer might ask for, from the one
-                              stored per-unit price. "Kitne ka patta?" is answered here. */}
-                          <div className="text-[10px] text-slate-500 mt-0.5 font-mono leading-tight whitespace-nowrap" title={[`box ${money(i.unit_price * i.units_per_box)}`, `strip ${money(i.unit_price * i.units_per_strip)}`, `${i.unit_name} ${money(i.unit_price)}`, i.mrp > 0 ? `MRP ${money(i.mrp)}/${i.unit_name}` : null].filter(Boolean).join(' · ')}>
-                            / {i.uom === 'unit' ? i.unit_name : i.uom}{i.units_per_strip > 1 && i.uom !== 'strip' ? ` · strip ${money(i.unit_price * i.units_per_strip)}` : i.uom !== 'unit' ? ` · ${i.unit_name} ${money(i.unit_price)}` : ''}
-                          </div>
+                          {rateControls(i)}
                         </td>
                         <td className="py-2 px-2.5 text-right font-mono font-bold text-slate-900 text-xs whitespace-nowrap">
                           {money(lineTotal(i))}
@@ -993,6 +1060,7 @@ export default function Pharmacy() {
                   </tr>
                 </tbody>
               </table>
+              )}
             </div>
           </div>
 
@@ -1138,7 +1206,7 @@ export default function Pharmacy() {
                       ['credit', 'On account', 'no cash'],
                     ].map(([k, label, tag]) => (
                       <button key={k} type="button" onClick={() => setMethod(k)}
-                        className={`py-1.5 px-2 rounded font-semibold text-center border flex items-center justify-center gap-1 ${
+                        className={`py-1.5 min-h-[44px] lg:min-h-0 px-2 rounded font-semibold text-center border flex items-center justify-center gap-1 ${
                           method === k ? 'bg-slate-800 text-white border-slate-900 shadow-xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300'}`}>
                         <span>{label}</span>
                         {tag && <span className={`text-[9px] font-mono font-bold px-1 rounded ${method === k ? 'bg-slate-700 text-emerald-300' : 'bg-emerald-100 text-emerald-700'}`}>{tag}</span>}
@@ -1169,12 +1237,12 @@ export default function Pharmacy() {
                   </div>
                   <div className="grid grid-cols-3 gap-1 pt-1">
                     <button type="button" onClick={() => setTendered(String(Math.ceil(net)))}
-                      className="py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-xs font-mono font-semibold text-slate-800">
+                      className="py-1 min-h-[44px] lg:min-h-0 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded text-xs font-mono font-semibold text-slate-800">
                       Exact ({Math.ceil(net)})
                     </button>
                     {QUICK_CASH.filter((n) => n >= net).slice(0, 5).map((n) => (
                       <button key={n} type="button" onClick={() => setTendered(String(n))}
-                        className={`py-1 border rounded text-xs font-mono font-semibold ${String(n) === tendered ? 'bg-slate-200 border-slate-400 text-slate-900 ring-1 ring-slate-400' : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'}`}>
+                        className={`py-1 min-h-[44px] lg:min-h-0 border rounded text-xs font-mono font-semibold ${String(n) === tendered ? 'bg-slate-200 border-slate-400 text-slate-900 ring-1 ring-slate-400' : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'}`}>
                         {n.toLocaleString()}
                       </button>
                     ))}
@@ -1208,18 +1276,18 @@ export default function Pharmacy() {
                   <Icon name="printer" size={15} />
                   {busy ? 'Processing…' : dept ? `Issue to ${dept.name}` : 'Complete & print slip'}
                 </span>
-                <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+                <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
               </button>
               {blockReason && cart.length > 0 && (
                 <div className="text-[11px] text-rose-900 bg-rose-50 border border-rose-200 rounded px-2.5 py-1.5">{blockReason}</div>
               )}
               <div className="grid grid-cols-2 gap-2">
                 <button type="button" onClick={parkSale} disabled={!cart.length || holdBusy}
-                  className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
+                  className="py-1.5 min-h-[44px] lg:min-h-0 px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
                   Hold bill <Kbd>F6</Kbd>
                 </button>
                 <button type="button" onClick={() => lastReceipt && setReceipt(lastReceipt)} disabled={!lastReceipt}
-                  className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
+                  className="py-1.5 min-h-[44px] lg:min-h-0 px-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 border border-slate-300 rounded text-xs font-semibold text-slate-700 flex items-center justify-center gap-1">
                   Reprint last
                 </button>
               </div>
@@ -1227,6 +1295,17 @@ export default function Pharmacy() {
           </div>
         </section>
       </div>
+
+      {/* Phones: Pay stays reachable while the cart scrolls under it (item 8). */}
+      {!wide && (
+        <div className="fixed inset-x-0 bottom-0 z-30 bg-white border-t border-slate-200 p-3 no-print">
+          <button type="button" onClick={checkout} disabled={!cart.length || blocked || busy}
+            className="w-full h-12 px-4 rounded-md font-bold text-sm text-white bg-emerald-700 active:bg-emerald-900 disabled:bg-slate-300 disabled:text-slate-500 flex items-center justify-between">
+            <span>{busy ? 'Processing…' : dept ? `Issue to ${dept.name}` : 'Pay'}</span>
+            <span className="font-mono">{money(dept ? gross : net)}</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1235,13 +1314,29 @@ export default function Pharmacy() {
 // Small pieces of the design's vocabulary
 // ---------------------------------------------------------------------------
 
-function ModeTab({ on, n, label, onClick }) {
+// One breakpoint the page renders on, not just styles on: the cart is a table
+// from `md` up and a card list under it, and only one of the two may be in the
+// DOM (the quantity refs and F3 would otherwise point at a hidden input).
+function useMedia(query) {
+  const [m, setM] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = () => setM(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [query]);
+  return m;
+}
+
+function ModeTab({ on, n, label, short, onClick }) {
   return (
     <button type="button" onClick={onClick}
-      className={`px-3 h-7 text-xs font-semibold rounded inline-flex items-center gap-1.5 border transition ${
+      className={`px-2 sm:px-3 min-h-[44px] sm:min-h-0 sm:h-7 text-xs font-semibold rounded inline-flex items-center justify-center sm:justify-start gap-1.5 border transition ${
         on ? 'bg-slate-800 text-white border-slate-900 shadow-xs' : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300'}`}>
-      <span className={`w-2 h-2 rounded-full ${on ? 'bg-emerald-400' : 'bg-slate-400'}`} />
-      <span>{n}. {label}</span>
+      <span className={`w-2 h-2 rounded-full shrink-0 ${on ? 'bg-emerald-400' : 'bg-slate-400'}`} />
+      <span className="sm:hidden">{short || label}</span>
+      <span className="hidden sm:inline">{n}. {label}</span>
     </button>
   );
 }
@@ -1342,9 +1437,9 @@ function CustomerBar({
   const initials = (n) => (n || '?').split(' ').filter(Boolean).slice(0, 2).map((s) => s[0].toUpperCase()).join('');
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
       {/* Lookup */}
-      <div className="md:col-span-5">
+      <div className="lg:col-span-5">
         <div className="flex items-center justify-between mb-1">
           <label className={`${LABEL} mb-0`}>
             Customer <span className="text-[9px] font-normal text-slate-500 font-mono normal-case">[card · mobile · name]</span>
@@ -1390,7 +1485,7 @@ function CustomerBar({
       {/* Who they are — the design's profile card. Hidden while a new
           customer is being typed in (UI report 2.2): "this is a walk-in
           sale" next to a create form contradicts it. */}
-      {!creating && !seeking && <div className="md:col-span-4 bg-slate-50 border border-slate-200 rounded p-2 flex items-center gap-3 min-h-[52px]">
+      {!creating && !seeking && <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded p-2 flex items-center gap-3 min-h-[52px]">
         {patient ? (
           <>
             <div className="h-9 w-9 rounded bg-slate-800 text-white font-bold text-xs flex items-center justify-center shrink-0">
@@ -1540,7 +1635,7 @@ function ProductSearch({ inputRef, onPick, onError }) {
   const open = q.trim().length >= 2;
 
   return (
-    <div className="relative flex-1 min-w-[24rem] basis-[28rem]">
+    <div className="relative flex-1 min-w-0 basis-full sm:min-w-[24rem] sm:basis-[28rem]">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
         <Icon name="barcode" size={18} />
       </div>
@@ -1648,7 +1743,7 @@ function Receipt({ bill, config, user, onClose }) {
         <button type="button" onClick={onClose}
           className="w-full py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded font-bold text-sm flex items-center justify-between">
           <span>{bill.department ? 'Done' : 'New sale'}</span>
-          <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">Enter</kbd>
+          <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">Enter</kbd>
         </button>
       </div>
 

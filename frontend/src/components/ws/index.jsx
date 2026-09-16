@@ -62,7 +62,7 @@ export function OfflineOverlay() {
 // A keyboard hint, drawn the way the mockups draw them everywhere.
 export function Kbd({ children, className = '' }) {
   return (
-    <kbd className={`inline-block font-mono text-[11px] leading-none text-slate-600 bg-slate-100 border border-slate-200 rounded px-1 py-0.5 ${className}`}>
+    <kbd className={`kbd-hint inline-block font-mono text-[11px] leading-none text-slate-600 bg-slate-100 border border-slate-200 rounded px-1 py-0.5 ${className}`}>
       {children}
     </kbd>
   );
@@ -102,7 +102,7 @@ export function Metric({ label, value, sub, tone = 'default', mono = true, class
   };
   return (
     <div className={`ws-tile bg-white border ${className}`} data-tone={tone}>
-      <div className="ws-tile-label text-[10px] font-bold uppercase tracking-wide text-slate-500">{label}</div>
+      <div className="ws-tile-label text-[10px] font-bold uppercase tracking-wide text-slate-500 line-clamp-2">{label}</div>
       <div className={`ws-tile-value mt-0.5 font-bold leading-tight ${mono ? 'ws-tile-mono' : ''} ${tones[tone] || tones.default}`}>
         {value}
       </div>
@@ -354,7 +354,7 @@ export function WsFooter() {
   const { online } = useConnection();
   const host = typeof window !== 'undefined' ? window.location.host : '';
   return (
-    <footer className="bg-navy-900 text-slate-400 text-[11px] px-4 py-1.5 border-t border-navy-800 flex items-center justify-between shrink-0 no-print">
+    <footer className="bg-navy-900 text-slate-400 text-[11px] px-4 py-1.5 border-t border-navy-800 hidden md:flex items-center justify-between shrink-0 no-print">
       <div className="flex items-center gap-3">
         <span className={`flex items-center gap-1.5 ${online ? 'text-slate-300' : 'text-rose-300 font-bold'}`}>
           <span className={`inline-block h-1.5 w-1.5 rounded-full ${online ? 'bg-emerald-400' : 'bg-rose-500'}`} />

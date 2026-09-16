@@ -81,7 +81,7 @@ function Revenue({ more }) {
     api.get(`/reports/revenue?from=${from}&to=${to}&group=${group}`).then(setRows).catch((e) => { setRows([]); setErr(e.message); });
     api.get(`/reports/subsidy?from=${from}&to=${to}`).then(setCat).catch(() => setCat([]));
   }, [from, to, group]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   const tot = rows.reduce((a, r) => ({ bills: a.bills + r.bills, gross: a.gross + r.gross, discount: a.discount + r.discount, subsidy: a.subsidy + r.subsidy, net: a.net + r.net, collected: a.collected + r.collected }), { bills: 0, gross: 0, discount: 0, subsidy: 0, net: 0, collected: 0 });
@@ -101,7 +101,7 @@ function Revenue({ more }) {
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
 
       <Card>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-end">
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-5 gap-4 items-end">
           <Lbl label="Report type"><div className={`${CTL} flex items-center bg-slate-50 text-slate-600`}>Revenue & sales detailed</div></Lbl>
           <Lbl label="From date"><input type="date" className={`${CTL} font-mono`} value={from} onChange={(e) => setFrom(e.target.value)} /></Lbl>
           <Lbl label="To date"><input type="date" className={`${CTL} font-mono`} value={to} onChange={(e) => setTo(e.target.value)} /></Lbl>
@@ -110,7 +110,7 @@ function Revenue({ more }) {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Gross sales" value={money(tot.gross)} icon="billing" sub={`${tot.bills} bills across ${group === 'day' ? rows.length : '—'} ${group === 'day' ? 'days' : 'groups'}`} />
         <Kpi label="Total discounts" value={money(tot.discount)} tone="amber" icon="idcard" sub="Patient, staff and counter relief" />
         <Kpi label="Trust subsidy" value={money(tot.subsidy)} tone="sky" icon="shield" sub="Given in full by the trust" />
@@ -118,7 +118,7 @@ function Revenue({ more }) {
       </div>
 
       <Card flush title="Revenue Breakdown" sub={group === 'day' ? 'Every day in the range, zero days included. Settlement is what the ledger says; Till is what the drawer count said.' : 'Register entries grouped; Settlement is what the ledger says.'} right={<Pill tone="emerald">{rows.length} {group === 'day' ? 'days' : 'groups'}</Pill>}>
-        <Tbl head={[group === 'day' ? 'Date' : group === 'category' ? 'Category' : 'Bill type', 'Bills', 'Gross (Rs)', 'Discount (Rs)', 'Subsidy (Rs)', 'Net (Rs)', 'Collected (Rs)', 'Credit (Rs)', 'Settlement', ...(group === 'day' ? ['Till'] : [])]} right={[1, 2, 3, 4, 5, 6, 7]}>
+        <Tbl pin head={[group === 'day' ? 'Date' : group === 'category' ? 'Category' : 'Bill type', 'Bills', 'Gross (Rs)', 'Discount (Rs)', 'Subsidy (Rs)', 'Net (Rs)', 'Collected (Rs)', 'Credit (Rs)', 'Settlement', ...(group === 'day' ? ['Till'] : [])]} right={[1, 2, 3, 4, 5, 6, 7]}>
           {rows.map((r) => {
             const cr = Math.max(0, r.net - r.collected);
             return (
@@ -195,7 +195,7 @@ function Velocity({ more }) {
   const [d, setD] = useState(null);
   const [err, setErr] = useState('');
   const load = useCallback(() => { api.get(`/reports/velocity?from=${from}&to=${to}`).then(setD).catch((e) => setErr(e.message)); }, [from, to]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
   const rows = (d?.rows || []).filter((r) => tier === 'all' || r.tier === tier).filter((r) => !sched || r.drug_schedule === sched)
     .filter((r) => !q.trim() || [r.name, r.generic_name, r.manufacturer, r.drap_reg_no].some((s) => (s || '').toLowerCase().includes(q.trim().toLowerCase())));
@@ -226,7 +226,7 @@ function Velocity({ more }) {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Fast-moving velocity" value={t?.fast ?? '—'} unit="SKUs" tone="emerald" icon="trend" sub={t ? `${t.units_out.toLocaleString()} units out · ${money(t.value_out)} at sale price` : ''} />
         <Kpi label="Sluggish capital" value={money(rows.length ? (d?.rows || []).filter((r) => r.tier === 'slow').reduce((s, r) => s + r.on_hand_cost, 0) : 0)} tone="amber" icon="clock" sub={t ? `${t.slow} slow-moving SKUs · pause purchasing` : ''} />
         <Kpi label="Dormant & dead stock" value={money(t?.dead_cost || 0)} tone="rose" icon="warning" sub={t ? `${t.dead} SKUs with nothing out · return or claim` : ''} />
@@ -234,7 +234,7 @@ function Velocity({ more }) {
       </div>
 
       <Card flush title="Formulary Consumption Ledger & Inventory Run Rates" sub={`Calculated per ${d?.days || '—'}-day period from every dispense and sale movement`} right={<Pill tone="slate">Showing {rows.length} of {d?.rows?.length || 0} formulary lines</Pill>}>
-        <Tbl head={['Medicine & formulation', 'Velocity tier', 'Daily run rate', 'Units out', 'Current stock', 'Days left', 'Next expiry', 'Stock balance', 'Procurement action']} right={[2, 3, 4, 5]}>
+        <Tbl pin head={['Medicine & formulation', 'Velocity tier', 'Daily run rate', 'Units out', 'Current stock', 'Days left', 'Next expiry', 'Stock balance', 'Procurement action']} right={[2, 3, 4, 5]}>
           {rows.map((r) => {
             const sl = stockLabel(r);
             return (
@@ -292,7 +292,7 @@ function Expiry({ more }) {
     api.get('/pharmacy/dashboard').then(setD).catch((e) => setErr(e.message));
     api.get('/inventory/alerts').then(setAlerts).catch(() => {});
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
   const ex = d?.expiry;
   const batches = useMemo(() => (ex?.batches || [])
@@ -331,7 +331,7 @@ function Expiry({ more }) {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Kpi label="Expired stock value" value={money(ex?.expired?.value || 0)} tone={ex?.expired?.batches ? 'rose' : 'emerald'} icon="warning" sub={ex ? `${ex.expired.batches} batch${ex.expired.batches === 1 ? '' : 'es'} still on the shelf · ${d.stock.quarantined_batches} quarantined` : ''} />
         <Kpi label="Critical expiry (< 30 d)" value={money(ex?.within_30?.value || 0)} tone="rose" icon="clock" sub={ex ? `${ex.within_30.batches} batches · ${ex.within_30.units.toLocaleString()} units at risk` : ''} />
         <Kpi label="Claimable value" value={money(ex?.claimable?.value || 0)} tone="sky" icon="file" sub={ex ? `${ex.claimable.batches} batches inside the ${ex.claim_window_days}-day covenant` : ''} />
@@ -339,7 +339,7 @@ function Expiry({ more }) {
       </div>
 
       <Card flush title="Active Batches Audit Ledger" sub="Live sorting by first-expiry first-out; quarantined batches stay listed and flagged" right={<Pill tone="amber">{batches.length} batches flagged</Pill>}>
-        <Tbl head={['Medicine & strength', 'Batch', 'Supplier / distributor', 'Expiry date', 'Days remaining', 'Stock on hand', 'Trade price', 'Valuation at risk', 'Claim status', '']} right={[5, 6, 7]}>
+        <Tbl pin head={['Medicine & strength', 'Batch', 'Supplier / distributor', 'Expiry date', 'Days remaining', 'Stock on hand', 'Trade price', 'Valuation at risk', 'Claim status', '']} right={[5, 6, 7]}>
           {batches.map((b) => (
             <tr key={b.id} className={b.quarantined ? 'opacity-60' : ''}>
               <td><div className="font-bold text-slate-900">{b.name}{b.strength ? <span className="text-slate-500 font-normal"> {b.strength}</span> : null}</div><div className="text-[11px] text-slate-500">{b.drug_schedule}{b.quarantined ? ' • quarantined' : ''}</div></td>
@@ -413,7 +413,7 @@ function Generic({ id, def, more }) {
       .catch((e) => { setRows([]); setErr(e.message); })
       .finally(() => setLoading(false));
   }, [def, from, to]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   useEffect(() => { window.addEventListener('hwt:refresh', load); return () => window.removeEventListener('hwt:refresh', load); }, [load]);
 
   const fmt = (val, type) => (val == null || val === '' ? '—' : type === 'money' ? money(val) : type === 'date' ? String(val).slice(0, 16).replace('T', ' ') : val);
@@ -432,7 +432,7 @@ function Generic({ id, def, more }) {
         </>} />
       <Alert type="error" onClose={() => setErr('')}>{err}</Alert>
       <Card flush title={def.title} right={<Pill tone="slate">{rows.length} row{rows.length === 1 ? '' : 's'}</Pill>}>
-        <Tbl head={def.cols.map((c) => c[1])} right={def.cols.map((c, i) => (c[2] === 'money' || totals[c[0]] != null ? i : -1)).filter((i) => i >= 0)}>
+        <Tbl pin head={def.cols.map((c) => c[1])} right={def.cols.map((c, i) => (c[2] === 'money' || totals[c[0]] != null ? i : -1)).filter((i) => i >= 0)}>
           {loading ? <tr><td colSpan={def.cols.length}><Empty>Loading…</Empty></td></tr> : rows.map((r, i) => (
             <tr key={i}>{def.cols.map((c) => <td key={c[0]} className={c[2] === 'money' || totals[c[0]] != null ? 'text-right font-mono' : ''}>{fmt(r[c[0]], c[2])}</td>)}</tr>
           ))}

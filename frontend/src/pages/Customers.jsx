@@ -73,7 +73,7 @@ export default function Customers() {
     api.get('/ledger/accounts').then(setAccounts).catch(() => {});
   }, []);
   useEffect(() => { const id = setTimeout(load, 200); return () => clearTimeout(id); }, [load]);
-  useEffect(loadSide, [loadSide]);
+  useEffect(() => { loadSide(); }, [loadSide]);
 
   // Arriving from the settlement screen's "View file".
   useEffect(() => {
@@ -146,7 +146,7 @@ export default function Customers() {
       <div className="flex items-center gap-1 print:hidden">
         {[['customers', 'Directory'], ['cards', 'Welfare card register'], ['tiers', 'Tiers & funds']].map(([k, l]) => (
           <button key={k} type="button" onClick={() => setTab(k)}
-            className={`h-7 px-2.5 text-[11px] font-semibold rounded border ${tab === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
+            className={`h-7 min-h-[44px] lg:min-h-0 px-2.5 text-[11px] font-semibold rounded border ${tab === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
         ))}
       </div>
 
@@ -500,7 +500,7 @@ function NewCustomer({ onClose, onDone, onErr, onOpen }) {
         </div>
         <div className="flex items-center gap-1.5 px-4 py-3 border-t border-slate-200 bg-slate-50">
           <button type="button" className="flex-1 h-9 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded font-bold text-xs inline-flex items-center justify-between" onClick={save} disabled={!f.full_name.trim() || busy}>
-            <span>{busy ? 'Saving…' : 'Register customer'}</span><kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-[10px] border border-emerald-600">F9</kbd>
+            <span>{busy ? 'Saving…' : 'Register customer'}</span><kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-[10px] border border-emerald-600">F9</kbd>
           </button>
           <button type="button" className={`${BTN} h-9`} onClick={onClose}>Cancel <Kbd>Esc</Kbd></button>
         </div>
@@ -552,7 +552,7 @@ function Funds({ can, onErr, onDone }) {
   const [funds, setFunds] = useState([]);
   const [f, setF] = useState({ code: '', name: '' });
   const load = useCallback(() => { api.get('/cards/funds').then(setFunds).catch((e) => onErr(e.message)); }, [onErr]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   async function add() {
     try { await api.post('/cards/funds', { code: f.code, name: f.name }); setF({ code: '', name: '' }); load(); onDone('Fund added.'); }
     catch (e) { onErr(e.message); }
@@ -586,7 +586,7 @@ function Tiers({ can, onErr, onDone }) {
   const [tiers, setTiers] = useState([]);
   const [edit, setEdit] = useState(null);
   const load = useCallback(() => { api.get('/cards/tiers').then(setTiers).catch((e) => onErr(e.message)); }, [onErr]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   async function save() {
     try {
       await api.put(`/cards/tiers/${edit.id}`, { name: edit.name, discount_pct: Number(edit.pctWhole) / 100, monthly_ceiling: edit.monthly_ceiling === '' ? null : Number(edit.monthly_ceiling) });

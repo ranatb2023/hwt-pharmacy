@@ -9,6 +9,7 @@ import { useConnection, setOnline } from '../connection.js';
 import { getTheme, toggleTheme } from '../theme.js';
 import { OfflineOverlay } from './ws/index.jsx';
 import { GENERIC } from '../pages/Reports.jsx';
+import RouteErrorBoundary from './RouteErrorBoundary.jsx';
 
 // The management shell — Phase 10.
 //
@@ -152,6 +153,21 @@ export default function AdminLayout() {
   const visible = (items) => items.filter((i) => (!i.perm || can(i.perm)) && (!i.hospital || hospitalMode));
   const conn = useConnection();
   const [theme, setTheme] = useState(getTheme());
+  // Below `lg` the sidebar is an off-canvas drawer (mobile spec, item 1): it
+  // closes after every navigation, on Esc, and on a tap outside; the page
+  // behind cannot scroll while it is open.
+  const [navOpen, setNavOpen] = useState(false);
+  useEffect(() => { setNavOpen(false); }, [loc.pathname]);
+  useEffect(() => {
+    if (!navOpen) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') setNavOpen(false); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [navOpen]);
   const onAdminRoute = GROUPS.find((g) => g.collapsible)?.items.some((i) => loc.pathname === i.to || loc.pathname.startsWith(`${i.to}/`));
   const [adminOpen, setAdminOpen] = useState(() => { try { return localStorage.getItem('hwt.nav.admin') === 'open'; } catch { return false; } });
   const toggleAdmin = () => setAdminOpen((v) => { try { localStorage.setItem('hwt.nav.admin', v ? 'closed' : 'open'); } catch { /* fine */ } return !v; });
@@ -171,16 +187,27 @@ export default function AdminLayout() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const link = ({ isActive }) => `flex items-center gap-3 px-3 py-1 rounded-md text-[13px] font-medium transition-colors ${
+  const link = ({ isActive }) => `flex items-center gap-3 px-3 py-2.5 lg:py-1 rounded-md text-[13px] font-medium transition-colors ${
     isActive ? 'bg-[#0369a1] text-white font-semibold shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#122e54]'}`;
 
   return (
-    <div className="h-screen flex overflow-hidden text-slate-800 bg-[#f8f9ff] antialiased font-sans">
+    <div className="app-shell h-screen flex overflow-hidden text-slate-800 bg-[#f8f9ff] antialiased font-sans">
       {/* ================= Sidebar ================= */}
-      <aside className="w-64 bg-[#0b1f3d] flex flex-col justify-between shrink-0 select-none border-r border-[#15345f] no-print">
+      {navOpen && (
+        <div className="fixed inset-0 z-40 bg-slate-900/50 lg:hidden no-print" onClick={() => setNavOpen(false)} aria-hidden="true" />
+      )}
+      <aside
+        id="app-sidebar"
+        className={[
+          'fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] transition-transform duration-200',
+          navOpen ? 'translate-x-0' : '-translate-x-full',
+          'lg:static lg:z-auto lg:w-64 lg:max-w-none lg:translate-x-0 lg:transition-none',
+          'bg-[#0b1f3d] flex flex-col justify-between shrink-0 select-none border-r border-[#15345f] no-print',
+        ].join(' ')}
+      >
         <div className="flex flex-col min-h-0 flex-1">
           <div className="p-4 bg-white border-b border-slate-200 flex items-center justify-between shadow-sm">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 min-w-0">
               <div className="w-10 h-10 rounded bg-[#0284c7] flex items-center justify-center text-white shadow-sm">
                 <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.75 4.5h1.5v4.5h4.5v1.5h-4.5v4.5h-1.5v-4.5h-4.5v-1.5h4.5v-4.5z" /></svg>
               </div>
@@ -189,6 +216,10 @@ export default function AdminLayout() {
                 <div className="text-[11px] font-semibold text-[#0284c7] leading-tight">{config.pharmacy_name || 'Trust Hospital & Pharmacy'}</div>
               </div>
             </div>
+            <button type="button" onClick={() => setNavOpen(false)} aria-label="Close menu"
+              className="lg:hidden -mr-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100">
+              <Icon name="close" size={20} />
+            </button>
           </div>
           <div className="px-4 py-2 bg-[#08172c] border-b border-[#142e53] flex items-center justify-between text-[11px] text-slate-400">
             <span className="flex items-center gap-1.5 font-mono truncate">
@@ -210,7 +241,7 @@ export default function AdminLayout() {
               return (
                 <div key={g.title}>
                   {g.collapsible ? (
-                    <button type="button" onClick={toggleAdmin} className="w-full flex items-center justify-between pt-2 pb-0.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-200" aria-expanded={open}>
+                    <button type="button" onClick={toggleAdmin} className="w-full flex items-center justify-between py-2.5 lg:pt-2 lg:pb-0.5 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-200" aria-expanded={open}>
                       <span>{g.title}</span><span className="font-mono">{open ? '▾' : '▸'}</span>
                     </button>
                   ) : (
@@ -223,14 +254,14 @@ export default function AdminLayout() {
                           <>
                             <span className={isActive ? 'text-white' : 'text-sky-400'}><Icon name={i.icon} size={16} /></span>
                             <span className="flex-1">{i.label}</span>
-                            {i.kbd && <span className="text-[10px] font-mono font-bold bg-[#0f2d59] text-sky-300 px-1.5 py-0.5 rounded">{i.kbd}</span>}
+                            {i.kbd && <span className="kbd-hint text-[10px] font-mono font-bold bg-[#0f2d59] text-sky-300 px-1.5 py-0.5 rounded">{i.kbd}</span>}
                           </>
                         )}
                       </NavLink>
                       {i.children && (loc.pathname.startsWith('/reports') || loc.pathname === '/margin' || loc.pathname === '/admin/subsidy') && (
                         <div className="ml-4 pl-3 border-l border-[#15345f] space-y-0.5 my-1">
                           {i.children.map(([to, label]) => (
-                            <NavLink key={to} to={to} className={({ isActive }) => `block px-3 py-1.5 rounded text-[13px] ${isActive ? 'text-white font-semibold bg-[#122e54]' : 'text-slate-400 hover:text-white hover:bg-[#122e54]'}`}>
+                            <NavLink key={to} to={to} className={({ isActive }) => `block px-3 py-2.5 lg:py-1.5 rounded text-[13px] ${isActive ? 'text-white font-semibold bg-[#122e54]' : 'text-slate-400 hover:text-white hover:bg-[#122e54]'}`}>
                               <span className="inline-block w-1.5 h-1.5 rounded-full bg-sky-400 mr-2 align-middle" />{label}
                             </NavLink>
                           ))}
@@ -251,8 +282,13 @@ export default function AdminLayout() {
               <p className="text-[11px] text-slate-400 truncate m-0">{user?.role}{user?.department ? ` · ${user.department}` : ''}</p>
             </div>
           </div>
+          {/* On phones the theme toggle lives here, not in the header (item 2). */}
+          <button type="button" onClick={() => setTheme(toggleTheme())}
+            className="lg:hidden w-full flex items-center justify-center gap-2 py-3 px-2 mb-2 rounded text-xs font-semibold text-slate-300 hover:text-white bg-[#0f2d59] hover:bg-[#1a447e] transition-colors">
+            {theme === 'night' ? '☀ Day mode' : '☾ Night mode'}
+          </button>
           <button type="button" onClick={() => { logout(); nav('/login'); }}
-            className="w-full flex items-center justify-center gap-2 py-1.5 px-2 rounded text-xs font-semibold text-slate-300 hover:text-white bg-[#0f2d59] hover:bg-[#1a447e] transition-colors">
+            className="w-full flex items-center justify-center gap-2 py-3 lg:py-1.5 px-2 rounded text-xs font-semibold text-slate-300 hover:text-white bg-[#0f2d59] hover:bg-[#1a447e] transition-colors">
             <Icon name="logout" size={13} /> Sign Out Session
           </button>
         </div>
@@ -260,35 +296,40 @@ export default function AdminLayout() {
 
       {/* ================= Main ================= */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <header className="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 shadow-sm no-print">
-          <div className="flex items-center space-x-3 min-w-0">
+        <header className="min-h-[3.5rem] lg:h-16 bg-white border-b border-slate-200 px-3 sm:px-4 lg:px-6 flex items-center justify-between gap-2 shrink-0 shadow-sm no-print">
+          <div className="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
+            <button type="button" onClick={() => setNavOpen(true)} aria-label="Open menu" aria-controls="app-sidebar" aria-expanded={navOpen}
+              className="lg:hidden -ml-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-slate-700 hover:bg-slate-100">
+              <Icon name="menu" size={20} />
+            </button>
             <div className="min-w-0">
-              {crumb && <div className="text-[12px] text-slate-600 leading-tight">{crumb} <span className="text-slate-400 mx-1">/</span> <span className="text-[#0369a1] font-semibold">{title}</span></div>}
-              <h1 className="text-xl font-extrabold text-[#0b1f3d] tracking-tight font-headline m-0 leading-tight">{title}</h1>
+              {crumb && <div className="hidden lg:block text-[12px] text-slate-600 leading-tight">{crumb} <span className="text-slate-400 mx-1">/</span> <span className="text-[#0369a1] font-semibold">{title}</span></div>}
+              <h1 className="truncate lg:whitespace-normal lg:overflow-visible text-base sm:text-lg lg:text-xl font-extrabold text-[#0b1f3d] tracking-tight font-headline m-0 leading-tight">{title}</h1>
             </div>
-            {!crumb && <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">{hospitalMode ? 'Hospital Core' : 'Clinical POS Core'}</span>}
+            {!crumb && <span className="hidden lg:inline-flex shrink-0 items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">{hospitalMode ? 'Hospital Core' : 'Clinical POS Core'}</span>}
           </div>
-          <div className="flex items-center space-x-4">
-            <div className={`inline-flex items-center px-3 py-1.5 rounded text-xs font-semibold shadow-sm border ${health.ok && conn.online ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-rose-50 border-rose-200 text-rose-800'}`}>
-              <span className={`w-2 h-2 rounded-full mr-2 ${health.ok && conn.online ? 'bg-emerald-500 animate-ping' : 'bg-rose-500'}`} />
-              <span>{health.ok && conn.online ? 'Counter Connected' : 'Cannot reach server'}</span>
+          <div className="flex items-center gap-1.5 lg:gap-4 shrink-0">
+            <div className={`inline-flex items-center px-2 lg:px-3 py-1.5 rounded text-xs font-semibold shadow-sm border ${health.ok && conn.online ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-rose-50 border-rose-200 text-rose-800'}`}
+              title={health.ok && conn.online ? 'Counter Connected' : 'Cannot reach server'}>
+              <span className={`w-2 h-2 rounded-full ${health.ok && conn.online ? 'bg-emerald-500 animate-ping' : 'bg-rose-500'}`} />
+              <span className="hidden md:inline ml-2">{health.ok && conn.online ? 'Counter Connected' : 'Cannot reach server'}</span>
             </div>
-            <div className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1.5 rounded border border-slate-200 flex items-center gap-1.5">
+            <div className="hidden xl:flex text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1.5 rounded border border-slate-200 items-center gap-1.5">
               <Icon name="clock" size={13} />
               {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </div>
-            <div className="flex items-center space-x-1.5 border-l border-slate-200 pl-3">
+            <div className="flex items-center gap-1.5 lg:border-l lg:border-slate-200 lg:pl-3">
               <button type="button" onClick={() => setTheme(toggleTheme())} title={theme === 'night' ? 'Day mode' : 'Night mode'}
-                className="px-2.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 border border-slate-200 rounded transition-colors">
+                className="hidden sm:inline-flex h-11 w-11 lg:h-auto lg:w-auto items-center justify-center lg:px-2.5 lg:py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 border border-slate-200 rounded transition-colors">
                 {theme === 'night' ? '☀' : '☾'}
               </button>
-              <button type="button" onClick={() => window.dispatchEvent(new CustomEvent('hwt:refresh'))} title="Refresh (F5)"
-                className="px-2.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 border border-slate-200 rounded transition-colors flex items-center gap-1">
-                <Icon name="returns" size={13} /> F5
+              <button type="button" onClick={() => window.dispatchEvent(new CustomEvent('hwt:refresh'))} title="Refresh (F5)" aria-label="Refresh"
+                className="inline-flex h-11 w-11 lg:h-auto lg:w-auto items-center justify-center lg:px-2.5 lg:py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 border border-slate-200 rounded transition-colors gap-1">
+                <Icon name="returns" size={13} /> <span className="kbd-hint hidden lg:inline">F5</span>
               </button>
-              <button type="button" onClick={() => printPaper('a4', { modal: false })} title="Print / export this screen (Alt+E)"
-                className="px-3 py-1.5 text-xs font-bold text-white bg-[#0284c7] hover:bg-blue-600 rounded transition-colors shadow-sm flex items-center gap-1">
-                <Icon name="printer" size={13} /> Export [Alt+E]
+              <button type="button" onClick={() => printPaper('a4', { modal: false })} title="Print / export this screen (Alt+E)" aria-label="Export"
+                className="inline-flex h-11 px-3 lg:h-auto lg:py-1.5 items-center justify-center gap-1 whitespace-nowrap text-xs font-bold text-white bg-[#0284c7] hover:bg-blue-600 rounded transition-colors shadow-sm">
+                <Icon name="printer" size={13} /> <span className="hidden sm:inline">Export</span> <span className="kbd-hint hidden lg:inline">[Alt+E]</span>
               </button>
             </div>
           </div>
@@ -296,13 +337,14 @@ export default function AdminLayout() {
 
         <OfflineOverlay />
         <main className="flex-1 overflow-y-auto min-h-0">
-          <div className="min-h-full flex flex-col gap-6 p-6 ws-content admin-content"
-            style={{ '--ctl-h': '2.5rem', '--ctl-fs': '14px', '--ctl-px': '12px', '--ctl-px-r': '10px', '--ctl-opt-py': '8px' }}>
-            <Outlet key={loc.pathname === '/pharmacy' ? 'pos' : `e${conn.epoch}`} />
+          <div className="min-h-full flex flex-col gap-4 p-3 sm:p-4 lg:gap-6 lg:p-6 ws-content admin-content">
+            <RouteErrorBoundary resetKey={loc.pathname}>
+              <Outlet key={loc.pathname === '/pharmacy' ? 'pos' : `e${conn.epoch}`} />
+            </RouteErrorBoundary>
           </div>
         </main>
 
-        <footer className="bg-white border-t border-slate-200 py-2.5 px-6 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2 select-none no-print shrink-0">
+        <footer className="bg-white border-t border-slate-200 py-2.5 px-6 text-[11px] text-slate-500 hidden md:flex flex-wrap items-center justify-between gap-2 select-none no-print shrink-0">
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${health.ok && conn.online ? 'bg-emerald-500' : 'bg-rose-500'}`} />
             <span className={`font-mono font-semibold ${health.ok && conn.online ? 'text-slate-700' : 'text-rose-700'}`}>LAN Master: {host}{health.ok && conn.online ? '' : ' — unreachable'}</span>

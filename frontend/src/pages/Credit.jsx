@@ -183,7 +183,7 @@ function Settlement({ account, can, onErr, onDone }) {
   const load = useCallback(() => {
     api.get(`/ledger/accounts/${account.id}/statement`).then(setSt).catch((e) => onErr(e.message));
   }, [account.id, onErr]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
 
   const balance = st?.closing ?? account.balance;
   const due = Number(amount || 0);
@@ -377,7 +377,7 @@ function Settlement({ account, can, onErr, onDone }) {
               <button type="button" onClick={() => settle(false)} disabled={!(due > 0) || busy || shortTendered || due > balance + 0.001}
                 className="w-full py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded font-bold text-sm flex items-center justify-between shadow-xs">
                 <span className="inline-flex items-center gap-1.5"><Icon name="printer" size={14} /> {busy ? 'Posting…' : 'Post payment & print receipt'}</span>
-                <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+                <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
               </button>
               <div className="text-[10px] text-slate-500">Applied to the oldest bill first. Cash reaches the open till now as a credit recovery — a credit sale never touched it.</div>
             </div>

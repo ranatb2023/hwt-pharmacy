@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useConnection } from '../connection.js';
 import { WsHeader, WsNav, WsFooter, OfflineOverlay } from './ws/index.jsx';
+import RouteErrorBoundary from './RouteErrorBoundary.jsx';
 
 // The workstation shell: header, nav dock, page, status footer — the frame every
 // redesigned screen in hwt-client/design/stitch sits inside. No sidebar; the
@@ -16,7 +17,7 @@ export default function WsLayout() {
   const { epoch } = useConnection();
   const { pathname } = useLocation();
   return (
-    <div className="h-screen flex flex-col bg-slate-100 text-slate-800 antialiased font-sans">
+    <div className="app-shell h-screen flex flex-col bg-slate-100 text-slate-800 antialiased font-sans">
       <WsHeader />
       <WsNav />
       <OfflineOverlay />
@@ -27,9 +28,10 @@ export default function WsLayout() {
               fills exactly the remaining height, and scrolls its own cart
               while the header, dock and footer stay put — the design's layout. */}
       <main className="flex-1 min-h-0 overflow-y-auto">
-        <div className="min-h-full flex flex-col p-3 ws-content"
-          style={{ '--ctl-h': '2rem', '--ctl-fs': '12px', '--ctl-px': '8px', '--ctl-px-r': '6px', '--ctl-opt-py': '6px' }}>
-          <Outlet key={pathname === '/pharmacy' ? 'pos' : `e${epoch}`} />
+        <div className="min-h-full flex flex-col p-3 ws-content">
+          <RouteErrorBoundary resetKey={pathname}>
+            <Outlet key={pathname === '/pharmacy' ? 'pos' : `e${epoch}`} />
+          </RouteErrorBoundary>
         </div>
       </main>
       <WsFooter />

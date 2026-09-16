@@ -154,7 +154,7 @@ export default function Inventory() {
           </div>
           <div className="text-xs text-slate-500">Stock is held per batch and sold FEFO. A medicine needs a DRAP registration number, a batch and an expiry on every receipt, and a shelf price at or under its MRP.</div>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
           <button type="button" className={BTN} onClick={() => load(q)}><Icon name="returns" size={13} /> Refresh</button>
           {can('inventory.manage') && (
             <>
@@ -208,14 +208,14 @@ export default function Inventory() {
           <div className="px-3 py-2 border-b border-slate-200 flex items-center gap-1 flex-wrap">
             {[['all', 'All medicines'], ['low', 'Low stock'], ['expiry', 'Near expiry'], ['drap', 'DRAP missing'], ['controlled', 'Schedule G / controlled']].map(([k, l]) => (
               <button key={k} type="button" onClick={() => setPill(k)}
-                className={`h-7 px-2.5 text-[11px] font-semibold rounded border ${pill === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'} ${k !== 'all' && counts[k] && pill !== k ? (k === 'low' || k === 'expiry' ? '!text-rose-800' : '!text-amber-800') : ''}`}>
+                className={`h-7 min-h-[44px] lg:min-h-0 px-2.5 text-[11px] font-semibold rounded border ${pill === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'} ${k !== 'all' && counts[k] && pill !== k ? (k === 'low' || k === 'expiry' ? '!text-rose-800' : '!text-amber-800') : ''}`}>
                 {l} ({counts[k]})
               </button>
             ))}
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-xs border-collapse">
+            <table className="table-stack w-full text-xs border-collapse">
               <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                 <tr>
                   <th className="text-left py-2 pl-3 pr-2">Product &amp; formula</th>
@@ -233,7 +233,7 @@ export default function Inventory() {
                   return (
                     <tr key={p.id} onClick={() => setSelected(p)}
                       className={`cursor-pointer ${on ? 'bg-sky-50 shadow-[inset_3px_0_0_#0369a1]' : 'hover:bg-slate-50'}`}>
-                      <td className="py-2 pl-3 pr-2">
+                      <td className="py-2 pl-3 pr-2" data-label="">
                         <div className="font-bold text-slate-900 flex items-center gap-1.5 flex-wrap">
                           <span>{p.name}{strengthOf(p) ? <span className="text-slate-500 font-normal"> {strengthOf(p)}</span> : null}</span>
                           {isLow(p) && <Tag tone={p.on_hand <= 0 ? 'red' : 'amber'}>{p.on_hand <= 0 ? 'out of stock' : 'low stock'}</Tag>}
@@ -247,26 +247,26 @@ export default function Inventory() {
                         </div>
                         {near && <div className="text-[10px] font-mono text-slate-500">Batch {near.batch_no || '—'} • exp {near.expiry_date}{near.quarantined ? ' • quarantined' : ''}</div>}
                       </td>
-                      <td className="py-2 px-2"><Tag tone={{ OTC: 'gray', Rx: 'blue', G: 'amber', Narcotic: 'red' }[p.drug_schedule] || 'gray'}>{SCHEDULE_LABEL[p.drug_schedule] || 'OTC'}</Tag></td>
-                      <td className="py-2 px-2 font-mono text-slate-600">
+                      <td className="py-2 px-2" data-label="Schedule"><Tag tone={{ OTC: 'gray', Rx: 'blue', G: 'amber', Narcotic: 'red' }[p.drug_schedule] || 'gray'}>{SCHEDULE_LABEL[p.drug_schedule] || 'OTC'}</Tag></td>
+                      <td className="py-2 px-2 font-mono text-slate-600" data-label="DRAP reg">
                         {p.drap_reg_no || (p.drug_schedule !== 'OTC' ? <Tag tone="amber">missing</Tag> : <span className="text-slate-400">—</span>)}
                       </td>
-                      <td className="py-2 px-2 text-right whitespace-nowrap">
+                      <td className="py-2 px-2 text-right whitespace-nowrap" data-label="On hand">
                         <div className={`font-mono font-bold ${p.on_hand <= 0 ? 'text-rose-700' : isLow(p) ? 'text-amber-700' : 'text-slate-900'}`}>{p.on_hand.toLocaleString()}</div>
                         <div className="text-[10px] text-slate-500 font-mono">{p.stock_label || `${p.on_hand} ${p.unit || ''}`} • reorder {p.reorder_level}</div>
                       </td>
-                      <td className="py-2 px-2 text-right whitespace-nowrap font-mono">
+                      <td className="py-2 px-2 text-right whitespace-nowrap font-mono" data-label="Price / MRP">
                         <div className="font-bold text-slate-900">{money(p.sale_price)}<span className="text-[10px] text-slate-500 font-normal">/{p.unit || 'unit'}</span></div>
                         <div className={`text-[10px] ${p.mrp > 0 && p.sale_price > p.mrp ? 'text-rose-700 font-bold' : 'text-slate-500'}`}>
                           {p.strip_price != null ? `${money(p.strip_price)}/strip • ` : ''}MRP {p.mrp > 0 ? money(p.mrp) : '—'}
                         </div>
                       </td>
-                      <td className="py-2 pl-2 pr-3 text-right whitespace-nowrap">
+                      <td className="py-2 pl-2 pr-3 text-right whitespace-nowrap" data-label="">
                         {can('inventory.manage') && (
                           <div className="inline-flex gap-1">
-                            <button type="button" className="h-6 px-2 text-[10px] font-semibold rounded border bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
+                            <button type="button" className="h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
                               onClick={(e) => { e.stopPropagation(); setSelected(p); setEditing(p); }}>Edit</button>
-                            <button type="button" className="h-6 px-2 text-[10px] font-semibold rounded border bg-slate-800 text-white border-slate-900 hover:bg-slate-900"
+                            <button type="button" className="h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border bg-slate-800 text-white border-slate-900 hover:bg-slate-900"
                               onClick={(e) => { e.stopPropagation(); setSelected(p); setReceiveFor(p); }}>Receive</button>
                           </div>
                         )}
@@ -328,16 +328,14 @@ function Tag({ tone, children }) {
 function Tile({ label, value, unit, sub, tone = '', icon, right }) {
   const t = { danger: 'text-rose-700', warn: 'text-amber-700', ok: 'text-emerald-700' }[tone] || 'text-slate-900';
   return (
-    <div className="ws-tile bg-white border flex items-start justify-between gap-2" data-tone={tone}>
-      <div className="min-w-0">
+    <div className="ws-tile bg-white border min-w-0" data-tone={tone}>
+      <div className="flex items-start justify-between gap-2">
         <div className="ws-tile-label text-[10px] font-bold uppercase tracking-wide text-slate-500 line-clamp-2 min-h-[2.4em] leading-[1.2]">{label}</div>
-        <div className={`ws-tile-value ws-tile-mono font-bold leading-tight mt-0.5 ${t}`}>{value} {unit && <span className="text-[11px] font-sans font-semibold text-slate-500">{unit}</span>}</div>
-        <div className="ws-tile-sub text-[10px] text-slate-500 line-clamp-2">{sub}</div>
+        <div className="flex items-center gap-1.5 shrink-0">{right && <span className="hidden sm:inline-flex">{right}</span>}<span className="text-slate-400"><Icon name={icon} size={16} /></span></div>
       </div>
-      <div className="flex flex-col items-end gap-1 shrink-0">
-        <span className="text-slate-400"><Icon name={icon} size={16} /></span>
-        {right}
-      </div>
+      {right && <div className="sm:hidden mt-1">{right}</div>}
+      <div className={`ws-tile-value ws-tile-mono font-bold leading-tight mt-0.5 ${t}`}>{value} {unit && <span className="text-[11px] font-sans font-semibold text-slate-500">{unit}</span>}</div>
+      <div className="ws-tile-sub text-[10px] text-slate-500 line-clamp-2">{sub}</div>
     </div>
   );
 }
@@ -643,7 +641,7 @@ function ReceiveModal({ product, batches, onClose, onDone, onErr }) {
             <div className="flex items-center gap-1.5 pt-1">
               <button type="button" className={`${BTN_GO} flex-1`} onClick={save} disabled={!complete || busy || !!problem} title={problem || undefined}>
                 <span className="inline-flex items-center gap-1.5"><Icon name="check" size={14} /> {busy ? 'Receiving…' : 'Receive into stock'}</span>
-                <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+                <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
               </button>
               <button type="button" className={`${BTN} h-9`} onClick={onClose}>Cancel <Kbd>Esc</Kbd></button>
             </div>
@@ -845,30 +843,30 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal !max-w-6xl !rounded-md !p-0 text-slate-800 overflow-hidden" onClick={(e) => e.stopPropagation()}>
-        <div className="px-4 py-2.5 border-b border-slate-200 bg-slate-50 flex items-center justify-between gap-3">
+      <div className="modal !max-w-6xl !rounded-md !p-0 text-slate-800 overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="px-4 py-2.5 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-3 shrink-0">
           <div>
             <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Medicine master &amp; DRAP formulary specification</div>
             <div className="text-sm font-bold text-slate-900">{editing ? `Edit — ${product.name}` : 'New medicine'}</div>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="hidden sm:flex items-center gap-1.5">
             <button type="button" className={BTN} onClick={onClose}>Cancel <Kbd>Esc</Kbd></button>
             <button type="button" className={`${BTN_GO} h-8`} onClick={save} disabled={!valid || busy}>
               <span>{busy ? 'Saving…' : editing ? 'Save changes' : 'Save medicine master'}</span>
-              <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-[10px] border border-emerald-600">F9</kbd>
+              <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-[10px] border border-emerald-600">F9</kbd>
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 lg:col-span-8 p-4 space-y-4 border-r border-slate-200 max-h-[calc(100vh-7rem)] overflow-y-auto">
+        <div className="grid grid-cols-12 flex-1 min-h-0 overflow-y-auto lg:overflow-visible">
+          <div className="col-span-12 lg:col-span-8 p-4 space-y-4 lg:border-r border-slate-200 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto">
             <div>
               <SectionHead n="1" title="Brand & clinical identification" right={<span className="text-[10px] text-slate-500">* required</span>} />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <Field label="Brand name *" hint="as registered on the packaging" className="col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+                <Field label="Brand name *" hint="as registered on the packaging" className="sm:col-span-2">
                   <input className={CTL} value={f.name} onChange={set('name')} autoFocus placeholder="e.g. Augmentin, Panadol, Amoxil" />
                 </Field>
-                <Field label="Generic name (active ingredient)" className="col-span-2"><input className={CTL} value={f.generic_name} onChange={set('generic_name')} placeholder="e.g. Amoxicillin Trihydrate" /></Field>
+                <Field label="Generic name (active ingredient)" className="sm:col-span-2"><input className={CTL} value={f.generic_name} onChange={set('generic_name')} placeholder="e.g. Amoxicillin Trihydrate" /></Field>
                 <Field label="Strength / dosage"><input className={CTL} value={f.strength} onChange={set('strength')} placeholder="e.g. 500mg, 125mg/5ml" /></Field>
                 <Field label="Dosage form *" hint={type ? (type.is_medicine ? 'medicine — batch & expiry required on receipt' : 'sundry — may be received without a batch') : null}>
                   <Select value={f.product_type_id} onChange={pickType}>
@@ -897,10 +895,10 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
 
             <div>
               <SectionHead n="2" title="Packaging" sub="how the medicine is boxed" />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
                 <Field label={`${f.unit || 'Units'} per strip`} hint="sealed within one blister strip"><input type="number" min="1" className={NUM} value={f.units_per_strip} onChange={set('units_per_strip')} /></Field>
                 <Field label="Strips per box" hint="packed in one carton"><input type="number" min="1" className={NUM} value={f.strips_per_box} onChange={set('strips_per_box')} /></Field>
-                <div className="col-span-2 text-[11px] text-sky-900 bg-sky-50 border border-sky-200 rounded px-3 py-2">
+                <div className="sm:col-span-2 text-[11px] text-sky-900 bg-sky-50 border border-sky-200 rounded px-3 py-2">
                   One box = <b>{perBox} strip{perBox === 1 ? '' : 's'}</b> = <b>{unitsPerBox} {f.unit || 'unit'}{unitsPerBox === 1 ? '' : 's'}</b>.
                   Stock is counted in {f.unit || 'unit'}s, so any of the three can be sold from the same shelf.
                 </div>
@@ -915,8 +913,8 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
 
             <div>
               <SectionHead n="3" title="Regulatory" sub="DRAP compliance" />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <Field label="Drug schedule *" hint={f.drug_schedule === 'Narcotic' ? 'register entry with CNIC at every sale' : f.drug_schedule === 'G' ? 'prescriber recorded at every sale' : f.drug_schedule === 'Rx' ? 'prescription reference at checkout' : 'sold without a prescription'} className="col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+                <Field label="Drug schedule *" hint={f.drug_schedule === 'Narcotic' ? 'register entry with CNIC at every sale' : f.drug_schedule === 'G' ? 'prescriber recorded at every sale' : f.drug_schedule === 'Rx' ? 'prescription reference at checkout' : 'sold without a prescription'} className="sm:col-span-2">
                   <Select value={f.drug_schedule} onChange={set('drug_schedule')}>
                     <option value="OTC">OTC — general sale</option>
                     <option value="Rx">Rx — prescription only</option>
@@ -924,10 +922,10 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
                     <option value="Narcotic">Controlled drug — register entry required</option>
                   </Select>
                 </Field>
-                <Field label={`DRAP registration no ${f.drug_schedule !== 'OTC' ? '*' : ''}`} hint="Drug Regulatory Authority of Pakistan" className="col-span-2">
+                <Field label={`DRAP registration no ${f.drug_schedule !== 'OTC' ? '*' : ''}`} hint="Drug Regulatory Authority of Pakistan" className="sm:col-span-2">
                   <input className={`${CTL} font-mono ${needsDrap ? '!border-amber-500' : ''}`} value={f.drap_reg_no} onChange={set('drap_reg_no')} placeholder="e.g. 012345" />
                 </Field>
-                <Field label="Manufacturer" className="col-span-2">
+                <Field label="Manufacturer" className="sm:col-span-2">
                   <Select value={f.manufacturer_id === '' && newMaker ? '__new' : f.manufacturer_id}
                     onChange={(e) => {
                       if (e.target.value === '__new') { setF({ ...f, manufacturer_id: '' }); setNewMaker(' '); }
@@ -939,9 +937,9 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
                   </Select>
                 </Field>
                 {newMaker !== '' && (
-                  <Field label="New company name" className="col-span-2"><input className={CTL} value={f.manufacturer} onChange={set('manufacturer')} autoFocus placeholder="exactly as printed on the pack" /></Field>
+                  <Field label="New company name" className="sm:col-span-2"><input className={CTL} value={f.manufacturer} onChange={set('manufacturer')} autoFocus placeholder="exactly as printed on the pack" /></Field>
                 )}
-                <label className="col-span-2 md:col-span-4 inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+                <label className="sm:col-span-2 md:col-span-4 inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
                   <input type="checkbox" checked={f.is_refrigerated} onChange={set('is_refrigerated')} />
                   Cold chain — must be stored at 2–8 °C (flagged at receipt, on the shelf and at the counter)
                 </label>
@@ -950,7 +948,7 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
 
             <div>
               <SectionHead n="4" title="Pricing & reorder" sub="one stored price per base unit; type whichever pack you read" />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
                 <Field label={`MRP per ${f.unit || 'unit'}`} hint="notified maximum retail">
                   <input type="number" step="0.01" min="0" className={NUM} value={f.mrp} onChange={set('mrp')} placeholder="0.00" />
                 </Field>
@@ -987,7 +985,7 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
           </div>
 
           {/* Live preview + checklist */}
-          <div className="col-span-12 lg:col-span-4 p-4 bg-slate-50 space-y-3 max-h-[calc(100vh-7rem)] overflow-y-auto">
+          <div className="col-span-12 lg:col-span-4 p-4 bg-slate-50 space-y-3 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto">
             <div className="bg-white border border-slate-300 rounded p-3">
               <div className="text-[10px] font-bold uppercase tracking-wide text-slate-600 border-b border-slate-200 pb-1.5 mb-2">Live POS item presentation</div>
               <div className="flex items-start justify-between gap-2">
@@ -1039,6 +1037,12 @@ function ProductModal({ product, batches, onClose, onDone, onErr }) {
               </div>
             )}
           </div>
+        </div>
+        <div className="sm:hidden shrink-0 bg-white border-t border-slate-200 p-3 flex gap-2">
+          <button type="button" className={`${BTN} flex-1 justify-center`} onClick={onClose}>Cancel</button>
+          <button type="button" className={`${BTN_GO} flex-1`} onClick={save} disabled={!valid || busy}>
+            <span>{busy ? 'Saving…' : editing ? 'Save changes' : 'Save medicine master'}</span>
+          </button>
         </div>
       </div>
     </div>

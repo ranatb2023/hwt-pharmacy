@@ -52,7 +52,7 @@ export default function Departments() {
     api.get('/departments').then(setDepts).catch((e) => setErr(e.message));
     api.get('/departments/requests').then(setRows).catch((e) => setErr(e.message));
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   // A runner may be walking over while this screen is open. The counter polls
   // its till every 30 s; the queue does the same.
   useEffect(() => { const id = setInterval(load, 30000); return () => clearInterval(id); }, [load]);
@@ -155,7 +155,7 @@ export default function Departments() {
               <DepartmentList depts={depts} can={can} onErr={setErr} onDone={(m) => done(m)} />
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-xs border-collapse">
+                <table className="table-stack w-full text-xs border-collapse">
                   <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                     <tr>
                       <th className="text-left py-2 pl-3 pr-2">Slip &amp; time</th>
@@ -176,7 +176,7 @@ export default function Departments() {
                       return (
                         <tr key={r.id} onClick={() => { setCursor(i); inspect(r); }}
                           className={`cursor-pointer ${isOpen ? 'bg-sky-50 shadow-[inset_3px_0_0_#0369a1]' : onCursor ? 'bg-slate-50' : 'hover:bg-slate-50'} ${stat ? 'bg-rose-50/40' : ''}`}>
-                          <td className="py-2 pl-3 pr-2 whitespace-nowrap">
+                          <td className="py-2 pl-3 pr-2 whitespace-nowrap" data-label="">
                             <div className="flex items-center gap-1.5">
                               {stat && <Icon name="warning" size={13} />}
                               <div>
@@ -185,26 +185,26 @@ export default function Departments() {
                               </div>
                             </div>
                           </td>
-                          <td className="py-2 px-2">
+                          <td className="py-2 px-2" data-label="Department">
                             <div className="font-semibold text-slate-800">{r.department_name}</div>
                             <div className="text-[10px] text-slate-500">{r.patient_name || '—'}{r.patient_ref ? ` · ${r.patient_ref}` : ''}</div>
                           </td>
-                          <td className="py-2 px-2 text-slate-700">{r.prescriber || <span className="text-slate-400">—</span>}</td>
-                          <td className="py-2 px-2">
+                          <td className="py-2 px-2 text-slate-700" data-label="Prescribed by">{r.prescriber || <span className="text-slate-400">—</span>}</td>
+                          <td className="py-2 px-2" data-label="Collected by">
                             <div className="text-slate-800">{r.collected_by_name || <span className="text-slate-400">—</span>}</div>
                             {r.collected_by_contact ? <div className="text-[10px] text-slate-500 font-mono">{r.collected_by_contact}</div> : null}
                           </td>
-                          <td className="py-2 px-2 text-right whitespace-nowrap">
+                          <td className="py-2 px-2 text-right whitespace-nowrap" data-label="Lines">
                             <span className="font-mono font-bold">{r.line_count}</span>
                             <div className="text-[10px] text-slate-500 font-mono">{r.units_requested} units</div>
                           </td>
-                          <td className="py-2 px-2 text-right whitespace-nowrap font-mono">
+                          <td className="py-2 px-2 text-right whitespace-nowrap font-mono" data-label="Invoice">
                             {r.bill_no ? <><b>{money(r.net_amount)}</b><div className="text-[10px] text-slate-500">{r.bill_no}</div></> : <span className="text-slate-400">—</span>}
                           </td>
-                          <td className="py-2 px-2 whitespace-nowrap"><Status r={r} /></td>
-                          <td className="py-2 pl-2 pr-3 text-right">
+                          <td className="py-2 px-2 whitespace-nowrap" data-label="Status"><Status r={r} /></td>
+                          <td className="py-2 pl-2 pr-3 text-right" data-label="">
                             <button type="button" onClick={(e) => { e.stopPropagation(); setCursor(i); inspect(r); }}
-                              className={`h-6 px-2 text-[10px] font-semibold rounded border ${isOpen ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>
+                              className={`h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border ${isOpen ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>
                               {isOpen ? 'Inspecting' : r.status === 'received' ? 'Load' : 'View'}
                             </button>
                           </td>
@@ -308,7 +308,7 @@ function DepartmentList({ depts, can, onErr, onDone }) {
         the stock, and their name prints on the issue slip.
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full text-xs border-collapse">
+        <table className="table-stack w-full text-xs border-collapse">
           <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
             <tr><th className="text-left py-2 px-2">Code</th><th className="text-left py-2 px-2">Department</th><th className="text-left py-2 px-2">Signs for it</th><th className="text-left py-2 px-2">Invoiced at</th>
               <th className="text-right py-2 px-2">Awaiting</th><th className="text-right py-2 px-2"><span className="sr-only">Edit</span></th></tr>
@@ -316,13 +316,13 @@ function DepartmentList({ depts, can, onErr, onDone }) {
           <tbody className="divide-y divide-slate-100">
             {depts.map((d) => (
               <tr key={d.id}>
-                <td className="py-2 px-2 font-mono">{d.code}</td>
-                <td className="py-2 px-2 font-semibold">{d.name}</td>
-                <td className="py-2 px-2">{d.in_charge || <span className="text-[10px] font-bold uppercase text-amber-800 bg-amber-50 border border-amber-300 px-1.5 py-0.5 rounded">not named</span>}
+                <td className="py-2 px-2 font-mono" data-label="Code">{d.code}</td>
+                <td className="py-2 px-2 font-semibold" data-label="Department">{d.name}</td>
+                <td className="py-2 px-2" data-label="Signs for it">{d.in_charge || <span className="text-[10px] font-bold uppercase text-amber-800 bg-amber-50 border border-amber-300 px-1.5 py-0.5 rounded">not named</span>}
                   {d.contact ? <div className="text-[10px] text-slate-500 font-mono">{d.contact}</div> : null}</td>
-                <td className="py-2 px-2">{basisLabel(d)}</td>
-                <td className="py-2 px-2 text-right font-mono">{d.pending ? <span className="font-bold text-amber-700">{d.pending}</span> : '—'}</td>
-                <td className="py-2 px-2 text-right">
+                <td className="py-2 px-2" data-label="Invoiced at">{basisLabel(d)}</td>
+                <td className="py-2 px-2 text-right font-mono" data-label="Awaiting">{d.pending ? <span className="font-bold text-amber-700">{d.pending}</span> : '—'}</td>
+                <td className="py-2 px-2 text-right" data-label="">
                   {can('inventory.manage') && <button type="button" className={BTN} onClick={() => setEdit({ ...d })}>Edit</button>}
                 </td>
               </tr>
@@ -667,7 +667,7 @@ function SlipDetail({ slip, depts, can, onClose, onDone, onErr }) {
             <button type="button" onClick={dispense} disabled={busy || unresolved.length > 0}
               className="w-full py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded font-bold text-sm flex items-center justify-between shadow-xs">
               <span className="inline-flex items-center gap-1.5"><Icon name="check" size={14} /> {busy ? 'Dispensing…' : 'Confirm dispense & invoice'}</span>
-              <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+              <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
             </button>
           )}
           <div className="grid grid-cols-2 gap-1.5">

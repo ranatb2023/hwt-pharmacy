@@ -40,7 +40,7 @@ export default function Returns() {
   const inputRef = useRef(null);
 
   const loadRecent = useCallback(() => { api.get('/returns').then(setRecent).catch(() => {}); }, []);
-  useEffect(loadRecent, [loadRecent]);
+  useEffect(() => { loadRecent(); }, [loadRecent]);
   useEffect(() => { api.get('/returns/reasons').then(setMeta).catch(() => {}); }, []);
 
   const lookup = useCallback(async (e) => {
@@ -171,7 +171,7 @@ export default function Returns() {
                 <span className="text-[11px] font-bold uppercase tracking-wide text-slate-700">Items on the bill — what is coming back</span>
                 <span className="text-[10px] font-mono text-slate-500">{lines.length} line{lines.length === 1 ? '' : 's'}</span>
               </div>
-              <table className="w-full text-xs border-collapse">
+              <div className="overflow-x-auto"><table className="w-full text-xs border-collapse">
                 <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                   <tr><th className="text-left py-2 pl-3 pr-2">Medicine</th><th className="text-right py-2 px-2">Sold</th><th className="text-right py-2 px-2">Back already</th><th className="text-center py-2 px-2 w-40">Return qty</th><th className="text-left py-2 px-2">Condition</th><th className="text-right py-2 pl-2 pr-3">Refund</th></tr>
                 </thead>
@@ -204,7 +204,7 @@ export default function Returns() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
               <div className="p-3 border-t border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
                   <label className={LABEL} htmlFor="ret-reason">Reason for return *</label>
@@ -224,7 +224,7 @@ export default function Returns() {
           {!bill && !done && recent.length > 0 && (
             <div className="bg-white rounded-md border border-slate-300 shadow-xs">
               <div className="px-3 py-2 border-b border-slate-200 bg-slate-50 rounded-t-md text-[11px] font-bold uppercase tracking-wide text-slate-700">Recent returns</div>
-              <table className="w-full text-xs border-collapse">
+              <div className="overflow-x-auto"><table className="w-full text-xs border-collapse">
                 <thead className="bg-slate-50 text-slate-600 uppercase tracking-wider text-[10px] font-semibold border-b border-slate-200">
                   <tr><th className="text-left py-2 pl-3 pr-2">Return</th><th className="text-left py-2 px-2">When</th><th className="text-left py-2 px-2">Against</th><th className="text-left py-2 px-2">Customer</th><th className="text-left py-2 px-2">Reason</th><th className="text-right py-2 pl-2 pr-3">Refund</th></tr>
                 </thead>
@@ -240,7 +240,7 @@ export default function Returns() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             </div>
           )}
         </div>
@@ -273,7 +273,7 @@ export default function Returns() {
               <div className="print:hidden grid grid-cols-2 gap-2 mt-4">
                 <button type="button" className={`${BTN} justify-center h-10`} onClick={() => printPaper('thermal', { modal: false })}><Icon name="printer" size={14} /> Print slip (80mm)</button>
                 <button type="button" className="h-10 px-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded font-bold text-sm flex items-center justify-between" onClick={reset}>
-                  <span>New return</span><kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+                  <span>New return</span><kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
                 </button>
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function Returns() {
                 <button type="button" onClick={submit} disabled={!canSubmit}
                   className="w-full py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded font-bold text-sm flex items-center justify-between shadow-xs">
                   <span className="inline-flex items-center gap-1.5"><Icon name="check" size={14} /> {busy ? 'Processing…' : 'Process return & refund'}</span>
-                  <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
+                  <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F9</kbd>
                 </button>
               )}
               {bill && !reasonOk && unitsBack > 0 && <div className="text-[11px] text-rose-800">Choose a reason for the return register.</div>}

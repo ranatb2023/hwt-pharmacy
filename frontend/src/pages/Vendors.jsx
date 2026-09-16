@@ -46,7 +46,7 @@ export default function Vendors() {
     api.get('/inventory/products').then(setProducts).catch(() => {});
     api.get('/vendors/bookings').then(setBookings).catch(() => {});
   }, []);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
 
   const openVendor = useCallback((v) => {
     api.get(`/vendors/${v.id}`).then(setSelected).catch((e) => setErr(e.message));
@@ -111,7 +111,7 @@ export default function Vendors() {
           <div className="ws-crumb text-[10px] font-bold uppercase tracking-wider text-slate-500">Purchase &amp; supply · vendor accounts &amp; order booking</div>
           <h1 className="ws-h1 text-base font-bold text-slate-900 m-0">Suppliers, Purchase Ledger &amp; Distributor Orders</h1>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
           <button type="button" className={BTN} onClick={load}><Icon name="returns" size={13} /> Refresh</button>
           <button type="button" className={BTN} onClick={() => setModal('slip')}><Icon name="file" size={13} /> Demand slip</button>
           {can('vendor.manage') && (
@@ -227,13 +227,14 @@ function Tag({ tone, children }) {
 function Tile({ label, value, unit, sub, tone = '', icon, right }) {
   const t = { danger: 'text-rose-700', warn: 'text-amber-700', ok: 'text-emerald-700' }[tone] || 'text-slate-900';
   return (
-    <div className="ws-tile bg-white border flex items-start justify-between gap-2" data-tone={tone}>
-      <div className="min-w-0">
+    <div className="ws-tile bg-white border min-w-0" data-tone={tone}>
+      <div className="flex items-start justify-between gap-2">
         <div className="ws-tile-label text-[10px] font-bold uppercase tracking-wide text-slate-500 line-clamp-2 min-h-[2.4em] leading-[1.2]">{label}</div>
-        <div className={`ws-tile-value ws-tile-mono font-bold leading-tight mt-0.5 ${t}`}>{value} {unit && <span className="text-[11px] font-sans font-semibold text-slate-500">{unit}</span>}</div>
-        <div className="ws-tile-sub text-[10px] text-slate-500 line-clamp-2">{sub}</div>
+        <div className="flex items-center gap-1.5 shrink-0">{right && <span className="hidden sm:inline-flex">{right}</span>}<span className="text-slate-400"><Icon name={icon} size={16} /></span></div>
       </div>
-      <div className="flex flex-col items-end gap-1 shrink-0"><span className="text-slate-400"><Icon name={icon} size={16} /></span>{right}</div>
+      {right && <div className="sm:hidden mt-1">{right}</div>}
+      <div className={`ws-tile-value ws-tile-mono font-bold leading-tight mt-0.5 ${t}`}>{value} {unit && <span className="text-[11px] font-sans font-semibold text-slate-500">{unit}</span>}</div>
+      <div className="ws-tile-sub text-[10px] text-slate-500 line-clamp-2">{sub}</div>
     </div>
   );
 }
@@ -281,7 +282,7 @@ function Actions({ onClose, onSave, label, disabled, busy }) {
     <div className="flex items-center gap-1.5 px-4 py-3 border-t border-slate-200 bg-slate-50">
       <button type="button" className={`${BTN_GO} flex-1`} onClick={onSave} disabled={disabled || busy}>
         <span>{busy ? 'Working…' : label}</span>
-        <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-[10px] border border-emerald-600">F9</kbd>
+        <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-[10px] border border-emerald-600">F9</kbd>
       </button>
       <button type="button" className={`${BTN} h-9`} onClick={onClose}>Cancel <Kbd>Esc</Kbd></button>
     </div>
@@ -443,7 +444,7 @@ function Statement({ vendor: v, can, onBack, onErr, onDone, onPay }) {
       else setSt(null);
     }).catch(() => setAccount(null));
   }, [v.id, onErr]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
 
   const entries = (st?.entries || []).filter((e) => filter === 'all' ? true : filter === 'grn' ? e.debit > 0 : filter === 'pay' ? (e.credit > 0 && !/reclaim|credit note/i.test(e.narration || '')) : /reclaim|credit note/i.test(e.narration || ''));
   const ytdFrom = `${new Date().getFullYear()}-01-01`;
@@ -498,7 +499,7 @@ function Statement({ vendor: v, can, onBack, onErr, onDone, onPay }) {
             <div className="flex items-center gap-1 print:hidden">
               {[['all', 'All entries'], ['grn', 'Invoices / GRNs'], ['pay', 'Payments'], ['cn', 'Returns & credit notes']].map(([k, l]) => (
                 <button key={k} type="button" onClick={() => setFilter(k)}
-                  className={`h-6 px-2 text-[10px] font-semibold rounded border ${filter === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
+                  className={`h-6 min-h-[44px] lg:min-h-0 px-2 text-[10px] font-semibold rounded border ${filter === k ? 'bg-slate-800 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'}`}>{l}</button>
               ))}
             </div>
           </div>
@@ -567,9 +568,9 @@ function Statement({ vendor: v, can, onBack, onErr, onDone, onPay }) {
                     <input type="number" min="0" step="0.01" className={`${NUM} pl-8 h-10 text-base font-bold`} value={pay.amount} onChange={(e) => setPay({ ...pay, amount: e.target.value })} placeholder="0.00" /></div>
                 </Field>
                 <div className="grid grid-cols-3 gap-1">
-                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, balance)) })} className="h-7 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Full balance</button>
-                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, Math.round(balance / 2))) })} className="h-7 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Half</button>
-                  <button type="button" onClick={() => setPay({ ...pay, amount: '' })} className="h-7 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Clear</button>
+                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, balance)) })} className="h-7 min-h-[44px] lg:min-h-0 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Full balance</button>
+                  <button type="button" onClick={() => setPay({ ...pay, amount: String(Math.max(0, Math.round(balance / 2))) })} className="h-7 min-h-[44px] lg:min-h-0 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Half</button>
+                  <button type="button" onClick={() => setPay({ ...pay, amount: '' })} className="h-7 min-h-[44px] lg:min-h-0 text-[10px] font-semibold rounded border bg-slate-100 border-slate-300 hover:bg-slate-200">Clear</button>
                 </div>
                 <div>
                   <label className={LABEL}>Payment mode</label>

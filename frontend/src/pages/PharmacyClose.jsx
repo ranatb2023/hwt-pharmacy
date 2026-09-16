@@ -189,7 +189,7 @@ export default function PharmacyClose() {
           </div>
           <div className="text-xs text-slate-500">Reconcile the drawer, then print and file the audit sheet. Any past date can be re-printed.</div>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
           <input type="date" value={date} max={ymd(new Date())} onChange={(e) => load(e.target.value)}
             className="h-8 min-h-0 py-0 px-2 text-xs font-mono border border-slate-300 rounded bg-white w-40" />
           <button type="button" className={BTN} onClick={() => load(date)}><Icon name="returns" size={13} /> Refresh</button>
@@ -297,7 +297,7 @@ export default function PharmacyClose() {
                 <button type="button" onClick={closeShift} disabled={counted == null || busy}
                   className="mt-3 w-full py-2.5 px-3 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:text-slate-500 text-white rounded font-bold text-sm flex items-center justify-between shadow-xs">
                   <span>{busy ? 'Closing…' : `Save & close shift — ${openTill.counter}`}</span>
-                  <kbd className="bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F10</kbd>
+                  <kbd className="kbd-hint bg-emerald-800 text-white font-mono px-1.5 py-0.5 rounded text-xs border border-emerald-600">F10</kbd>
                 </button>
               </>
             ) : openTill ? (
