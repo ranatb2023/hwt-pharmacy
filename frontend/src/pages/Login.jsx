@@ -5,8 +5,8 @@ import { useAuth } from '../auth.jsx';
 export default function Login() {
   const { login } = useAuth();
   const nav = useNavigate();
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -43,10 +43,6 @@ export default function Login() {
         <button className="btn primary lg" style={{ width: '100%' }} disabled={busy}>
           {busy ? 'Signing in…' : 'Sign in'}
         </button>
-        <div className="login-hint">
-          Demo accounts: <b>admin</b>, <b>reception</b>, <b>doctor</b>, <b>lab</b>, <b>pharmacy</b>, <b>cashier</b>
-          <br />Password: <b>pass123</b> (admin: <b>admin123</b>)
-        </div>
       </form>
     </div>
   );
