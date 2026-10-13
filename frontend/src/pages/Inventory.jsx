@@ -26,6 +26,8 @@ const SCHEDULES = ['OTC', 'Rx', 'G', 'Narcotic'];
 const SCHEDULE_LABEL = { OTC: 'OTC', Rx: 'Rx', G: 'Sch. G', Narcotic: 'Controlled' };
 const r2 = (n) => Math.round((Number(n) + Number.EPSILON) * 100) / 100;
 const daysLeft = (iso) => (iso ? Math.round((new Date(iso) - Date.now()) / 86400000) : null);
+const PAGE_SIZE = 50;
+const PAGER_BTN = 'h-6 min-h-[44px] lg:min-h-0 touch:min-h-[44px] px-2 text-[11px] font-semibold rounded border bg-white text-slate-700 border-slate-300 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed';
 
 
 export default function Inventory() {
@@ -37,6 +39,7 @@ export default function Inventory() {
   const [q, setQ] = useState('');
   const [schedule, setSchedule] = useState('');
   const [pill, setPill] = useState('all');
+  const [page, setPage] = useState(0);
   const [selected, setSelected] = useState(null);
   const [batches, setBatches] = useState([]);
   const [err, setErr] = useState('');
@@ -46,8 +49,8 @@ export default function Inventory() {
   const [showNew, setShowNew] = useState(false);
   const searchRef = useRef(null);
 
-  // The list is a server search when there is a term and the first hundred
-  // otherwise — the same route as before, so the row shape is unchanged.
+  // The list is a server search when there is a term and the whole catalogue
+  // otherwise, paged here — the same route as before, so the row shape is unchanged.
   const load = useCallback((term = q) => {
     const qs = term.trim().length >= 2 ? `?q=${encodeURIComponent(term.trim())}` : '';
     api.get(`/inventory/products${qs}`).then(setProducts).catch((e) => setErr(e.message));
@@ -87,6 +90,13 @@ export default function Inventory() {
         : pill === 'expiry' ? nearIds.has(p.id)
           : pill === 'drap' ? drapMissing(p)
             : pill === 'controlled' ? controlled(p) : true);
+
+  // Back to the first page whenever the view changes; clamp when a refresh
+  // leaves fewer rows than the page we were on.
+  useEffect(() => { setPage(0); }, [q, schedule, pill]);
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const pageNo = Math.min(page, pages - 1);
+  const pageRows = rows.slice(pageNo * PAGE_SIZE, (pageNo + 1) * PAGE_SIZE);
 
   const counts = {
     all: products.length,
@@ -228,7 +238,7 @@ export default function Inventory() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {rows.map((p) => {
+                {pageRows.map((p) => {
                   const on = selected?.id === p.id;
                   const near = alerts.near_expiry.filter((b) => b.product_id === p.id).sort((a, b) => a.days_left - b.days_left)[0];
                   return (
@@ -287,8 +297,20 @@ export default function Inventory() {
               </tbody>
             </table>
           </div>
-          <div className="flex items-center justify-between px-3 py-1.5 border-t border-slate-200 text-[10px] text-slate-500 font-mono">
-            <span>Showing {rows.length} of {products.length} loaded{q.trim().length >= 2 ? ' (search)' : products.length >= 100 ? ' — type to search the rest' : ''}</span>
+          <div className="flex items-center justify-between gap-2 flex-wrap px-3 py-1.5 border-t border-slate-200 text-[10px] text-slate-500 font-mono">
+            <span>
+              {rows.length ? `${pageNo * PAGE_SIZE + 1}–${pageNo * PAGE_SIZE + pageRows.length} of ${rows.length}` : '0'}
+              {rows.length !== products.length ? ` (filtered from ${products.length})` : ''}{q.trim().length >= 2 ? ' · search' : ''}
+            </span>
+            {pages > 1 && (
+              <span className="inline-flex items-center gap-1">
+                <button type="button" className={PAGER_BTN} disabled={pageNo === 0} onClick={() => setPage(0)} aria-label="First page">«</button>
+                <button type="button" className={PAGER_BTN} disabled={pageNo === 0} onClick={() => setPage(pageNo - 1)}>‹ Prev</button>
+                <span className="px-1 text-slate-700">Page {pageNo + 1} of {pages}</span>
+                <button type="button" className={PAGER_BTN} disabled={pageNo >= pages - 1} onClick={() => setPage(pageNo + 1)}>Next ›</button>
+                <button type="button" className={PAGER_BTN} disabled={pageNo >= pages - 1} onClick={() => setPage(pages - 1)} aria-label="Last page">»</button>
+              </span>
+            )}
             <span>{alerts.near_expiry.length} batch{alerts.near_expiry.length === 1 ? '' : 'es'} inside the {alerts.near_expiry_days}-day expiry window</span>
           </div>
         </div>
