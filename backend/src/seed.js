@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { db, init } = require('./db');
 const { DEFAULT_ROLES } = require('./permissions');
+const { seedHwhMedicines } = require('./seedMedicines');
 
 init();
 
@@ -158,6 +159,10 @@ const seed = db.transaction(() => {
   products.forEach((p, idx) =>
     seedProduct(p, idx, OPENING_BOXES[idx], EXPIRY_STAGGER[idx % EXPIRY_STAGGER.length], 'Generic Pharma')
   );
+
+  // --- HWH Pharmacy product master (catalogue only, no stock) ---
+  const meds = seedHwhMedicines(db);
+  console.log(`HWH medicines: ${meds.added} added, ${meds.total - meds.added} already present.`);
 
   // --- Dialysis stations ---
   const insStation = db.prepare("INSERT INTO dialysis_stations (name) VALUES (?) ON CONFLICT(name) DO NOTHING");

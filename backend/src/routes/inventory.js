@@ -250,7 +250,9 @@ router.get(
              ORDER BY name LIMIT 50`
           )
           .all(like, like, like, q, like)
-      : db.prepare('SELECT * FROM products WHERE is_active = 1 ORDER BY name LIMIT 100').all();
+      // The whole active catalogue: the inventory screen pages it and counts its
+      // tabs (low stock, DRAP missing) over every product, not the first hundred.
+      : db.prepare('SELECT * FROM products WHERE is_active = 1 ORDER BY name').all();
     for (const p of rows) {
       p.on_hand = stockOnHand(p.id);
       // Ship the answer, not the rule. The receive form needs to know whether a
